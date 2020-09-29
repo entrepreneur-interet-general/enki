@@ -43,13 +43,13 @@ Once the variable is set you can start the front with :
 
 .. code-block:: bash
 
-   $ nx serve couv-ops
+   $ npm start couv-ops
 
 To launch the test of core-couv-ops:
 
 .. code-block:: bash
 
-   $ nx test core-couv-ops
+   $ npm test core-couv-ops
 
 
 

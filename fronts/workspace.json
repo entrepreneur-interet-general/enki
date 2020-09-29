@@ -79,30 +79,28 @@
         }
       }
     },
-    "couv-ops-e2e": {
-      "root": "apps/couv-ops-e2e",
-      "sourceRoot": "apps/couv-ops-e2e/src",
-      "projectType": "application",
+    "core-couv-ops": {
+      "root": "libs/core-couv-ops",
+      "sourceRoot": "libs/core-couv-ops/src",
+      "projectType": "library",
+      "schematics": {},
       "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/couv-ops-e2e/cypress.json",
-            "tsConfig": "apps/couv-ops-e2e/tsconfig.e2e.json",
-            "devServerTarget": "couv-ops:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "couv-ops:serve:production"
-            }
-          }
-        },
         "lint": {
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": ["apps/couv-ops-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/couv-ops-e2e/**/*"]
+            "tsConfig": [
+              "libs/core-couv-ops/tsconfig.lib.json",
+              "libs/core-couv-ops/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/core-couv-ops/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/core-couv-ops/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

@@ -14,3 +14,42 @@ lib
   -> utils (utilities in typecript reusable on all projects)
   -> ui-components (could be Web Component lib, so that it is usable both by angular and react)
 
+# Setup
+
+Installation
+------------
+
+Pre-requisite
+^^^^^^^^^^^^^
+
+- node 12.18
+
+For developement :
+
+Go in `fronts` folder
+
+Install dependencies:
+
+.. code-block:: bash
+
+   $ npm install
+
+In front/apps/couv-ops: copy the file `.env.sample` and rename it to `.env`
+`.env` should not be versionned in git, it is used for hosting env variables.
+
+You can choose from those variables to have the backend simulated in memory or to actually call the backend (if it is running).
+
+Once the variable is set you can start the front with :
+
+.. code-block:: bash
+
+   $ nx serve couv-ops
+
+To launch the test of core-couv-ops:
+
+.. code-block:: bash
+
+   $ nx test core-couv-ops
+
+
+

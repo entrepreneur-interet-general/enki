@@ -25,9 +25,8 @@
     "couv-ops": {
       "tags": []
     },
-    "couv-ops-e2e": {
-      "tags": [],
-      "implicitDependencies": ["couv-ops"]
+    "core-couv-ops": {
+      "tags": []
     }
   }
 }

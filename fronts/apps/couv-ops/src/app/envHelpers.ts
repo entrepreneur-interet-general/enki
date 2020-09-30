@@ -16,3 +16,10 @@ export const throwIfNotInArray = <T extends string>(
     );
   return process.env[variableName] as EnumFromArray<typeof authorizedValues>;
 };
+
+export const throwIfVariableUndefined = (variableName: string) => {
+  const variableValue = process.env[variableName];
+  if (!variableValue)
+    throw new Error(`Environnement variable : ${variableName} was not set`);
+  return variableValue;
+};

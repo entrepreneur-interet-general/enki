@@ -8,7 +8,7 @@ from flask_jwt_extended import (
     get_raw_jwt,
 )
 
-from api.sapeur_api.domain.models import User
+from ..domain.models import User
 from ..auth.helpers import revoke_token, is_token_revoked, add_token_to_database
 from ..extensions import pwd_context, jwt, apispec
 

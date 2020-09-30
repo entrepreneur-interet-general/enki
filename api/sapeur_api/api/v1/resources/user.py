@@ -2,7 +2,7 @@ from flask import request
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
-from api.sapeur_api.domain.models import User
+from ....domain.models import User
 from ..schemas import UserSchema
 from ....commons.pagination import paginate
 from ....extensions import db

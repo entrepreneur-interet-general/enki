@@ -17,8 +17,8 @@ def cli():
 def init():
     """Create a new admin user
     """
-    from sapeur_api.extensions import db
-    from sapeur_api.models import User
+    from .extensions import db
+    from .domain.models import User
 
     click.echo("create user")
     user = User(username="sapeuradmin", email="r.courivaud@gmail.com", password="sapeurpassword", active=True)

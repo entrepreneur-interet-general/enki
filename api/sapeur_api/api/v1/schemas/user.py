@@ -2,7 +2,7 @@ from ....domain.models import User
 from ....extensions import ma, db
 
 
-class UserSchema(ma.SQLAlchemyAutoSchema):
+class UserSchema(ma.SQLAlchemySchema):
 
     id = ma.Int(dump_only=True)
     password = ma.String(load_only=True, required=True)

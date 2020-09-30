@@ -2,7 +2,7 @@ from flask import Blueprint, current_app, jsonify
 from flask_restful import Api
 from marshmallow import ValidationError
 from ...extensions import apispec
-from .resources import UserResource, UserList, HealthResource
+from .resources import UserResource, UserList, HealthResource, TaskList
 from .schemas import UserSchema
 
 
@@ -12,6 +12,7 @@ api = Api(blueprint)
 
 api.add_resource(UserResource, "/users/<int:user_id>", endpoint="user_by_id")
 api.add_resource(UserList, "/users", endpoint="users")
+api.add_resource(TaskList, "/tasks", endpoint="tasks")
 api.add_resource(HealthResource, "/health", endpoint="health")
 
 

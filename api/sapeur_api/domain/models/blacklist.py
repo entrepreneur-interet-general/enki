@@ -14,7 +14,9 @@ like a redis or a memcached server.
 This example is heavily inspired by
 https://github.com/vimalloc/flask-jwt-extended/blob/master/examples/database_blacklist/
 """
-from sapeur_api.extensions import db
+from sqlalchemy.orm import relationship
+
+from ...extensions import db
 
 
 class TokenBlacklist(db.Model):
@@ -24,11 +26,11 @@ class TokenBlacklist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     jti = db.Column(db.String(36), nullable=False, unique=True)
     token_type = db.Column(db.String(10), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    #user_id = relationship("user")
     revoked = db.Column(db.Boolean, nullable=False)
     expires = db.Column(db.DateTime, nullable=False)
 
-    user = db.relationship("User", lazy="joined")
+    #user = db.relationship("User", lazy="joined")
 
     def to_dict(self):
         return {

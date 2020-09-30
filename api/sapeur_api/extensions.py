@@ -10,6 +10,7 @@ from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from celery import Celery
 
+from .adapters.context import SQLContext
 from .commons.apispec import APISpecExt
 
 
@@ -20,3 +21,4 @@ migrate = Migrate()
 apispec = APISpecExt()
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 celery = Celery()
+context = SQLContext(db=db)

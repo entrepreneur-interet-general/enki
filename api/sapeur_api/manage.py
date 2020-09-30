@@ -2,6 +2,7 @@ import click
 from flask.cli import FlaskGroup
 
 from .app import create_app
+from .adapters.repositories.sql.user import UserRepository
 
 
 def create_sapeur_api(info):
@@ -21,9 +22,8 @@ def init():
     from .domain.models import User
 
     click.echo("create user")
-    user = User(username="sapeuradmin", email="r.courivaud@gmail.com", password="sapeurpassword", active=True)
-    db.session.add(user)
-    db.session.commit()
+    user = User(username="sapeuradmin", email="r.courivaud@gmail.com", password="sapeurpassword")
+    UserRepository(db).add(user)
     click.echo("created user admin")
 
 

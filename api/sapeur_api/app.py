@@ -3,7 +3,7 @@ from flask import Flask
 from .api.v1 import views as v1_views
 from .auth import views as auth_views
 
-from .extensions import db, jwt, migrate, apispec, celery
+from .extensions import db, jwt, migrate, apispec, celery, context
 
 
 def create_app(testing=False, cli=False):
@@ -31,6 +31,7 @@ def configure_extensions(app, cli):
 
     if cli is True:
         migrate.init_app(app, db)
+        context.setup()
 
 
 def configure_apispec(app):

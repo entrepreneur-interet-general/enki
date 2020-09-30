@@ -8,8 +8,8 @@ from datetime import datetime
 from flask_jwt_extended import decode_token
 from sqlalchemy.orm.exc import NoResultFound
 
+from api.sapeur_api.domain.models import TokenBlacklist
 from ..extensions import db
-from ..models import TokenBlacklist
 
 
 def add_token_to_database(encoded_token, identity_claim):

@@ -1,4 +1,4 @@
-from ....models import User
+from api.sapeur_api.domain.models import User
 from ....extensions import ma, db
 
 

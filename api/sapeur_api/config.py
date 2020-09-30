@@ -3,6 +3,8 @@
 Use env var to override
 """
 import os
+import logging
+
 
 ENV = os.getenv("FLASK_ENV")
 DEBUG = ENV == "development"

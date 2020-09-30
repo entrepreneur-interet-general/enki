@@ -5,12 +5,13 @@ services:
   api:
     image: sapeur_api
     build: .
-    command: gunicorn -b 0.0.0.0:5000 sapeur_api.wsgi:app
+    command: gunicorn -b 0.0.0.0:5000 sapeur_api.wsgi:app --log-level=debug
     env_file:
       - ./.envs/.local/.flaskenv
       - ./.envs/.local/.pg_env
     volumes:
       - ./sapeur_api:/code/sapeur_api
+      - ./migrations:/code/migrations
     ports:
       - "5000:5000"
 

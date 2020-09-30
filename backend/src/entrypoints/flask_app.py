@@ -1,7 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 
 app = Flask('sapeurs')
 
 @app.route('/')
 def hello_sapeurs():
-	return jsonify({'message': 'Hello, Sapeurs!'}), 200
+		resp = make_response(jsonify({'message': 'Hello, Sapeurs!'}))
+		resp.headers['Access-Control-Allow-Origin'] = '*'
+		return resp

@@ -1,0 +1,15 @@
+# WARNING: this file is not suitable for production, please use with caution
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: sapeurs-dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pg-password
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data

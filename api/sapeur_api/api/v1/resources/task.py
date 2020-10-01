@@ -1,9 +1,7 @@
 from flask_restful import Resource
-
-from ....adapters.repositories import TaskRepository
+from flask import current_app
 from ....domain.models import Task
 from ..schemas import TaskSchema
-from ....extensions import db, context
 from hashlib import sha1
 
 
@@ -51,6 +49,6 @@ class TaskList(Resource):
     def get(self):
         schema = TaskSchema()
         task = Task(id=sha1().hexdigest())
-        context.task_repository.add(task=task)
+        current_app.context.task_repository.add(task=task)
 
         return {"msg": "user created", "user": schema.dump(task)}, 201

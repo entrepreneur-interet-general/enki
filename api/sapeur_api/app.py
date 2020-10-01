@@ -3,7 +3,7 @@ from flask import Flask
 from .api.v1 import views as v1_views
 from .auth import views as auth_views
 
-from .extensions import db, jwt, migrate, apispec, celery, context
+from .extensions import db, jwt, migrate, apispec, celery
 
 
 def create_app(testing=False, cli=False):
@@ -19,6 +19,8 @@ def create_app(testing=False, cli=False):
     configure_apispec(app)
     register_blueprints(app)
     init_celery(app)
+    context = app.config["CONTEXT_FACTORY"]()
+    context.init_app(app=app, db=db)
 
     return app
 
@@ -31,7 +33,6 @@ def configure_extensions(app, cli):
 
     if cli is True:
         migrate.init_app(app, db)
-        context.setup()
 
 
 def configure_apispec(app):

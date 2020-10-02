@@ -1,4 +1,5 @@
 # WARNING: this file is not suitable for production, please use with caution
+# This file provides the external ressources (like Postgres) without the application code
 version: '3'
 
 services:

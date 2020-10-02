@@ -37,10 +37,12 @@ Install the requirements
 
    $ pip install -r requirements.txt
 
-Export environment variables :
+Start the app ressources (pg):
+
 .. code-block:: bash
-   $ export FLASK_ENV=development
-   $ export FLASK_APP=src/entrypoints/flask_app
+
+   $ make ressources
+
 
 Launch the app :
 
@@ -48,7 +50,16 @@ Launch the app :
 
    $ flask run
 
-For production
-^^^^^^^^^^^^^^^
+# Runnig entire app with docker (no need for `make ressources` in this case):
 
-Docker is comin'
+To build the application using docker
+
+.. code-block:: bash
+
+   $ make build:
+
+To run the application in docker environement
+
+.. code-block:: bash
+
+   $ make up

@@ -20,12 +20,11 @@ services:
     image: postgres
     volumes:
       - pg-data:/var/lib/postgresql/data
+      - ./scripts/init_users.sh:/docker-entrypoint-initdb.d/init_users.sh
     ports:
       - 5432:5432
     env_file:
       - ./.envs/.local/.pg_env
-    volumes:
-      - ./scripts/init_users.sh:/docker-entrypoint-initdb.d/init_users.sh
 
 #  rabbitmq:
 #    image: rabbitmq

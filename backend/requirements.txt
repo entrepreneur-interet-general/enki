@@ -2,3 +2,7 @@ flask==1.0.2
 sqlalchemy
 python-dotenv
 psycopg2
+
+# dev/test
+pytest
+pytest-watch

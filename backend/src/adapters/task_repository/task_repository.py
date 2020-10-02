@@ -1,11 +1,8 @@
 import abc
-from typing import Dict, List, Union
+from typing import List, Union
 from domain.entities.task_entity import TaskEntity
 
 class AbstractTaskRepository(abc.ABC):
-    def __init__(self):
-        pass
-
     def add(self, task: TaskEntity) -> None:
         raise NotImplementedError
 
@@ -16,14 +13,23 @@ class AbstractTaskRepository(abc.ABC):
         raise NotImplementedError
 
 
+Tasks = List[TaskEntity]
+
 class InMemoryTaskRepository(AbstractTaskRepository):
-    tasks: Dict[str, TaskEntity] = {}
+    _tasks: Tasks = []
 
     def add(self, task: TaskEntity) -> None:
-        self.tasks[task.uuid] = task
+        self._tasks.append(task)
 
     def get_by_uuid(self, uuid : str) -> Union[TaskEntity,None] :
-        return self.tasks.get(uuid)
+        return next(task for task in self._tasks if task['uuid'] == uuid)
 
     def get_all(self) -> List[TaskEntity]:
-        return list(self.tasks.values())
+        return self._tasks
+
+    @property
+    def tasks(self) -> Tasks:
+        return self._tasks
+
+    def set_tasks(self, tasks: Tasks) -> None:
+        self._tasks = tasks

@@ -37,6 +37,10 @@ Install the requirements
 
    $ pip install -r requirements.txt
 
+.. code-block:: bash
+
+   $ pip install -e ./src
+
 Start the app ressources (pg):
 
 .. code-block:: bash

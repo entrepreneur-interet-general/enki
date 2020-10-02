@@ -2,7 +2,7 @@ from typing import Any, List
 from adapters.task_repository.task_repository import AbstractTaskRepository
 from domain.entities.task_entity import TaskEntity
 
-class SqlTaskRRepository(AbstractTaskRepository):
+class PgTaskRepository(AbstractTaskRepository):
     def __init__(self, session: Any):
         self.session = session
 

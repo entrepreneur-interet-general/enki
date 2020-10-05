@@ -1,0 +1,3 @@
+userName,firstName,lastName,matricule,password,roles
+Annem,Anne,Mesnil,77,motdepasse,77-cis-souppes-sur-loing-1::agent//77-cis-souppes-sur-loing-1::chef-centre//77-cis-tournan-en-brie-1::agent
+FrancoisB,François,Béatrice,45,motdepasse,77-cis-souppes-sur-loing-1::agent//77-cis-souppes-sur-loing-1::chef-centre//77-cis-tournan-en-brie-1::agent

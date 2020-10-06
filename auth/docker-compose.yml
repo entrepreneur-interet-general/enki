@@ -14,7 +14,8 @@ services:
         POSTGRES_USER: keycloak
         POSTGRES_PASSWORD: password
   keycloak:
-      image: jboss/keycloak
+      image: keycloak
+      build: .
       environment:
         DB_VENDOR: POSTGRES
         DB_ADDR: postgres
@@ -26,7 +27,8 @@ services:
         KEYCLOAK_PASSWORD: Pa55w0rd
       volumes:
         - ./realms/sapeurs.json:/tmp/quarkus-realm.json
-        - ./enki-theme/login:/opt/jboss/keycloak/themes/login-enki
+        - ./enki-theme/:/opt/jboss/keycloak/themes/enki-theme
+        #- ./provider/keycloak-franceconnect-2.1.jar:/opt/jboss/keycloak/standalone/deployments/keycloak-franceconnect-2.1.jar
       ports:
         - 8080:8080
       depends_on:

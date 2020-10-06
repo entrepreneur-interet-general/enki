@@ -1,0 +1,39 @@
+body {
+  color: white;
+}
+h1 {
+  margin-bottom: 0;
+}
+header {
+  background: #11151C;
+  text-align: center;
+}
+.affaires {
+  padding: 0;
+  margin: 30px;
+}
+
+.affaire {
+  background: #D66853;
+  list-style: none;
+  padding: 20px;
+  margin-bottom: 30px;
+  &__naturedefait {
+    font-size: 20px;
+    margin-bottom: 10px;
+    display: flex;
+  }
+  &__victimes {
+    display: flex;
+  }
+  &__icon {
+    width: 20px;
+    margin-right: 10px;
+    color: white;
+  }
+  .-title {
+      font-weight: bold;
+      align-items: center;
+      margin-right: 5px;
+  }
+}

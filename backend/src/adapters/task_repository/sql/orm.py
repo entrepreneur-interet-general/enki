@@ -4,7 +4,7 @@ from sqlalchemy import (
     Table, MetaData, Column, String
 )
 from sqlalchemy.orm import mapper
-from domain.entities.task_entity import TaskEntity
+from domain.tasks.entities.task_entity import TaskEntity
 
 logger = logging.getLogger(__name__)
 

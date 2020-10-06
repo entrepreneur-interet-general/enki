@@ -2,6 +2,12 @@ from dataclasses import dataclass
 
 @dataclass
 class TaskEntity:
+    def asdict(self):
+        return {
+            'uuid': self.uuid,
+            'title': self.title,
+        }
+
     uuid: str
     title: str
     # description: str

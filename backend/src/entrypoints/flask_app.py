@@ -1,9 +1,8 @@
-import dataclasses
 from flask import Flask, make_response, request
 from flask.json import jsonify
-from entrypoints.repositories import Repositories
 
-from service_layer.task_service import add_task, list_tasks
+from entrypoints.repositories import Repositories
+from domain.tasks.task_service import add_task, get_by_uuid, list_tasks
 
 
 app = Flask('sapeurs')
@@ -27,5 +26,13 @@ def list_tasks_route():
 	tasks = list_tasks(repositories.task)
 
 	response = make_response(jsonify(tasks))
+	response.headers['Access-Control-Allow-Origin'] = '*'
+	return response
+
+@app.route('/tasks/<uuid>', methods = ['GET'])
+def get_task_route(uuid: str):
+	task = get_by_uuid(uuid, repositories.task)
+
+	response = make_response(jsonify(task))
 	response.headers['Access-Control-Allow-Origin'] = '*'
 	return response

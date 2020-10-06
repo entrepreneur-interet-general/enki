@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 from adapters.task_repository.sql.orm import start_mappers
 from adapters.task_repository.task_repository import AbstractTaskRepository, InMemoryTaskRepository
-from adapters.task_repository.sql.sql_task_repository import PgTaskRepository
+from adapters.task_repository.sql.pg_task_repository import PgTaskRepository
 
 def getPgRepos() -> AbstractTaskRepository:
     engine = create_engine(

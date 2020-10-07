@@ -1,4 +1,4 @@
-from adapters.task_repository.task_repository import AlreadyExistingTaskUuid, InMemoryTaskRepository, NotFoundTask
+from domain.tasks.ports.task_repository import AlreadyExistingTaskUuid, InMemoryTaskRepository, NotFoundTask
 from domain.tasks.entities.task_entity import TaskEntity
 from domain.tasks.task_service import add_task, get_by_uuid, list_tasks
 from uuid import uuid4

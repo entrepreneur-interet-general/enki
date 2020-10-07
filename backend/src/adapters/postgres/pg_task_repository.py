@@ -1,5 +1,5 @@
 from typing import Any, List
-from adapters.task_repository.task_repository import AbstractTaskRepository
+from domain.tasks.ports.task_repository import AbstractTaskRepository
 from domain.tasks.entities.task_entity import TaskEntity
 
 class PgTaskRepository(AbstractTaskRepository):

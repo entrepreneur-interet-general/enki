@@ -3,9 +3,9 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from adapters.task_repository.sql.orm import start_mappers
-from adapters.task_repository.task_repository import AbstractTaskRepository, InMemoryTaskRepository
-from adapters.task_repository.sql.pg_task_repository import PgTaskRepository
+from adapters.postgres.orm import start_mappers
+from adapters.postgres.pg_task_repository import PgTaskRepository
+from domain.tasks.ports.task_repository import AbstractTaskRepository, InMemoryTaskRepository
 
 def getPgRepos() -> AbstractTaskRepository:
     engine = create_engine(

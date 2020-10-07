@@ -10,7 +10,7 @@ body {
   width: 100%;
   margin: 0px;
   padding: 0;
-  background-color: #000;
+  background-color: #181B3D;
   color: #fff;
   font-size: 1rem;
   font-family: "Open Sans", sans-serif;
@@ -23,6 +23,7 @@ body {
   background-position: left center;
   background-size: cover;
   background-repeat: no-repeat;
+  display: none;
 }
 
 .login-wrapper {
@@ -32,17 +33,13 @@ body {
   justify-content: center;
   align-items: center;
   max-width: 100%;
-  background-color: #F7F7F7;
   color: #666;
 }
 
 .login-form {
   flex: 0 1 50%;
   padding: 60px;
-  text-align: left;
-  border-radius: 10px;
-  box-shadow: 0 0 2px rgba(0, 0, 0, .1);
-  background-color: #FFFFFF;
+  text-align: center;
 }
 
 .login-form h2 {
@@ -61,11 +58,10 @@ body {
 .form-group {
   width: 100%;
   text-align: left;
-  padding-top: 60px;
 }
 
 label.form-control {
-  display: block;
+  display: none;
   font-size: 23px;
 }
 
@@ -163,4 +159,8 @@ input[type=submit]:active {
 
 .feedback-error {
   background-color: rgba(255, 0, 0, 0.1);
+}
+
+.h1-title {
+  font-size: 48px;
 }

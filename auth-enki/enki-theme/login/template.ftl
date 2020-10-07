@@ -36,7 +36,7 @@
   <div class="login-wrapper">
     <div class="login-form ${properties.kcFormCardClass!} <#if displayWide>${properties.kcFormCardAccountClass!}</#if>">
       <header class="${properties.kcFormHeaderClass!}">
-      <img src="${url.resourcesPath}/img/nexsis.svg" alt="NexSIS" height="100"/>
+        <h1 class="h1-title">ENKI</h1>
       </header>
       <div id="kc-content">
         <div id="kc-content-wrapper">

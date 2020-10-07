@@ -28,7 +28,6 @@ services:
       volumes:
         - ./realms/sapeurs.json:/tmp/quarkus-realm.json
         - ./enki-theme/:/opt/jboss/keycloak/themes/enki-theme
-        #- ./provider/keycloak-franceconnect-2.1.jar:/opt/jboss/keycloak/standalone/deployments/keycloak-franceconnect-2.1.jar
       ports:
         - 8080:8080
       depends_on:

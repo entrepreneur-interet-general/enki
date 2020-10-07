@@ -16,7 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@test/calculator": ["libs/calculator/src/index.ts"]
+      "@fronts/calculator": ["libs/calculator/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

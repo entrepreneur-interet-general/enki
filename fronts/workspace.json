@@ -10,7 +10,7 @@
       },
       "root": "apps/enki",
       "sourceRoot": "apps/enki/src",
-      "prefix": "test",
+      "prefix": "fronts",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AffairesService } from './affaires.service'
+import { add } from '@fronts/calculator'
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ import { AffairesService } from './affaires.service'
 export class AppComponent {
   title = 'enki';
   affaires;
+  number = add(1, 2);
 
   constructor(private affairesService: AffairesService) {
   }

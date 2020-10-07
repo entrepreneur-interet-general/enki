@@ -1,5 +1,5 @@
 {
-  "npmScope": "test",
+  "npmScope": "fronts",
   "affected": {
     "defaultBase": "master"
   },

@@ -3,6 +3,7 @@ import logging
 from sqlalchemy import (
     Table, MetaData, Column, String
 )
+from sqlalchemy.engine.base import Engine
 from sqlalchemy.orm import mapper
 from domain.tasks.entities.task_entity import TaskEntity
 
@@ -16,6 +17,6 @@ taskTable = Table(
     Column('title', String(255), nullable=False),
 )
 
-def start_mappers(engine):
+def start_mappers(engine: Engine):
     metadata.create_all(engine)
     mapper(TaskEntity, taskTable)

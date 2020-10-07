@@ -1,3 +1,4 @@
+from logging import log
 from flask import Flask, make_response, request
 from flask.json import jsonify
 
@@ -16,6 +17,7 @@ def hello_sapeurs():
 
 @app.route('/tasks', methods = ['POST'])
 def add_task_route():
+	print("---------- hey ----------", request.json)
 	add_task(request.json["uuid"], request.json["title"], repo=repositories.task)
 	response = make_response('OK', 201)
 	response.headers['Access-Control-Allow-Origin'] = '*'

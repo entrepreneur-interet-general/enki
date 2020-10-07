@@ -6,5 +6,9 @@
     "titleBar.inactiveForeground": "#b4b4b4"
   },
   "python.languageServer": "Pylance",
-  "python.analysis.typeCheckingMode": "strict"
+  "python.analysis.typeCheckingMode": "basic",
+  "[python]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4  
+  }
 }

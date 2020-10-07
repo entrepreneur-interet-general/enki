@@ -7,10 +7,10 @@ services:
     image: postgres
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - "5431:5432"
     environment:
-      POSTGRES_DB: sapeurs-dev
+      POSTGRES_DB: sapeurs-test
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pg-password
     volumes:
-      - ./pgdata/dev:/var/lib/postgresql/data
+      - ./pgdata/test:/var/lib/postgresql/data

@@ -1,9 +1,15 @@
 from typing import Any, List
+
+from sqlalchemy.orm.session import Session
 from domain.tasks.ports.task_repository import AbstractTaskRepository
 from domain.tasks.entities.task_entity import TaskEntity
 
 class PgTaskRepository(AbstractTaskRepository):
-    def __init__(self, session: Any):
+    def get_all(self) -> List[TaskEntity]:
+        return self.session.query(TaskEntity)
+
+
+    def __init__(self, session: Session):
         self.session = session
 
     def _add(self, task: TaskEntity):
@@ -12,6 +18,3 @@ class PgTaskRepository(AbstractTaskRepository):
 
     def _match_uuid(self, uuid: str):
         return self.session.query(TaskEntity).filter(TaskEntity.uuid == uuid)
-
-    def get_all(self) -> List[TaskEntity]:
-        return self.session.query(TaskEntity)

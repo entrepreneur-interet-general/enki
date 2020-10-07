@@ -1,6 +1,123 @@
 {
   "version": 1,
   "projects": {
+    "enki": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/enki",
+      "sourceRoot": "apps/enki/src",
+      "prefix": "fronts",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/enki",
+            "index": "apps/enki/src/index.html",
+            "main": "apps/enki/src/main.ts",
+            "polyfills": "apps/enki/src/polyfills.ts",
+            "tsConfig": "apps/enki/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/enki/src/favicon.ico",
+              "apps/enki/src/assets"
+            ],
+            "styles": [
+              "apps/enki/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/enki/src/environments/environment.ts",
+                  "with": "apps/enki/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "enki:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "enki:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "enki:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/enki/src/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/enki/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "calculator": {
+      "root": "libs/calculator",
+      "sourceRoot": "libs/calculator/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/calculator/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/calculator/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "couv-ops": {
       "root": "apps/couv-ops",
       "sourceRoot": "apps/couv-ops/src",
@@ -19,7 +136,9 @@
               "apps/couv-ops/src/favicon.ico",
               "apps/couv-ops/src/assets"
             ],
-            "styles": ["apps/couv-ops/src/styles.scss"],
+            "styles": [
+              "apps/couv-ops/src/styles.css"
+            ],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -60,14 +179,11 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "apps/couv-ops/tsconfig.app.json",
-              "apps/couv-ops/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/couv-ops/**/*"]
+            "lintFilePatterns": [
+              "apps/couv-ops/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
@@ -78,52 +194,33 @@
           }
         }
       }
-    },
-    "core-couv-ops": {
-      "root": "libs/core-couv-ops",
-      "sourceRoot": "libs/core-couv-ops/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/core-couv-ops/tsconfig.lib.json",
-              "libs/core-couv-ops/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/core-couv-ops/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/core-couv-ops/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/react"
+    "defaultCollection": "@nrwl/angular"
   },
   "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "none"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    },
     "@nrwl/react": {
       "application": {
-        "style": "scss",
+        "style": "css",
         "linter": "eslint",
         "babel": true
       },
       "component": {
-        "style": "scss"
+        "style": "css"
       },
       "library": {
-        "style": "scss",
+        "style": "css",
         "linter": "eslint"
       }
     }
   },
-  "defaultProject": "couv-ops"
+  "defaultProject": "enki"
 }

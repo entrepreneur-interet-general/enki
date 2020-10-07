@@ -1,6 +1,6 @@
 module.exports = {
-  name: 'couv-ops',
-  preset: '../../jest.config.js',
+  displayName: 'couv-ops',
+  preset: '../../jest.preset.js',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nrwl/react/plugins/jest',
     '^.+\\.[tj]sx?$': [

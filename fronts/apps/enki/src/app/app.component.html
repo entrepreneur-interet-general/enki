@@ -1,0 +1,19 @@
+<header class="grid">
+  <h1>ENKI</h1>
+</header>
+<main>
+  <app-map></app-map>
+  <ul class="affaires">
+    <li *ngFor='let affaire of affaires' class="affaire">
+      <div class="affaire__naturedefait">
+        <img src="../assets/alert.svg" class="affaire__icon"/><span class="-title">Nature de fait :</span> {{affaire.natureDeFait}}
+      </div>
+      <div class="affaire__victimes">
+        <span class="-title">Nombre de victimes : </span> {{affaire.nbDeVictimes}}
+      </div>
+      <div class="affaire__address">
+        <span class="-title">Adresse : </span> {{affaire.adresse}}
+      </div>
+    </li>
+  </ul>
+</main>

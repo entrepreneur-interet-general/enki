@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'calculator',
+  displayName: 'core-couv-ops',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/calculator',
+  coverageDirectory: '../../coverage/libs/core-couv-ops',
 };

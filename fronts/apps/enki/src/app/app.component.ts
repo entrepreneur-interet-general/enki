@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AffairesService } from './affaires.service'
-import { add } from '@fronts/calculator'
+import { add } from '@fronts/utilities'
 
 @Component({
   selector: 'app-root',

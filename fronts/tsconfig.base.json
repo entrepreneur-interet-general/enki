@@ -2,7 +2,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
-    "strict": true,
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -17,7 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fronts/core-couv-ops": ["libs/core-couv-ops/src/index.ts"]
+      "@test/calculator": ["libs/calculator/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

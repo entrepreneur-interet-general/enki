@@ -1,5 +1,5 @@
 {
-  "npmScope": "fronts",
+  "npmScope": "test",
   "affected": {
     "defaultBase": "master"
   },
@@ -11,21 +11,30 @@
     },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
+    ".eslintrc.json": "*",
     "nx.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
       }
     }
   },
   "projects": {
-    "couv-ops": {
+    "enki": {
       "tags": []
     },
-    "core-couv-ops": {
+    "calculator": {
+      "tags": []
+    },
+    "couv-ops": {
       "tags": []
     }
   }

@@ -31,10 +31,13 @@
     "enki": {
       "tags": []
     },
-    "calculator": {
+    "couv-ops": {
       "tags": []
     },
-    "couv-ops": {
+    "core-couv-ops": {
+      "tags": []
+    },
+    "utilities": {
       "tags": []
     }
   }

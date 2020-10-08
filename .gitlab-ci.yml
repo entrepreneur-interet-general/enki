@@ -1,0 +1,32 @@
+stages:
+  - install
+  - build-test
+
+cache:
+  paths:
+    - fronts/node_modules/
+
+install-fronts-dependencies:
+  image: node:latest
+  stage: install
+  script:
+    - cd fronts
+    - echo "Installing packages..."
+    - npm install
+  artifacts:
+    paths:
+      - fronts/node_modules/
+
+build-and-test-front:
+  image: node:latest
+  stage: build-test
+  script:
+    - cd fronts
+    - echo "Building enki front app..."
+    - npm run build enki
+    - echo "Building couv-ops front app..."
+    - npm run build couv-ops
+    # - echo "Testing enki front app..."
+    # - npm test enki
+    - echo "Testing core-couv-ops..."
+    - npm test core-couv-ops

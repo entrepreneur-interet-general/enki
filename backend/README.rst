@@ -47,6 +47,7 @@ Start the app ressources (pg):
 
    $ make ressources
 
+Copy the .env.sample file in `backend/.env.sample` and rename the new file to `backend/.env`
 
 Launch the app :
 

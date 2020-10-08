@@ -5,6 +5,7 @@ stages:
 cache:
   paths:
     - fronts/node_modules/
+    - backend/venv/
 
 install-fronts-dependencies:
   image: node:latest
@@ -17,7 +18,22 @@ install-fronts-dependencies:
     paths:
       - fronts/node_modules/
 
-build-and-test-front:
+install-backend-dependencies:
+  image: python:3.8
+  stage: install
+  script:
+    - cd backend
+    - echo "Installing python env and requirements..."
+    - python3 -m venv venv
+    - source venv/bin/activate
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install -e ./src
+  artifacts:
+    paths:
+      - backend/venv/
+
+fronts-build-and-test:
   image: node:latest
   stage: build-test
   script:
@@ -30,3 +46,16 @@ build-and-test-front:
     # - npm test enki
     - echo "Testing core-couv-ops..."
     - npm test core-couv-ops
+
+back-build-and-test:
+  image: python:3.8
+  stage: build-test
+  script:
+    - cd backend
+    - source venv/bin/activate
+    - echo "Unit testing..."
+    - pytest tests/unit
+    - echo "Flask e2e testing..."
+    - pytest tests/e2e
+
+

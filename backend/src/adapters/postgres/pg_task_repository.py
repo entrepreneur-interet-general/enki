@@ -6,7 +6,7 @@ from domain.tasks.entities.task_entity import TaskEntity
 
 class PgTaskRepository(AbstractTaskRepository):
     def get_all(self) -> List[TaskEntity]:
-        return self.session.query(TaskEntity)
+        return self.session.query(TaskEntity).all()
 
 
     def __init__(self, session: Session):
@@ -17,4 +17,4 @@ class PgTaskRepository(AbstractTaskRepository):
         self.session.commit()
 
     def _match_uuid(self, uuid: str):
-        return self.session.query(TaskEntity).filter(TaskEntity.uuid == uuid)
+        return self.session.query(TaskEntity).filter(TaskEntity.uuid == uuid).all()

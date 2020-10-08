@@ -56,13 +56,8 @@ Launch the app :
 
 # Runnig entire app with docker (no need for `make ressources` in this case):
 
-To build the application using docker
 
-.. code-block:: bash
-
-   $ make build:
-
-To run the application in docker environement
+To run the application in docker environement (it will also build the app image)
 
 .. code-block:: bash
 

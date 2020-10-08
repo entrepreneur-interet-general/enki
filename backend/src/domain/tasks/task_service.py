@@ -2,7 +2,7 @@ from typing import Any, Dict, List
 from domain.tasks.entities.task_entity import TaskEntity
 from domain.tasks.ports.task_repository import AbstractTaskRepository
 
-def add_task(uuid: str, title: str, *, repo: AbstractTaskRepository):
+def add_task(uuid: str, title: str, repo: AbstractTaskRepository):
   new_task = TaskEntity(uuid, title)
   repo.add(new_task)
 

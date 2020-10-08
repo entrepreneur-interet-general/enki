@@ -14,7 +14,7 @@ class NotFoundTask(Exception):
 class AbstractTaskRepository(abc.ABC):
     def add(self, task: TaskEntity) -> None:
         if self._match_uuid(task.uuid):
-            raise AlreadyExistingTaskUuid();
+            raise AlreadyExistingTaskUuid()
         self._add(task)
 
     def get_by_uuid(self, uuid : str) -> TaskEntity:

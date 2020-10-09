@@ -37,12 +37,17 @@ Install the requirements
 
    $ pip install -r requirements.txt
 
+.. code-block:: bash
+
+   $ pip install -e ./src
+
 Start the app ressources (pg):
 
 .. code-block:: bash
 
    $ make ressources
 
+Copy the .env.sample file in `backend/.env.sample` and rename the new file to `backend/.env`
 
 Launch the app :
 
@@ -52,13 +57,8 @@ Launch the app :
 
 # Runnig entire app with docker (no need for `make ressources` in this case):
 
-To build the application using docker
 
-.. code-block:: bash
-
-   $ make build:
-
-To run the application in docker environement
+To run the application in docker environement (it will also build the app image)
 
 .. code-block:: bash
 

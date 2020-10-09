@@ -1,13 +1,16 @@
-from dataclasses import dataclass, field
-# from datetime import datetime
-from uuid import uuid4
-
+from dataclasses import dataclass
 
 @dataclass
 class TaskEntity:
+    def asdict(self):
+        return {
+            'uuid': self.uuid,
+            'title': self.title,
+        }
+
+    uuid: str
     title: str
     # description: str
-    uuid: str = field(default_factory = lambda: str(uuid4()))
     # executor_id: str = field(default_factory=lambda: None)
     # creator_id: str = field(default_factory=lambda: None)
     # user_ids: str = field(default_factory=list)

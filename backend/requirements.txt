@@ -1,4 +1,10 @@
 flask==1.0.2
+flask-restful
 sqlalchemy
 python-dotenv
 psycopg2
+
+# dev/test
+sqlalchemy-stubs
+pytest
+pytest-watch

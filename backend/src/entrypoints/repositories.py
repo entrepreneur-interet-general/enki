@@ -2,10 +2,11 @@ import os
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.session import Session
 
-from adapters.task_repository.sql.orm import start_mappers
-from adapters.task_repository.task_repository import AbstractTaskRepository, InMemoryTaskRepository
-from adapters.task_repository.sql.sql_task_repository import PgTaskRepository
+from adapters.postgres.orm import start_mappers
+from adapters.postgres.pg_task_repository import PgTaskRepository
+from domain.tasks.ports.task_repository import AbstractTaskRepository, InMemoryTaskRepository
 
 def getPgRepos() -> AbstractTaskRepository:
     engine = create_engine(
@@ -16,9 +17,8 @@ def getPgRepos() -> AbstractTaskRepository:
     start_mappers(engine)
 
     session_factory = sessionmaker(bind=engine)
-    session = session_factory()
+    session: Session = session_factory()
     return PgTaskRepository(session)
-
 
 class Repositories:
     task: AbstractTaskRepository

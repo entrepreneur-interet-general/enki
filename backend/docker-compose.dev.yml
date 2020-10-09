@@ -28,4 +28,4 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pg-password
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - ./pgdata/dev:/var/lib/postgresql/data

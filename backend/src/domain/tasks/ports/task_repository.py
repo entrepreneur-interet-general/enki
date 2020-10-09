@@ -5,11 +5,14 @@ from domain.tasks.entities.task_entity import TaskEntity
 
 TasksList = List[TaskEntity]
 
+
 class AlreadyExistingTaskUuid(Exception):
     pass
 
+
 class NotFoundTask(Exception):
-  pass
+    pass
+
 
 class AbstractTaskRepository(abc.ABC):
     def add(self, task: TaskEntity) -> None:
@@ -17,11 +20,19 @@ class AbstractTaskRepository(abc.ABC):
             raise AlreadyExistingTaskUuid()
         self._add(task)
 
-    def get_by_uuid(self, uuid : str) -> TaskEntity:
-        matches = self._match_uuid(uuid)
-        if not matches:
+    def get_by_uuid(self, uuid: str) -> TaskEntity:
+        match = self._match_uuid(uuid)
+        if not match:
             raise NotFoundTask
-        return matches[0]
+        return match
+
+    def add_tag_to_task(self, uuid: str, tag_uuid: str) -> None:
+        match = self._match_uuid(uuid)
+        self._add_tag_to_task(match, tag_uuid=tag_uuid)
+
+    def remove_tag_to_task(self, uuid: str, tag_uuid: str) -> None:
+        match = self._match_uuid(uuid)
+        self._remove_tag_to_task(match, tag_uuid=tag_uuid)
 
     @abc.abstractclassmethod
     def get_all(self) -> TasksList:
@@ -32,9 +43,16 @@ class AbstractTaskRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractclassmethod
-    def _match_uuid(self, uuid: str) -> List[TaskEntity]:
+    def _add_tag_to_task(self, task: TaskEntity, tag_uuid: str) -> None:
         raise NotImplementedError
 
+    @abc.abstractclassmethod
+    def _remove_tag_to_task(self, task: TaskEntity, tag_uuid: str) -> None:
+        raise NotImplementedError
+
+    @abc.abstractclassmethod
+    def _match_uuid(self, uuid: str) -> TaskEntity:
+        raise NotImplementedError
 
 
 class InMemoryTaskRepository(AbstractTaskRepository):
@@ -43,8 +61,11 @@ class InMemoryTaskRepository(AbstractTaskRepository):
     def get_all(self) -> TasksList:
         return self._tasks
 
-    def _match_uuid(self, uuid: str) -> List[TaskEntity]:
-        return [task for task in self._tasks if task.uuid == uuid]
+    def _match_uuid(self, uuid: str) -> TaskEntity:
+        matches = [task for task in self._tasks if task.uuid == uuid]
+        if not matches:
+            return None
+        return matches[0]
 
     def _add(self, task: TaskEntity):
         self._tasks.append(task)
@@ -56,3 +77,11 @@ class InMemoryTaskRepository(AbstractTaskRepository):
 
     def set_tasks(self, tasks: TasksList) -> None:
         self._tasks = tasks
+
+    def _add_tag_to_task(self, task: TaskEntity, tag_uuid: str) -> None:
+        # TODO: fill _add_tag_to_task for inmemory repository
+        raise NotImplementedError
+
+    def _remove_tag_to_task(self, task: TaskEntity, tag_uuid: str) -> None:
+        # TODO: fill _remove_tag_to_task for inmemory repository
+        raise NotImplementedError

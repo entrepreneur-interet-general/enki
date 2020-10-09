@@ -1,0 +1,3 @@
+sqlalchemy-stubs
+pytest
+pytest-watch

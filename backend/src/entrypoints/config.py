@@ -1,4 +1,4 @@
-from entrypoints.serializers import SapeurJsonEncoder
+from .serializers import SapeurJsonEncoder
 
 
 class SapeursConfig(object):

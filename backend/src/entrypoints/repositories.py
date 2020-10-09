@@ -5,16 +5,18 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.orm.session import Session
 
 from adapters.postgres.orm import start_mappers
+from adapters.postgres import PgTaskRepository, PgTagRepository
 from adapters.postgres.sge.orm import start_mappers as sge_mappers
 from adapters.postgres.pg_task_repository import PgTaskRepository
 from adapters.postgres.sge.pg_affairs_repository import PgSgeMessageRepository
 from domain.tasks.ports.task_repository import AbstractTaskRepository, InMemoryTaskRepository
 from domain.affairs.ports.message_repository import AbstractSgeMessageRepository, InMemorySgeMessageRepository
 from adapters.xml.xml_cisu_repository import XmlCisuRepository
+from domain.tags.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 from adapters.random.random_cisu_repository import RandomCisuRepository
 
 
-def getPgTaskRepos() -> AbstractTaskRepository:
+def getPgRepos() -> (AbstractTagRepository, AbstractTaskRepository):
     engine = create_engine(
         os.environ.get('SQLALCHEMY_ENGINE_OPTIONS', 'postgresql://postgres:pg-password@localhost:5432/sapeurs-dev'),
         isolation_level="REPEATABLE READ",
@@ -23,7 +25,9 @@ def getPgTaskRepos() -> AbstractTaskRepository:
 
     session_factory = sessionmaker(bind=engine)
     session: Session = session_factory()
-    return PgTaskRepository(session)
+
+    return PgTagRepository(session), PgTaskRepository(session)
+
 
 
 def getPgMessageRepos() -> AbstractSgeMessageRepository:
@@ -40,6 +44,7 @@ def getPgMessageRepos() -> AbstractSgeMessageRepository:
 
 class Repositories:
     task: AbstractTaskRepository
+    tag: AbstractTagRepository
 
     def __init__(self) -> None:
         repo_infra: str = os.environ.get('REPOSITORIES')
@@ -48,9 +53,9 @@ class Repositories:
         print("----   Repositories : ", repo_infra or 'IN MEMORY ')
 
         if repo_infra == 'PG':
-            self.task = getPgTaskRepos()
+            self.tag, self.task = getPgRepos()
         else:
-            self.task = InMemoryTaskRepository()
+            self.tag, self.task = InMemoryTagRepository(), InMemoryTaskRepository()
 
         if connect_to_sge:
             self.message = getPgMessageRepos()

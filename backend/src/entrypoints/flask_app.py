@@ -1,4 +1,4 @@
-from flask import Flask, make_response, jsonify
+from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
 from entrypoints.extensions import api_spec
@@ -7,6 +7,7 @@ from domain.affairs.entities.sge.sge_message_entity import SgeMessageEntity
 from entrypoints.config import SapeursConfig
 from entrypoints import views
 from .extensions import repositories
+from .config import SapeursConfig
 
 
 def register_blueprints(app: Flask):

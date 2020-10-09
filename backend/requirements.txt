@@ -7,13 +7,5 @@ dataclasses-json
 apispec[yaml]
 apispec-webframeworks
 flask-cors
-
-
-# dev/test
-sqlalchemy-stubs
-pytest
-pytest-watch
-faker
-
-# data
+sqlalchemy-utils
 pandas

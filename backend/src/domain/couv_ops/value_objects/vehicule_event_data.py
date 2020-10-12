@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import Literal, TypedDict, Union
 
 vehicule_unavailable_status_options = [
@@ -27,10 +28,10 @@ VehiculeStatus = Literal[vehicule_status_options]
 vehicule_role_options = ['victim_rescue', 'pump', 'other']
 VehiculeRole = Literal[vehicule_role_options]
 
-
-class VehiculeEventData(TypedDict):
+@dataclass
+class VehiculeEventData():
     raw_vehicule_id: int # 'Operation-Software'  vehicule ID 
-    raw_intervention_id: Union[int, None] # 'Operation-Software'  intervention ID 
+    raw_intervention_id: int # 'Operation-Software'  intervention ID 
     status: VehiculeStatus
     is_available: bool
     raw_status: str # Status label from 'Operation-Software' 

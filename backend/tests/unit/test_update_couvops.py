@@ -10,7 +10,7 @@ def test_update_couvops():
     status = 'selected'
 
     incoming_vehicule_event_data = make_vehicule_event_data(status=status)
-    assert not incoming_vehicule_event_data['is_available'] 
+    assert not incoming_vehicule_event_data.is_available
     uuid = 'my uuid'
     incoming_vehicule_event = make_vehicule_event(uuid=uuid, data=incoming_vehicule_event_data)
     expected_vehicule_event_entity = make_vehicule_event_entity(uuid=uuid, data=incoming_vehicule_event_data)

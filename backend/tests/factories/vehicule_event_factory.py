@@ -1,3 +1,4 @@
+from dataclasses import asdict
 import random
 from typing import Optional
 from uuid import uuid4
@@ -49,7 +50,7 @@ def make_vehicule_event(
         data: VehiculeEventData = None
     ) -> VehiculeEvent:
     data = data or make_vehicule_event_data()
-    vehicule_event_data = make_vehicule_event_data(**data)
+    vehicule_event_data = make_vehicule_event_data(**asdict(data))
     timestamp = timestamp or default_timestamp
     uuid = uuid or default_uuid
     return VehiculeEvent(
@@ -64,7 +65,7 @@ def make_vehicule_event_entity(
         data: VehiculeEventData = None
     ) -> VehiculeEventEntity:
     data = data or make_vehicule_event_data()
-    vehicule_event_data = make_vehicule_event_data(**data)
+    vehicule_event_data = make_vehicule_event_data(**asdict(data))
     timestamp = timestamp or default_timestamp
     uuid = uuid or default_uuid
     return VehiculeEventEntity(

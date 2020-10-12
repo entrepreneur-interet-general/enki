@@ -1,6 +1,5 @@
 from typing import Literal, TypedDict, Union
 
-from pandas import Timestamp
 vehicule_unavailable_status_options = [
     'departed_to_intervention',  
     'arrived_on_intervention', 
@@ -28,8 +27,8 @@ VehiculeStatus = Literal[vehicule_status_options]
 vehicule_role_options = ['victim_rescue', 'pump', 'other']
 VehiculeRole = Literal[vehicule_role_options]
 
-class VehiculeEvent(TypedDict):
-    timestamp: Timestamp
+
+class VehiculeEventData(TypedDict):
     raw_vehicule_id: int # 'Operation-Software'  vehicule ID 
     raw_intervention_id: Union[int, None] # 'Operation-Software'  intervention ID 
     status: VehiculeStatus

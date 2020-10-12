@@ -3,6 +3,7 @@ from typing import List, Union
 
 from domain.couv_ops.entities.vehicule_event_entity import VehiculeEventEntity
 
+
 VehiculeEventsList = List[VehiculeEventEntity]
 
 class AlreadyExistingVehiculeEventUuid(Exception):

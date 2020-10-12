@@ -1,11 +1,11 @@
 from domain.couv_ops.entities.vehicule_event_entity import VehiculeEventEntity
-from domain.couv_ops.events.vehicule_events import VehiculeEvent
-from domain.couv_ops.ports.vehicule_repository import AbstractVehiculeEventRepository
+from domain.couv_ops.events.events import VehiculeEvent
+from domain.couv_ops.ports.vehicule_event_repository import AbstractVehiculeEventRepository
 
 
-class UpdateCouvopsOnEvent:
-    def __init__(self, vehicule_repo: AbstractVehiculeEventRepository) -> None:
-        self.vehicule_repo = vehicule_repo
+class UpdateCouvops:
+    def __init__(self, vehicule_event_repo: AbstractVehiculeEventRepository) -> None:
+        self.vehicule_repo = vehicule_event_repo
 
     def execute(self, event: VehiculeEvent) -> None:
         """Store event in repository

@@ -1,16 +1,15 @@
 from typing import Literal, TypedDict, Union
 
 from pandas import Timestamp
-vehicule_status_options = [
+vehicule_unavailable_status_options = [
     'departed_to_intervention',  
     'arrived_on_intervention', 
     'transport_to_hospital',
     'arrived_at_hospital', 
     'left_hospital', 
-    'arrived_at_home' ,
     'retrievable_within_15_minutes', # sport 
     'selected',  # présentation spontannée, sélection / instance de départ
-    'pending',  
+    'waiting',  
     'broken',
     'lacks_staff', # manque personnel, omnibus
     'cancelled',
@@ -18,8 +17,12 @@ vehicule_status_options = [
     'realocated', # monté en garde
     'undefined', # or unused
     'misc_unavailable'    
+    ]
+vehicule_available_status_options = [
+    'arrived_at_home' ,
     'misc_available'
     ]
+vehicule_status_options = vehicule_unavailable_status_options + vehicule_available_status_options
 VehiculeStatus = Literal[vehicule_status_options]
 
 vehicule_role_options = ['victim_rescue', 'pump', 'other']

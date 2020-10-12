@@ -11,3 +11,4 @@ class InterventionEvent(TypedDict):
     adresss: str
     area: str # Reference on a partitioned map 
     cause: InterventionCause
+    raw_cause: str # Cause label from 'Operation-Software' (motif)

@@ -8,3 +8,6 @@ psycopg2
 sqlalchemy-stubs
 pytest
 pytest-watch
+
+# data
+pandas

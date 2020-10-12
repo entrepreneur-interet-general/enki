@@ -10,11 +10,29 @@ body {
   width: 100%;
   margin: 0px;
   padding: 0;
-  background-color: #181B3D;
-  color: #fff;
+  color: #011428;
   font-size: 1rem;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Overpass", sans-serif;
   font-weight: 300;
+}
+
+a {
+  color: #034EA2;
+}
+
+.form-header {
+  margin-bottom: 48px;
+}
+
+.login-title {
+  font-size: 32px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.login-subtitle {
+  margin-top: 12px;
 }
 
 .login-background {
@@ -28,18 +46,15 @@ body {
 
 .login-wrapper {
   display: flex;
-  flex: 0 1 40%;
-  min-width: 992px;
   justify-content: center;
   align-items: center;
-  max-width: 100%;
-  color: #666;
+  width: 100%;
+  padding: 16px;
 }
 
 .login-form {
-  flex: 0 1 50%;
-  padding: 60px;
   text-align: center;
+  width: 100%;
 }
 
 .login-form h2 {
@@ -69,13 +84,9 @@ label.form-control {
 input[type=text], input[type=password] {
   box-sizing: border-box;
   width: 100%;
-  margin-top: .7em;
-  margin-bottom: .1em;
-  border-width: 0 0 2px 0;
-  padding: 0 .5em .5em 0;
-  border-color: #999;
-  font-size: 32px;
-  caret-color: #2F61D5;
+  height: 56px;
+  padding: 0 0 0 16px;
+  margin-bottom: 32px;
 }
 
 input[type=text]:focus, input[type=password]:focus {
@@ -88,20 +99,18 @@ input[type=text]::placeholder, input[type=password]::placeholder {
 
 /*button*/
 input[type=submit] {
-  padding: 1em 3em;
-  margin-top: 1.5em;
+  width: 100%;
+  height: 42px;
+  margin-top: 32px;
   border: none;
   border-radius: 4px;
-  background-color: #2F61D5;
+  background-color: #034EA2;
+  opacity: .5;
   color: #FFF;
-  font-size: 30px;
+  font-size: 18px;
   font-weight: 600;
   text-transform: uppercase;
   cursor: pointer;
-}
-
-input[type=submit]:active {
-  background-color: #f39c12;
 }
 
 .login-reset-password a {

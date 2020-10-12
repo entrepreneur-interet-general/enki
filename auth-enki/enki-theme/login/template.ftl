@@ -35,8 +35,9 @@
   <div class="login-background"></div>
   <div class="login-wrapper">
     <div class="login-form ${properties.kcFormCardClass!} <#if displayWide>${properties.kcFormCardAccountClass!}</#if>">
-      <header class="${properties.kcFormHeaderClass!}">
-        <h1 class="h1-title">ENKI</h1>
+      <header class="form-header ${properties.kcFormHeaderClass!}">
+        <h1 class="login-title">Bienvenue sur ENKI</h1>
+        <p class="login-subtitle">Première visite ? <a href="#" class="login-signupLink">Créer un compte</a>
       </header>
       <div id="kc-content">
         <div id="kc-content-wrapper">

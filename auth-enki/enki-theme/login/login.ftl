@@ -10,15 +10,15 @@
           <div class="form-group">
             <label for="username" class="form-control"><#if !realm.loginWithEmailAllowed>${msg("username")}<#elseif !realm.registrationEmailAsUsername>${msg("usernameOrEmail")}<#else>${msg("email")}</#if></label>
             <#if usernameEditDisabled??>
-              <input tabindex="1" id="username" class="${properties.kcInputClass!}" name="username" value="${(login.username!'')}" type="text" disabled />
+              <input tabindex="1" placeholder="Identifiant" id="username" class="${properties.kcInputClass!}" name="username" value="${(login.username!'')}"  type="text" disabled />
             <#else>
-              <input tabindex="1" id="username" class="${properties.kcInputClass!}" name="username" value="${(login.username!'')}"  type="text" autofocus autocomplete="off" />
+              <input tabindex="1" placeholder="Identifiant" id="username" class="${properties.kcInputClass!}" name="username" value="${(login.username!'')}" type="text" autofocus autocomplete="off" />
             </#if>
           </div>
 
           <div class="form-group">
             <label for="password" class="form-control">${msg("password")}</label>
-            <input tabindex="2" id="password" class="${properties.kcInputClass!}" name="password" type="password" autocomplete="off" />
+            <input tabindex="2" id="password" placeholder="Mot de passe" class="${properties.kcInputClass!}" name="password" type="password" autocomplete="off" />
           </div>
 
           <div class="${properties.kcFormGroupClass!} ${properties.kcFormSettingClass!}">
@@ -27,7 +27,7 @@
                 <div class="checkbox">
                   <label>
                     <#if login.rememberMe??>
-                      <input tabindex="3" id="rememberMe" name="rememberMe" type="checkbox" checked> ${msg("rememberMe")}
+                      <input placeholder="totoot" tabindex="3" id="rememberMe" name="rememberMe" type="checkbox" checked> ${msg("rememberMe")}
                     <#else>
                       <input tabindex="3" id="rememberMe" name="rememberMe" type="checkbox"> ${msg("rememberMe")}
                     </#if>

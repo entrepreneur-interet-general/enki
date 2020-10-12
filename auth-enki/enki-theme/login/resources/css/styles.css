@@ -2,6 +2,9 @@ html,
 body {
   height: 100%;
 }
+:root {
+  --main-color: #034EA2;
+}
 
 body {
   display: flex;
@@ -16,16 +19,27 @@ body {
   font-weight: 300;
 }
 
+input {
+  font-family: "Overpass", sans-serif;
+}
+
 a {
-  color: #034EA2;
+  color: var(--main-color);
 }
 
 .form-header {
   margin-bottom: 48px;
 }
 
+.form-header__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .login-title {
   font-size: 32px;
+  line-height: 32px;
   font-weight: 300;
   letter-spacing: 1px;
   margin-bottom: 12px;
@@ -72,25 +86,51 @@ a {
 
 .form-group {
   width: 100%;
+  position: relative;
   text-align: left;
 }
 
 label.form-control {
-  display: none;
-  font-size: 23px;
+  font-size: 12px;
+  line-height: 16px;
+  position: absolute;
+  top: 0;
+  background: white;
+  color: #9BA8B5;
+  font-size: 16px;
+  top: 20px;
+  left: 14px;
+  cursor: text;
+  padding: 0 4px;
+  transition: ease .2s all;
+}
+input:focus + label.form-control {
+  top: -7px;
+  font-size: 12px;
+  color: var(--main-color);
+  transition: ease .2s all;
+}
+
+input:valid + label.form-control {
+  top: -7px;
+  font-size: 12px;
 }
 
 /*fields*/
 input[type=text], input[type=password] {
   box-sizing: border-box;
   width: 100%;
+  border-radius: 4px;
+  border: 1px solid #B3BDC7;
   height: 56px;
   padding: 0 0 0 16px;
   margin-bottom: 32px;
 }
 
 input[type=text]:focus, input[type=password]:focus {
-  border-color: #2F61D5;
+  outline: 0;
+  padding: 0 0 0 15px;
+  border: 2px solid var(--main-color);
 }
 
 input[type=text]::placeholder, input[type=password]::placeholder {
@@ -105,12 +145,14 @@ input[type=submit] {
   border: none;
   border-radius: 4px;
   background-color: #034EA2;
-  opacity: .5;
   color: #FFF;
   font-size: 18px;
   font-weight: 600;
   text-transform: uppercase;
   cursor: pointer;
+}
+input[type=submit]:disabled {
+  opacity: .5;
 }
 
 .login-reset-password a {

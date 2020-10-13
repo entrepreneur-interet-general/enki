@@ -1,2 +1,0 @@
-timestamp,uuid,raw_vehicule_id,raw_intervention_id,status,is_available,raw_status,home_area,role
-2020-01-01 12:00:00,3ddb6f1e-6199-422c-bf45-de751b798c99,1074,4678,undefined,False,some raw status,some home area,other

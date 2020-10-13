@@ -33,7 +33,7 @@ class AbstractVehiculeEventRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractclassmethod
-    def _match_uuid(self, uuid: str) -> List[VehiculeEventEntity]:
+    def _match_uuid(self, uuid: str) -> Union[VehiculeEventEntity, None]:
         raise NotImplementedError
 
 
@@ -44,8 +44,9 @@ class InMemoryVehiculeEventRepository(AbstractVehiculeEventRepository):
     def get_all(self) -> VehiculeEventsList:
         return self._events
 
-    def _match_uuid(self, uuid: str) -> List[VehiculeEventEntity]:
-        return [task for task in self._events if task.uuid == uuid]
+    def _match_uuid(self, uuid: str) -> Union[VehiculeEventEntity, None]:
+        _matches = [task for task in self._events if task.uuid == uuid]
+        return _matches[0] if _matches else None
 
     def _add(self, task: VehiculeEventEntity):
         self._events.append(task)

@@ -1,6 +1,6 @@
 from dataclasses import Field, asdict, field, fields
 import pathlib
-from typing import Dict, List
+from typing import Dict, List, Union
 import pandas as pd 
 import os
 
@@ -26,6 +26,7 @@ class CsvVehiculeEventRepository(AbstractVehiculeEventRepository):
         self.df.to_csv(self.csv_path, index=False)
         
     def _add(self, vehicule_event_entity : VehiculeEventEntity) -> None:
+
         data_dict = asdict(vehicule_event_entity.data)
         flatten_row = asdict(vehicule_event_entity)
         del flatten_row['data']
@@ -33,8 +34,9 @@ class CsvVehiculeEventRepository(AbstractVehiculeEventRepository):
         self.df = self.df.append(pd.Series(flatten_row), ignore_index=True)
         self._save()
 
-    def _match_uuid(self, uuid: str):
-        pass
+    def _match_uuid(self, uuid: str) -> Union[VehiculeEventEntity, None]:
+        _matches = self.df[self.df.uuid == uuid]
+        return self._series_to_entity(_matches.iloc[0]) if not _matches.empty else None
 
     @staticmethod
     def _create_series_from_fields(fields: List[Field]) -> Dict[str, pd.Series]:
@@ -45,3 +47,14 @@ class CsvVehiculeEventRepository(AbstractVehiculeEventRepository):
                 dtype = 'datetime64[ns]'
             series[field.name] = pd.Series([], dtype=dtype)
         return series
+
+    @staticmethod
+    def _series_to_entity(series: pd.Series) -> VehiculeEventEntity:
+        isin_timestamp_uuid = series.index.isin(['timestamp', 'uuid'])
+
+        series_timestamp_uuid = series[isin_timestamp_uuid].to_dict()
+        series_data = series[~isin_timestamp_uuid].to_dict()
+
+        data = VehiculeEventData(**series_data)
+        entity = VehiculeEventEntity(data=data, **series_timestamp_uuid)
+        return entity

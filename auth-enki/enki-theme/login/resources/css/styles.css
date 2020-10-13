@@ -32,8 +32,19 @@ a {
   display: flex;
   width: 100%;
   justify-content: flex-end;
-  background-image: url('../img/background-france.png');
 
+}
+.login-background {
+  background-image: url('../img/background-france.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  display: none;
+}
+@media screen and (min-width: 600px) {
+  .login-background {
+    display: block;
+  }
 }
 
 .form-header {
@@ -74,15 +85,7 @@ a {
   margin-top: 12px;
 }
 
-.login-background {
-  flex: 1 1 60%;
-  background-image: url('../img/login-background.jpg');
-  background-size: cover;
-  background-position: left center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  display: none;
-}
+
 
 .login-wrapper {
   display: flex;
@@ -165,6 +168,21 @@ input[type=text]:focus, input[type=password]:focus {
 
 input[type=text]::placeholder, input[type=password]::placeholder {
   color: #999;
+}
+
+.show-password {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  width: 24px;
+  height: 18px;
+  background-image: url('../img/eye-open.svg');
+  background-repeat: no-repeat;
+  background-size: 24px;
+}
+.show-password.-active {
+  background-image: url('../img/eye-close.svg');
+  top: 18px;
 }
 
 /*button*/

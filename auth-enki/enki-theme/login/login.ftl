@@ -19,6 +19,7 @@
           <div class="form-group">
             <input tabindex="2" id="password" class="js-loginInputs ${properties.kcInputClass!}" name="password" type="password" autocomplete="off" required />
             <label for="password" class="form-control">${msg("password")}</label>
+            <div class="js-showPwd show-password"></div>
           </div>
 
           <div class="${properties.kcFormGroupClass!} ${properties.kcFormSettingClass!}">

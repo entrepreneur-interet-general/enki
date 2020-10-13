@@ -34,6 +34,7 @@
 
 <body class="${properties.kcBodyClass!}">
   <div class="login-container">
+    <div class="login-background"></div>
     <div class="login-wrapper">
       <div class="login-form ${properties.kcFormCardClass!} <#if displayWide>${properties.kcFormCardAccountClass!}</#if>">
         <header class="form-header ${properties.kcFormHeaderClass!}">

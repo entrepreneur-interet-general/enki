@@ -55,6 +55,8 @@ back-build-and-test:
     - source venv/bin/activate
     - echo "Unit testing..."
     - pytest tests/unit
+    - echo "Integration testing..."
+    - pytest tests/integration
     - echo "Flask e2e testing..."
     - pytest tests/e2e
 

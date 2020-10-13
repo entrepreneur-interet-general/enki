@@ -8,3 +8,7 @@ psycopg2
 sqlalchemy-stubs
 pytest
 pytest-watch
+faker
+
+# data
+pandas

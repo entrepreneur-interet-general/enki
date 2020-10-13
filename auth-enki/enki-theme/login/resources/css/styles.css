@@ -4,6 +4,7 @@ body {
 }
 :root {
   --main-color: #034EA2;
+  --error-color: #E1000F;
 }
 
 body {
@@ -27,14 +28,38 @@ a {
   color: var(--main-color);
 }
 
+.login-container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  background-image: url('../img/background-france.png');
+
+}
+
 .form-header {
   margin-bottom: 48px;
 }
 
-.form-header__img {
+.form-header__imgRepu {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.form-header__illus {
+  display: none;
+}
+@media screen and (min-width: 600px) {
+  .form-header__illus {
+    display: inline;
+  }
+}
+
+.form-footer__imgNexsis {
+  max-width: 120px;
+  position: absolute;
+  bottom: 32px;
+  transform: translateX(-50%);
 }
 
 .login-title {
@@ -52,6 +77,7 @@ a {
 .login-background {
   flex: 1 1 60%;
   background-image: url('../img/login-background.jpg');
+  background-size: cover;
   background-position: left center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -63,12 +89,16 @@ a {
   justify-content: center;
   align-items: center;
   width: 100%;
+  max-width: 525px;
+  background: white;
   padding: 16px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .login-form {
   text-align: center;
   width: 100%;
+  max-width: 343px;
 }
 
 .login-form h2 {
@@ -141,7 +171,7 @@ input[type=text]::placeholder, input[type=password]::placeholder {
 input[type=submit] {
   width: 100%;
   height: 42px;
-  margin-top: 32px;
+  margin-bottom: 16px;
   border: none;
   border-radius: 4px;
   background-color: #034EA2;
@@ -158,21 +188,20 @@ input[type=submit]:disabled {
 .login-reset-password a {
   display: inline-block;
   width: 100%;
-  font-size: 23px;
-  text-align: right;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
   text-decoration: none;
-  color: #2F61D5;
 }
 
 .alert {
   width: 100%;
-  margin-top: 30px;
+  margin: 30px 0;
   text-align: left;
 }
 
 .alert.alert-error {
-  color: #f00;
-  font-weight: 600;
+  color: var(--error-color);
 }
 
 

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Literal, TypedDict, Union
+from typing import Literal
 
 vehicule_unavailable_status_options = [
     'departed_to_intervention',  

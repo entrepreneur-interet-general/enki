@@ -1,6 +1,6 @@
 from dataclasses import asdict
+from tests.integration.csv_test_helpers import reset_csv
 import pytest
-import os
 
 import pandas as pd
 
@@ -11,12 +11,9 @@ from tests.factories.vehicule_event_factory import make_vehicule_event_entity
 from tests.factories import vehicule_event_factory
 
 csv_path = 'tests/integration/temp_data/vehicule_event_entity.csv'
-def reset_csv():
-    if os.path.exists(csv_path):
-        os.remove(csv_path)
 
 def test_can_add_to_csv_vehicule_event_repository():
-    reset_csv()
+    reset_csv(csv_path)
     csv_vehicule_event_repository = CsvVehiculeEventRepository(csv_path=csv_path)
     vehicule_event_entity = make_vehicule_event_entity()
     csv_vehicule_event_repository.add(vehicule_event_entity)
@@ -30,7 +27,7 @@ def test_can_add_to_csv_vehicule_event_repository():
     assert vehicule_event_entity_data_values.issubset(last_row_values)
 
 def test_cannot_add_to_csv_if_already_exists():
-    reset_csv()
+    reset_csv(csv_path)
     csv_vehicule_event_repository = CsvVehiculeEventRepository(csv_path=csv_path)
     vehicule_event_entity = make_vehicule_event_entity()
     

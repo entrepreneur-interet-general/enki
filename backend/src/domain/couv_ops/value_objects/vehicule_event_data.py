@@ -31,7 +31,7 @@ VehiculeRole = Literal[vehicule_role_options]
 @dataclass
 class VehiculeEventData():
     raw_vehicule_id: int # 'Operation-Software'  vehicule ID 
-    raw_intervention_id: int # 'Operation-Software'  intervention ID 
+    raw_operation_id: int # inter = op ?  affaire ? # 'Operation-Software'  intervention ID 
     status: VehiculeStatus
     is_available: bool
     raw_status: str # Status label from 'Operation-Software' 

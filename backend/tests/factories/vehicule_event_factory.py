@@ -17,7 +17,7 @@ default_uuid = str(uuid4())
 
 def make_vehicule_event_data(
         raw_vehicule_id: int = None,
-        raw_intervention_id: int = None,
+        raw_operation_id: int = None,
         status: VehiculeStatus = None, 
         is_available: bool = None,
         raw_status: str = None,
@@ -27,7 +27,7 @@ def make_vehicule_event_data(
     if status and status not in vehicule_status_options:
         raise ValueError(f'Provided status not in {vehicule_status_options}')
     raw_vehicule_id = raw_vehicule_id or fake.pyint() 
-    raw_intervention_id = raw_intervention_id or fake.pyint()
+    raw_operation_id = raw_operation_id or fake.pyint()
     status = status or random.choice(vehicule_status_options)
     is_available =  is_available or status in vehicule_available_status_options
     raw_status = raw_status or 'some raw status'
@@ -35,7 +35,7 @@ def make_vehicule_event_data(
     role = role or random.choice(vehicule_role_options)
     vehicule_event_data = VehiculeEventData(
         raw_vehicule_id=raw_vehicule_id,
-        raw_intervention_id=raw_intervention_id, 
+        raw_operation_id=raw_operation_id, 
         status=status,
         is_available=is_available,
         raw_status=raw_status,

@@ -1,9 +1,11 @@
+import asyncio
 from datetime import datetime, timedelta
+import logging
 from typing import List
 
 import pytest
 from domain.couv_ops.ports.event_bus import Event
-from heplers.now import CustomNow
+from heplers.clock import CustomClock
 from tests.integration.csv_test_helpers import reset_csv
 import pandas as pd
 from pandas.api.types import is_datetime64_any_dtype as is_datetime
@@ -12,11 +14,15 @@ from adapters.csv.csv_helpers import event_to_series
 from tests.factories.vehicule_event_factory import make_vehicule_event
 from adapters.csv.csv_scheduled_event_bus import CsvError, CsvScheduledEventBus
 
+
 csv_path = 'tests/integration/temp_data/events_to_dispatch.csv'
 
 def create_csv_events_to_dispatch(path: str):
     reset_csv(path)
-    timestamps = [pd.Timestamp("2020-10-01T12:01"), pd.Timestamp("2020-10-01T12:01:03"), pd.Timestamp("2020-10-01T12:00")]
+    timestamps = [
+        pd.Timestamp("2020-10-01T12:01"), 
+        pd.Timestamp("2020-10-01T12:01:03"), 
+        pd.Timestamp("2020-10-01T12:00")]
 
     list_series = []
     for timestamp in timestamps:
@@ -27,58 +33,87 @@ def create_csv_events_to_dispatch(path: str):
     df.to_csv(path)
     return df
 
-now = CustomNow()
+clock = CustomClock()
 
 def test_fails_if_csv_not_found():
     with pytest.raises(CsvError) as e:
-        CsvScheduledEventBus(now, csv_path="notfound/file.csv")
+        CsvScheduledEventBus(clock, csv_path="notfound/file.csv")
     assert str(e.value) == "Csv_path or DF should be provided"
 
     with pytest.raises(CsvError) as e2:
-        CsvScheduledEventBus(now, )
+        CsvScheduledEventBus(clock)
     assert str(e2.value) == "Csv_path or DF should be provided"
 
 def test_fails_if_csv_format_is_incorrect():
     df = create_csv_events_to_dispatch(csv_path)
     missing_col_df = df.drop('timestamp', axis=1)
     with pytest.raises(CsvError) as e3:
-        CsvScheduledEventBus(now, df=missing_col_df)
+        CsvScheduledEventBus(clock, df=missing_col_df)
     assert str(e3.value) == "Some columns are missing : {'timestamp'}"
     
     timestamp_as_str_df = df.copy()
     timestamp_as_str_df.timestamp = timestamp_as_str_df.timestamp.astype(str)
-    event_bus = CsvScheduledEventBus(now, df=timestamp_as_str_df)
+    event_bus = CsvScheduledEventBus(clock, df=timestamp_as_str_df.copy())
     assert is_datetime(event_bus.df.timestamp)
     assert event_bus.df.timestamp.is_monotonic
 
     timestamp_with_wrong_str_df = timestamp_as_str_df.copy()
     timestamp_with_wrong_str_df.timestamp[0] = "wrong"
     with pytest.raises(CsvError) as e4:
-        CsvScheduledEventBus(now, df=timestamp_with_wrong_str_df)
+        CsvScheduledEventBus(clock, df=timestamp_with_wrong_str_df)
     assert str(e4.value) == "Timestamp cannot be converted to datetime"
 
     
+# async def async_test_loop(event_bus: CsvScheduledEventBus, df: pd.DataFrame): 
+    # event_bus.start(time_step=10)
+    # # event_bus.pause()
 
+    # clock.add_seconds(1)
+    # clock.awake_sleep()
+    # assert published_events[0].uuid == df.uuid.iloc[0]
 
 def test_provided_event_get_dispatched_correctly():
     published_events: List[Event] = []
     df = create_csv_events_to_dispatch(csv_path)
 
     test_start_time = datetime.strptime("2020-10-02 15:00", "%Y-%m-%d %H:%M")
-    now.set_next_date(test_start_time)
+    clock.set_next_date(test_start_time)
 
-    event_bus = CsvScheduledEventBus(now, df=df)
+    event_bus = CsvScheduledEventBus(clock,  df=df)
     
     spy = lambda event: published_events.append(event)
     event_bus.subscribe("vehicule_changed_status", spy)
-    event_bus.start(time_step=10)
+    event_bus.start()
 
+    clock.add_seconds(.1)
+    event_bus._next()
     assert published_events[0].uuid == df.uuid.iloc[0]
 
-    test_plus_1_min = test_start_time + timedelta(minutes=1)
-    now.set_next_date(test_plus_1_min)
+    logging.info('Adding 5 seconds and call next. ')
+    clock.add_seconds(5)
+    event_bus._next()
     assert len(published_events) == 1
 
-    test_plus_1_min_30_s = test_plus_1_min + timedelta(seconds=30)
-    now.set_next_date(test_plus_1_min_30_s)
+    logging.info('Adding 60 seconds and call next')
+    clock.add_seconds(60)
+    event_bus._next()
     assert len(published_events) == 3
+
+def test_streaming_speed():
+    published_events: List[Event] = []
+    df = create_csv_events_to_dispatch(csv_path)
+
+    test_start_time = datetime.strptime("2020-10-02 15:00", "%Y-%m-%d %H:%M")
+    clock.set_next_date(test_start_time)
+
+    event_bus = CsvScheduledEventBus(clock,  df=df)
+    
+    spy = lambda event: published_events.append(event)
+    event_bus.subscribe("vehicule_changed_status", spy)
+    event_bus.start()
+
+    speed = 60  
+    clock.add_seconds(1) # equivalent to 60 seconds 
+    event_bus._next(speed)
+    assert published_events[0].timestamp == df.timestamp.iloc[0]
+    assert published_events[1].timestamp == df.timestamp.iloc[1]

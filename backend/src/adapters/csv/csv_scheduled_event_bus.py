@@ -1,6 +1,8 @@
+from ast import copy_location
 import asyncio
 import logging
-import os 
+import os
+from numpy.lib.function_base import copy 
 
 from pandas.api.types import is_datetime64_any_dtype as is_datetime
 import pandas as pd
@@ -19,16 +21,24 @@ class Pause(Exception):
 class CsvScheduledEventBus(InMemoryEventBus):
     def __init__(self, clock: AbstractClock,  *, csv_path: str = None, df: pd.DataFrame = None):
         self.clock = clock
-        self.df: pd.DataFrame = df 
-        if self.df is None:
+        self.df: pd.DataFrame
+        if df is not None: 
+            self.df = df.copy()
+        else:
             if csv_path is None or not os.path.exists(csv_path):
                 raise CsvError("Csv_path or DF should be provided")
             self.df = pd.read_csv(csv_path)
         self._sanity_check()
         self.df.index = self.df.timestamp
 
-    def start(self, speed : float = 1):
+    def start(self, resync: bool = False):
         now = self.clock.get_now()
+        
+        if resync: # todo : inplace or not inplace ? rather not,  I guess. 
+            offset = pd.Timestamp(now) - self.df.timestamp[0]
+            self.df.index += offset
+            self.df.timestamp += offset 
+
         self._last_published_timestamp = self.df.timestamp[0]
         self._previous_now = now
 

@@ -20,6 +20,10 @@ class Event():
     uuid: str
     data: Dict
 
+class DictWithKeysDataEvent(TypedDict):
+    data: Any  #  Should be Data
+    event: Any # Should be Event
+
 @dataclass
 class VehiculeEvent(Event):
     topic: TopicVehiculeChangedStatus
@@ -46,3 +50,10 @@ class InMemoryEventBus(AbstractEventBus):
         for callback in self._subscriptions[event.topic]:
             callback(event)
 
+topic_to_types :  Dict[Topic, DictWithKeysDataEvent] = {
+    'vehicule_changed_status': {
+            'data':  VehiculeEventData,
+            'event':  VehiculeEvent,
+        }
+    }
+        

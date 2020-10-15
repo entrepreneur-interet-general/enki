@@ -1,24 +1,23 @@
 import abc
 import asyncio
-from asyncio.tasks import Task
+
 from datetime import datetime, timedelta
-import logging
-from typing import Union
 
 class AbstractClock(abc.ABC):
+    can_wake_up: bool = True
+
     @abc.abstractclassmethod
     def get_now(self) -> datetime:
         raise NotImplementedError
 
     @abc.abstractclassmethod
-    async def sleep(self, delay: float) -> None:
+    async def sleep(self, delay: float):
         raise NotImplementedError
 
 
 class CustomClock(AbstractClock):
-    is_sleeping: bool = True
     next_date: datetime = datetime.now()
-    _sleeping_task: Task
+    awaken_event: asyncio.Event
 
     def get_now(self) -> datetime:
         return self.next_date
@@ -28,34 +27,23 @@ class CustomClock(AbstractClock):
 
     def add_seconds(self, delay: float):
         self.next_date += timedelta(seconds=delay)
+        
+    async def sleep(self, delay: float):
+        await self.awaken_event.wait()
+        self.can_wake_up = False
 
-    async def _set_sleeping_task(self, delay: float):
-        try: 
-            await asyncio.sleep(delay)
-        except asyncio.CancelledError:
-            logging.info('Sleep was cancelled')
-            raise
-    
-    def sleep(self, delay: float):
-        self._sleeping_task = asyncio.create_task(self._set_sleeping_task(delay))
+    def set_awaken_event(self, awaken_event: asyncio.Event):
+      self.can_wake_up = True
+      self.awaken_event = awaken_event   
 
-    @property
-    def sleeping_task(self):
-        return self._sleeping_task
+    async def wake_up(self): 
+      self.awaken_event.set()
+  
 
-        # logging.info(f'Just before the while {self.is_sleeping}')
-        # while self.is_sleeping:
-        #     pass
-        # logging.info('I am awake, out of while !')
+class RealClock(AbstractClock):
+  def get_now(self) -> datetime:
+      return datetime.now()
 
-
-    async def awake_sleep(self):
-        self.is_sleeping = False
-
-# class AbstractSleeper(abc.ABC):
-#     @abc.abstractclassmethod
-#     async def wait(self) -> None:
-#         raise NotImplementedError
-
-# class InstantaneousSleeper(AbstractSleeper):
-#     async def wait(self) -> None
+  async def sleep(self, delay: float):
+      await asyncio.sleep(delay)
+      

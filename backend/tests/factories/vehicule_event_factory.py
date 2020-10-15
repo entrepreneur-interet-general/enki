@@ -1,12 +1,12 @@
 from dataclasses import asdict
 import random
-from typing import Optional
 from uuid import uuid4
+
 from faker import Faker
 from pandas._libs.tslibs import Timestamp
+
 from domain.couv_ops.entities.vehicule_event_entity import VehiculeEventEntity
 from domain.couv_ops.events.events import VehiculeEvent
-
 from domain.couv_ops.value_objects.vehicule_event_data import VehiculeEventData, vehicule_status_options, \
     vehicule_available_status_options, vehicule_role_options, VehiculeRole, VehiculeStatus
 

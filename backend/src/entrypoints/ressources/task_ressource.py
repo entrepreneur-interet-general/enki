@@ -2,8 +2,8 @@ from flask import request
 from flask_restful import Resource
 
 from domain.tasks.ports.task_repository import AbstractTaskRepository
-from domain.tags.ports.tag_repository import AbstractTagRepository
-from domain.tasks.task_service import TaskService
+from domain.tasks.ports.tag_repository import AbstractTagRepository
+from domain.tasks.services.task_service import TaskService
 
 
 class WithTaskRepoResource(Resource):

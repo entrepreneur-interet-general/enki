@@ -1,13 +1,16 @@
 from typing import Any, Dict, List
-from .entities.tag_entity import TagEntity
-from .ports.tag_repository import AbstractTagRepository
+from domain.tasks.entities.tag_entity import TagEntity
+from domain.tasks.ports.tag_repository import AbstractTagRepository
 
 
 class TagService:
 
     @staticmethod
     def add_tag(uuid: str, title: str, repo: AbstractTagRepository, description: str = None, color: str = None):
-        new_tag = TagEntity(uuid=uuid, title=title, description=description, color=color)
+        new_tag = TagEntity(uuid=uuid,
+                            title=title,
+                            description=description,
+                            color=color)
         repo.add(new_tag)
 
     @staticmethod

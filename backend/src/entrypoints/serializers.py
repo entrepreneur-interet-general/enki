@@ -4,7 +4,6 @@ from datetime import date, datetime
 from flask import make_response
 
 from domain.affairs.cisu.entities.commons.cisu_enum import CisuEnum
-from domain.entities.event_entity import Severity
 from domain.affairs.cisu.entities.commons.common_alerts import AttributeType, Victims
 
 

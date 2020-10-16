@@ -11,9 +11,8 @@ from adapters.postgres.pg_task_repository import PgTaskRepository
 from adapters.postgres.sge.pg_affairs_repository import PgSgeMessageRepository
 from domain.tasks.ports.task_repository import AbstractTaskRepository, InMemoryTaskRepository
 from domain.affairs.ports.message_repository import AbstractSgeMessageRepository, InMemorySgeMessageRepository
-from adapters.xml.xml_cisu_repository import XmlCisuRepository
-from domain.tags.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 from adapters.random.random_cisu_repository import RandomCisuRepository
+from domain.tasks.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 
 
 def getPgRepos() -> (AbstractTagRepository, AbstractTaskRepository):

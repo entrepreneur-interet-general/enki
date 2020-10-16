@@ -1,6 +1,6 @@
 from domain.tasks.ports.task_repository import AlreadyExistingTaskUuid, InMemoryTaskRepository, NotFoundTask
 from domain.tasks.entities.task_entity import TaskEntity
-from domain.tasks.task_service import TaskService
+from domain.tasks.services.task_service import TaskService
 from uuid import uuid4
 import pytest
 

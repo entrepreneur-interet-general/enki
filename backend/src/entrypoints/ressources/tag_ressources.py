@@ -1,10 +1,8 @@
-import uuid
-
 from flask import request
 from flask_restful import Resource
 
-from domain.tags.ports.tag_repository import AbstractTagRepository
-from domain.tags.tag_service import TagService
+from domain.tasks.ports.tag_repository import AbstractTagRepository
+from domain.tasks.services.tag_service import TagService
 
 
 class WithTagRepoResource(Resource):

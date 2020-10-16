@@ -1,9 +1,9 @@
 from uuid import uuid4
 import pytest
 
-from domain.tags.entities.tag_entity import TagEntity
-from domain.tags.ports.tag_repository import AlreadyExistingTagUuid, InMemoryTagRepository, NotFoundTag
-from domain.tags.tag_service import TagService
+from domain.tasks.entities.tag_entity import TagEntity
+from domain.tasks.ports.tag_repository import AlreadyExistingTagUuid, InMemoryTagRepository, NotFoundTag
+from domain.tasks.services.tag_service import TagService
 
 
 def initiateRepo():

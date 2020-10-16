@@ -1,10 +1,10 @@
-from typing import Any, List
+from typing import List
 
 from sqlalchemy.orm import Session
 
 from domain.tasks.ports.task_repository import AbstractTaskRepository
 from domain.tasks.entities.task_entity import TaskEntity
-from domain.tags.entities.tag_entity import TagEntity
+from domain.tasks.entities.tag_entity import TagEntity
 from .repository import PgRepositoryMixin, NotFoundException
 
 

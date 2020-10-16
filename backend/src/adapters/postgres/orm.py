@@ -6,9 +6,9 @@ from sqlalchemy.engine.base import Engine
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy_utils import ChoiceType
 
-from domain.entities.event_entity import Severity
+from domain.tasks.entities.event_entity import Severity
 from domain.tasks.entities.task_entity import TaskEntity
-from domain.tags.entities.tag_entity import TagEntity
+from domain.tasks.entities.tag_entity import TagEntity
 
 logger = logging.getLogger(__name__)
 

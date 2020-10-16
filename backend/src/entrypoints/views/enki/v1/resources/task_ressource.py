@@ -2,7 +2,7 @@ from flask import request
 from flask_restful import Resource
 
 from domain.tasks.ports.task_repository import AbstractTaskRepository
-from domain.tasks.task_service import add_task, list_tasks, get_by_uuid
+from domain.tasks.services.task_service import add_task, list_tasks, get_by_uuid
 
 
 class WithTaskRepoResource(Resource):

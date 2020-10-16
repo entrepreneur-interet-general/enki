@@ -1,7 +1,7 @@
 from typing import Any, Dict, List
 from domain.tasks.entities.task_entity import TaskEntity
 from domain.tasks.ports.task_repository import AbstractTaskRepository
-from domain.tags.ports.tag_repository import AbstractTagRepository
+from domain.tasks.ports.tag_repository import AbstractTagRepository
 
 
 class TaskService:

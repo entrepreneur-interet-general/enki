@@ -1,6 +1,5 @@
 import abc
 from typing import List, Union
-
 from domain.tasks.entities.task_entity import TaskEntity
 
 TasksList = List[TaskEntity]
@@ -51,7 +50,7 @@ class AbstractTaskRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractclassmethod
-    def _match_uuid(self, uuid: str) -> TaskEntity:
+    def _match_uuid(self, uuid: str)-> Union[TaskEntity, None]:
         raise NotImplementedError
 
 
@@ -61,7 +60,7 @@ class InMemoryTaskRepository(AbstractTaskRepository):
     def get_all(self) -> TasksList:
         return self._tasks
 
-    def _match_uuid(self, uuid: str) -> TaskEntity:
+    def _match_uuid(self, uuid: str) -> Union[TaskEntity, None]:
         matches = [task for task in self._tasks if task.uuid == uuid]
         if not matches:
             return None

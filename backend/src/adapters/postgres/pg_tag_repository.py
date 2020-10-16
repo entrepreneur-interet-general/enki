@@ -1,9 +1,9 @@
-from typing import Any, List
+from typing import List
 
 from sqlalchemy.orm import Session
 
-from domain.tags.ports.tag_repository import AbstractTagRepository
-from domain.tags.entities.tag_entity import TagEntity
+from domain.tasks.ports.tag_repository import AbstractTagRepository
+from domain.tasks.entities.tag_entity import TagEntity
 from .repository import PgRepositoryMixin, NotFoundException
 
 

@@ -1,3 +1,4 @@
 sqlalchemy-stubs
 pytest
 pytest-watch
+faker

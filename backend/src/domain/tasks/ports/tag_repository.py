@@ -1,7 +1,7 @@
 import abc
-from typing import List
+from typing import List, Union
 
-from domain.tags.entities.tag_entity import TagEntity
+from domain.tasks.entities.tag_entity import TagEntity
 
 TagsList = List[TagEntity]
 
@@ -35,7 +35,7 @@ class AbstractTagRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractclassmethod
-    def _match_uuid(self, uuid: str) -> TagsList:
+    def _match_uuid(self, uuid: str) -> Union[TagEntity, None]:
         raise NotImplementedError
 
 
@@ -45,13 +45,13 @@ class InMemoryTagRepository(AbstractTagRepository):
     def get_all(self) -> TagsList:
         return self._tags
 
-    def _match_uuid(self, uuid: str) -> TagEntity:
+    def _match_uuid(self, uuid: str) -> Union[TagEntity, None]:
         matches = [tag for tag in self._tags if tag.uuid == uuid]
         if not matches:
             return None
         return matches[0]
 
-    def _add(self, tag: TagEntity):
+    def _add(self, tag: TagEntity) -> None:
         self._tags.append(tag)
 
     # next methods are only for test purposes

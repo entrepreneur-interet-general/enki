@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AffairesService } from './affaires.service'
 import { add } from '@fronts/utilities'
+// import { AuthGuard } from './app-auth-guard.service'
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,10 @@ export class AppComponent {
   title = 'enki';
   affaires;
   number = add(1, 2);
+  
 
-  constructor(private affairesService: AffairesService) {
+  constructor(private affairesService: AffairesService
+    ) {
   }
   ngOnInit(): void {
     this.affairesService.getAffaires().subscribe((affaires) => {

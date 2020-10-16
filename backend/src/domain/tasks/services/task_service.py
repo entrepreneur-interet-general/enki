@@ -6,8 +6,8 @@ from domain.tasks.ports.tag_repository import AbstractTagRepository
 
 class TaskService:
     @staticmethod
-    def add_task(uuid: str, title: str, repo: AbstractTaskRepository):
-        new_task = TaskEntity(uuid=uuid, title=title)
+    def add_task(uuid: str, title: str, description: str,  repo: AbstractTaskRepository):
+        new_task = TaskEntity(uuid=uuid, title=title, description=description)
         repo.add(new_task)
 
     @staticmethod

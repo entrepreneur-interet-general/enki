@@ -3,6 +3,7 @@ from domain.core.entity import Entity
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 
+
 @dataclass_json
 @dataclass
 class TagEntity(Entity):
@@ -10,3 +11,6 @@ class TagEntity(Entity):
     description: Optional[str]
     creator_id: str
     color: str
+
+    def __init__(self, **kwargs):
+        super(Entity, self).__init__(**kwargs)

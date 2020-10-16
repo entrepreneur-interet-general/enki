@@ -12,15 +12,19 @@ class TaskType(Enum):
     ASK = 1
     DO = 2
     NEED_INFO = 3
+    UNKNONW = 4
 
 
 @dataclass_json
 @dataclass
 class TaskEntity(MessageEventEntity):
-    task_type: TaskType
+    task_type: TaskType = field(default_factory=lambda: TaskType.UNKNONW)
     event_type: str = field(default="task")
     executor_id: Union[str, None] = field(default_factory=lambda: None)
     executor_type: Union[str, None] = field(default_factory=lambda: None)
     done_at: Union[datetime, None] = field(default_factory=lambda: None)
     tags: List = field(default_factory=lambda: [])
     # user_ids: str = field(default_factory=list)
+
+    def __init__(self, **kwargs):
+        super(MessageEventEntity, self).__init__(**kwargs)

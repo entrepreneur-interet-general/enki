@@ -27,11 +27,11 @@ class CsvScheduledEventBus(InMemoryEventBus):
         else:
             if csv_path is None or not os.path.exists(csv_path):
                 raise CsvError("Csv_path or DF should be provided")
-            self.df = pd.read_csv(csv_path)
+            self.df = pd.read_csv(csv_path, index_col=0)
         self._sanity_check()
         self.df.index = self.df.timestamp
 
-    def start(self, resync: bool = False):
+    def _start(self, resync: bool = False):
         now = self.clock.get_now()
         
         if resync: 
@@ -42,8 +42,12 @@ class CsvScheduledEventBus(InMemoryEventBus):
         self._last_published_timestamp = self.df.timestamp[0]
         self._previous_now = now
 
-    def play(self, time_step: float, speed: float = 1):
+    def _play(self, time_step: float, speed: float = 1):
         asyncio.run(self._async_loop(time_step, speed))
+    
+    def start_and_play(self, time_step: float, speed: float = 1, resync: bool = False):
+        self._start(resync)
+        self._play(time_step, speed)
 
     def _dispatch_event(self, event_series: pd.Series):
         topic: Topic = event_series.topic

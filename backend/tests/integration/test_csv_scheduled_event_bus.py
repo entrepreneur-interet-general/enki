@@ -74,7 +74,7 @@ def prepare_event_bus_and_spy(resync):
     
     spy = lambda event: published_events.append(event)
     event_bus.subscribe("vehicule_changed_status", spy)
-    event_bus.start(resync=resync)
+    event_bus._start(resync=resync)
     return event_bus, published_events
 
 async def _async_test_one_step(event_bus,  speed, time_step, published_events, expected_dispatched_events_timestamps):

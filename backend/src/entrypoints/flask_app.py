@@ -1,11 +1,11 @@
-from logging import log
 from flask import Flask, make_response, request
 from flask.json import jsonify
 from flask_restful import Api
+from adapters.csv.csv_scheduled_event_bus import CsvScheduledEventBus
 
 from entrypoints.repositories import Repositories
-from domain.tasks.task_service import add_task, get_by_uuid, list_tasks
 from entrypoints.task_ressource import TaskListResource, TaskResource
+from heplers.clock import RealClock
 
 
 app = Flask('sapeurs')
@@ -21,3 +21,8 @@ def hello_sapeurs():
 api.add_resource(TaskListResource, '/tasks', resource_class_kwargs={'taskRepo': repositories.task})
 api.add_resource(TaskResource, '/tasks/<uuid>', resource_class_kwargs={'taskRepo': repositories.task})
 
+clock = RealClock()
+csv_path = 'tests/integration/temp_data/events_to_dispatch.csv'
+event_bus = CsvScheduledEventBus(clock=clock, csv_path=csv_path)
+event_bus.subscribe(topic='vehicule_changed_status', callback=lambda e: print(e))
+event_bus.start_and_play(time_step=1., speed=20, resync=False)

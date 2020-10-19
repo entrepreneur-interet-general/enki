@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AffairesService } from './affaires.service'
 import { add } from '@fronts/utilities'
-// import { AuthGuard } from './app-auth-guard.service'
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +14,18 @@ export class AppComponent {
   number = add(1, 2);
   
 
-  constructor(private affairesService: AffairesService
+  constructor(private affairesService: AffairesService, private keycloakService: KeycloakService
     ) {
   }
   ngOnInit(): void {
     this.affairesService.getAffaires().subscribe((affaires) => {
       this.affaires = affaires
     })
+  }
+  logout(): void {
+    this.keycloakService.logout()
+  }
+  canSeeEvents(): boolean {
+    return this.keycloakService.isUserInRole('watchEvents')
   }
 }

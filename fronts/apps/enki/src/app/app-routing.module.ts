@@ -9,7 +9,7 @@ const routes: Routes = [
     path: 'test',
     canActivate: [AuthGuard],
     component: TestAuthComponent,
-    data: { roles: ['maire'] }
+    data: { roles: ['accessEnki'] }
   }
 ];
 

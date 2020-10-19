@@ -52,4 +52,8 @@ To launch the test of core-couv-ops:
    $ npm test core-couv-ops
 
 
-
+Enki front 
+----------
+Development:
+^^^^^^^^^^^^
+* `nx serve enki` within /fronts folder

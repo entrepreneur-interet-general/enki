@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import * as NatureDeFait from './naturedefait.json'
+import { KeycloakService } from 'keycloak-angular';
+
 interface Affaires {
   hits: Hits
 }
@@ -28,11 +30,13 @@ export class AffairesService {
   naturedefait;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private keycloakService: KeycloakService
     ) { 
       this.affairesUrl = 'http://localhost:9200/affaire/_search'
       this.httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        headers: new HttpHeaders({ 'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.keycloakService.getToken() })
       };
       this.naturedefait = (NatureDeFait as any).default
     }
@@ -41,7 +45,6 @@ export class AffairesService {
     return this.http.get<Affaires>(this.affairesUrl, this.httpOptions)
       .pipe(
         map(affaires => {
-          console.log(affaires)
           let newAffaires = []
           newAffaires = affaires.hits.hits.map((affaire: any) => {
             const newAffaire: Affaire = {

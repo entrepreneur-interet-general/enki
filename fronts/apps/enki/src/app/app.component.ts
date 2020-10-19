@@ -12,10 +12,14 @@ export class AppComponent {
   title = 'enki';
   affaires;
   number = add(1, 2);
+  token;
   
 
   constructor(private affairesService: AffairesService, private keycloakService: KeycloakService
     ) {
+      this.keycloakService.getToken().then((res) => {
+        this.token = res
+      });
   }
   ngOnInit(): void {
     this.affairesService.getAffaires().subscribe((affaires) => {

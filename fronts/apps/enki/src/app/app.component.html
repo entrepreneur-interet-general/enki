@@ -30,7 +30,7 @@
     </ul>
   </nav>
   <p>Bienvenue sur le prototype de Enki !</p>
-  <p>Vous êtes connecté en tant que : <i></i></p>
+  <p>Vous êtes connecté en tant que : <i>{{token}}</i></p>
   <p *ngIf="!canSeeEvents()">Vous n'avez pas le droit de voir les infos confidentielles concernant les alertes...</p>
   <router-outlet></router-outlet>
 

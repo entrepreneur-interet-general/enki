@@ -33,6 +33,22 @@ install-backend-dependencies:
     paths:
       - backend/venv/
 
+install-cisu-package-dependencies:
+  image: python:3.8
+  stage: install
+  script:
+    - cd cisu
+    - echo "Installing python env and requirements..."
+    - python3 -m venv venv
+    - source venv/bin/activate
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install -r requirements.test.txt
+    - pip install -e .
+  artifacts:
+    paths:
+      - cisu/venv/
+
 fronts-build-and-test:
   image: node:latest
   stage: build-test
@@ -61,3 +77,11 @@ back-build-and-test:
     - pytest tests/e2e
 
 
+cisu-build-and-test:
+  image: python:3.8
+  stage: build-test
+  script:
+    - cd cisu
+    - source venv/bin/activate
+    - echo "Unit testing..."
+    - pytest tests/unit

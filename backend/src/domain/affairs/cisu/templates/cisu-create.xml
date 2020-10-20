@@ -1,0 +1,194 @@
+<message xmlns="urn:emergency:cisu:2.0">
+  <messageId>{{ messageId }}</messageId>
+  <sender>
+    <name>{{ sender.name }}</name>
+    <URI>{{ sender.URI }}</URI>
+  </sender>
+  <sentAt>{{ sentAt }}</sentAt>
+  <msgType>{{ msgType }}</msgType>
+  <status>{{ status }}</status>
+  <recipients>
+    {{#each recipients}}
+    <recipient>
+      <name>{{ this.name }}</name>
+      <URI>{{ this.URI }}</URI>
+    </recipient>
+    {{/each }}
+  </recipients>
+  <createEvent>
+    <eventId>{{ createEvent.eventId }}</eventId>
+    <createdAt>{{ createEvent.createdAt }}</createdAt>
+    <severity>{{ createEvent.severity }}</severity>
+    {{#if createEvent.eventLocation }}
+    <eventLocation>
+      {{#if createEvent.eventLocation.loc_Id }}
+      <loc_Id>{{ createEvent.eventLocation.loc_Id }}</loc_Id>
+      {{/if}}
+      {{#if createEvent.eventLocation.name }}
+      <name>{{ createEvent.eventLocation.name }}</name>
+      {{/if}}
+      {{#if createEvent.eventLocation.type }}
+      <type>{{ createEvent.eventLocation.type }}</type>
+      {{/if}}
+      {{#if createEvent.eventLocation.coordsys }}
+      <coordsys>{{ createEvent.eventLocation.coordsys }}</coordsys>
+      {{/if}}
+      {{#if createEvent.eventLocation.height_role }}
+      <height_role>{{ createEvent.eventLocation.height_role }}</height_role>
+      {{/if}}
+      <coord>
+        <lat>{{ createEvent.eventLocation.coord.lat }}</lat>
+        <lon>{{ createEvent.eventLocation.coord.lon }}</lon>
+        {{#if createEvent.eventLocation.coord.height}}
+        <height>{{ createEvent.eventLocation.coord.height }}</height>
+        {{/if}}
+      </coord>
+      {{#each createEvent.eventLocation.address}}
+      <address>{{ this }}</address>
+      {{/each}}
+    </eventLocation>
+    {{/if}}
+    {{#with createEvent.primaryAlert}}
+    <primaryAlert>
+      <alertId>{{ this.alertId }}</alertId>
+      <receivedAt>{{ this.receivedAt }}</receivedAt>
+      <reporting>{{ this.reporting }}</reporting>
+      {{#if this.alertInformation}}
+      <alertInformation>{{ this.alertInformation }}</alertInformation>
+      {{/if}}
+      {{#if this.alertLocation }}
+      <alertLocation>
+        {{#if this.alertLocation.loc_Id }}
+        <loc_Id>{{ this.alertLocation.loc_Id }}</loc_Id>
+        {{/if}}
+        {{#if this.alertLocation.name }}
+        <name>{{ this.alertLocation.name }}</name>
+        {{/if}}
+        {{#if this.alertLocation.type }}
+        <type>{{ this.alertLocation.type }}</type>
+        {{/if}}
+        {{#if this.alertLocation.coordsys }}
+        <coordsys>{{ this.alertLocation.coordsys }}</coordsys>
+        {{/if}}
+        {{#if this.alertLocation.height_rol }}
+        <height_role>{{ this.alertLocation.height_role }}</height_role>
+        {{/if}}
+        <coord>
+          <lat>{{ this.alertLocation.coord.lat }}</lat>
+          <lon>{{ this.alertLocation.coord.lon }}</lon>
+          {{#if this.alertLocation.coord.height}}
+          <height>{{ this.alertLocation.coord.height }}</height>
+          {{/if}}
+        </coord>
+        {{#each this.alertLocation.address}}
+        <address>{{ this }}</address>
+        {{/each}}
+      </alertLocation>
+      {{/if}}
+      {{#if this.call}}
+      <call>
+        {{#if this.call.source }}
+        <source>{{ this.call.source }}</source>
+        {{/if}}
+        {{#if this.call.dialledURI }}
+        <dialledURI>{{ this.call.dialledURI }}</dialledURI>
+        {{/if}}
+      </call>
+      {{/if}}
+      <caller>
+        <callerURI>{{ this.caller.callerURI }}</callerURI>
+        {{#if this.caller.callbackURI}}
+        <callbackURI>{{ this.caller.callbackURI }}</callbackURI>
+        {{/if}}
+        {{#if this.caller.spokenLanguage}}
+        <spokenLanguage>{{ this.caller.spokenLanguage }}</spokenLanguage>
+        {{/if}}
+        {{#if this.caller.callerInformation}}
+        <callerInformation>{{ this.caller.callerInformation }}</callerInformation>
+        {{/if}}
+      </caller>
+      {{#if this.callTaker }}
+      <callTaker>
+        {{#if this.callTaker.organization}}
+        <organization>{{ this.callTaker.organization }}</organization>
+        {{/if}}
+        {{#if this.callTaker.controlRoom}}
+        <controlRoom>{{ this.callTaker.controlRoom }}</controlRoom>
+        {{/if}}
+        {{#if this.callTaker.calltakerURI}}
+        <calltakerURI>{{ this.callTaker.calltakerURI }}</calltakerURI>
+        {{/if}}
+      </callTaker>
+      {{/if}}
+      <alertCode>
+        <version>{{ this.alertCode.version }}</version>
+        <whatsHappen>
+          <code>{{ this.alertCode.whatsHappen.code }}</code>
+          <label>{{ this.alertCode.whatsHappen.label }}</label>
+          {{#if this.alertCode.whatsHappen.comment}}
+          <comment>{{ this.alertCode.whatsHappen.comment }}</comment>
+          {{/if}}
+        </whatsHappen>
+        {{#if this.alertCode.locationKind}}
+        <locationKind>
+          <code>{{ this.alertCode.locationKind.code }}</code>
+          <label>{{ this.alertCode.locationKind.label }}</label>
+          {{#if this.alertCode.locationKind.comment}}
+          <comment>{{ this.alertCode.locationKind.comment }}</comment>
+          {{/if}}
+        </locationKind>
+        {{/if}}
+        {{#if this.alertCode.riskThreat}}
+        {{#each this.alertCode.riskThreat }}
+        <riskThreat>
+          <code>{{ this.code }}</code>
+          <label>{{ this.label }}</label>
+          {{#if this.comment}}
+          <comment>{{ this.comment }}</comment>
+          {{/if}}
+        </riskThreat>
+        {{/each }}
+        {{/if}}
+        {{#if this.alertCode.healthMotive}}
+        <healthMotive>
+          <code>{{ this.alertCode.healthMotive.code }}</code>
+          <label>{{ this.alertCode.healthMotive.label }}</label>
+          {{#if this.alertCode.healthMotive.comment}}
+          <comment>{{ this.alertCode.healthMotive.comment }}</comment>
+          {{/if}}
+        </healthMotive>
+        {{/if}}
+        <victims>
+          {{#if this.alertCode.victims.count}}
+          <count>{{ this.alertCode.victims.count }}</count>
+          {{/if}}
+          {{#if this.alertCode.victims.mainVictim}}
+          <mainVictim>{{ this.alertCode.victims.mainVictim }}</mainVictim>
+          {{/if}}
+          {{#if this.alertCode.victims.comment}}
+          <comment>{{ this.alertCode.victims.comment }}</comment>
+          {{/if}}
+        </victims>
+      </alertCode>
+      {{#if this.resource}}
+      {{#each this.resource}}
+      <resource>
+        <resourceDesc>{{ this.resourceDesc }}</resourceDesc>
+        <mimeType>{{ this.mimeType }}</mimeType>
+        {{#if this.size}}
+        <size>{{ this.size }}</size>
+        {{/if}}
+        <URI>{{ this.URI }}</URI>
+        {{#if this.derefURI}}
+        <derefURI>{{ this.derefURI }}</derefURI>
+        {{/if}}
+        {{#if this.digest}}
+        <digest>{{ this.digest }}</digest>
+        {{/if}}
+      </resource>
+      {{/each}}
+      {{/if}}
+    </primaryAlert>
+    {{/with}}
+  </createEvent>
+</message>

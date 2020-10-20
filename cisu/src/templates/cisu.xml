@@ -7,14 +7,14 @@
   </sender>
   <sentAt>{{ message.sentAt }}</sentAt>
   <msgType>{{ message.msgType }}</msgType>
-  <status>{{ status }}</status>
+  <status>{{ message.status }}</status>
   <recipients>
-    {% for recipient in message.recipients.recipients %}
+    {% for recipient in message.recipients %}
     <recipient>
       <name>{{ recipient.name }}</name>
       <URI>{{ recipient.URI }}</URI>
     </recipient>
     {% endfor %}
   </recipients>
-  {% include "create-event.xml" %}
+  {% include "templates/create-event.xml" %}
 </message>

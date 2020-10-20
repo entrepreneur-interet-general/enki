@@ -28,3 +28,7 @@ class DateType(object):
 
     def validate(self):
         pass
+
+    def __repr__(self):
+        string_value = self.value.strftime('%Y-%m-%dT%H:%M:%S%z')
+        return string_value[0:-2] + ":" + string_value[-2:]

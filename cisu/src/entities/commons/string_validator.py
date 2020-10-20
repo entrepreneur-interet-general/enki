@@ -8,3 +8,6 @@ class StringValidator(str):
         if not self.pattern:
             return True
         return bool(re.match(pattern=self.pattern, string=self))
+
+    def __repr__(self):
+        return self.replace("&", '&amp;')

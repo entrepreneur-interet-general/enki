@@ -27,7 +27,7 @@
         {% endif %}
       </coord>
       {% for address in  message.choice.eventLocation.address %}
-      <address>{{ address }}</address>
+      <address>{{ address|safe}}</address>
       {% endfor %}
     </eventLocation>
     {% endif %}

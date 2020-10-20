@@ -1,7 +1,6 @@
+import pathlib
 from enum import auto
 from typing import List, Union
-from uuid import uuid4
-
 from dataclasses import dataclass
 
 from .alert_entity import AlertEntity, PrimaryAlertEntity, OtherAlertEntity
@@ -170,7 +169,7 @@ class MessageCisuEntity(object):
     def from_xml(cls, xml):
         message_id = get_data_from_tag_name(xml, "messageId")
         sender = AddressType.from_xml(get_xml_from_tag_name(xml, "sender")[0])
-        sent_at = get_data_from_tag_name(xml, "sentAt")
+        sent_at = DateType(get_data_from_tag_name(xml, "sentAt"))
         msg_type = get_data_from_tag_name(xml, "msgType")
         status = get_data_from_tag_name(xml, "status")
         recipients = Recipients.from_xml(get_xml_from_tag_name(xml, "recipients")[0])
@@ -187,9 +186,10 @@ class MessageCisuEntity(object):
 
     def to_xml(self) -> str:
         from jinja2 import Environment, FileSystemLoader
-        env = Environment(loader=FileSystemLoader('../src/templates/'))
-        template = env.get_template('message.xml')
-        return template.render(message=self)
+        xml_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), '../templates/')
+        env = Environment(loader=FileSystemLoader(str(xml_path)))
+        template = env.get_template('cisu.xml')
+        return template.render(message=self).replace("&", "&amp;")
 
 
 @dataclass
@@ -213,6 +213,8 @@ class CisuEntity:
 
     def to_xml(self) -> str:
         from jinja2 import Environment, FileSystemLoader
-        env = Environment(loader=FileSystemLoader('../src/templates/'))
+        xml_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), '../templates/')
+
+        env = Environment(loader=FileSystemLoader(str(xml_path)))
         template = env.get_template('cisu.xml')
         return template.render(message=self.message)

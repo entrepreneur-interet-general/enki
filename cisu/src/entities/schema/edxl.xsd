@@ -26,9 +26,8 @@
   <!--
      NEXSIS customer xsd
 -->
-      <xs:include schemaLocation="edxl_commons.xsd"/>
 
-  <xs:import namespace="urn:cisuV2" schemaLocation="../cisu/cisu.xsd"/>
+  <xs:import namespace="urn:cisuV2" schemaLocation="/cisu.xsd"/>
 
   <xs:element name="edxlDistribution" type="DEDistributionType"/>
 	<xs:complexType name="DEDistributionType">

@@ -23,6 +23,7 @@
       <contentXML>
         <embeddedXMLContent>
           {% include "templates/cisu-create.xml" %}
+<!--          TODO: Find a way to reference cisu-create.xml from another layer-->
         </embeddedXMLContent>
       </contentXML>
     </contentObject>

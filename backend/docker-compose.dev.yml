@@ -9,11 +9,12 @@ services:
       - pg
     command: flask run --host=0.0.0.0
     environment:
-      REPOSITORIES: PG
+      # REPOSITORIES: PG
       # SQLALCHEMY_ENGINE_OPTIONS: postgresql://postgres:pg-password@localhost:5432/sapeurs-dev
       SQLALCHEMY_ENGINE_OPTIONS: postgresql://postgres:pg-password@pg:5432/sapeurs-dev
       FLASK_ENV: development
-      FLASK_APP: src/entrypoints/flask_app
+      FLASK_APP: src/entrypoints/flask_app:app
+      FLASK_DEBUG: 1
     ports:
       - "5000:5000"
     volumes:

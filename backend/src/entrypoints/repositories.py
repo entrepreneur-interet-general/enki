@@ -7,6 +7,7 @@ from sqlalchemy.orm.session import Session
 from adapters.postgres.orm import start_mappers
 from adapters.postgres.pg_task_repository import PgTaskRepository
 from domain.tasks.ports.task_repository import AbstractTaskRepository, InMemoryTaskRepository
+from adapters.xml.xml_cisu_repository import XmlCisuRepository
 
 def getPgRepos() -> AbstractTaskRepository:
     engine = create_engine(
@@ -33,3 +34,4 @@ class Repositories:
         else:
             self.task = InMemoryTaskRepository()
 
+        self.affairs = XmlCisuRepository()

@@ -70,6 +70,12 @@ class Address(str):
                     et contenir des informations complémentaires (digicode, étage, ...)
     """
 
+    def __str__(self):
+        return self.replace("&", "&amp;")
+
+    def __repr__(self):
+        return self.replace("&", "&amp;")
+
 
 class HeightRole(CisuEnum):
     """

@@ -22,8 +22,7 @@
     <contentObject xlink:type="resource">
       <contentXML>
         <embeddedXMLContent>
-          {% include "templates/cisu-create.xml" %}
-<!--          TODO: Find a way to reference cisu-create.xml from another layer-->
+          {% include "cisu.xml" %}
         </embeddedXMLContent>
       </contentXML>
     </contentObject>

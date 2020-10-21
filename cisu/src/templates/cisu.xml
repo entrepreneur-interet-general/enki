@@ -16,5 +16,5 @@
     </recipient>
     {% endfor %}
   </recipients>
-  {% include "templates/create-event.xml" %}
+  {% include "create-event.xml" %}
 </message>

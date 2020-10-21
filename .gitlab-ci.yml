@@ -47,7 +47,7 @@ install-cisu-package-dependencies:
   image: python:3.8
   stage: install
   script:
-    - cd schema
+    - cd cisu
     - echo "Installing python env and requirements..."
     - python3 -m venv venv
     - source venv/bin/activate
@@ -63,6 +63,7 @@ install-cisu-package-dependencies:
       - merge_requests
     changes:
       - cisu/*
+
 
 
 front-enki-build-and-test:
@@ -117,7 +118,7 @@ cisu-build-and-test:
   image: python:3.8
   stage: build-test
   script:
-    - cd schema
+    - cd cisu
     - source venv/bin/activate
     - echo "Unit testing..."
     - pytest tests/unit

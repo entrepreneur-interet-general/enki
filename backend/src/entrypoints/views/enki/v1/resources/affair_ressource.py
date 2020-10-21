@@ -3,6 +3,7 @@ from flask_restful import Resource
 
 from domain.affairs.ports.affair_repository import AbstractAffairRepository
 from domain.affairs.affair_service import list_affairs
+from entrypoints.views.enki.v1.blueprint import enki_v1_blueprint
 
 
 class WithAffairRepoResource(Resource):
@@ -10,10 +11,9 @@ class WithAffairRepoResource(Resource):
         self.affairRepo = affairRepo
 
 
+@enki_v1_blueprint.route("/affairs")
 class AffairListResource(WithAffairRepoResource):
     def get(self):
         return {
                    "affairs": list_affairs(self.affairRepo),
-            "path":str(self.affairRepo.xml_path)
-
                }, 200

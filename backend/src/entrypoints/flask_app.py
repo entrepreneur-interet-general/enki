@@ -13,7 +13,7 @@ app.config.from_object(SapeursConfig)
 api = Api(app)
 repositories = Repositories()
 
-simple_page = Blueprint('api', __name__, url_prefix="/api/v1")
+simple_page = Blueprint('api', __name__, url_prefix="/test")
 
 
 @simple_page.route('/')
@@ -23,8 +23,10 @@ def hello_sapeurs():
     return response
 
 
-app.register_blueprint(simple_page)
+#app.register_blueprint(simple_page)
+print(app.url_map)
 app.register_blueprint(enki_v1_blueprint)
+print(app.url_map)
 # api.add_resource(TaskListResource, '/tasks', resource_class_kwargs={'taskRepo': repositories.task})
 # api.add_resource(TaskResource, '/tasks/<uuid>', resource_class_kwargs={'taskRepo': repositories.task})
 

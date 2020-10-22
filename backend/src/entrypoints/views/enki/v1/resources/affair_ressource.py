@@ -13,6 +13,7 @@ class WithAffairRepoResource(Resource):
 
 @enki_v1_blueprint.route("/affairs")
 class AffairListResource(WithAffairRepoResource):
+    @enki_v1_blueprint.route("/affairs")
     def get(self):
         return {
                    "affairs": list_affairs(self.affairRepo),

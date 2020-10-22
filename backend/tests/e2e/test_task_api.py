@@ -1,11 +1,7 @@
 from typing import Dict
 from flask.testing import FlaskClient
 import json
-
-from sqlalchemy import create_engine
-from sqlalchemy.sql.schema import MetaData
 from entrypoints.flask_app import app
-from entrypoints.extensions import repositories
 
 BASE_PATH_TASK: str = "/api/enki/v1/tasks"
 

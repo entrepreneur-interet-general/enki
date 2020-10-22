@@ -18,8 +18,9 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./src:/src
-      - ./tests:/tests
+      - ./src:/code/src
+      - ./tests:/code/tests
+
 
   pg:
     image: postgres

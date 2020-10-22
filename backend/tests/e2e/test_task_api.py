@@ -5,6 +5,7 @@ from entrypoints.flask_app import app
 
 BASE_PATH_TASK: str = "/api/enki/v1/tasks"
 
+
 def test_hello_sapeurs_returns_200_and_expected_message():
     with app.test_client() as client:
         response = client.get('/')
@@ -47,4 +48,4 @@ def test_add_task_then_recovers_it_and_recovers_all():
 
 
 def post_add_task(client: FlaskClient, body: Dict[str, str]):
-    return client.post('/tasks', json=body)
+    return client.post(BASE_PATH_TASK, json=body)

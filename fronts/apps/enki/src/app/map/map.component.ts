@@ -34,12 +34,12 @@ export class MapComponent implements OnInit {
   ngAfterViewInit(): void {
     this.initMap()
     this.affairesService.getAffaires().subscribe((affaires) => {
-      console.log(affaires[0].location.lat, affaires[0].location.lon)
-      this.map.panTo([affaires[0].location.lat, affaires[0].location.lon])
+      console.log(affaires[0].coord.lat, affaires[0].coord.long)
+      this.map.panTo([affaires[0].coord.lat, affaires[0].coord.long])
       // const marker = L.marker([affaires[0].location.lat, affaires[0].location.lon], {icon: this.icon}).addTo(this.map);
 
       affaires.forEach((affaire) => {
-        L.marker([affaire.location.lat, affaire.location.lon], {icon: this.icon}).addTo(this.map);
+        L.marker([affaire.coord.lat, affaire.coord.long], {icon: this.icon}).addTo(this.map);
       })
     })
   }

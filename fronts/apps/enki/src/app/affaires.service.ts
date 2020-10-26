@@ -5,20 +5,16 @@ import { Observable, of } from 'rxjs';
 import * as NatureDeFait from './naturedefait.json'
 import { KeycloakService } from 'keycloak-angular';
 
-interface Affaires {
-  hits: Hits
-}
-interface Hits {
-  hits: []
-}
 interface Affaire {
-  natureDeFait: string;
-  nbDeVictimes: string;
-  location: {
-    lon: number;
-    lat: number;
-  };
-  adresse: string;
+  dateTimeSent: object;
+  resource?: any;
+  coord: Coordinates;
+  victims: number;
+  address: string;
+}
+interface Coordinates {
+  lat: number,
+  long: number
 }
 @Injectable({
   providedIn: 'root'
@@ -33,7 +29,7 @@ export class AffairesService {
     private http: HttpClient,
     private keycloakService: KeycloakService
     ) { 
-      this.affairesUrl = 'http://localhost:9200/affaire/_search'
+      this.affairesUrl = 'http://localhost:5000/affairs'
       this.httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.keycloakService.getToken() })
@@ -42,24 +38,24 @@ export class AffairesService {
     }
 
   getAffaires(): Observable<Affaire[]> {
-    return this.http.get<Affaires>(this.affairesUrl, this.httpOptions)
+    return this.http.get<any>(this.affairesUrl, this.httpOptions)
       .pipe(
         map(affaires => {
           let newAffaires = []
-          newAffaires = affaires.hits.hits.map((affaire: any) => {
+          // debugger;
+          newAffaires = affaires.affairs.map((affaire: Affaire) => {
             const newAffaire: Affaire = {
-              natureDeFait: affaire._source.nature_de_fait_0_label,
-              nbDeVictimes: affaire._source.nombre_de_victimes,
-              adresse: affaire._source.adresse,
-              location: {
-                lon: affaire._source.location.lon,
-                lat: affaire._source.location.lat
-              }
+              dateTimeSent: affaire.dateTimeSent,
+              victims: affaire.resource.message.choice.primaryAlert.alertCode.victims.count,
+              coord: {
+                lat: affaire.resource.message.choice.eventLocation.coord.lat,
+                long: affaire.resource.message.choice.eventLocation.coord.lon
+              },
+              address: affaire.resource.message.choice.eventLocation.address
             }
             
             return newAffaire
           })
-          affaires.hits.hits
           return newAffaires
         }),
         tap(_ => this.log('fetched affaires'))

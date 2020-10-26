@@ -1,6 +1,6 @@
 from .factory import Factory
-from ..commons import LocationType, CoordType
-from ..commons.location_type import LocationShape
+from ..entities.commons import LocationType, CoordType
+from ..entities.commons.location_type import LocationShape
 
 
 class CoordTypeFactory(Factory):

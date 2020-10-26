@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restful import Api
+from flask_cors import CORS
 from entrypoints.extensions import api_spec
 from entrypoints.config import SapeursConfig
 from entrypoints import views
@@ -31,6 +32,7 @@ def create_app():
     """
     app = Flask('sapeurs')
     app.config.from_object(SapeursConfig)
+    CORS(app)
 
     api = Api(app)
     configure_apispec(app=app)

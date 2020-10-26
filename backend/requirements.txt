@@ -6,6 +6,8 @@ psycopg2-binary
 dataclasses-json
 apispec[yaml]
 apispec-webframeworks
+flask-cors
+
 
 # dev/test
 sqlalchemy-stubs

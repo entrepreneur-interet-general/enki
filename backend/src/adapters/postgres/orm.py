@@ -17,6 +17,7 @@ taskTable = Table(
     Column('title', String(255), nullable=False),
 )
 
+
 def start_mappers(engine: Engine):
     metadata.create_all(engine)
     mapper(TaskEntity, taskTable)

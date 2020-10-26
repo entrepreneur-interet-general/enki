@@ -31,11 +31,11 @@ class AbstractAffairRepository(abc.ABC):
             raise NotFoundAffair
         return matches[0]
 
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def get_all(self) -> affairsList:
         raise NotImplementedError
 
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> List[AffairEntity]:
         raise NotImplementedError
 

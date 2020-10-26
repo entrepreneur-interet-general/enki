@@ -1,9 +1,12 @@
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from flask_restful import Api
 from flask_cors import CORS
 from entrypoints.extensions import api_spec
+from typing import List
+from domain.affairs.entities.sge.sge_message_entity import SgeMessageEntity
 from entrypoints.config import SapeursConfig
 from entrypoints import views
+from .extensions import repositories
 
 
 def register_blueprints(app: Flask):
@@ -37,8 +40,14 @@ def create_app():
     api = Api(app)
     configure_apispec(app=app)
     register_blueprints(app)
-
     return app
 
 
 app = create_app()
+
+@app.route('/events')
+def get_events():
+    all_messages: List[SgeMessageEntity] = repositories.message.get_all()
+    response = make_response(jsonify({'messages': [msg.affair.to_json() for msg in all_messages]}))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response

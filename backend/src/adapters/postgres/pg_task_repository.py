@@ -4,10 +4,10 @@ from sqlalchemy.orm.session import Session
 from domain.tasks.ports.task_repository import AbstractTaskRepository
 from domain.tasks.entities.task_entity import TaskEntity
 
+
 class PgTaskRepository(AbstractTaskRepository):
     def get_all(self) -> List[TaskEntity]:
         return self.session.query(TaskEntity).all()
-
 
     def __init__(self, session: Session):
         self.session = session

@@ -14,3 +14,4 @@ class Severity(CisuEnum):
     MODERATE = 2
     MINOR = 1
     UNKNOWN = 0
+

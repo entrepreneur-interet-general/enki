@@ -10,6 +10,8 @@ services:
     command: flask run --host=0.0.0.0
     environment:
       REPOSITORIES: PG
+      # SQLALCHEMY_ENGINE_OPTIONS: postgresql://postgres:pg-password@localhost:5432/sapeurs-dev
+      SQLALCHEMY_SGE_ENGINE_OPTIONS: postgresql://hub:hub@hubdb:5432/hub
       SQLALCHEMY_ENGINE_OPTIONS: postgresql://postgres:pg-password@pg:5432/sapeurs-dev
       FLASK_ENV: development
       FLASK_APP: src/entrypoints/flask_app:app
@@ -17,10 +19,12 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./src:/code/src
-      - ./tests:/code/tests
+      - ./src:/src
+      - ./tests:/tests
     networks:
+      - sge_default
       - default
+
   pg:
     image: postgres
     restart: unless-stopped
@@ -34,5 +38,7 @@ services:
       - default
 
 networks:
+  sge_default:
+    external: true
   default:
     driver: bridge

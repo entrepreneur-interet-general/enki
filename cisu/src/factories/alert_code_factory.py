@@ -14,17 +14,17 @@ class WhatsHappenFactory(Factory):
 
 
 class LocationKindFactory(Factory):
-    def generate(self) -> WhatsHappen:
+    def generate(self) -> LocationKind:
         return LocationKindConstants().get_random()
 
 
 class RiskThreatFactory(Factory):
-    def generate(self) -> WhatsHappen:
+    def generate(self) -> RiskThreat:
         return RiskThreatConstants().get_random(how_many=3)
 
 
 class HealthMotiveFactory(Factory):
-    def generate(self) -> WhatsHappen:
+    def generate(self) -> HealthMotive:
         return HealthMotiveConstants().get_random()
 
 

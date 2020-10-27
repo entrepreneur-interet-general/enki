@@ -157,7 +157,7 @@ class UpdateEvent(object):
 
 
 @dataclass
-class Message(object):
+class MessageCisuEntity(object):
     messageId: str
     sender: AddressType
     sentAt: DateType
@@ -203,12 +203,12 @@ class CisuEntity:
         message: str
 
     """
-    message: Message
+    message: MessageCisuEntity
 
     @classmethod
     def from_xml(cls, xml):
         return cls(
-            message=Message.from_xml(xml.getElementsByTagName("message")[0])
+            message=MessageCisuEntity.from_xml(xml.getElementsByTagName("message")[0])
         )
 
     def to_xml(self) -> str:

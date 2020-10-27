@@ -1,10 +1,12 @@
+from typing import Union
+
 from .alert_code_factory import AlertCodeFactory
 from .factory import Factory
 from .location_factory import LocationTypeFactory
-from ..entities.alert_entity import AlertEntity
+from ..entities.alert_entity import AlertEntity, PrimaryAlertEntity, OtherAlertEntity
 from .uid_factory import UidFactory
 from ..entities.commons.common_alerts import Reporting, AlertId, Call, \
-        Caller, CallTaker, AnyURI, Language
+    Caller, CallTaker, AnyURI, Language
 
 
 class CallFactory:
@@ -34,10 +36,9 @@ class CallTakerFactory:
         )
 
 
-
-class AlertFactory(Factory):
-    def build(self) -> AlertEntity:
-        return AlertEntity(
+class PrimaryAlertFactory(Factory):
+    def build(self) -> PrimaryAlertEntity:
+        return PrimaryAlertEntity(
             alertId=AlertId(UidFactory().build()),
             receivedAt=self.clock_seed.generate(),
             reporting=Reporting.random(),
@@ -47,5 +48,23 @@ class AlertFactory(Factory):
             caller=CallerFactory().build(),
             callTaker=CallTakerFactory().build(),
             resource=[],
-            alertCode=AlertCodeFactory().build()
+            alertCode=AlertCodeFactory().build(),
+            primary=True
+        )
+
+
+class OtherAlertFactory(Factory):
+    def build(self) -> OtherAlertEntity:
+        return OtherAlertEntity(
+            alertId=AlertId(UidFactory().build()),
+            receivedAt=self.clock_seed.generate(),
+            reporting=Reporting.random(),
+            alertInformation=self.faker.text,
+            alertLocation=LocationTypeFactory().build(),
+            call=CallFactory().build(),
+            caller=CallerFactory().build(),
+            callTaker=CallTakerFactory().build(),
+            resource=[],
+            alertCode=AlertCodeFactory().build(),
+            primary=False,
         )

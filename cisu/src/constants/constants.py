@@ -9,14 +9,14 @@ from ..entities.commons.common_alerts import AttributeType, WhatsHappen, Locatio
     RiskThreat, HealthMotive
 
 
-@dataclass#
+@dataclass  #
 class ConstantHandler:
     attribute_type_class: AttributeType
     child_keyword: str = "enfants"
 
     def __init__(self, name: str):
         self.path_constant = pathlib.Path(pathlib.Path(__file__).parent.absolute(), name)
-        self.__all:List[AttributeType] = self.list_all()
+        self.__all: List[AttributeType] = self.list_all()
 
     def data_from_json_file(self) -> list:
         with open(self.path_constant, "r") as f:
@@ -36,13 +36,13 @@ class ConstantHandler:
     def list_has_childs(self, data_list: list) -> bool:
         return any([e.get(self.child_keyword, False) for e in data_list])
 
-    def get_random(self, how_many=1)-> Union[List[AttributeType],AttributeType]:
+    def get_random(self, how_many=1) -> Union[List[AttributeType], AttributeType]:
         randoms = random.sample(self.__all, how_many)
         return randoms if how_many > 1 else randoms[0]
 
 
 class WhatsHappenConstants(ConstantHandler):
-    attribute_type_class:WhatsHappen = WhatsHappen
+    attribute_type_class: WhatsHappen = WhatsHappen
 
     def __init__(self):
         super(WhatsHappenConstants, self).__init__(name="nature-de-fait.json")

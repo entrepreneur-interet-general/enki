@@ -17,6 +17,11 @@ install-fronts-dependencies:
   artifacts:
     paths:
       - fronts/node_modules/
+  only:
+    refs:
+      - branches
+    changes:
+      - fronts/*
 
 install-backend-dependencies:
   image: python:3.8
@@ -59,19 +64,35 @@ install-cisu-package-dependencies:
     changes:
       - cisu/*
 
-fronts-build-and-test:
+front-enki-build-and-test:
   image: node:latest
   stage: build-test
   script:
     - cd fronts
     - echo "Building enki front app..."
     # - npm run build enki
-    - echo "Building couv-ops front app..."
-    - npm run build couv-ops
     # - echo "Testing enki front app..."
     # - npm test enki
+  only:
+    refs:
+      - branches
+    changes:
+      - fronts/*
+
+front-couvops-build-and-test:
+  image: node:latest
+  stage: build-test
+  script:
+    - cd fronts
+    - echo "Building couv-ops front app..."
+    - npm run build couv-ops
     - echo "Testing core-couv-ops..."
     - npm test core-couv-ops
+  only:
+    refs:
+      - branches
+    changes:
+      - fronts/*
 
 back-build-and-test:
   image: python:3.8

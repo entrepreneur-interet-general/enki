@@ -1,6 +1,6 @@
 from .factory import Factory
 from .location_factory import LocationTypeFactory
-from ..entities.alert_entity import AlertEntity, PrimaryAlert
+from ..entities.alert_entity import AlertEntity, PrimaryAlertEntity
 from .uid_factory import UidFactory
 from cisu.src.entities.commons.common_alerts import Reporting, AlertId, Call, Caller, CallTaker, AnyURI, Language, \
     AlertCode

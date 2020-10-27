@@ -4,7 +4,7 @@ from uuid import uuid4
 
 from dataclasses import dataclass
 
-from .alert_entity import AlertEntity, PrimaryAlert, OtherAlert
+from .alert_entity import AlertEntity, PrimaryAlertEntity, OtherAlertEntity
 from .commons import DateType, Severity, LocationType
 from .commons.cisu_enum import CisuEnum
 from .commons.common_alerts import AnyURI
@@ -123,8 +123,8 @@ class CreateEvent(object):
     createdAt: DateType
     severity: Severity
     eventLocation: LocationType
-    primaryAlert: PrimaryAlert
-    otherAlert: Union[List[OtherAlert], OtherAlert]
+    primaryAlert: PrimaryAlertEntity
+    otherAlert: Union[List[OtherAlertEntity], OtherAlertEntity]
 
     @classmethod
     def from_xml(cls, xml):
@@ -133,9 +133,9 @@ class CreateEvent(object):
             createdAt=DateType(xml.getElementsByTagName("createdAt")[0].firstChild.nodeValue),
             severity=Severity.from_string(xml.getElementsByTagName("severity")[0].firstChild.nodeValue),
             eventLocation=LocationType.from_xml(xml.getElementsByTagName("eventLocation")[0]),
-            primaryAlert=PrimaryAlert.from_xml(xml.getElementsByTagName("primaryAlert")[0]),
+            primaryAlert=PrimaryAlertEntity.from_xml(xml.getElementsByTagName("primaryAlert")[0]),
             otherAlert=[
-                OtherAlert.from_xml(other_alert) for other_alert in xml.getElementsByTagName("otherAlert")
+                OtherAlertEntity.from_xml(other_alert) for other_alert in xml.getElementsByTagName("otherAlert")
             ],
         )
 
@@ -153,7 +153,7 @@ class UpdateEvent(object):
     createdAt: DateType
     severity: Severity
     eventLocation: LocationType
-    otherAlert: OtherAlert
+    otherAlert: OtherAlertEntity
 
 
 @dataclass

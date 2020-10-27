@@ -8,7 +8,7 @@ from .date_type import DateType
 from .location_type import LocationType
 from .string_validator import StringValidator
 from .utils import get_data_from_tag_name, get_xml_from_tag_name
-
+from abc import ABC
 
 class AlertId(str):
     """
@@ -92,7 +92,7 @@ class Comment(StringValidator):
 
 
 @dataclass
-class AttributeType(object):
+class AttributeType(ABC):
     """
 
     Attributes

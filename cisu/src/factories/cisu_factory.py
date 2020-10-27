@@ -11,7 +11,7 @@ class CreateEventFactory(Factory):
     def build(self) -> CreateEvent:
         return CreateEvent(
             eventId=UidFactory().build(),
-            createdAt=DateType(self.clock_seed.generate()),
+            createdAt=self.clock_seed.generate(),
             severity=Severity.random(),
             eventLocation=LocationTypeFactory().build(),
             primaryAlert=PrimaryAlertFactory().build(),
@@ -24,7 +24,7 @@ class MessageCisuFactory(Factory):
         return MessageCisuEntity(
             messageId=UidFactory().build(),
             sender=AddressTypeFactory().build(),
-            sentAt=DateType(self.clock_seed.generate()),
+            sentAt=self.clock_seed.generate(),
             msgType=MessageType.random(),
             status=Status.random(),
             recipients=RecipientsFactory().build(),

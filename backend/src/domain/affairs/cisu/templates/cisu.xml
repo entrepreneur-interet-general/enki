@@ -1,0 +1,20 @@
+<message xmlns="urn:emergency:cisu:2.0">
+  {%set message = message or edxl.resource.message  %}
+  <messageId>{{ message.messageId }}</messageId>
+  <sender>
+    <name>{{ message.sender.name }}</name>
+    <URI>{{ message.sender.URI }}</URI>
+  </sender>
+  <sentAt>{{ message.sentAt }}</sentAt>
+  <msgType>{{ message.msgType }}</msgType>
+  <status>{{ status }}</status>
+  <recipients>
+    {% for recipient in message.recipients.recipients %}
+    <recipient>
+      <name>{{ recipient.name }}</name>
+      <URI>{{ recipient.URI }}</URI>
+    </recipient>
+    {% endfor %}
+  </recipients>
+  {% include "create-event.xml" %}
+</message>

@@ -4,11 +4,11 @@ from uuid import uuid4
 
 from dataclasses import dataclass
 
-from .alert_entity import AlertEntity, PrimaryAlert, OtherAlert
+from .alert_entity import AlertEntity, PrimaryAlertEntity, OtherAlertEntity
 from .commons import DateType, Severity, LocationType
 from .commons.cisu_enum import CisuEnum
 from .commons.common_alerts import AnyURI
-from .commons.utils import get_data_from_tag_name
+from .commons.utils import get_data_from_tag_name, get_xml_from_tag_name
 
 
 class MessageType(CisuEnum):
@@ -70,17 +70,16 @@ class Recipient(AddressType):
 
 
 @dataclass
-class Recipients(object):
+class Recipients(list):
     """
     Listes de destinataires du message (il doit en avoir un au minimum). S'agissant d'un acquittement on
                 doit trouver
                 au mimnimum l'émetteur du message d'origine mais il est possible d'informer les autres destinataires
                 du message d'origine en les listant dans les 'recipients' (dépendant de la plateforme d'échanges).
     """
-    recipients = List[Recipient]
 
     def __init__(self, recipients):
-        self.recipients = recipients
+        super().__init__(recipients)
 
     @classmethod
     def from_xml(cls, xml):
@@ -88,6 +87,9 @@ class Recipients(object):
             recipients=[
                 Recipient.from_xml(xml=recipient_xml) for recipient_xml in xml.getElementsByTagName("recipient")]
         )
+
+    def __repr__(self):
+        return f"""{[recipient for recipient in self]}"""
 
 
 class AlertAck:
@@ -97,10 +99,10 @@ class AlertAck:
 
     Attributes
     ----------
-    alertId : uuid4
+    alertId : str
         Identifiant technique unique de l'alerte à acquitter.
     """
-    alertId: uuid4
+    alertId: str
 
 
 class AckEvent(object):
@@ -111,18 +113,18 @@ class AckEvent(object):
                 sur suite la suite donnée ne doit en être déduite).
 
     """
-    eventId: uuid4
+    eventId: str
     alert: Union[AlertEntity, List[AlertEntity]]
 
 
 @dataclass
 class CreateEvent(object):
-    eventId: uuid4
+    eventId: str
     createdAt: DateType
     severity: Severity
     eventLocation: LocationType
-    primaryAlert: PrimaryAlert
-    otherAlert: Union[List[OtherAlert], OtherAlert]
+    primaryAlert: PrimaryAlertEntity
+    otherAlert: Union[List[OtherAlertEntity], OtherAlertEntity]
 
     @classmethod
     def from_xml(cls, xml):
@@ -131,11 +133,10 @@ class CreateEvent(object):
             createdAt=DateType(xml.getElementsByTagName("createdAt")[0].firstChild.nodeValue),
             severity=Severity.from_string(xml.getElementsByTagName("severity")[0].firstChild.nodeValue),
             eventLocation=LocationType.from_xml(xml.getElementsByTagName("eventLocation")[0]),
-            primaryAlert=PrimaryAlert.from_xml(xml.getElementsByTagName("primaryAlert")[0]),
+            primaryAlert=PrimaryAlertEntity.from_xml(xml.getElementsByTagName("primaryAlert")[0]),
             otherAlert=[
-                OtherAlert.from_xml(other_alert) for other_alert in xml.getElementsByTagName("otherAlert")
+                OtherAlertEntity.from_xml(other_alert) for other_alert in xml.getElementsByTagName("otherAlert")
             ],
-
         )
 
 
@@ -144,20 +145,20 @@ class AckMessage(object):
     Ce type de message permet un acquittement "technique" d'un message reçu. Il précède un
                 éventuel acquittement "fonctionnel".
     """
-    ackMessageId: uuid4
+    ackMessageId: str
 
 
 class UpdateEvent(object):
-    eventId: uuid4
+    eventId: str
     createdAt: DateType
     severity: Severity
     eventLocation: LocationType
-    otherAlert: OtherAlert
+    otherAlert: OtherAlertEntity
 
 
 @dataclass
-class Message(object):
-    messageId: uuid4
+class MessageCisuEntity(object):
+    messageId: str
     sender: AddressType
     sentAt: DateType
     msgType: MessageType
@@ -167,22 +168,28 @@ class Message(object):
 
     @classmethod
     def from_xml(cls, xml):
-        messageId = AddressType.from_xml(xml.getElementsByTagName("messageId")[0])
-        sender = AddressType.from_xml(xml.getElementsByTagName("sender")[0])
-        sentAt = xml.getElementsByTagName("sentAt")[0].firstChild.nodeValue
-        msgType = xml.getElementsByTagName("msgType")[0].firstChild.nodeValue
-        status = xml.getElementsByTagName("status")[0].firstChild.nodeValue
-        recipients = Recipients.from_xml(xml.getElementsByTagName("recipients")[0])
+        message_id = get_data_from_tag_name(xml, "messageId")
+        sender = AddressType.from_xml(get_xml_from_tag_name(xml, "sender")[0])
+        sent_at = get_data_from_tag_name(xml, "sentAt")
+        msg_type = get_data_from_tag_name(xml, "msgType")
+        status = get_data_from_tag_name(xml, "status")
+        recipients = Recipients.from_xml(get_xml_from_tag_name(xml, "recipients")[0])
 
         return cls(
-            messageId=messageId,
+            messageId=message_id,
             sender=sender,
-            sentAt=sentAt,
-            msgType=msgType,
+            sentAt=sent_at,
+            msgType=msg_type,
             status=status,
             recipients=recipients,
             choice=CreateEvent.from_xml(xml.getElementsByTagName("createEvent")[0])
         )
+
+    def to_xml(self) -> str:
+        from jinja2 import Environment, FileSystemLoader
+        env = Environment(loader=FileSystemLoader('../src/templates/'))
+        template = env.get_template('message.xml')
+        return template.render(message=self)
 
 
 @dataclass
@@ -196,10 +203,16 @@ class CisuEntity:
         message: str
 
     """
-    message: Message
+    message: MessageCisuEntity
 
     @classmethod
     def from_xml(cls, xml):
         return cls(
-            message=Message.from_xml(xml.getElementsByTagName("message")[0])
+            message=MessageCisuEntity.from_xml(xml.getElementsByTagName("message")[0])
         )
+
+    def to_xml(self) -> str:
+        from jinja2 import Environment, FileSystemLoader
+        env = Environment(loader=FileSystemLoader('../src/templates/'))
+        template = env.get_template('cisu.xml')
+        return template.render(message=self.message)

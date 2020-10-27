@@ -2,13 +2,17 @@ from flask import Blueprint, current_app
 from flask_restful import Api
 
 from entrypoints.extensions import api_spec, repositories
-from .resources import AffairListResource, TaskListResource, TaskResource
+from .resources import AffairListResource, TaskListResource, TaskResource, AffairRandomResource, AffairRandomListResource
 
 enki_blueprint_v1 = Blueprint(name="enki_blueprint_v1", import_name=__name__, url_prefix="/api/enki/v1")
 
 api = Api(enki_blueprint_v1)
 # Affairs
 api.add_resource(AffairListResource, '/affairs', resource_class_kwargs={'affairRepo': repositories.affairs}, endpoint="affairs")
+api.add_resource(AffairRandomResource, '/affair/random', resource_class_kwargs={'affairRepo': repositories.affairs}, endpoint="affairs")
+api.add_resource(AffairRandomListResource, '/affairs/random', resource_class_kwargs={'affairRepo': repositories.affairs}, endpoint="affairs")
+
+# Tasks
 api.add_resource(TaskListResource, '/tasks', resource_class_kwargs={'taskRepo': repositories.task}, endpoint="tasks")
 api.add_resource(TaskResource, '/tasks/<uuid>', resource_class_kwargs={'taskRepo': repositories.task}, endpoint="task_by_id")
 

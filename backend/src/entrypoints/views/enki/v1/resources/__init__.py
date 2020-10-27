@@ -1,8 +1,10 @@
-from .affair_ressource import AffairListResource
+from .affair_ressource import AffairListResource, AffairRandomResource, AffairRandomListResource
 from .task_ressource import TaskResource, TaskListResource
 
 __all__ = [
-    AffairListResource,
     TaskResource,
-    TaskListResource
+    TaskListResource,
+    AffairListResource,
+    AffairRandomResource,
+    AffairRandomListResource
 ]

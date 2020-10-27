@@ -1,7 +1,14 @@
-from enum import Enum
+from enum import Enum, EnumMeta
+from random import choice
 
 
-class CisuEnum(Enum):
+class RandomAttr(EnumMeta):
+
+    def random(self):
+        return choice([e for e in self])
+
+
+class CisuEnum(Enum, metaclass=RandomAttr):
     def __str__(self):
         return str(self.name)
 

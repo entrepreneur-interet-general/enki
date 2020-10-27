@@ -16,12 +16,12 @@ class DateType(object):
         Attributes
         ----------
         value : str
-            a datetime object "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d[\-+]\d\d:\d\d"
+            a datetime object "\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d[\\-+]\\d\\d:\\d\\d"
 
     """
 
     value: datetime
-    pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d[\-+]\d\d:\d\d"
+    pattern = "\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d[\\-+]\\d\\d:\\d\\d"
 
     def __init__(self, value: str):
         self.value = datetime.strptime(remove_extra_last_char_(value), '%Y-%m-%dT%H:%M:%S%z')

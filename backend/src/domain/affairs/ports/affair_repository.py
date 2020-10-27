@@ -1,5 +1,5 @@
 import abc
-from typing import List, Union
+from typing import List
 
 from domain.affairs.entities.affair_entity import AffairEntity
 
@@ -17,6 +17,12 @@ class NotFoundAffair(Exception):
 class AbstractAffairRepository(abc.ABC):
 
     def _add(self, entity: AffairEntity):
+        raise NotImplementedError
+
+    def get_one(self) -> AffairEntity:
+        raise NotImplementedError
+
+    def get_many(self, N) -> List[AffairEntity]:
         raise NotImplementedError
 
     def get_by_uuid(self, uuid: str) -> AffairEntity:

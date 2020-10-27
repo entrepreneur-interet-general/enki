@@ -4,6 +4,7 @@ from dataclasses import dataclass
 
 from .cisu_entity import CisuEntity
 from .commons import DateType
+from .commons.utils import get_data_from_tag_name
 
 
 @dataclass
@@ -11,7 +12,7 @@ class EdxlEntity:
     """
 
     """
-    distributionID: uuid4
+    distributionID: str
     senderID: str
     dateTimeSent: DateType
     dateTimeExpires: DateType
@@ -21,20 +22,26 @@ class EdxlEntity:
 
     @classmethod
     def from_xml(cls, xml):
-        distributionId = xml.getElementsByTagName("distributionID")[0].firstChild.nodeValue
-        senderID = xml.getElementsByTagName("senderID")[0].firstChild.nodeValue
-        dateTimeSent = xml.getElementsByTagName("dateTimeSent")[0].firstChild.nodeValue
-        dateTimeExpires = xml.getElementsByTagName("dateTimeExpires")[0].firstChild.nodeValue
-        distributionStatus = xml.getElementsByTagName("distributionStatus")[0].firstChild.nodeValue
-        distributionKind = xml.getElementsByTagName("distributionKind")[0].firstChild.nodeValue
+        distribution_id = get_data_from_tag_name(xml, "distributionID")
+        sender_id = get_data_from_tag_name(xml, "senderID")
+        date_time_sent = get_data_from_tag_name(xml, "dateTimeSent")
+        date_time_expires = get_data_from_tag_name(xml, "dateTimeExpires")
+        distribution_status = get_data_from_tag_name(xml, "distributionStatus")
+        distribution_kind = get_data_from_tag_name(xml, "distributionKind")
         resource = xml.getElementsByTagName("content")[0]
 
         return cls(
-            distributionID=distributionId,
-            senderID=senderID,
-            dateTimeSent=DateType(dateTimeSent),
-            dateTimeExpires=DateType(dateTimeExpires),
-            distributionStatus=distributionStatus,
-            distributionKind=distributionKind,
+            distributionID=distribution_id,
+            senderID=sender_id,
+            dateTimeSent=DateType(date_time_sent),
+            dateTimeExpires=DateType(date_time_expires),
+            distributionStatus=distribution_status,
+            distributionKind=distribution_kind,
             resource=CisuEntity.from_xml(resource),
         )
+
+    def to_xml(self) -> str:
+        from jinja2 import Environment, FileSystemLoader
+        env = Environment(loader=FileSystemLoader('../src/templates/'))
+        template = env.get_template('message.xml')
+        return template.render(edxl=self)

@@ -1,13 +1,14 @@
 from enum import auto
 
 from dataclasses import dataclass
+from typing import List
 
 from .cisu_enum import CisuEnum
 from .date_type import DateType
 from .location_type import LocationType
 from .string_validator import StringValidator
 from .utils import get_data_from_tag_name, get_xml_from_tag_name
-
+from abc import ABC
 
 class AlertId(str):
     """
@@ -72,10 +73,10 @@ class Code(StringValidator):
     """
     Décrit le code des NF, TL, RMS et MR. Les différents niveaux doivent être séparés par un point.
 
-    pattern [CLMR](([0-9][0-9])|(([0-9][0-9])(\.[0-9][0-9]){1,2}))
+    pattern [CLMR](([0-9][0-9])|(([0-9][0-9])(\\.[0-9][0-9]){1,2}))
     """
 
-    pattern = "[CLMR](([0-9][0-9])|(([0-9][0-9])(\.[0-9][0-9]){1,2}))"
+    pattern = "[CLMR](([0-9][0-9])|(([0-9][0-9])(\\.[0-9][0-9]){1,2}))"
 
 
 class Label(StringValidator):
@@ -91,7 +92,7 @@ class Comment(StringValidator):
 
 
 @dataclass
-class AttributeType(object):
+class AttributeType(ABC):
     """
 
     Attributes
@@ -191,10 +192,10 @@ class Version(StringValidator):
                 de s'assurer que les systèmes opérationnels soient en capacité de les
                 traiter correctement.
 
-    format = latest|(\d+(\.\d*)?)
+    format = latest|(\\d+(\\.\\d*)?)
     """
 
-    pattern = "latest|(\d+(\.\d*)?)"
+    pattern = "latest|(\\d+(\\.\\d*)?)"
 
 
 class WhatsHappen(AttributeType):
@@ -327,7 +328,7 @@ class AlertCode(object):
     version: Version
     whatsHappen: WhatsHappen
     locationKind: LocationKind
-    riskThreat: RiskThreat
+    riskThreat: List[RiskThreat]
     healthMotive: HealthMotive
     victims: Victims
 
@@ -337,31 +338,16 @@ class AlertCode(object):
             version=Version(get_data_from_tag_name(xml, "version")),
             whatsHappen=WhatsHappen.from_xml(get_xml_from_tag_name(xml, "whatsHappen")[0]),
             locationKind=LocationKind.from_xml(get_xml_from_tag_name(xml, "locationKind")[0]),
-            riskThreat=RiskThreat.from_xml(get_xml_from_tag_name(xml, "riskThreat")[0]),
+            riskThreat=[
+                RiskThreat.from_xml(xml_risk) for xml_risk in get_xml_from_tag_name(xml, "riskThreat")
+                ],
             healthMotive=HealthMotive.from_xml(get_xml_from_tag_name(xml, "healthMotive")[0]),
             victims=Victims.from_xml(get_xml_from_tag_name(xml, "victims")[0]),
         )
 
 
 @dataclass
-class OtherAlertCode(object):
+class OtherAlertCode(AlertCode):
     """
 
     """
-    version: Version
-    whatsHappen: WhatsHappen
-    locationKind: LocationKind
-    riskThreat: RiskThreat
-    healthMotive: HealthMotive
-    victims: Victims
-
-    @classmethod
-    def from_xml(cls, xml):
-        return cls(
-            version=Version(get_data_from_tag_name(xml, "version")),
-            whatsHappen=WhatsHappen.from_xml(get_xml_from_tag_name(xml, "whatsHappen")[0]),
-            locationKind=LocationKind.from_xml(get_xml_from_tag_name(xml, "locationKind")[0]),
-            riskThreat=RiskThreat.from_xml(get_xml_from_tag_name(xml, "riskThreat")[0]),
-            healthMotive=HealthMotive.from_xml(get_xml_from_tag_name(xml, "healthMotive")[0]),
-            victims=Victims.from_xml(get_xml_from_tag_name(xml, "victims")[0]),
-        )

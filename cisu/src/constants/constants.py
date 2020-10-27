@@ -8,7 +8,7 @@ from ..entities.commons.common_alerts import AttributeType, WhatsHappen, Locatio
     RiskThreat, HealthMotive
 
 
-@dataclass
+@dataclass#
 class ConstantHandler:
     attribute_type_class: AttributeType
     child_keyword: str = "enfants"

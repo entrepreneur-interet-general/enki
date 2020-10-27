@@ -19,7 +19,7 @@ install-fronts-dependencies:
       - fronts/node_modules/
   only:
     refs:
-      - branches
+      - merge_requests
     changes:
       - fronts/*
 
@@ -36,7 +36,7 @@ install-backend-dependencies:
     - pip install -e ./src
   only:
     refs:
-      - branches
+      - merge_requests
     changes:
       - backend/*
   artifacts:
@@ -60,7 +60,7 @@ install-cisu-package-dependencies:
       - cisu/venv/
   only:
     refs:
-      - branches
+      - merge_requests
     changes:
       - cisu/*
 
@@ -75,7 +75,7 @@ front-enki-build-and-test:
     # - npm test enki
   only:
     refs:
-      - branches
+      - merge_requests
     changes:
       - fronts/*
 
@@ -90,7 +90,7 @@ front-couvops-build-and-test:
     - npm test core-couv-ops
   only:
     refs:
-      - branches
+      - merge_requests
     changes:
       - fronts/*
 
@@ -108,7 +108,7 @@ back-build-and-test:
     - pytest tests/e2e
   only:
     refs:
-      - branches
+      - merge_requests
     changes:
       - backend/*
 
@@ -122,6 +122,6 @@ cisu-build-and-test:
     - pytest tests/unit
   only:
     refs:
-      - branches
+      - merge_requests
     changes:
       - cisu/*

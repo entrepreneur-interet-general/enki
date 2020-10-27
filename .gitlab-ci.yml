@@ -29,6 +29,11 @@ install-backend-dependencies:
     - pip install --upgrade pip
     - pip install -r requirements.txt
     - pip install -e ./src
+  only:
+    refs:
+      - branches
+    changes:
+      - backend/*
   artifacts:
     paths:
       - backend/venv/
@@ -48,6 +53,11 @@ install-cisu-package-dependencies:
   artifacts:
     paths:
       - cisu/venv/
+  only:
+    refs:
+      - branches
+    changes:
+      - cisu/*
 
 fronts-build-and-test:
   image: node:latest
@@ -75,7 +85,11 @@ back-build-and-test:
     - pytest tests/integration
     - echo "Flask e2e testing..."
     - pytest tests/e2e
-
+  only:
+    refs:
+      - branches
+    changes:
+      - backend/*
 
 cisu-build-and-test:
   image: python:3.8
@@ -85,3 +99,8 @@ cisu-build-and-test:
     - source venv/bin/activate
     - echo "Unit testing..."
     - pytest tests/unit
+  only:
+    refs:
+      - branches
+    changes:
+      - cisu/*

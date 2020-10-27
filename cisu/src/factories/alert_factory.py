@@ -45,3 +45,17 @@ class AlertFactory(Factory):
             callTaker=CallTakerFactory().build(),
             resource=[],
         )
+
+class PrimaryAlertFactory(Factory):
+    def build(self) -> AlertEntity:
+        return AlertEntity(
+            alertId=AlertId(UidFactory().build()),
+            receivedAt=self.clock_seed.generate(),
+            reporting=Reporting.random(),
+            alertInformation=self.faker.text,
+            alertLocation=LocationTypeFactory().build(),
+            call=CallFactory().build(),
+            caller=CallerFactory().build(),
+            callTaker=CallTakerFactory().build(),
+            resource=[],
+        )

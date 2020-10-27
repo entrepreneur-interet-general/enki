@@ -347,26 +347,7 @@ class AlertCode(object):
 
 
 @dataclass
-class OtherAlertCode(object):
+class OtherAlertCode(AlertCode):
     """
 
     """
-    version: Version
-    whatsHappen: WhatsHappen
-    locationKind: LocationKind
-    riskThreat: List[RiskThreat]
-    healthMotive: HealthMotive
-    victims: Victims
-
-    @classmethod
-    def from_xml(cls, xml):
-        return cls(
-            version=Version(get_data_from_tag_name(xml, "version")),
-            whatsHappen=WhatsHappen.from_xml(get_xml_from_tag_name(xml, "whatsHappen")[0]),
-            locationKind=LocationKind.from_xml(get_xml_from_tag_name(xml, "locationKind")[0]),
-            riskThreat=[
-                RiskThreat.from_xml(xml_risk) for xml_risk in get_xml_from_tag_name(xml, "riskThreat")
-                ],
-            healthMotive=HealthMotive.from_xml(get_xml_from_tag_name(xml, "healthMotive")[0]),
-            victims=Victims.from_xml(get_xml_from_tag_name(xml, "victims")[0]),
-        )

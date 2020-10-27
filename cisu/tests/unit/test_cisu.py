@@ -1,7 +1,7 @@
 import pathlib
 from datetime import datetime, timezone
 from cisu.src import EdxlEntity
-from cisu.src.entities.alert_entity import PrimaryAlert
+from cisu.src.entities.alert_entity import PrimaryAlertEntity
 from cisu.src.entities.cisu_entity import CreateEvent, Recipient
 from cisu.src.entities.commons import Severity
 from cisu.src.entities.commons.common_alerts import AnyURI
@@ -17,7 +17,7 @@ def test_edxl_xml_parsing():
     assert edxl.distributionID == '21b36a36-717b-4eba-bbc1-8e027624fe2f'
     assert isinstance(edxl.resource.message.choice, CreateEvent)
     assert edxl.resource.message.choice.primaryAlert.receivedAt.value == datetime(2020, 4, 6, 12, 2, tzinfo=timezone.utc)
-    assert isinstance(edxl.resource.message.choice.primaryAlert, PrimaryAlert)
+    assert isinstance(edxl.resource.message.choice.primaryAlert, PrimaryAlertEntity)
     assert isinstance(edxl.resource.message.choice.primaryAlert.resource, list)
     assert edxl.resource.message.recipients == [
         Recipient(name='pompier-sdis77', URI=AnyURI('sge:pompier-sdis77')),

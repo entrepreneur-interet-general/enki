@@ -9,6 +9,17 @@ class WithAffairRepoResource(Resource):
     def __init__(self, affairRepo: AbstractAffairRepository):
         self.affairRepo = affairRepo
 
+class AffairResource(WithAffairRepoResource):
+    """Get random affair
+    ---
+    get:
+      tags:
+        - affairs
+    """
+    def get(self):
+        return {
+                   "affairs": list_affairs(self.affairRepo),
+               }, 200
 
 class AffairListResource(WithAffairRepoResource):
     """All affairs list

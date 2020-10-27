@@ -55,7 +55,7 @@ fronts-build-and-test:
   script:
     - cd fronts
     - echo "Building enki front app..."
-    - npm run build enki
+    # - npm run build enki
     - echo "Building couv-ops front app..."
     - npm run build couv-ops
     # - echo "Testing enki front app..."

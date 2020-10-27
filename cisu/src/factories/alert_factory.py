@@ -1,8 +1,9 @@
 from .factory import Factory
 from .location_factory import LocationTypeFactory
-from ..entities.alert_entity import AlertEntity
+from ..entities.alert_entity import AlertEntity, PrimaryAlert
 from .uid_factory import UidFactory
-from cisu.src.entities.commons.common_alerts import Reporting, AlertId, Call, Caller, CallTaker, AnyURI, Language
+from cisu.src.entities.commons.common_alerts import Reporting, AlertId, Call, Caller, CallTaker, AnyURI, Language, \
+    AlertCode
 
 
 class CallFactory:
@@ -32,6 +33,11 @@ class CallTakerFactory:
         )
 
 
+class AlertCodeFactory(Factory):
+    def build(self) -> AlertCode:
+        pass
+
+
 class AlertFactory(Factory):
     def build(self) -> AlertEntity:
         return AlertEntity(
@@ -44,18 +50,5 @@ class AlertFactory(Factory):
             caller=CallerFactory().build(),
             callTaker=CallTakerFactory().build(),
             resource=[],
-        )
-
-class PrimaryAlertFactory(Factory):
-    def build(self) -> AlertEntity:
-        return AlertEntity(
-            alertId=AlertId(UidFactory().build()),
-            receivedAt=self.clock_seed.generate(),
-            reporting=Reporting.random(),
-            alertInformation=self.faker.text,
-            alertLocation=LocationTypeFactory().build(),
-            call=CallFactory().build(),
-            caller=CallerFactory().build(),
-            callTaker=CallTakerFactory().build(),
-            resource=[],
+            alertCode=AlertCodeFactory().build()
         )

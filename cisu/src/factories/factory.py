@@ -42,5 +42,5 @@ class LocationSeed:
 class Factory:
     def __init__(self):
         self.faker = Faker(locale="fr_FR")
-        self.clock_seed =  ClockSeed(datetime(2020, 1, 1), timedelta(minutes=2))
+        self.clock_seed = ClockSeed(datetime(2020, 1, 1), timedelta(minutes=2))
         self.location_seed = LocationSeed(latitude=48.8811, longitude=2.5929)

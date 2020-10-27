@@ -6,5 +6,7 @@ from domain.affairs.cisu import EdxlEntity
 @dataclass_json
 @dataclass
 class AffairEntity(EdxlEntity):
-    pass
+    """
+
+    """
 

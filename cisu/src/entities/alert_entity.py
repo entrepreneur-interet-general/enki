@@ -15,7 +15,6 @@ class AlertEntity:
         Attributes
         ----------
     """
-
     alertId: AlertId
     receivedAt: ReceivedAt
     reporting: Reporting
@@ -25,14 +24,13 @@ class AlertEntity:
     caller: Caller
     callTaker: CallTaker
     resource: List[Resource]
-
-
-@dataclass
-class PrimaryAlert(AlertEntity):
-    """
-
-    """
     alertCode: AlertCode
+    primary: bool = True
+
+    def __post_init__(self):
+        if not self.primary:
+            self.otherAlertCode: AlertCode = self.alertCode
+            self.__delattr__("alertCode")
 
     @classmethod
     def from_xml(cls, xml):
@@ -48,27 +46,25 @@ class PrimaryAlert(AlertEntity):
             alertCode=AlertCode.from_xml(get_xml_from_tag_name(xml, "alertCode")[0]),
             resource=[
                 Resource.from_xml(resource) for resource in get_xml_from_tag_name(xml, "resource")
-            ]
+            ],
         )
 
 
 @dataclass
-class OtherAlert(AlertEntity):
+class PrimaryAlertEntity(AlertEntity):
     """
 
     """
-    otherAlertCode: AlertCode
+    primary = True
 
     @classmethod
     def from_xml(cls, xml):
-        return cls(
-            alertId=AlertId(get_data_from_tag_name(xml, "alertId")),
-            receivedAt=ReceivedAt(get_data_from_tag_name(xml, "receivedAt")),
-            reporting=Reporting.from_string(get_data_from_tag_name(xml, "reporting")),
-            alertInformation=AlertInformation(get_data_from_tag_name(xml, "alertInformation")),
-            alertLocation=AlertLocation.from_xml(get_xml_from_tag_name(xml, "alertLocation")[0]),
-            call=Call.from_xml(get_xml_from_tag_name(xml, "call")[0]),
-            caller=Caller.from_xml(get_xml_from_tag_name(xml, "caller")[0]),
-            callTaker=Caller.from_xml(get_xml_from_tag_name(xml, "callTaker")[0]),
-            otherAlertCode=OtherAlertCode.from_xml(get_xml_from_tag_name(xml, "alertCode")[0])
-        )
+        return super().from_xml(xml=xml)
+
+
+class OtherAlertEntity(AlertEntity):
+    primary = False
+
+    @classmethod
+    def from_xml(cls, xml):
+        return super().from_xml(xml=xml)

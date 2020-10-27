@@ -1,42 +1,62 @@
-body {
-  color: white;
-}
+@import "enki-design-system/styles/variables";
+
 h1 {
   margin-bottom: 0;
+  font-size: 24px;
+  letter-spacing: 1px;
+  font-weight: 800;
 }
-header {
-  background: #11151C;
+.logout {
+  padding: 32px;
+  background-color: $lightestGrey;
   text-align: center;
+  &--link {
+    color: $lightestRed;
+  }
 }
-.affaires {
-  padding: 0;
-  margin: 30px;
-}
-a {
-  color: white;
+.header {
+  text-align: left;
+  height: 56px;
+  border-bottom: 1px solid $grey;
+  padding: 0 16px;
+  &--col {
+    display: flex;
+    align-items: center;
+    img {
+      display: block;
+      margin-right: 16px;
+    }
+    &.-right {
+      justify-content: flex-end;
+    }
+  }
 }
 
 .affaire {
-  background: #D66853;
   list-style: none;
-  padding: 20px;
   margin-bottom: 30px;
-  &__naturedefait {
-    font-size: 20px;
-    margin-bottom: 10px;
+}
+.niveauAlerte {
+  padding: 16px 16px 0 16px;
+  margin-bottom: 16px;
+  color: $darkestGrey;
+}
+.infosPrincipales {
+  padding: 0 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  &--icon {
+    margin-right: 16px;
     display: flex;
   }
-  &__victimes {
-    display: flex;
+  &--natureDeFait {
+    font-size: 24px;
+    letter-spacing: 1px;
+    font-weight: 700;
   }
-  &__icon {
-    width: 20px;
-    margin-right: 10px;
-    color: white;
-  }
-  .-title {
-      font-weight: bold;
-      align-items: center;
-      margin-right: 5px;
+  &--dateTemps {
+    font-size: 16px;
+    color: $darkestGrey;
   }
 }

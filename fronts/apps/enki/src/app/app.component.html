@@ -1,13 +1,66 @@
-<header class="grid">
-  <h1>ENKI</h1>
+<header class="header grid">
+  <div class="header--col">
+    <div class="logo-marianne">
+      <img src="../assets/Marianne.jpg" />
+    </div>
+    <h1>ENKI</h1>
+  </div>
+  <div class="header--col -right">
+    <div class="burger">BURGER</div>
+  </div>
 </header>
 <main>
-  <nav>
-    <a (click)="logout()">Logout</a>
-  </nav>
-  <div *ngIf="canSeeEvents()">
+  <div class="affaire" *ngIf="canSeeEvents()">
+    <div class="niveauAlerte">
+      Niveau d'alerte : 
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 14.6667C8.73333 14.6667 9.33333 14.0667 9.33333 13.3333H6.66667C6.66667 14.0667 7.26 14.6667 8 14.6667ZM12 10.6667V7.33334C12 5.28667 10.9067 3.57334 9 3.12001V2.66667C9 2.11334 8.55333 1.66667 8 1.66667C7.44667 1.66667 7 2.11334 7 2.66667V3.12001C5.08667 3.57334 4 5.28001 4 7.33334V10.6667L2.66667 12V12.6667H13.3333V12L12 10.6667Z" fill="#E1000F"/>
+        </svg>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 14.6667C8.73333 14.6667 9.33333 14.0667 9.33333 13.3333H6.66667C6.66667 14.0667 7.26 14.6667 8 14.6667ZM12 10.6667V7.33334C12 5.28667 10.9067 3.57334 9 3.12001V2.66667C9 2.11334 8.55333 1.66667 8 1.66667C7.44667 1.66667 7 2.11334 7 2.66667V3.12001C5.08667 3.57334 4 5.28001 4 7.33334V10.6667L2.66667 12V12.6667H13.3333V12L12 10.6667Z" fill="#8494A4"/>
+          </svg>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 14.6667C8.73333 14.6667 9.33333 14.0667 9.33333 13.3333H6.66667C6.66667 14.0667 7.26 14.6667 8 14.6667ZM12 10.6667V7.33334C12 5.28667 10.9067 3.57334 9 3.12001V2.66667C9 2.11334 8.55333 1.66667 8 1.66667C7.44667 1.66667 7 2.11334 7 2.66667V3.12001C5.08667 3.57334 4 5.28001 4 7.33334V10.6667L2.66667 12V12.6667H13.3333V12L12 10.6667Z" fill="#8494A4"/>
+          </svg>
+    </div>
+    <div class="infosPrincipales">
+      <div class="infosPrincipales--icon">
+        <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
+      </div>
+      <div>
+        <div class="infosPrincipales--natureDeFait">
+          Accident routier
+        </div>
+        <div class="infosPrincipales--dateTemps">
+          30/09/2020 à 17:25:09
+        </div>
+      </div>
+    </div>
     <app-map></app-map>
-    <ul class="affaires" >
+    <div class="localisation">
+      <div class="localisation--title">
+        <i class="pointer"></i>
+        Localisation
+      </div>
+      <div class="localisation--adresse">
+        47 rue Ledru Rollin, Ivry-sur-Seine (94041)
+      </div>
+      <div class="localisation--type">
+        Circulation / transport, voie rapide
+      </div>
+      <button class="btn">Copier l'adresse</button>
+    </div>
+    <div class="circonstances">
+      <ul>
+        <li>Accident de circulation - 2 roues</li>
+        <li>Plusieurs victimes</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div *ngIf="canSeeEvents()">
+    <!-- <ul class="affaires" >
       <li *ngFor='let affaire of affaires' class="affaire">
         <div class="affaire__naturedefait">
           <img src="../assets/alert.svg" class="affaire__icon"/><span class="-title">Nature de fait :</span> {{affaire.natureDeFait}}
@@ -19,7 +72,7 @@
           <span class="-title">Adresse : </span> {{affaire.address}}
         </div>
       </li>
-    </ul>
+    </ul> -->
   </div>
   <nav>
     <ul>
@@ -32,9 +85,10 @@
     </ul>
   </nav>
   <p>Bienvenue sur le prototype de Enki !</p>
-  <p>Vous êtes connecté en tant que : <i>{{token}}</i></p>
   <p *ngIf="!canSeeEvents()">Vous n'avez pas le droit de voir les infos confidentielles concernant les alertes...</p>
   <router-outlet></router-outlet>
 
-
+  <nav class="logout">
+    <a (click)="logout()" class="logout--link">Se déconnecter</a>
+  </nav>
 </main>

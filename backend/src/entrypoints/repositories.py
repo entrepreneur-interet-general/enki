@@ -13,6 +13,7 @@ from domain.affairs.ports.message_repository import AbstractSgeMessageRepository
 from adapters.xml.xml_cisu_repository import XmlCisuRepository
 from adapters.random.random_cisu_repository import RandomCisuRepository
 
+
 def getPgTaskRepos() -> AbstractTaskRepository:
     engine = create_engine(
         os.environ.get('SQLALCHEMY_ENGINE_OPTIONS', 'postgresql://postgres:pg-password@localhost:5432/sapeurs-dev'),
@@ -28,7 +29,7 @@ def getPgTaskRepos() -> AbstractTaskRepository:
 def getPgMessageRepos() -> AbstractSgeMessageRepository:
     sge_engine = create_engine(
         os.environ.get('SQLALCHEMY_SGE_ENGINE_OPTIONS'),
-        isolation_level="REPEATABLE READ", echo = True
+        isolation_level="REPEATABLE READ", echo=True
     )
 
     sge_mappers(engine=sge_engine)
@@ -41,15 +42,19 @@ class Repositories:
     task: AbstractTaskRepository
 
     def __init__(self) -> None:
-        repo_infra = os.environ.get('REPOSITORIES')
+        repo_infra: str = os.environ.get('REPOSITORIES')
+        connect_to_sge: bool = os.environ.get('CONNECT_TO_SGE') == 'true'
 
         print("----   Repositories : ", repo_infra or 'IN MEMORY ')
 
         if repo_infra == 'PG':
             self.task = getPgTaskRepos()
-            self.message = getPgMessageRepos()
         else:
             self.task = InMemoryTaskRepository()
+
+        if connect_to_sge:
+            self.message = getPgMessageRepos()
+        else:
             self.message = InMemorySgeMessageRepository()
 
-        self.affairs = RandomCisuRepository() #XmlCisuRepository()
+        self.affairs = RandomCisuRepository()  # XmlCisuRepository()

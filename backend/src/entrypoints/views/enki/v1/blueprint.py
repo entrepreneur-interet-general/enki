@@ -9,8 +9,8 @@ enki_blueprint_v1 = Blueprint(name="enki_blueprint_v1", import_name=__name__, ur
 api = Api(enki_blueprint_v1)
 # Affairs
 api.add_resource(AffairListResource, '/affairs', resource_class_kwargs={'affairRepo': repositories.affairs}, endpoint="affairs")
-api.add_resource(AffairRandomResource, '/affair/random', resource_class_kwargs={'affairRepo': repositories.affairs}, endpoint="affairs")
-api.add_resource(AffairRandomListResource, '/affairs/random', resource_class_kwargs={'affairRepo': repositories.affairs}, endpoint="affairs")
+api.add_resource(AffairRandomResource, '/affair/random', resource_class_kwargs={'affairRepo': repositories.affairs}, endpoint="affair_random")
+api.add_resource(AffairRandomListResource, '/affairs/random', resource_class_kwargs={'affairRepo': repositories.affairs}, endpoint="affairs_random")
 
 # Tasks
 api.add_resource(TaskListResource, '/tasks', resource_class_kwargs={'taskRepo': repositories.task}, endpoint="tasks")

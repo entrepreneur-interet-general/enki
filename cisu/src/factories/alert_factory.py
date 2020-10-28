@@ -23,7 +23,7 @@ class CallerFactory(Factory):
             callerURI=AnyURI("ok:ok"),
             callbackURI=AnyURI("ok:ok"),
             spokenLanguage=Language("fr_FR"),
-            callerInformation=self.faker.text
+            callerInformation=self.faker.text()
         )
 
 
@@ -42,7 +42,7 @@ class PrimaryAlertFactory(Factory):
             alertId=AlertId(UidFactory().build()),
             receivedAt=self.clock_seed.generate(),
             reporting=Reporting.random(),
-            alertInformation=self.faker.text,
+            alertInformation=self.faker.text(),
             alertLocation=LocationTypeFactory().build(),
             call=CallFactory().build(),
             caller=CallerFactory().build(),
@@ -59,7 +59,7 @@ class OtherAlertFactory(Factory):
             alertId=AlertId(UidFactory().build()),
             receivedAt=self.clock_seed.generate(),
             reporting=Reporting.random(),
-            alertInformation=self.faker.text,
+            alertInformation=self.faker.text(),
             alertLocation=LocationTypeFactory().build(),
             call=CallFactory().build(),
             caller=CallerFactory().build(),

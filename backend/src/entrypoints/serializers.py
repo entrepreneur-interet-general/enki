@@ -3,6 +3,7 @@ from datetime import date, datetime
 
 from flask import make_response
 from domain.affairs.cisu.entities.commons.cisu_enum import CisuEnum
+from domain.affairs.cisu.entities.commons.common_alerts import AttributeType, Victims
 
 
 class SapeurJsonEncoder(json.JSONEncoder):
@@ -14,10 +15,15 @@ class SapeurJsonEncoder(json.JSONEncoder):
                 return str(obj)
             elif isinstance(obj, CisuEnum):
                 return str(obj)
+            elif isinstance(obj, AttributeType):
+                return obj.to_dict()
+            elif isinstance(obj, Victims):
+                return obj.to_dict()
             elif obj is None:
                 return None
             return json.JSONEncoder.default(self, obj)
         except TypeError as e:
+            print(e)
             raise TypeError(obj)
 
 

@@ -1,12 +1,9 @@
-import glob
 from typing import List
-import xml.dom.minidom
 import logging
 
 from domain.affairs.cisu.factories.edxl_factory import AffairEntityFactory
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, affairsList
-import pathlib
 
 
 class RandomCisuRepository(AbstractAffairRepository):
@@ -33,9 +30,8 @@ class RandomCisuRepository(AbstractAffairRepository):
         if _matches:
             return _matches[0]
 
-    @staticmethod
-    def build_one():
+    def build_one(self):
         return self.factory.build()
 
-    def build_n_affairs(self, N=100):
+    def build_n_affairs(self, N=10):
         self.all_affairs = [self.build_one() for _ in range(N)]

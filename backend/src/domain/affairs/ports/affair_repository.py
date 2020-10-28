@@ -22,7 +22,7 @@ class AbstractAffairRepository(abc.ABC):
     def get_one(self) -> AffairEntity:
         raise NotImplementedError
 
-    def get_many(self, N) -> List[AffairEntity]:
+    def get_many(self, n) -> List[AffairEntity]:
         raise NotImplementedError
 
     def get_by_uuid(self, uuid: str) -> AffairEntity:

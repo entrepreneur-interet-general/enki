@@ -1,5 +1,7 @@
 import pathlib
 
+from typing import List
+
 from .factory import Factory
 from ..constants.constants import RiskThreatConstants, HealthMotiveConstants, \
     LocationKindConstants, WhatsHappenConstants
@@ -9,31 +11,31 @@ from ..entities.commons.common_alerts import Version, WhatsHappen, LocationKind,
 
 
 class WhatsHappenFactory(Factory):
-    def generate(self) -> WhatsHappen:
+    def build(self) -> WhatsHappen:
         return HealthMotiveConstants().get_random()
 
 
 class LocationKindFactory(Factory):
-    def generate(self) -> LocationKind:
+    def build(self) -> LocationKind:
         return LocationKindConstants().get_random()
 
 
 class RiskThreatFactory(Factory):
-    def generate(self) -> RiskThreat:
+    def build(self) -> List[RiskThreat]:
         return RiskThreatConstants().get_random(how_many=3)
 
 
 class HealthMotiveFactory(Factory):
-    def generate(self) -> HealthMotive:
+    def build(self) -> HealthMotive:
         return HealthMotiveConstants().get_random()
 
 
 class VictimsFactory(Factory):
-    def generate(self) -> Victims:
+    def build(self) -> Victims:
         return Victims(
             count=Count.random(),
             mainVictim=MainVictim.random(),
-            comment=self.faker.text
+            comment=self.faker.text()
         )
 
 
@@ -41,9 +43,9 @@ class AlertCodeFactory(Factory):
     def build(self) -> AlertCode:
         return AlertCode(
             version=Version("latest"),
-            whatsHappen=WhatsHappenFactory().generate(),
-            locationKind=LocationKindFactory().generate(),
-            riskThreat=RiskThreatFactory().generate(),
-            healthMotive=HealthMotiveFactory().generate(),
-            victims=Victims,
+            whatsHappen=WhatsHappenFactory().build(),
+            locationKind=LocationKindFactory().build(),
+            riskThreat=RiskThreatFactory().build(),
+            healthMotive=HealthMotiveFactory().build(),
+            victims=VictimsFactory().build(),
         )

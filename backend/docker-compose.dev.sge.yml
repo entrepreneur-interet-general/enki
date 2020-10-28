@@ -8,14 +8,11 @@ services:
     depends_on:
       - pg
     command: flask run --host=0.0.0.0
+    env_file:
+      - .envs/.local/.env.flaskenv
+      - .envs/.local/.env.pg
     environment:
-      REPOSITORIES: PG
-      # SQLALCHEMY_ENGINE_OPTIONS: postgresql://postgres:pg-password@localhost:5432/sapeurs-dev
-      SQLALCHEMY_SGE_ENGINE_OPTIONS: postgresql://hub:hub@hubdb:5432/hub
-      SQLALCHEMY_ENGINE_OPTIONS: postgresql://postgres:pg-password@pg:5432/sapeurs-dev
-      FLASK_ENV: development
-      FLASK_APP: src/entrypoints/flask_app:app
-      FLASK_DEBUG: 1
+      - CONNECT_TO_SGE: true
     ports:
       - "5000:5000"
     volumes:
@@ -25,13 +22,11 @@ services:
       - sge_default
       - default
 
-  pg:
+  postgres:
     image: postgres
     restart: unless-stopped
-    environment:
-      POSTGRES_DB: sapeurs-dev
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pg-password
+    env_file:
+      - .envs/.local/.env.pg
     volumes:
       - ./pgdata/dev:/var/lib/postgresql/data
     networks:

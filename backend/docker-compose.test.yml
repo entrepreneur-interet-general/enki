@@ -8,9 +8,7 @@ services:
     restart: unless-stopped
     ports:
       - "5431:5432"
-    environment:
-      POSTGRES_DB: sapeurs-test
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pg-password
+    env_file:
+      - .envs/.test/.env.pg
     volumes:
       - ./pgdata/test:/var/lib/postgresql/data

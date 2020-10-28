@@ -6,14 +6,11 @@ services:
     image: sapeurs-api
     build: .
     depends_on:
-      - pg
+      - postgres
     command: flask run --host=0.0.0.0
-    environment:
-      REPOSITORIES: PG
-      SQLALCHEMY_ENGINE_OPTIONS: postgresql://postgres:pg-password@pg:5432/sapeurs-dev
-      FLASK_ENV: development
-      FLASK_APP: src/entrypoints/flask_app:app
-      FLASK_DEBUG: 1
+    env_file:
+      - .envs/.local/.env.flaskenv
+      - .envs/.local/.env.pg
     ports:
       - "5000:5000"
     volumes:
@@ -21,13 +18,11 @@ services:
       - ./tests:/code/tests
     networks:
       - default
-  pg:
+  postgres:
     image: postgres
     restart: unless-stopped
-    environment:
-      POSTGRES_DB: sapeurs-dev
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pg-password
+    env_file:
+      - .envs/.local/.env.pg
     volumes:
       - ./pgdata/dev:/var/lib/postgresql/data
     networks:

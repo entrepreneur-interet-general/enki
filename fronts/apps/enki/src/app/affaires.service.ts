@@ -7,6 +7,7 @@ import { KeycloakService } from 'keycloak-angular';
 
 interface Affaire {
   dateTimeSent: object;
+  natureDeFait: string;
   resource?: any;
   coord: Coordinates;
   victims: number;
@@ -21,7 +22,7 @@ interface Coordinates {
 })
 
 export class AffairesService {
-  affairesUrl: string;
+  affaireUrl: string;
   httpOptions: object;
   naturedefait;
 
@@ -29,7 +30,7 @@ export class AffairesService {
     private http: HttpClient,
     private keycloakService: KeycloakService
     ) { 
-      this.affairesUrl = 'http://localhost:5000/affairs'
+      this.affaireUrl = 'http://localhost:5000/api/enki/v1/affair/random'
       this.httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.keycloakService.getToken() })
@@ -37,13 +38,22 @@ export class AffairesService {
       this.naturedefait = (NatureDeFait as any).default
     }
 
-  getAffaires(): Observable<Affaire[]> {
-    return this.http.get<any>(this.affairesUrl, this.httpOptions)
+  getAffaire(): Observable<Affaire> {
+    return this.http.get<any>(this.affaireUrl, this.httpOptions)
       .pipe(
-        map(affaires => {
-          let newAffaires = []
+        map(affaire => {
+          let newAffaire: Affaire = {
+            dateTimeSent: affaire.affair.dateTimeSent,
+            natureDeFait: affaire.affair.resource.message.choice.primaryAlert.alertCode.whatsHappen.label,
+            victims: affaire.affair.resource.message.choice.primaryAlert.alertCode.victims.count,
+            coord: {
+              lat: affaire.affair.resource.message.choice.eventLocation.coord.lat,
+              long: affaire.affair.resource.message.choice.eventLocation.coord.lon
+            },
+            address: affaire.affair.resource.message.choice.eventLocation.address
+          }
           // debugger;
-          newAffaires = affaires.affairs.map((affaire: Affaire) => {
+          /* newAffaires = affaires.affairs.map((affaire: Affaire) => {
             const newAffaire: Affaire = {
               dateTimeSent: affaire.dateTimeSent,
               victims: affaire.resource.message.choice.primaryAlert.alertCode.victims.count,
@@ -55,8 +65,8 @@ export class AffairesService {
             }
             
             return newAffaire
-          })
-          return newAffaires
+          }) */
+          return newAffaire
         }),
         tap(_ => this.log('fetched affaires'))
       );

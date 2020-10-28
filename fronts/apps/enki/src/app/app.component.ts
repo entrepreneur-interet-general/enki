@@ -10,7 +10,7 @@ import { KeycloakService } from 'keycloak-angular';
 })
 export class AppComponent {
   title = 'enki';
-  affaires;
+  affaire;
   number = add(1, 2);
   token;
   
@@ -22,8 +22,8 @@ export class AppComponent {
       });
   }
   ngOnInit(): void {
-    this.affairesService.getAffaires().subscribe((affaires) => {
-      this.affaires = affaires
+    this.affairesService.getAffaire().subscribe((affaire) => {
+      this.affaire = affaire
     })
   }
   logout(): void {

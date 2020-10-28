@@ -1,3 +1,4 @@
+import random
 from typing import List
 import logging
 
@@ -11,15 +12,19 @@ class RandomCisuRepository(AbstractAffairRepository):
     def __init__(self):
         self.all_affairs: List[AffairEntity] = []
         self.factory = AffairEntityFactory()
+        self.all_affairs.extend(self.build_many(n=50))
 
     def _add(self, entity: AffairEntity):
         self.all_affairs.append(entity)
 
     def get_one(self) -> AffairEntity:
-        return self.build_one()
+        return random.sample(self.all_affairs, 1)[0]
+
+    def build_many(self, n) -> List[AffairEntity]:
+        return [self.build_one() for _ in range(n)]
 
     def get_many(self, n) -> List[AffairEntity]:
-        return [self.build_one() for _ in range(n)]
+        return random.sample(self.all_affairs, n)
 
     def get_all(self) -> affairsList:
         logging.info(f"self.all_affairs {self.all_affairs}")
@@ -32,6 +37,3 @@ class RandomCisuRepository(AbstractAffairRepository):
 
     def build_one(self):
         return self.factory.build()
-
-    def build_n_affairs(self, N=10):
-        self.all_affairs = [self.build_one() for _ in range(N)]

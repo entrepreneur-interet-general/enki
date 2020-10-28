@@ -15,7 +15,6 @@ def register_blueprints(app: Flask):
     :param app:
     :return:
     """
-    app.register_blueprint(views.couvops_blueprint)
     app.register_blueprint(views.hello_page_blueprint)
     app.register_blueprint(views.enki_blueprint)
     app.register_blueprint(views.enki.enki_blueprint_v1)

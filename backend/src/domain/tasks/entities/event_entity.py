@@ -30,7 +30,3 @@ class MessageEventEntity(Entity, TimeStamped):
 
     # parents: any = field(default_factory=lambda: None)
     # childs: any = field(default_factory=lambda: None)
-
-    def __init__(self, **kwargs):
-        super(Entity, self).__init__(**kwargs)
-        super(TimeStamped, self).__init__(**kwargs)

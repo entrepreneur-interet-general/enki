@@ -81,21 +81,6 @@ front-enki-build-and-test:
     changes:
       - fronts/*
 
-front-couvops-build-and-test:
-  image: node:latest
-  stage: build-test
-  script:
-    - cd fronts
-    - echo "Building couv-ops front app..."
-    - npm run build couv-ops
-    - echo "Testing core-couv-ops..."
-    - npm test core-couv-ops
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - fronts/*
-
 back-build-and-test:
   image: python:3.8
   stage: build-test

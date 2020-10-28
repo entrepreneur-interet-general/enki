@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import * as NatureDeFait from './naturedefait.json'
 import { KeycloakService } from 'keycloak-angular';
 
-interface Affaire {
+export interface Affaire {
   dateTimeSent: object;
   natureDeFait: string;
   resource?: any;
@@ -24,7 +23,6 @@ interface Coordinates {
 export class AffairesService {
   affaireUrl: string;
   httpOptions: object;
-  naturedefait;
 
   constructor(
     private http: HttpClient,
@@ -35,7 +33,6 @@ export class AffairesService {
         headers: new HttpHeaders({ 'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.keycloakService.getToken() })
       };
-      this.naturedefait = (NatureDeFait as any).default
     }
 
   getAffaire(): Observable<Affaire> {
@@ -52,20 +49,6 @@ export class AffairesService {
             },
             address: affaire.affair.resource.message.choice.eventLocation.address
           }
-          // debugger;
-          /* newAffaires = affaires.affairs.map((affaire: Affaire) => {
-            const newAffaire: Affaire = {
-              dateTimeSent: affaire.dateTimeSent,
-              victims: affaire.resource.message.choice.primaryAlert.alertCode.victims.count,
-              coord: {
-                lat: affaire.resource.message.choice.eventLocation.coord.lat,
-                long: affaire.resource.message.choice.eventLocation.coord.lon
-              },
-              address: affaire.resource.message.choice.eventLocation.address
-            }
-            
-            return newAffaire
-          }) */
           return newAffaire
         }),
         tap(_ => this.log('fetched affaires'))

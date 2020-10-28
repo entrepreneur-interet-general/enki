@@ -41,6 +41,7 @@ xmlns:xlink="http://www.w3.org/1999/xlink">
   </div>
 </header>
 <main>
+  <button (click)="loadNewAffaire()">RANDOM AFFAIRE</button>
   <div class="affaire" *ngIf="canSeeEvents()">
     <div class="info-block niveauAlerte">
       Niveau d'alerte : 

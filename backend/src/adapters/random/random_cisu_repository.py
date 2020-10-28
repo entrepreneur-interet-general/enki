@@ -2,9 +2,24 @@ import random
 from typing import List
 import logging
 
-from domain.affairs.cisu.factories.edxl_factory import AffairEntityFactory
+from domain.affairs.cisu.factories.cisu_factory import CisuEntityFactory
+from domain.affairs.cisu.factories.edxl_factory import EdxlMessageFactory
+from domain.affairs.cisu.factories.uid_factory import UidFactory
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, affairsList
+
+
+class AffairEntityFactory(EdxlMessageFactory):
+    def build(self) -> AffairEntity:
+        return AffairEntity(
+            distributionID=UidFactory().build(),
+            senderID=UidFactory().build(),
+            dateTimeSent=self.clock_seed.generate(),
+            dateTimeExpires=self.clock_seed.generate(),
+            distributionStatus="status",
+            distributionKind="kind",
+            resource=CisuEntityFactory().build(),
+        )
 
 
 class RandomCisuRepository(AbstractAffairRepository):

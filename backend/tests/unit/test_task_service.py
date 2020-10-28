@@ -1,4 +1,4 @@
-from backend.tests.utils.filter import filter_dict_with_keys
+from ..utils.filter import filter_dict_with_keys
 from domain.tasks.ports.task_repository import AlreadyExistingTaskUuid, InMemoryTaskRepository, NotFoundTask
 from domain.tasks.entities.task_entity import TaskEntity
 from domain.tasks.services.task_service import TaskService
@@ -61,7 +61,7 @@ def test_list_tasks():
     tasks = TaskService.list_tasks(repo)
 
     assert len(tasks) == 1
-    assert filter_dict_with_keys(tasks, serialized_task1) == serialized_task1
+    assert filter_dict_with_keys(tasks[0], serialized_task1) == serialized_task1
 
 
 def test_get_by_uuid_when_not_present():

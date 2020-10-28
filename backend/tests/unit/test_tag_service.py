@@ -1,6 +1,7 @@
 from uuid import uuid4
 import pytest
 
+from ..utils.filter import filter_dict_with_keys
 from domain.tasks.entities.tag_entity import TagEntity
 from domain.tasks.ports.tag_repository import AlreadyExistingTagUuid, InMemoryTagRepository, NotFoundTag
 from domain.tasks.services.tag_service import TagService
@@ -48,7 +49,7 @@ def test_list_tags():
     tags = TagService.list_tags(repo)
 
     assert len(tags) == 1
-    assert {k: v for k, v in tags[0].items() if k in serialized_tag1} == serialized_tag1
+    assert filter_dict_with_keys(tags[0], serialized_tag1) == serialized_tag1
 
 
 def test_get_by_uuid_when_not_present():
@@ -69,4 +70,4 @@ def test_get_by_uuid_when_tag_present():
     repo.set_tags([tag1])
 
     tag = TagService.get_by_uuid(tag1_uuid, repo)
-    assert {k: v for k, v in tag.items() if k in serialized_tag1} == serialized_tag1
+    assert filter_dict_with_keys(tag, serialized_tag1) == serialized_tag1

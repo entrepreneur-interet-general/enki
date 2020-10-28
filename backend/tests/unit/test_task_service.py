@@ -13,10 +13,16 @@ def test_add_task():
     repo = initiateRepo()
     uuid = str(uuid4())
     expected_title = "My title"
-    TaskService.add_task(uuid, expected_title, repo=repo)
+    expected_description = "My description"
+    TaskService.add_task(uuid,
+                         title=expected_title,
+                         description=expected_description,
+                         repo=repo)
 
     print(repo.tasks[0])
-    assert repo.tasks[0] == TaskEntity(uuid=uuid, title=expected_title)
+    assert repo.tasks[0] == TaskEntity(uuid=uuid,
+                                       title=expected_title,
+                                       description=expected_description)
 
 
 def test_fails_to_add_task_when_already_exists():
@@ -25,13 +31,17 @@ def test_fails_to_add_task_when_already_exists():
     task1_uuid = str(uuid4())
     serialized_task1 = {
         "uuid": task1_uuid,
-        "title": "Task 1 title"
+        "title": "Task 1 title",
+        "description": "Task 1 description",
     }
-    task1 = TaskEntity(uuid=task1_uuid, title=serialized_task1["title"])
+    task1 = TaskEntity(uuid=task1_uuid,
+                       title=serialized_task1["title"],
+                       description=serialized_task1["description"],
+                       )
     repo.set_tasks([task1])
 
     with pytest.raises(AlreadyExistingTaskUuid):
-        TaskService.add_task(task1_uuid, "Some title", repo=repo)
+        TaskService.add_task(task1_uuid, "Some title", "Some description", repo=repo)
 
 
 def test_list_tasks():
@@ -40,8 +50,12 @@ def test_list_tasks():
     serialized_task1 = {
         "uuid": task1_uuid,
         "title": "Task 1 title",
+        "description": "Task 1 description",
     }
-    task1 = TaskEntity(uuid=task1_uuid, title=serialized_task1["title"])
+    task1 = TaskEntity(uuid=task1_uuid,
+                       title=serialized_task1["title"],
+                       description=serialized_task1["description"],
+                       )
     repo.set_tasks([task1])
 
     tasks = TaskService.list_tasks(repo)
@@ -62,9 +76,13 @@ def test_get_by_uuid_when_task_present():
     task1_uuid = str(uuid4())
     serialized_task1 = {
         "uuid": task1_uuid,
-        "title": "Task 1 title"
+        "title": "Task 1 title",
+        "description": "Task 1 description"
     }
-    task1 = TaskEntity(uuid=task1_uuid, title=serialized_task1["title"])
+    task1 = TaskEntity(uuid=task1_uuid,
+                       title=serialized_task1["title"],
+                       description=serialized_task1["description"],
+                       )
     repo.set_tasks([task1])
 
     task = TaskService.get_by_uuid(task1_uuid, repo)

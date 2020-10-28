@@ -25,6 +25,3 @@ class TaskEntity(MessageEventEntity):
     done_at: Union[datetime, None] = field(default_factory=lambda: None)
     tags: List = field(default_factory=lambda: [])
     # user_ids: str = field(default_factory=list)
-
-    def __init__(self, **kwargs):
-        super(MessageEventEntity, self).__init__(**kwargs)

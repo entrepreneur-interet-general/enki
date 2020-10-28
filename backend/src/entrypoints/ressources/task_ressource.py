@@ -14,7 +14,9 @@ class WithTaskRepoResource(Resource):
 
 class TaskListResource(WithTaskRepoResource):
     def get(self):
-        return TaskService.list_tasks(self.task_repo), 200
+        return {
+                   "tasks": TaskService.list_tasks(self.task_repo)
+               }, 200
 
     def post(self):
         body = request.get_json()

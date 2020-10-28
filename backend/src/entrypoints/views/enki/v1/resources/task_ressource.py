@@ -2,7 +2,7 @@ from flask import request
 from flask_restful import Resource
 
 from domain.tasks.ports.task_repository import AbstractTaskRepository
-from domain.tasks.services.task_service import add_task, list_tasks, get_by_uuid
+from domain.tasks.services.task_service import TaskService
 
 
 class WithTaskRepoResource(Resource):
@@ -20,12 +20,15 @@ class TaskListResource(WithTaskRepoResource):
           tags:
             - tasks
         """
+
     def get(self):
-        return list_tasks(self.taskRepo), 200
+        return {
+            "tasks":TaskService.list_tasks(self.taskRepo)
+               }, 200
 
     def post(self):
         body = request.get_json()
-        add_task(body["uuid"], body["title"], self.taskRepo)
+        TaskService.add_task(body["uuid"], body["title"], body["description"], self.taskRepo)
         return {"message": "Success"}, 201
 
 
@@ -36,5 +39,8 @@ class TaskResource(WithTaskRepoResource):
           tags:
             - tasks
         """
+
     def get(self, uuid: str):
-        return get_by_uuid(uuid, self.taskRepo)
+        return {
+            "task": TaskService.get_by_uuid(uuid, self.taskRepo)
+               }, 200

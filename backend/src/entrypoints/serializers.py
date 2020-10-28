@@ -5,6 +5,8 @@ from flask import make_response
 
 from domain.affairs.cisu.entities.commons.cisu_enum import CisuEnum
 from domain.affairs.cisu.entities.commons.common_alerts import AttributeType, Victims
+from domain.tasks.entities.event_entity import Severity
+from domain.tasks.entities.task_entity import TaskType
 
 
 class SapeurJsonEncoder(json.JSONEncoder):
@@ -15,6 +17,10 @@ class SapeurJsonEncoder(json.JSONEncoder):
             elif isinstance(obj, date):
                 return str(obj)
             elif isinstance(obj, CisuEnum):
+                return str(obj)
+            elif isinstance(obj, Severity):
+                return str(obj)
+            elif isinstance(obj, TaskType):
                 return str(obj)
             elif isinstance(obj, AttributeType):
                 return obj.to_dict()

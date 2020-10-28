@@ -1,4 +1,3 @@
-from flask import request
 from flask_restful import Resource
 
 from domain.affairs.ports.affair_repository import AbstractAffairRepository

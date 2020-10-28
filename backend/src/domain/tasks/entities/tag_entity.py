@@ -1,6 +1,6 @@
-from typing import Optional
+from typing import Optional, Union
 from domain.core.entity import Entity
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
 
 
@@ -8,9 +8,6 @@ from dataclasses_json import dataclass_json
 @dataclass
 class TagEntity(Entity):
     title: str
-    description: Optional[str]
-    creator_id: str
-    color: str
-
-    def __init__(self, **kwargs):
-        super(Entity, self).__init__(**kwargs)
+    description: Optional[str] = field(default_factory=lambda: None)
+    creator_id: Union[str, None] = field(default_factory=lambda: None)
+    color: Union[str, None] = field(default_factory=lambda: None)

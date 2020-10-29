@@ -4,7 +4,6 @@ from domain.tasks.ports.tag_repository import AbstractTagRepository
 from domain.tasks.ports.task_repository import AbstractTaskRepository
 from domain.tasks.services.tag_service import TagService
 from domain.tasks.services.task_service import TaskService
-from ..utils.filter import filter_dict_with_keys
 from uuid import uuid4
 
 
@@ -16,8 +15,7 @@ def test_add_task_and_add_tag(task_repo: AbstractTaskRepository, tag_repo: Abstr
 
     TaskService.add_tag_to_task(task_uuid=task_uuid,
                                 tag_uuid=tag_uuid,
-                                task_repo=task_repo,
-                                tag_repo=tag_repo)
+                                repo=task_repo)
 
     task:TaskEntity = task_repo.get_by_uuid(task_uuid)
     tag:TagEntity = tag_repo.get_by_uuid(tag_uuid)

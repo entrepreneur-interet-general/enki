@@ -11,6 +11,16 @@ class WithTagRepoResource(Resource):
 
 
 class TagListResource(WithTagRepoResource):
+    """Get all tags
+    ---
+    get:
+      tags:
+        - tags
+
+    post:
+      tags:
+        - tags
+    """
     def get(self):
         return TagService.list_tags(self.tag_repo), 200
 
@@ -27,5 +37,11 @@ class TagListResource(WithTagRepoResource):
 
 
 class TagResource(WithTagRepoResource):
+    """Get specific tag
+    ---
+    get:
+      tags:
+        - tags
+    """
     def get(self, uuid: str):
         return TagService.get_by_uuid(uuid, self.tag_repo)

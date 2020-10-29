@@ -1,7 +1,7 @@
 from http.client import HTTPException
 
 from sqlalchemy.orm.session import Session
-from typing import List
+from typing import List, Any
 
 
 class NotFoundException(HTTPException):
@@ -26,9 +26,9 @@ class PgRepositoryMixin:
             raise NotFoundException
         return matches[0]
 
-    def _add(self, obj: any):
+    def _add(self, obj: Any):
         self.session.add(obj)
         self.commit()
 
-    def get_all(self) -> List[any]:
+    def get_all(self) -> List[Any]:
         return self.session.query(self.entity_type).all()

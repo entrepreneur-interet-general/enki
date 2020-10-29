@@ -25,7 +25,9 @@ def getPgRepos() -> (AbstractTagRepository, AbstractTaskRepository):
     session_factory = sessionmaker(bind=engine)
     session: Session = session_factory()
 
-    return PgTagRepository(session), PgTaskRepository(session)
+    tag_repository = PgTagRepository(session)
+
+    return tag_repository, PgTaskRepository(session, tag_repo=tag_repository)
 
 
 
@@ -54,7 +56,8 @@ class Repositories:
         if repo_infra == 'PG':
             self.tag, self.task = getPgRepos()
         else:
-            self.tag, self.task = InMemoryTagRepository(), InMemoryTaskRepository()
+            self.tag = InMemoryTagRepository()
+            self.task = InMemoryTaskRepository(tag_repo=self.tag)
 
         if connect_to_sge:
             self.message = getPgMessageRepos()

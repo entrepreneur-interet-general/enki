@@ -15,14 +15,14 @@ api.add_resource(AffairRandomResource, '/affair/random', resource_class_kwargs={
 api.add_resource(AffairRandomListResource, '/affairs/random', resource_class_kwargs={'affairRepo': repositories.affairs}, endpoint="affairs_random")
 
 # Tasks
-api.add_resource(TaskListResource, '/tasks', resource_class_kwargs={'taskRepo': repositories.task}, endpoint="tasks")
-api.add_resource(TaskResource, '/tasks/<uuid>', resource_class_kwargs={'taskRepo': repositories.task}, endpoint="task_by_id")
-api.add_resource(TaskTagResource, '/tasks/<uuid>/tags/<tag_uuid>', resource_class_kwargs={'taskRepo': repositories.task}, endpoint="task_by_id_tag")
-api.add_resource(TaskTagListResource, '/tasks/<uuid>/tags', resource_class_kwargs={'taskRepo': repositories.task}, endpoint="task_by_id_tag")
+api.add_resource(TaskListResource, '/tasks', resource_class_kwargs={'task_repo': repositories.task}, endpoint="tasks")
+api.add_resource(TaskResource, '/tasks/<uuid>', resource_class_kwargs={'task_repo': repositories.task}, endpoint="task_by_id")
+api.add_resource(TaskTagResource, '/tasks/<uuid>/tags/<tag_uuid>', resource_class_kwargs={'task_repo': repositories.task}, endpoint="task_by_id_tag_by_id")
+api.add_resource(TaskTagListResource, '/tasks/<uuid>/tags', resource_class_kwargs={'task_repo': repositories.task}, endpoint="task_by_id_tags")
 
 # Tags
-api.add_resource(TagListResource, '/tags', resource_class_kwargs={'tagRepo': repositories.tag}, endpoint="tags")
-api.add_resource(TagResource, '/tags/<uuid>', resource_class_kwargs={'tagRepo': repositories.tag}, endpoint="tag_by_id")
+api.add_resource(TagListResource, '/tags', resource_class_kwargs={'tag_repo': repositories.tag}, endpoint="tags")
+api.add_resource(TagResource, '/tags/<uuid>', resource_class_kwargs={'tag_repo': repositories.tag}, endpoint="tag_by_id")
 
 
 @enki_blueprint_v1.before_app_first_request

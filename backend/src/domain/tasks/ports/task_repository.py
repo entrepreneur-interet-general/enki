@@ -3,7 +3,7 @@ from typing import List, Union
 
 from domain.tasks.entities.tag_entity import TagEntity
 from domain.tasks.entities.task_entity import TaskEntity
-from domain.tasks.ports.tag_repository import AbstractTagRepository
+from domain.tasks.ports.tag_repository import AbstractTagRepository, NotFoundTag
 
 TasksList = List[TaskEntity]
 
@@ -31,14 +31,17 @@ class AbstractTaskRepository(abc.ABC):
             raise NotFoundTask
         return match
 
+    def get_tag_by_task(self, uuid: str, tag_uuid: str) -> TagEntity:
+        return self._get_tag_by_task(uuid=uuid, tag_uuid=tag_uuid)
+
     def add_tag_to_task(self, uuid: str, tag_uuid: str) -> None:
-        match = self._match_uuid(uuid)
-        tag = self.tag_repo.get_by_uuid(uuid=tag_uuid)
+        match: TaskEntity = self.get_by_uuid(uuid)
+        tag: TagEntity = self.tag_repo.get_by_uuid(uuid=tag_uuid)
         self._add_tag_to_task(match, tag=tag)
 
     def remove_tag_to_task(self, uuid: str, tag_uuid: str) -> None:
-        match = self._match_uuid(uuid)
-        tag = self.tag_repo.get_by_uuid(uuid=tag_uuid)
+        match: TaskEntity = self.get_by_uuid(uuid)
+        tag: TagEntity = self.tag_repo.get_by_uuid(uuid=tag_uuid)
         self._remove_tag_to_task(match, tag=tag)
 
     @abc.abstractmethod
@@ -59,6 +62,10 @@ class AbstractTaskRepository(abc.ABC):
 
     @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> Union[TaskEntity, None]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _get_tag_by_task(self, uuid: str, tag_uuid: str) -> TagEntity:
         raise NotImplementedError
 
 
@@ -90,3 +97,10 @@ class InMemoryTaskRepository(AbstractTaskRepository):
 
     def _remove_tag_to_task(self, task: TaskEntity, tag: TagEntity) -> None:
         task.tags.remove(tag)
+
+    def _get_tag_by_task(self, uuid: str, tag_uuid: str) -> TagEntity:
+        task: TaskEntity = self.get_by_uuid(uuid=uuid)
+        matches = [tag for tag in task.tags if tag.uuid == tag_uuid]
+        if matches:
+            return matches[0]
+        raise NotFoundTag

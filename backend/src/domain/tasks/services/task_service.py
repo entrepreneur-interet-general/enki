@@ -1,4 +1,6 @@
 from typing import Any, Dict, List
+
+from domain.tasks.entities.tag_entity import TagEntity
 from domain.tasks.entities.task_entity import TaskEntity
 from domain.tasks.ports.task_repository import AbstractTaskRepository
 from domain.tasks.ports.tag_repository import AbstractTagRepository
@@ -22,6 +24,11 @@ class TaskService:
     def list_tags(uuid: str, repo: AbstractTaskRepository) -> List[Dict[str, Any]]:
         task: TaskEntity = repo.get_by_uuid(uuid)
         return [tag.to_dict() for tag in task.tags]
+
+    @staticmethod
+    def get_task_tag(uuid: str, tag_uuid: str, repo: AbstractTaskRepository) -> Dict[str, Any]:
+        tag: TagEntity = repo.get_tag_by_task(uuid=uuid, tag_uuid=tag_uuid)
+        return tag
 
     @staticmethod
     def list_tasks(repo: AbstractTaskRepository) -> List[Dict[str, Any]]:

@@ -8,4 +8,7 @@ apispec[yaml]
 apispec-webframeworks
 flask-cors
 sqlalchemy-utils
-pandas
+#pandas
+
+#Cisu Package
+faker

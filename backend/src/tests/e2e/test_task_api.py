@@ -6,16 +6,6 @@ from ..utils.filter import filter_dict_with_keys
 
 BASE_PATH_TASK: str = "/api/enki/v1/tasks"
 
-
-def test_hello_sapeurs_returns_200_and_expected_message():
-    with app.test_client() as client:
-        response = client.get('/')
-        body = json.loads(response.data)
-        print("response data : ", json.loads(response.data))
-        assert response.status_code == 200
-        assert body['message'] == "Hello, Sapeurs!"
-
-
 def test_add_task_then_recovers_it_and_recovers_all():
     with app.test_client() as client:
         client: FlaskClient

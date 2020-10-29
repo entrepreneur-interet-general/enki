@@ -13,8 +13,10 @@ def test_add_tag(tag_repo: AbstractTagRepository):
     expected_title = "My title"
     TagService.add_tag(uuid=uuid, title=expected_title, repo=tag_repo)
 
-    print(tag_repo.tags[0])
-    assert tag_repo.tags[0] == TagEntity(uuid=uuid, title=expected_title)
+    print(tag_repo.get_all())
+    print(tag_repo.get_all()[0])
+    print(uuid)
+    assert tag_repo.get_all()[0] == TagEntity(uuid=uuid, title=expected_title)
 
 
 def test_fails_to_add_tag_when_already_exists(tag_repo: AbstractTagRepository):
@@ -25,7 +27,7 @@ def test_fails_to_add_tag_when_already_exists(tag_repo: AbstractTagRepository):
         "title": "Tag 1 title"
     }
     tag1 = TagEntity(uuid=tag1_uuid, title=serialized_tag1["title"])
-    tag_repo.set_tags([tag1])
+    tag_repo.add(tag1)
 
     with pytest.raises(AlreadyExistingTagUuid):
         TagService.add_tag(tag1_uuid, "Some title", repo=tag_repo)
@@ -38,7 +40,7 @@ def test_list_tags(tag_repo: AbstractTagRepository):
         "title": "Tag 1 title",
     }
     tag1 = TagEntity(uuid=tag1_uuid, title=serialized_tag1["title"])
-    tag_repo.set_tags([tag1])
+    tag_repo.add(tag1)
 
     tags = TagService.list_tags(tag_repo)
 
@@ -58,7 +60,7 @@ def test_get_by_uuid_when_tag_present(tag_repo: AbstractTagRepository):
         "title": "Tag 1 title"
     }
     tag1 = TagEntity(uuid=tag1_uuid, title=serialized_tag1["title"])
-    tag_repo.set_tags([tag1])
+    tag_repo.add(tag1)
 
     tag = TagService.get_by_uuid(tag1_uuid, tag_repo)
     assert filter_dict_with_keys(tag, serialized_tag1) == serialized_tag1

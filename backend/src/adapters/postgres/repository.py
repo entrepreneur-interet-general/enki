@@ -1,3 +1,4 @@
+import abc
 from http.client import HTTPException
 
 from sqlalchemy.orm.session import Session
@@ -8,8 +9,8 @@ class NotFoundException(HTTPException):
     code = 404
 
 
-class PgRepositoryMixin:
-    def __init__(self, session: Session, entity_type):
+class PgRepositoryMixin(abc.ABC):
+    def __init__(self, session: Session, entity_type: Any):
         self.session = session
         self.entity_type = entity_type
 

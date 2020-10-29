@@ -46,4 +46,4 @@ class TagResource(WithTagRepoResource):
     """
 
     def get(self, uuid: str):
-        return {"tag":TagService.get_by_uuid(uuid, self.tag_repo)}, 200
+        return {"tag": TagService.get_by_uuid(uuid, self.tag_repo)}, 200

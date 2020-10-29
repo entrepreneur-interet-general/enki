@@ -3,6 +3,7 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.orm.session import Session
+from typing import Tuple
 
 from adapters.postgres.orm import start_mappers
 from adapters.postgres import PgTaskRepository, PgTagRepository
@@ -15,9 +16,9 @@ from adapters.random.random_cisu_repository import RandomCisuRepository
 from domain.tasks.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 
 
-def getPgRepos() -> (AbstractTagRepository, AbstractTaskRepository):
+def getPgRepos(sql_engine_uri:str) -> Tuple[AbstractTagRepository, AbstractTaskRepository]:
     engine = create_engine(
-        os.environ.get('SQLALCHEMY_ENGINE_OPTIONS', 'postgresql://postgres:pg-password@localhost:5432/sapeurs-dev'),
+        sql_engine_uri,
         isolation_level="REPEATABLE READ",
     )
     start_mappers(engine)
@@ -28,7 +29,6 @@ def getPgRepos() -> (AbstractTagRepository, AbstractTaskRepository):
     tag_repository = PgTagRepository(session)
 
     return tag_repository, PgTaskRepository(session, tag_repo=tag_repository)
-
 
 
 def getPgMessageRepos() -> AbstractSgeMessageRepository:
@@ -54,7 +54,8 @@ class Repositories:
         print("----   Repositories : ", repo_infra or 'IN MEMORY ')
 
         if repo_infra == 'PG':
-            self.tag, self.task = getPgRepos()
+            pg_uri = os.environ.get('SQLALCHEMY_ENGINE_OPTIONS', 'postgresql://postgres:pg-password@localhost:5432/sapeurs-dev')
+            self.tag, self.task = getPgRepos(pg_uri)
         else:
             self.tag = InMemoryTagRepository()
             self.task = InMemoryTaskRepository(tag_repo=self.tag)

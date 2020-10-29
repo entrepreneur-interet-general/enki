@@ -1,13 +1,13 @@
 import logging
 
 from datetime import datetime
-from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Integer, TIMESTAMP
+from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Integer, TIMESTAMP, Enum
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy_utils import ChoiceType
 
 from domain.tasks.entities.event_entity import Severity
-from domain.tasks.entities.task_entity import TaskEntity
+from domain.tasks.entities.task_entity import TaskEntity, TaskType
 from domain.tasks.entities.tag_entity import TagEntity
 
 logger = logging.getLogger(__name__)
@@ -40,8 +40,8 @@ taskTable = Table(
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False),
     Column('description', String(255)),
+    Column('task_type', Enum(TaskType)),
     Column('event_type', String(60)),
-    Column('task_type', String(60)),
     Column('executor_id', String(60), ForeignKey("users.uuid")),
     Column('executor_type', String(60)),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
@@ -63,6 +63,13 @@ tagTable = Table(
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
 
+
+all_tables = [
+    tagTaskTable,
+    taskHierarchyTaskTable,
+    taskTable,
+    tagTable
+]
 
 
 def start_mappers(engine: Engine):

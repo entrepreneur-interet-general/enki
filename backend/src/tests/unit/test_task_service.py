@@ -16,9 +16,9 @@ def test_add_task(task_repo: AbstractTaskRepository):
                          description=expected_description,
                          repo=task_repo)
 
-    print(task_repo.tasks[0])
+    print(task_repo.get_all()[0])
     print(uuid)
-    assert task_repo.tasks[0] == TaskEntity(uuid=uuid,
+    assert task_repo.get_all()[0] == TaskEntity(uuid=uuid,
                                             title=expected_title,
                                             description=expected_description)
 
@@ -34,7 +34,7 @@ def test_fails_to_add_task_when_already_exists(task_repo: AbstractTaskRepository
                        title=serialized_task1["title"],
                        description=serialized_task1["description"],
                        )
-    task_repo.set_tasks([task1])
+    task_repo.add(task1)
 
     with pytest.raises(AlreadyExistingTaskUuid):
         TaskService.add_task(task1_uuid, "Some title", "Some description", repo=task_repo)
@@ -51,7 +51,7 @@ def test_list_tasks(task_repo: AbstractTaskRepository):
                        title=serialized_task1["title"],
                        description=serialized_task1["description"],
                        )
-    task_repo.set_tasks([task1])
+    task_repo.add(task1)
 
     tasks = TaskService.list_tasks(task_repo)
 
@@ -75,7 +75,7 @@ def test_get_by_uuid_when_task_present(task_repo: AbstractTaskRepository):
                        title=serialized_task1["title"],
                        description=serialized_task1["description"],
                        )
-    task_repo.set_tasks([task1])
+    task_repo.add(task1)
 
     task = TaskService.get_by_uuid(task1_uuid, task_repo)
     assert filter_dict_with_keys(task, serialized_task1) == serialized_task1

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 
 from sqlalchemy.orm import Session
 
@@ -11,21 +11,23 @@ from .repository import PgRepositoryMixin
 
 class PgTaskRepository(PgRepositoryMixin, AbstractTaskRepository):
 
+
+
     def __init__(self, session: Session, tag_repo: AbstractTagRepository):
         PgRepositoryMixin.__init__(self, session=session, entity_type=TaskEntity)
         AbstractTaskRepository.__init__(self, tag_repo=tag_repo)
 
-    def _add_tag_to_task(self, task: TaskEntity, tag_uuid: str) -> None:
+    def _add_tag_to_task(self, task: TaskEntity, tag: TagEntity) -> None:
         p = self.session.query(TaskEntity).get(task.uuid)
         if p:
-            t = self.session.query(TagEntity).get(tag_uuid)
+            t = self.session.query(TagEntity).get(tag.uuid)
             p.tags.append(t)
             self.commit()
 
-    def _remove_tag_to_task(self, task: TaskEntity, tag_uuid: str) -> None:
+    def _remove_tag_to_task(self, task: TaskEntity, tag: TagEntity) -> None:
         p = self.session.query(TaskEntity).get(task.uuid)
         if p:
-            t = self.session.query(TagEntity).get(tag_uuid)
+            t = self.session.query(TagEntity).get(tag.uuid)
             p.tags.remove(t)
             self.commit()
 
@@ -43,3 +45,11 @@ class PgTaskRepository(PgRepositoryMixin, AbstractTaskRepository):
 
     def get_all(self) -> List[TaskEntity]:
         return self.session.query(self.entity_type).all()
+
+    def _get_tag_by_task(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:
+        matches = self.session.query(TagEntity).\
+            filter(TaskEntity.uuid == uuid).\
+            filter(TagEntity.uuid == tag_uuid).all()
+        if not matches:
+            return None
+        return matches[0]

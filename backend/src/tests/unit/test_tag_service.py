@@ -13,9 +13,6 @@ def test_add_tag(tag_repo: AbstractTagRepository):
     expected_title = "My title"
     TagService.add_tag(uuid=uuid, title=expected_title, repo=tag_repo)
 
-    print(tag_repo.get_all())
-    print(tag_repo.get_all()[0])
-    print(uuid)
     assert tag_repo.get_all()[0] == TagEntity(uuid=uuid, title=expected_title)
 
 

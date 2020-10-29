@@ -32,12 +32,15 @@ class AbstractTaskRepository(abc.ABC):
         return match
 
     def get_tag_by_task(self, uuid: str, tag_uuid: str) -> TagEntity:
-        return self._get_tag_by_task(uuid=uuid, tag_uuid=tag_uuid)
+        match = self._get_tag_by_task(uuid=uuid, tag_uuid=tag_uuid)
+        if not match:
+            raise NotFoundTag
+        return match
 
     def add_tag_to_task(self, uuid: str, tag_uuid: str) -> None:
         match: TaskEntity = self.get_by_uuid(uuid)
         tag: TagEntity = self.tag_repo.get_by_uuid(uuid=tag_uuid)
-        self._add_tag_to_task(match, tag=tag)
+        self._add_tag_to_task(task=match, tag=tag)
 
     def remove_tag_to_task(self, uuid: str, tag_uuid: str) -> None:
         match: TaskEntity = self.get_by_uuid(uuid)
@@ -65,7 +68,7 @@ class AbstractTaskRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _get_tag_by_task(self, uuid: str, tag_uuid: str) -> TagEntity:
+    def _get_tag_by_task(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:
         raise NotImplementedError
 
 

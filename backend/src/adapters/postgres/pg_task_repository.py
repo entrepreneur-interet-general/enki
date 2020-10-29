@@ -11,8 +11,6 @@ from .repository import PgRepositoryMixin
 
 class PgTaskRepository(PgRepositoryMixin, AbstractTaskRepository):
 
-
-
     def __init__(self, session: Session, tag_repo: AbstractTagRepository):
         PgRepositoryMixin.__init__(self, session=session, entity_type=TaskEntity)
         AbstractTaskRepository.__init__(self, tag_repo=tag_repo)
@@ -47,8 +45,8 @@ class PgTaskRepository(PgRepositoryMixin, AbstractTaskRepository):
         return self.session.query(self.entity_type).all()
 
     def _get_tag_by_task(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:
-        matches = self.session.query(TagEntity).\
-            filter(TaskEntity.uuid == uuid).\
+        matches = self.session.query(TagEntity). \
+            filter(TaskEntity.uuid == uuid). \
             filter(TagEntity.uuid == tag_uuid).all()
         if not matches:
             return None

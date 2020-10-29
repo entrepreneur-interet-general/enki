@@ -7,6 +7,7 @@ from typing import List
 class NotFoundException(HTTPException):
     code = 404
 
+
 class PgRepositoryMixin:
     def __init__(self, session: Session, entity_type):
         self.session = session
@@ -31,4 +32,3 @@ class PgRepositoryMixin:
 
     def get_all(self) -> List[any]:
         return self.session.query(self.entity_type).all()
-

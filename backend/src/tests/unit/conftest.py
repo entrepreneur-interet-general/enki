@@ -4,7 +4,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker, Session, clear_mappers
 
 from adapters.postgres import PgTagRepository, PgTaskRepository
-from adapters.postgres.orm import start_mappers, tagTaskTable, all_tables, metadata
+from adapters.postgres.orm import start_mappers, metadata
 from domain.tasks.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 from domain.tasks.ports.task_repository import InMemoryTaskRepository, AbstractTaskRepository
 

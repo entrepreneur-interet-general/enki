@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, current_app
 from flask_restful import Resource
 
 from domain.tasks.ports.tag_repository import AbstractTagRepository
@@ -6,8 +6,8 @@ from domain.tasks.services.tag_service import TagService
 
 
 class WithTagRepoResource(Resource):
-    def __init__(self, tag_repo: AbstractTagRepository):
-        self.tag_repo = tag_repo
+    def __init__(self):
+        pass
 
 
 class TagListResource(WithTagRepoResource):
@@ -23,7 +23,7 @@ class TagListResource(WithTagRepoResource):
     """
 
     def get(self):
-        return {"tags": TagService.list_tags(self.tag_repo)}, 200
+        return {"tags": TagService.list_tags(current_app.context.tag)}, 200
 
     def post(self):
         body = request.get_json()
@@ -32,7 +32,7 @@ class TagListResource(WithTagRepoResource):
             title=body.get("title"),
             description=body.get("description"),
             color=body.get("color"),
-            repo=self.tag_repo
+            repo=current_app.context.tag
         )
         return {"message": "Success"}, 201
 
@@ -46,4 +46,4 @@ class TagResource(WithTagRepoResource):
     """
 
     def get(self, uuid: str):
-        return {"tag": TagService.get_by_uuid(uuid, self.tag_repo)}, 200
+        return {"tag": TagService.get_by_uuid(uuid, current_app.context.tag)}, 200

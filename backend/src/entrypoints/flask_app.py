@@ -4,9 +4,7 @@ from flask_cors import CORS
 from entrypoints.extensions import api_spec
 from typing import List
 from domain.affairs.entities.sge.sge_message_entity import SgeMessageEntity
-from entrypoints.config import SapeursConfig
 from entrypoints import views
-from .extensions import repositories
 from .config import SapeursConfig
 
 
@@ -28,7 +26,7 @@ def configure_apispec(app):
     api_spec.init_app(app)
 
 
-def create_app():
+def create_app(testing=False):
     """
 
     :return:
@@ -37,7 +35,12 @@ def create_app():
     app.config.from_object(SapeursConfig)
     CORS(app)
 
+    if testing is True:
+        app.config["TESTING"] = True
+
     api = Api(app)
+    context = app.config["CONTEXT_FACTORY"](config=SapeursConfig())
+    context.init_app(app=app)
     configure_apispec(app=app)
     register_blueprints(app)
     return app

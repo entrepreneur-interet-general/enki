@@ -1,12 +1,12 @@
+from flask import current_app
 from flask_restful import Resource
 
-from domain.affairs.ports.affair_repository import AbstractAffairRepository
 from domain.affairs.affair_service import list_affairs, get_random_affair, get_random_list_affairs
 
 
 class WithAffairRepoResource(Resource):
-    def __init__(self, affairRepo: AbstractAffairRepository):
-        self.affairRepo = affairRepo
+    def __init__(self):
+        pass
 
 
 class AffairResource(WithAffairRepoResource):
@@ -19,7 +19,7 @@ class AffairResource(WithAffairRepoResource):
 
     def get(self):
         return {
-                   "affairs": list_affairs(self.affairRepo),
+                   "affairs": list_affairs(current_app.context.affair),
                }, 200
 
 
@@ -33,7 +33,7 @@ class AffairRandomResource(WithAffairRepoResource):
 
     def get(self):
         return {
-                   "affair": get_random_affair(self.affairRepo),
+                   "affair": get_random_affair(current_app.context.affair),
                }, 200
 
 
@@ -47,7 +47,7 @@ class AffairRandomListResource(WithAffairRepoResource):
 
     def get(self):
         return {
-                   "affairs": get_random_list_affairs(self.affairRepo),
+                   "affairs": get_random_list_affairs(current_app.context.affair),
                }, 200
 
 
@@ -61,5 +61,5 @@ class AffairListResource(WithAffairRepoResource):
 
     def get(self):
         return {
-                   "affairs": list_affairs(self.affairRepo),
+                   "affairs": list_affairs(current_app.context.affair),
                }, 200

@@ -59,7 +59,7 @@ class SQLRepository(Repositories):
 
     def __init__(self, config):
         super().__init__(config)
-        self.engine = build_engine(sql_engine_uri=config.LOCAL_PG_URI)
+        self.engine = build_engine(sql_engine_uri=config.DATABASE_URI)
         self.tag, self.task = get_pg_repos(engine=self.engine)
 
     def _reset(self):

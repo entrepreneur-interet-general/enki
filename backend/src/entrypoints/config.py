@@ -10,5 +10,6 @@ class SapeursConfig(object):
     }
     REPO_INFRA: str = os.environ.get('REPOSITORIES', InMemoryRepository.name)
     CONNECT_SGE: bool = os.environ.get('CONNECT_SGE', 'false') == 'true'
-    LOCAL_PG_URI: str = os.environ.get('DATABASE_URI')
+    DATABASE_URI: str = os.environ.get('DATABASE_URI')
+    DATABASE_SGE_URI: str = os.environ.get('DATABASE_SGE_URI')
     CONTEXT_FACTORY: Repositories = REPOSITORY_TYPES[REPO_INFRA]

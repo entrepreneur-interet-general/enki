@@ -1,17 +1,21 @@
 import abc
 from typing import List, Union
 
+from werkzeug.exceptions import HTTPException
+
 from domain.tasks.entities.tag_entity import TagEntity
 
 TagsList = List[TagEntity]
 
 
-class AlreadyExistingTagUuid(Exception):
-    pass
+class AlreadyExistingTagUuid(HTTPException):
+    code = 404
+    description = "Tag already exists"
 
 
-class NotFoundTag(Exception):
-    pass
+class NotFoundTag(HTTPException):
+    code = 404
+    description = "Tag not found"
 
 
 class AbstractTagRepository(abc.ABC):

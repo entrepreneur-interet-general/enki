@@ -1,17 +1,23 @@
 import abc
 from typing import List
 
+from werkzeug.exceptions import HTTPException
+
 from domain.affairs.entities.affair_entity import AffairEntity
 
 affairsList = List[AffairEntity]
 
 
-class AlreadyExistingAffairUuid(Exception):
-    pass
+class AlreadyExistingAffairUuid(HTTPException):
+    code = 409
+    description = "test"
+    message = "ok"
 
 
-class NotFoundAffair(Exception):
-    pass
+class NotFoundAffair(HTTPException):
+    code = 404
+    description ="test"
+    message = "ok"
 
 
 class AbstractAffairRepository(abc.ABC):

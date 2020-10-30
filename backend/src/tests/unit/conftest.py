@@ -58,7 +58,7 @@ def tag_repo(request, tag_in_memory_repo, tag_pg_repo) -> AbstractTagRepository:
         repo = tag_pg_repo
     else:  # request.param == "in_memory"
         repo = tag_in_memory_repo
-    repo._tags = []
+        repo._tags = []
     return repo
 
 
@@ -66,7 +66,6 @@ def tag_repo(request, tag_in_memory_repo, tag_pg_repo) -> AbstractTagRepository:
 def task_repo(request, task_in_memory_repo, task_pg_repo) -> AbstractTaskRepository:
     if request.param == "sqlite":
         repo = task_pg_repo
-        repo._tasks = []
     else:  # request.param == "in_memory"
         repo = task_in_memory_repo
         repo._tasks = []

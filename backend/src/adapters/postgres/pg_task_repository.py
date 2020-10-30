@@ -6,6 +6,7 @@ from domain.tasks.ports.tag_repository import AbstractTagRepository
 from domain.tasks.ports.task_repository import AbstractTaskRepository, AlreadyExistingTaskUuid, NotFoundTask
 from domain.tasks.entities.task_entity import TaskEntity
 from domain.tasks.entities.tag_entity import TagEntity
+from .orm import tagTaskTable
 from .repository import PgRepositoryMixin
 
 
@@ -45,9 +46,9 @@ class PgTaskRepository(PgRepositoryMixin, AbstractTaskRepository):
         return self.session.query(self.entity_type).all()
 
     def _get_tag_by_task(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:
-        matches = self.session.query(TagEntity). \
-            filter(TaskEntity.uuid == uuid). \
-            filter(TagEntity.uuid == tag_uuid).all()
+        print(f"_get_tag_by_task uuid {uuid} and tag_uuid {tag_uuid}")
+        match = self.get_by_uuid(uuid=uuid)
+        matches = [tag for tag in match.tags if tag.uuid == tag_uuid]
         if not matches:
             return None
         return matches[0]

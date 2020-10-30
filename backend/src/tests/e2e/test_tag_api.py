@@ -6,7 +6,7 @@ from flask.testing import FlaskClient
 from domain.tasks.ports.tag_repository import NotFoundTag, AlreadyExistingTagUuid
 from entrypoints.flask_app import app
 from ..factories.tag import tag_factory
-from ..utils.filter import filter_dict_with_keys
+from ..helpers.filter import filter_dict_with_keys
 
 BASE_PATH_TAG: str = "/api/enki/v1/tags"
 

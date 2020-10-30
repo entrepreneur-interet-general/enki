@@ -52,9 +52,14 @@ class AbstractTaskRepository(abc.ABC):
         return match
 
     def add_tag_to_task(self, uuid: str, tag_uuid: str) -> None:
-        if self._get_tag_by_task(uuid=uuid, tag_uuid=tag_uuid):
-            raise AlreadyExistingTagInThisTask()
+        print("method add_tag_to_task")
         match: TaskEntity = self.get_by_uuid(uuid)
+        print(match.tags)
+        results = self._get_tag_by_task(uuid=uuid, tag_uuid=tag_uuid)
+        print(f"results {results}")
+        if self._get_tag_by_task(uuid=uuid, tag_uuid=tag_uuid):
+            print(self._get_tag_by_task(uuid=uuid, tag_uuid=tag_uuid))
+            raise AlreadyExistingTagInThisTask()
         tag: TagEntity = self.tag_repo.get_by_uuid(uuid=tag_uuid)
         self._add_tag_to_task(task=match, tag=tag)
 
@@ -120,8 +125,12 @@ class InMemoryTaskRepository(AbstractTaskRepository):
         task.tags.remove(tag)
 
     def _get_tag_by_task(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:
+        print("_get_tag_by_task")
         task: TaskEntity = self.get_by_uuid(uuid=uuid)
+        print(task)
         matches = [tag for tag in task.tags if tag.uuid == tag_uuid]
+        print("matches")
+        print(matches)
         if not matches:
             return None
         return matches[0]

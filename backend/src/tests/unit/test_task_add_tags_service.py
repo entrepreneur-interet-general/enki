@@ -13,6 +13,8 @@ def test_add_task_and_add_tag(task_repo: AbstractTaskRepository):
     TaskService.add_task(task_uuid, "Some title", "Some description", repo=task_repo)
     TagService.add_tag(tag_uuid, "Some title", repo=task_repo.tag_repo)
 
+    print(TaskService.get_by_uuid(task_uuid, repo=task_repo))
+
     TaskService.add_tag_to_task(task_uuid=task_uuid,
                                 tag_uuid=tag_uuid,
                                 repo=task_repo)

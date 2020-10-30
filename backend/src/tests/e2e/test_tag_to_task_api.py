@@ -8,7 +8,7 @@ from .test_tag_api import BASE_PATH_TAG
 from .test_task_api import BASE_PATH_TASK, get_task
 from ..factories.tag import tag_factory
 from ..factories.task import task_factory
-from ..utils.filter import filter_dict_with_keys
+from ..helpers.filter import filter_dict_with_keys
 
 def test_add_task_add_tag_then_link_them(app, client: FlaskClient):
     app.context.reset()

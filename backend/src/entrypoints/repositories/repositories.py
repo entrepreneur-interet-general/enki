@@ -23,7 +23,7 @@ class Repositories(abc.ABC):
             self.message = get_pg_message_repos()
         else:
             self.message = InMemorySgeMessageRepository()
-        self.affairs = RandomCisuRepository()  # XmlCisuRepository()
+        self.affair = RandomCisuRepository()  # XmlCisuRepository()
 
     def init_app(self, app):
         app.context = self

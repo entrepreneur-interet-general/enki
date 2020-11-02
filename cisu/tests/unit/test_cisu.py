@@ -23,8 +23,8 @@ def test_edxl_xml_parsing():
 
     assert isinstance(edxl.resource.message.choice.primaryAlert.resource, list)
     assert edxl.resource.message.recipients == [
-        Recipient(name='pompier-sdis77', URI=AnyURI('sge:pompier-sdis77')),
-        Recipient(name='police-77', URI=AnyURI('sge:sgo-police-77'))
+        Recipient(name='pompier-sdis77', URI=AnyURI('echanges:pompier-sdis77')),
+        Recipient(name='police-77', URI=AnyURI('echanges:sgo-police-77'))
     ]
     assert edxl.resource.message.choice.severity == Severity.SEVERE
 

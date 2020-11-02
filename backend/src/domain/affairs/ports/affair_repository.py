@@ -1,6 +1,6 @@
 import abc
 from typing import List
-
+import xml.dom.minidom
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.affair_entity import AffairEntity
@@ -16,20 +16,22 @@ class AlreadyExistingAffairUuid(HTTPException):
 
 class NotFoundAffair(HTTPException):
     code = 404
-    description ="test"
+    description = "test"
     message = "ok"
 
 
 class AbstractAffairRepository(abc.ABC):
 
-    def _add(self, entity: AffairEntity):
-        raise NotImplementedError
+    def add(self, affair: AffairEntity) -> None:
+        if self._match_uuid(affair.distributionID):
+            raise AlreadyExistingAffairUuid()
+        self._add(affair)
 
     def get_one(self) -> AffairEntity:
-        raise NotImplementedError
+        return self.get_all()[0]
 
-    def get_many(self, n) -> List[AffairEntity]:
-        raise NotImplementedError
+    def get_many(self, n: int) -> List[AffairEntity]:
+        return self.get_all()[0:n]
 
     def get_by_uuid(self, uuid: str) -> AffairEntity:
         matches = self._match_uuid(uuid)
@@ -38,12 +40,28 @@ class AbstractAffairRepository(abc.ABC):
         return matches[0]
 
     @abc.abstractmethod
+    def _add(self, entity: AffairEntity):
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_all(self) -> affairsList:
         raise NotImplementedError
 
     @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> List[AffairEntity]:
         raise NotImplementedError
+
+    @staticmethod
+    def build_affair_from_xml_string(xml_string: str) -> AffairEntity:
+        affair_dom = xml.dom.minidom.parseString(xml_string)
+        with open("myfile.xml", "w") as xml_file:
+            affair_dom.writexml(xml_file)
+        return AffairEntity.from_xml(affair_dom)
+
+    @staticmethod
+    def build_affair_from_xml_file(xml_path: str) -> AffairEntity:
+        affair_dom = xml.dom.minidom.parse(xml_path)
+        return AffairEntity.from_xml(affair_dom)
 
 
 class InMemoryAffairRepository(AbstractAffairRepository):

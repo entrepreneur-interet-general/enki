@@ -31,6 +31,5 @@ class XmlCisuRepository(AbstractAffairRepository):
     def _list_xml_files(self):
         for xml_file in self.xml_path.glob("*.xml"):
             logging.info(f"self.all_affairs {self.all_affairs}")
-            dom = xml.dom.minidom.parse(str(xml_file))
-            self._add(AffairEntity.from_xml(dom))
+            self._add(self.build_affair_from_xml_file(str(xml_file)))
 

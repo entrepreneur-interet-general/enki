@@ -18,6 +18,7 @@ def register_blueprints(app: Flask):
     app.register_blueprint(views.enki_blueprint)
     app.register_blueprint(views.enki.enki_blueprint_v1)
     app.register_blueprint(views.core_blueprint)
+    app.register_blueprint(views.echanges_blueprint)
 
 
 def configure_apispec(app):
@@ -47,10 +48,3 @@ def create_app(testing=False):
 
 
 app = create_app()
-
-@app.route('/events')
-def get_events():
-    all_messages: List[SgeMessageEntity] = repositories.message.get_all()
-    response = make_response(jsonify({'messages': [msg.affair.to_json() for msg in all_messages]}))
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    return response

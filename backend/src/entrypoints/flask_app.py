@@ -2,8 +2,6 @@ from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
 from entrypoints.extensions import api_spec
-from typing import List
-from domain.affairs.entities.sge.sge_message_entity import SgeMessageEntity
 from entrypoints import views
 from .config import SapeursConfig
 

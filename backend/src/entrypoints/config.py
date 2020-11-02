@@ -9,7 +9,6 @@ class SapeursConfig(object):
         'cls': SapeurJsonEncoder
     }
     REPO_INFRA: str = os.environ.get('REPOSITORIES', InMemoryRepository.name)
-    CONNECT_SGE: bool = os.environ.get('CONNECT_SGE', 'false') == 'true'
-    DATABASE_URI: str = os.environ.get('DATABASE_URI')
-    DATABASE_SGE_URI: str = os.environ.get('DATABASE_SGE_URI')
+    SGE_HUB_BASE_URI: str = os.environ.get('SGE_HUB_BASE_URI', 'http://localhost:9090')
+    SGE_REF_BASE_URI: str = os.environ.get('SGE_REF_BASE_URI', 'http://localhost:10010')
     CONTEXT_FACTORY: Repositories = REPOSITORY_TYPES[REPO_INFRA]

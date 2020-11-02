@@ -2,10 +2,7 @@ import abc
 from typing import Dict
 
 from adapters.postgres.orm import metadata
-from adapters.postgres.pg_affair_repository import PgAffairRepository
-from adapters.random.random_cisu_repository import RandomCisuRepository
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, InMemoryAffairRepository
-from domain.affairs.ports.message_repository import AbstractSgeMessageRepository
 from domain.tasks.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 from domain.tasks.ports.task_repository import AbstractTaskRepository, InMemoryTaskRepository
 from entrypoints.repositories.factories import get_pg_repos, build_engine
@@ -15,7 +12,6 @@ class Repositories(abc.ABC):
     name: str
     task: AbstractTaskRepository
     tag: AbstractTagRepository
-    message: AbstractSgeMessageRepository
     affair: AbstractAffairRepository
 
     def __init__(self, config):

@@ -16,6 +16,7 @@ services:
     volumes:
       - ./src:/code/src
       - ./tests:/code/tests
+      - ./jdd/xml_cisu:/jdd/xml_cisu
     networks:
       - default
   postgres:

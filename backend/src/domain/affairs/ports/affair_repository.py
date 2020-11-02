@@ -1,6 +1,8 @@
 import abc
 from typing import List
 import xml.dom.minidom
+from uuid import uuid4
+
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.affair_entity import AffairEntity
@@ -54,7 +56,7 @@ class AbstractAffairRepository(abc.ABC):
     @staticmethod
     def build_affair_from_xml_string(xml_string: str) -> AffairEntity:
         affair_dom = xml.dom.minidom.parseString(xml_string)
-        with open("myfile.xml", "w") as xml_file:
+        with open(f"/jdd/xml_cisu/{uuid4()}.xml", "w") as xml_file:
             affair_dom.writexml(xml_file)
         return AffairEntity.from_xml(affair_dom)
 

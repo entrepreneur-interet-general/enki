@@ -1,6 +1,6 @@
 from .factory import Factory
-from ..entities.commons import LocationType, CoordType
-from ..entities.commons.location_type import LocationShape
+from cisu.src.entities.commons import LocationType, CoordType
+from cisu.src.entities.commons.location_type import LocationShape
 
 
 class CoordTypeFactory(Factory):

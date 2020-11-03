@@ -1,10 +1,13 @@
+from typing import Union
+
 from .alert_factory import PrimaryAlertFactory
 from .commons import AddressTypeFactory, RecipientsFactory
 from .factory import Factory
 from .location_factory import LocationTypeFactory
 from .uid_factory import UidFactory
-from ..entities.cisu_entity import CisuEntity, MessageCisuEntity, MessageType, Status, CreateEvent
-from ..entities.commons import DateType, Severity
+from cisu.src.entities.cisu_entity import CisuEntity, MessageCisuEntity, MessageType, Status, CreateEvent, AddressType, \
+    Recipients, AckMessage, AckEvent, UpdateEvent
+from cisu.src.entities.commons import DateType, Severity
 
 
 class CreateEventFactory(Factory):
@@ -21,14 +24,31 @@ class CreateEventFactory(Factory):
 
 class MessageCisuFactory(Factory):
     def build(self) -> MessageCisuEntity:
-        return MessageCisuEntity(
-            messageId=UidFactory().build(),
+        return self.create(
+            uuid=UidFactory().build(),
             sender=AddressTypeFactory().build(),
-            sentAt=self.clock_seed.generate(),
-            msgType=MessageType.random(),
+            sent_at=self.clock_seed.generate(),
+            msg_type=MessageType.random(),
             status=Status.random(),
             recipients=RecipientsFactory().build(),
             choice=CreateEventFactory().build()
+        )
+
+    @staticmethod
+    def create(uuid: str, sender: AddressType,
+               sent_at: DateType,
+               msg_type: MessageType,
+               status: Status,
+               recipients: Recipients,
+               choice: Union[AckEvent, CreateEvent, AckMessage, UpdateEvent]) -> MessageCisuEntity:
+        return MessageCisuEntity(
+            messageId=uuid,
+            sender=sender,
+            sentAt=sent_at,
+            msgType=msg_type,
+            status=status,
+            recipients=recipients,
+            choice=choice
         )
 
 

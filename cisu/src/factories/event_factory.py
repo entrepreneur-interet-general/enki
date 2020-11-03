@@ -1,7 +1,7 @@
 from .location_factory import LocationTypeFactory
 from .uid_factory import UidFactory
-from ..entities.commons import Severity
-from ..entities.event_entity import EventEntity
+from cisu.src.entities.commons import Severity
+from cisu.src.entities.event_entity import EventEntity
 from .factory import Factory
 
 

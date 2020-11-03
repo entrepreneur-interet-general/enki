@@ -3,9 +3,9 @@ from typing import Union
 from .alert_code_factory import AlertCodeFactory
 from .factory import Factory
 from .location_factory import LocationTypeFactory
-from ..entities.alert_entity import AlertEntity, PrimaryAlertEntity, OtherAlertEntity
+from cisu.src.entities.alert_entity import AlertEntity, PrimaryAlertEntity, OtherAlertEntity
 from .uid_factory import UidFactory
-from ..entities.commons.common_alerts import Reporting, AlertId, Call, \
+from cisu.src.entities.commons.common_alerts import Reporting, AlertId, Call, \
     Caller, CallTaker, AnyURI, Language
 
 

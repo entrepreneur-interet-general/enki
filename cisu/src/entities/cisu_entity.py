@@ -139,12 +139,22 @@ class CreateEvent(object):
         )
 
 
+@dataclass
 class AckMessage(object):
     """
     Ce type de message permet un acquittement "technique" d'un message reçu. Il précède un
                 éventuel acquittement "fonctionnel".
     """
     ackMessageId: str
+
+    @classmethod
+    def from_xml(cls, xml):
+        return cls(
+            ackMessageId=xml.getElementsByTagName("ackMessageId")[0].firstChild.nodeValue
+        )
+
+    def __repr__(self):
+        return self.ackMessageId
 
 
 class UpdateEvent(object):
@@ -174,6 +184,15 @@ class MessageCisuEntity(object):
         status = get_data_from_tag_name(xml, "status")
         recipients = Recipients.from_xml(get_xml_from_tag_name(xml, "recipients")[0])
 
+        is_create_event = xml.getElementsByTagName("createEvent")
+        is_ack_message = xml.getElementsByTagName("ackMessage")
+        if is_create_event:
+            choice = CreateEvent.from_xml(is_create_event[0])
+        elif is_ack_message:
+            choice = AckMessage.from_xml(is_ack_message[0])
+        else:
+            choice = None
+
         return cls(
             messageId=message_id,
             sender=sender,
@@ -181,7 +200,7 @@ class MessageCisuEntity(object):
             msgType=msg_type,
             status=status,
             recipients=recipients,
-            choice=CreateEvent.from_xml(xml.getElementsByTagName("createEvent")[0])
+            choice=choice
         )
 
     def to_xml(self) -> str:
@@ -189,7 +208,13 @@ class MessageCisuEntity(object):
         xml_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), '../templates/')
         env = Environment(loader=FileSystemLoader(str(xml_path)))
         template = env.get_template('cisu.xml')
-        return template.render(message=self).replace("&", "&amp;")
+        if isinstance(self.choice, AckMessage):
+            choice_type = "ack_message"
+        else:
+            choice_type = "create_event"
+
+
+        return template.render(message=self, choice_type=choice_type).replace("&", "&amp;")
 
 
 @dataclass
@@ -217,4 +242,6 @@ class CisuEntity:
 
         env = Environment(loader=FileSystemLoader(str(xml_path)))
         template = env.get_template('cisu.xml')
-        return template.render(message=self.message)
+
+        choice_type = "create_event" if isinstance(self.message.choice, CreateEvent) else "ack_message"
+        return template.render(message=self.message, choice_type=choice_type)

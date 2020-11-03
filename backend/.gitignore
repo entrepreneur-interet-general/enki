@@ -3,3 +3,4 @@ __pycache__
 pgdata
 .pytest_cache
 src/tests/integration/temp_data
+.envs/.local/.env*

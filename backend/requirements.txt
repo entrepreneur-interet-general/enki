@@ -8,6 +8,7 @@ apispec[yaml]
 apispec-webframeworks
 flask-cors
 sqlalchemy-utils
+twilio
 #pandas
 
 #Cisu Package

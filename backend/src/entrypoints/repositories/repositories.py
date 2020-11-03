@@ -3,6 +3,7 @@ from typing import Dict
 
 from adapters.postgres.orm import metadata
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, InMemoryAffairRepository
+from domain.core.ports.event_bus import AbstractEventBus, InMemoryEventBus
 from domain.tasks.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 from domain.tasks.ports.task_repository import AbstractTaskRepository, InMemoryTaskRepository
 from entrypoints.repositories.factories import get_pg_repos, build_engine

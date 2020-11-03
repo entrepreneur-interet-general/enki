@@ -1,4 +1,5 @@
 sqlalchemy-stubs
 pytest
 pytest-watch
+pytest-icdiff
 faker

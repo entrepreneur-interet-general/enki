@@ -1,28 +1,5 @@
-import asyncio
-
-from dataclasses import dataclass, field
 from datetime import datetime
-import abc
-
-
-class AbstractClock(abc.ABC):
-    can_wake_up: bool = True
-
-    @abc.abstractclassmethod
-    def get_now(self) -> datetime:
-        raise NotImplementedError
-
-    @abc.abstractclassmethod
-    async def sleep(self, delay: float):
-        raise NotImplementedError
-
-
-class RealClock(AbstractClock):
-    def get_now(self) -> datetime:
-        return datetime.now()
-
-    async def sleep(self, delay: float):
-        await asyncio.sleep(delay)
+from heplers.clock import AbstractClock
 
 
 class TimeStamped:

@@ -3,7 +3,9 @@ from flask_restful import Api
 from flask_cors import CORS
 from entrypoints.extensions import api_spec
 from entrypoints import views
+from service_layer.messagebus import HANDLERS
 from .config import SapeursConfig
+from .extensions import event_bus
 
 
 def register_blueprints(app: Flask):
@@ -39,10 +41,17 @@ def create_app(testing=False):
 
     api = Api(app)
     context = app.config["CONTEXT_FACTORY"](config=SapeursConfig())
+    configure_event_bus(context=context)
     context.init_app(app=app)
     configure_apispec(app=app)
     register_blueprints(app)
     return app
+
+
+def configure_event_bus(context):
+    for topic, callbacks in HANDLERS.items():
+        for callback in callbacks:
+            event_bus.subscribe(topic=topic, callback=callback)
 
 
 app = create_app()

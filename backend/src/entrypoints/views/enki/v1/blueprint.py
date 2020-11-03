@@ -4,12 +4,13 @@ from flask_restful import Api
 from entrypoints.extensions import api_spec
 from .resources import AffairListResource, AffairRandomResource, AffairRandomListResource, \
     TaskListResource, TaskResource, TaskTagResource,TaskTagListResource, \
-    TagResource, TagListResource
+    TagResource, TagListResource, AffairResource
 
 enki_blueprint_v1 = Blueprint(name="enki_blueprint_v1", import_name=__name__, url_prefix="/api/enki/v1")
 
 api = Api(enki_blueprint_v1)
 # Affairs
+api.add_resource(AffairResource, '/affairs/<uuid>', endpoint="affair_by_id")
 api.add_resource(AffairListResource, '/affairs', endpoint="affairs")
 api.add_resource(AffairRandomResource, '/affair/random',  endpoint="affair_random")
 api.add_resource(AffairRandomListResource, '/affairs/random', endpoint="affairs_random")

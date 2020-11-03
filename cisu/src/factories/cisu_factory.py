@@ -5,9 +5,9 @@ from .commons import AddressTypeFactory, RecipientsFactory
 from .factory import Factory
 from .location_factory import LocationTypeFactory
 from .uid_factory import UidFactory
-from cisu.src.entities.cisu_entity import CisuEntity, MessageCisuEntity, MessageType, Status, CreateEvent, AddressType, \
+from ..entities.cisu_entity import CisuEntity, MessageCisuEntity, MessageType, Status, CreateEvent, AddressType, \
     Recipients, AckMessage, AckEvent, UpdateEvent
-from cisu.src.entities.commons import DateType, Severity
+from ..entities.commons import DateType, Severity
 
 
 class CreateEventFactory(Factory):

@@ -4,7 +4,7 @@ from uuid import uuid4
 from .cisu_factory import CisuEntityFactory, MessageCisuFactory
 from .factory import Factory
 from .uid_factory import UidFactory
-from cisu.src import EdxlEntity
+from ..entities.edxl_entity import EdxlEntity
 from ..entities.cisu_entity import CisuEntity, MessageType, Status, AddressType, Recipients, AckMessage
 from ..entities.commons import DateType
 

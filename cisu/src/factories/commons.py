@@ -1,5 +1,5 @@
-from cisu.src.entities.cisu_entity import AddressType, Recipient, Recipients
-from cisu.src.entities.commons.common_alerts import AnyURI
+from ..entities.cisu_entity import AddressType, Recipient, Recipients
+from ..entities.commons.common_alerts import AnyURI
 
 
 class AddressTypeFactory:

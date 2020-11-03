@@ -7,14 +7,20 @@
   </sender>
   <sentAt>{{ message.sentAt }}</sentAt>
   <msgType>{{ message.msgType }}</msgType>
-  <status>{{ status }}</status>
+  <status>{{ message.status }}</status>
   <recipients>
-    {% for recipient in message.recipients.recipients %}
+    {% for recipient in message.recipients %}
     <recipient>
       <name>{{ recipient.name }}</name>
       <URI>{{ recipient.URI }}</URI>
     </recipient>
     {% endfor %}
   </recipients>
-  {% include "create-event.xml" %}
+  {% if choice_type =="create_event" %}
+    {% include "create-event.xml" %}
+  {% elif choice_type =="ack_message" %}
+      {% include "ack-message.xml" %}
+  {% else %}
+    {% include "create-event.xml" %}
+  {% endif %}
 </message>

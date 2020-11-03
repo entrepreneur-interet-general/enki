@@ -11,6 +11,7 @@ from .string_validator import StringValidator
 from .utils import get_data_from_tag_name, get_xml_from_tag_name
 from abc import ABC
 
+
 class AlertId(str):
     """
     Identifiant technique unique de l'alerte. Il doit pouvoir être généré automatiquement
@@ -236,6 +237,22 @@ class Count(CisuEnum):
     MANY = auto()
     UNKNOWN = auto()
 
+    @classmethod
+    def from_string(cls, value_string):
+        print("from_string")
+        if value_string == "1":
+            return cls.ONE
+        if value_string == "0":
+            return cls.NONE
+        return cls[value_string]
+
+    def __str__(self):
+        if self is self.NONE:
+            return "0"
+        if self is self.ONE:
+            return "1"
+        return str(self.name)
+
 
 class MainVictim(CisuEnum):
     """
@@ -308,9 +325,11 @@ class Victims(object):
 
     @classmethod
     def from_xml(cls, xml):
+        main_victim_data: str = get_data_from_tag_name(xml, "mainVictim")
+        main_victim: MainVictim = MainVictim.from_string(main_victim_data) if main_victim_data else None
         return cls(
             count=Count.from_string(get_data_from_tag_name(xml, "count")),
-            mainVictim=MainVictim.from_string(get_data_from_tag_name(xml, "mainVictim")),
+            mainVictim=main_victim,
             comment=get_data_from_tag_name(xml, "comment"),
         )
 
@@ -319,6 +338,7 @@ class Resource(ResourceType):
     """
 
     """
+
 
 @dataclass_json
 @dataclass
@@ -336,14 +356,16 @@ class AlertCode(object):
 
     @classmethod
     def from_xml(cls, xml):
+        health_motive_list = get_xml_from_tag_name(xml, "healthMotive")
+        health_motive = HealthMotive.from_xml(health_motive_list[0]) if health_motive_list else None
         return cls(
             version=Version(get_data_from_tag_name(xml, "version")),
             whatsHappen=WhatsHappen.from_xml(get_xml_from_tag_name(xml, "whatsHappen")[0]),
             locationKind=LocationKind.from_xml(get_xml_from_tag_name(xml, "locationKind")[0]),
             riskThreat=[
                 RiskThreat.from_xml(xml_risk) for xml_risk in get_xml_from_tag_name(xml, "riskThreat")
-                ],
-            healthMotive=HealthMotive.from_xml(get_xml_from_tag_name(xml, "healthMotive")[0]),
+            ],
+            healthMotive=health_motive,
             victims=Victims.from_xml(get_xml_from_tag_name(xml, "victims")[0]),
         )
 

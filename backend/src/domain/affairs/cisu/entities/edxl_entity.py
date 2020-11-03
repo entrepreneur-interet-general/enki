@@ -1,3 +1,4 @@
+import pathlib
 from uuid import uuid4
 
 from dataclasses import dataclass
@@ -42,6 +43,8 @@ class EdxlEntity:
 
     def to_xml(self) -> str:
         from jinja2 import Environment, FileSystemLoader
-        env = Environment(loader=FileSystemLoader('../src/templates/'))
+        xml_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), '../templates/')
+        print(xml_path)
+        env = Environment(loader=FileSystemLoader(str(xml_path)))
         template = env.get_template('message.xml')
         return template.render(edxl=self)

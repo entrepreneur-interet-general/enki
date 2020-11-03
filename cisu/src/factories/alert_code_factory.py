@@ -3,10 +3,10 @@ import pathlib
 from typing import List
 
 from .factory import Factory
-from cisu.src.constants.constants import RiskThreatConstants, HealthMotiveConstants, \
+from ..constants.constants import RiskThreatConstants, HealthMotiveConstants, \
     LocationKindConstants, WhatsHappenConstants
-from cisu.src.entities.alert_entity import AlertCode
-from cisu.src.entities.commons.common_alerts import Version, WhatsHappen, LocationKind, \
+from ..entities.alert_entity import AlertCode
+from ..entities.commons.common_alerts import Version, WhatsHappen, LocationKind, \
     RiskThreat, HealthMotive, Victims, Count, MainVictim
 
 

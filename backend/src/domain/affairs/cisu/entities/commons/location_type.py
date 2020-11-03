@@ -4,10 +4,11 @@ from dataclasses import dataclass
 from typing import List
 
 from .cisu_enum import CisuEnum
+from .string_validator import StringValidator
 from .utils import get_data_from_tag_name, get_xml_from_tag_name
 
 
-class LocId(str):
+class LocId(StringValidator):
     """
      *** Le format locationType est identique au format POSITION de l'EMSI TSO (ISO 22 351) ***
             Identifiant unique de la localisation au sein du message.
@@ -69,12 +70,6 @@ class Address(str):
     Texte libre permettant de saisir une adresse civile. Cet élément peut être répété autant que nécessaire
                     et contenir des informations complémentaires (digicode, étage, ...)
     """
-
-    def __str__(self):
-        return self.replace("&", "&amp;")
-
-    def __repr__(self):
-        return self.replace("&", "&amp;")
 
 
 class HeightRole(CisuEnum):

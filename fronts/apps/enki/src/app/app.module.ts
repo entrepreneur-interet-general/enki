@@ -9,6 +9,10 @@ import { MapComponent } from './map/map.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { TestAuthComponent } from './test-auth/test-auth.component';
+import { ListeInterventionsComponent } from './interventions/liste/liste-interventions.component';
+import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
+import { SvgDefinitionsComponent } from './ui/svg-definitions/svg-definitions.component';
+import { HeaderComponent } from './ui/header/header.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -27,7 +31,11 @@ function initializeKeycloak(keycloak: KeycloakService) {
   declarations: [
     AppComponent,
     MapComponent,
-    TestAuthComponent
+    TestAuthComponent,
+    ListeInterventionsComponent,
+    DetailInterventionComponent,
+    SvgDefinitionsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

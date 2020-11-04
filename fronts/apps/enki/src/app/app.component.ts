@@ -26,10 +26,7 @@ export class AppComponent {
       this.fetchedAffaire = false;
   }
   ngOnInit(): void {
-    this.affairesService.getAffaire().subscribe((affaire) => {
-      this.affaire = affaire;
-      this.fetchedAffaire = true;
-    })
+
   }
   loadNewAffaire() {
     this.affairesService.getAffaire().subscribe((affaire) => {
@@ -43,6 +40,6 @@ export class AppComponent {
     this.keycloakService.logout()
   }
   canSeeEvents(): boolean {
-    return this.keycloakService.isUserInRole('watchEvents') && this.fetchedAffaire
+    return this.fetchedAffaire
   }
 }

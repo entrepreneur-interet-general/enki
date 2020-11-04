@@ -1,0 +1,49 @@
+<div class="affaire" *ngIf="fetchedAffaire">
+  <div class="info-block niveauAlerte">
+    Niveau d'alerte : 
+    <svg class="icon-notification -active"><use xlink:href="#icon-notification"></use></svg>
+    <svg class="icon-notification"><use xlink:href="#icon-notification"></use></svg>
+    <svg class="icon-notification"><use xlink:href="#icon-notification"></use></svg>
+  </div>
+  <div class="info-block infosPrincipales">
+    <div class="infosPrincipales--icon">
+      <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
+    </div>
+    <div>
+      <div class="infosPrincipales--natureDeFait">
+        {{affaire.natureDeFait}}
+      </div>
+      <div class="infosPrincipales--dateTemps">
+        {{affaire.dateTimeSent}}
+      </div>
+    </div>
+  </div>
+  <div class="map">
+    <app-map></app-map>
+  </div>
+  <div class="info-block localisation">
+    <div class="title-with-icon localisation--title">
+      <svg class="icon icon-pin"><use xlink:href="#icon-pin"></use></svg>
+      <div class="">Localisation</div>
+    </div>
+    <div class="localisation--details">
+      <div class="localisation--adresse">
+        {{affaire.address}}
+      </div>
+      <div class="localisation--type">
+        Circulation / transport, voie rapide
+      </div>
+    </div>
+    <button class="btn">Copier l'adresse</button>
+  </div>
+  <div class="info-block circonstances">
+    <div class="title-with-icon circonstances--title">
+      <svg class="icon icon-layers"><use xlink:href="#icon-layers"></use></svg>
+      <div class="">Circonstances</div>
+    </div>
+    <ul>
+      <li>Accident de circulation - 2 roues</li>
+      <li>Plusieurs victimes</li>
+    </ul>
+  </div>
+</div>

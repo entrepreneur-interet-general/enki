@@ -13,6 +13,7 @@ import { Affaire } from './affaires.service'
 export class AppComponent {
   title = 'enki';
   affaire;
+  fetchedAffaire: boolean;
   number = add(1, 2);
   token;
   
@@ -22,15 +23,17 @@ export class AppComponent {
       this.keycloakService.getToken().then((res) => {
         this.token = res
       });
+      this.fetchedAffaire = false;
   }
   ngOnInit(): void {
     this.affairesService.getAffaire().subscribe((affaire) => {
-      this.affaire = affaire
+      this.affaire = affaire;
+      this.fetchedAffaire = true;
     })
   }
   loadNewAffaire() {
     this.affairesService.getAffaire().subscribe((affaire) => {
-      this.affaire = affaire
+      this.affaire = affaire;
     })
   }
   getAffaire(): Observable<Affaire> {
@@ -40,6 +43,6 @@ export class AppComponent {
     this.keycloakService.logout()
   }
   canSeeEvents(): boolean {
-    return this.keycloakService.isUserInRole('watchEvents')
+    return this.keycloakService.isUserInRole('watchEvents') && this.fetchedAffaire
   }
 }

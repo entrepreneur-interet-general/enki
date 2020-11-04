@@ -29,7 +29,7 @@ class AbstractAffairRepository(abc.ABC):
         if self._match_uuid(affair.distributionID):
             raise AlreadyExistingAffairUuid()
         self._add(affair)
-        event_bus.publish(events.AffairCreatedEvent(uuid=affair.distributionID, timestamp=clock.get_now()))
+        event_bus.publish(events.AffairCreatedEvent(data=affair))
 
     def get_one(self) -> AffairEntity:
         return self.get_all()[0]

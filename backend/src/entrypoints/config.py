@@ -13,6 +13,8 @@ class SapeursConfig(object):
     REPO_INFRA: str = os.environ.get('REPOSITORIES', InMemoryRepository.name)
     SGE_HUB_BASE_URI: str = os.environ.get('SGE_HUB_BASE_URI', 'http://localhost:9090')
     SGE_REF_BASE_URI: str = os.environ.get('SGE_REF_BASE_URI', 'http://localhost:10010')
+    ENKI_SGE_ID = "sgc-enki"
+    ENKI_SGE_ADDRESS = "sge:sgc-enki"
     CONTEXT_FACTORY: Repositories = REPOSITORY_TYPES[REPO_INFRA]
     TWILIO_ACCOUNT_SID: Optional[str] = os.environ.get('TWILIO_ACCOUNT_SID')
     TWILIO_AUTH_TOKEN: Optional[str] = os.environ.get('TWILIO_AUTH_TOKEN')

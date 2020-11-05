@@ -36,7 +36,6 @@ export class AffairesService {
     }
 
   getAffaire(uuid: string): Observable<Affaire> {
-    debugger
     return this.http.get<any>(this.affaireUrl + uuid, this.httpOptions)
       .pipe(
         map(affaire => {

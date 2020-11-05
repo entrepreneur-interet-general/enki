@@ -12,6 +12,7 @@ export interface Affaire {
   victims: number;
   address: string;
 }
+
 interface Coordinates {
   lat: number,
   long: number
@@ -22,18 +23,54 @@ interface Coordinates {
 
 export class AffairesService {
   affaireUrl: string;
+  interventionsUrl: string;
   httpOptions: object;
 
   constructor(
     private http: HttpClient,
     private keycloakService: KeycloakService
     ) { 
-      this.affaireUrl = 'http://localhost:5000/api/enki/v1/affairs/'
+      this.affaireUrl = 'http://localhost:5000/api/enki/v1/affair/'
+      this.interventionsUrl = 'http://localhost:5000/api/enki/v1/affairs'
       this.httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.keycloakService.getToken() })
       };
     }
+
+  getAllInterventions(): Observable<Affaire[]> {
+    return this.http.get<any>(this.interventionsUrl, this.httpOptions)
+      .pipe(
+        map(interventions => {
+          let newInterventions: Affaire[];
+          newInterventions = interventions.affairs.map(intervention => {
+            return {
+              uuid: intervention.distributionID,
+              dateTimeSent: intervention.dateTimeSent,
+              natureDeFait: intervention.resource.message.choice.primaryAlert.alertCode.whatsHappen.label,
+              victims: intervention.resource.message.choice.primaryAlert.alertCode.victims.count,
+              coord: {
+                lat: intervention.resource.message.choice.eventLocation.coord.lat,
+                long: intervention.resource.message.choice.eventLocation.coord.lon
+              },
+              address: intervention.resource.message.choice.eventLocation.address
+            }
+          })
+          return newInterventions
+          /* let newAffaire: Affaire = {
+            dateTimeSent: affaire.affair.dateTimeSent,
+            natureDeFait: affaire.affair.resource.message.choice.primaryAlert.alertCode.whatsHappen.label,
+            victims: affaire.affair.resource.message.choice.primaryAlert.alertCode.victims.count,
+            coord: {
+              lat: affaire.affair.resource.message.choice.eventLocation.coord.lat,
+              long: affaire.affair.resource.message.choice.eventLocation.coord.lon
+            },
+            address: affaire.affair.resource.message.choice.eventLocation.address
+          }
+          return newAffaire */
+        })
+      )
+  }
 
   getAffaire(uuid: string): Observable<Affaire> {
     return this.http.get<any>(this.affaireUrl + uuid, this.httpOptions)

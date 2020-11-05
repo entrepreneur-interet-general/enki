@@ -25,7 +25,6 @@ export class DetailInterventionComponent implements OnInit {
         this.affaire = affaire;
         this.fetchedAffaire = true;
       });
-      
     });
   }
 

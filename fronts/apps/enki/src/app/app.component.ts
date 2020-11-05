@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { AffairesService } from './affaires.service'
 import { add } from '@fronts/utilities'
 import { KeycloakService } from 'keycloak-angular';
-import { Observable, of } from 'rxjs';
-import { Affaire } from './affaires.service'
 
 @Component({
   selector: 'app-root',
@@ -27,11 +25,6 @@ export class AppComponent {
   }
   ngOnInit(): void {
 
-  }
-  loadNewAffaire() {
-    this.affairesService.getAffaire().subscribe((affaire) => {
-      this.affaire = affaire;
-    })
   }
 
   logout(): void {

@@ -1,7 +1,7 @@
 from flask import current_app
 from flask_restful import Resource
 
-from domain.affairs.affair_service import list_affairs, get_random_affair, get_random_list_affairs
+from domain.affairs.affair_service import list_affairs, get_random_affair, get_random_list_affairs, get_by_uuid
 from adapters.random.random_cisu_repository import RandomCisuRepository
 
 class WithAffairRepoResource(Resource):
@@ -17,9 +17,9 @@ class AffairResource(WithAffairRepoResource):
         - affairs
     """
 
-    def get(self):
+    def get(self, uuid):
         return {
-                   "affairs": list_affairs(current_app.context.affair),
+                   "affair": get_by_uuid(uuid, current_app.context.affair),
                }, 200
 
 

@@ -20,3 +20,6 @@ class SapeursConfig(object):
     TWILIO_AUTH_TOKEN: Optional[str] = os.environ.get('TWILIO_AUTH_TOKEN')
     FROM_EMAIL = "enki@ansc.fr"
     FROM_TEL_NUMBER = "+13345084085"
+    TO_TEL_NUMBER = "+33772324157"
+    ENKI_FRONT_BASE_URI: str = os.environ.get('ENKI_FRONT_BASE_URI', 'http://localhost:4200')
+

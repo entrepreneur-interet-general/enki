@@ -10,11 +10,10 @@ def send(*args):
 
     message = client.messages \
         .create(
-        body=f'Une nouvelle intervention a commencé, voici son identifiant {args[1]}',
+        body=f"Une nouvelle intervention a commencé, pour plus d'"
+             f"informations Veuillez trouver  {current_app.config['ENKI_FRONT_BASE_URI']}/detail-intervention/{args[2]}",
         from_=current_app.config['FROM_TEL_NUMBER'],
-        to='+33 7 72 32 41 57'
+        to=current_app.config['FROM_TEL_NUMBER'],
     )
-
-    print(message.sid)
 
     current_app.logger.info(f'SENDING SMS with {message.sid}', )

@@ -30,7 +30,7 @@ export class AffairesService {
     private http: HttpClient,
     private keycloakService: KeycloakService
     ) { 
-      this.affaireUrl = 'http://localhost:5000/api/enki/v1/affair/'
+      this.affaireUrl = 'http://localhost:5000/api/enki/v1/affairs/'
       this.interventionsUrl = 'http://localhost:5000/api/enki/v1/affairs'
       this.httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json',

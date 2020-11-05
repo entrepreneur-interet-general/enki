@@ -28,15 +28,16 @@ export class AffairesService {
     private http: HttpClient,
     private keycloakService: KeycloakService
     ) { 
-      this.affaireUrl = 'http://localhost:5000/api/enki/v1/affair/random'
+      this.affaireUrl = 'http://localhost:5000/api/enki/v1/affairs/'
       this.httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.keycloakService.getToken() })
       };
     }
 
-  getAffaire(): Observable<Affaire> {
-    return this.http.get<any>(this.affaireUrl, this.httpOptions)
+  getAffaire(uuid: string): Observable<Affaire> {
+    debugger
+    return this.http.get<any>(this.affaireUrl + uuid, this.httpOptions)
       .pipe(
         map(affaire => {
           let newAffaire: Affaire = {

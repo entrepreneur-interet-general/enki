@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Affaire, AffairesService } from '../../affaires.service'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'fronts-detail-intervention',
@@ -14,16 +15,17 @@ export class DetailInterventionComponent implements OnInit {
   uuid;
   constructor(
     private affairesService: AffairesService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
-    this.affairesService.getAffaire().subscribe((affaire) => {
-      this.affaire = affaire;
-      this.fetchedAffaire = true;
-    })
-    this.route.queryParams.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.uuid = params['uuid'];
+      this.affairesService.getAffaire(this.uuid).subscribe((affaire) => {
+        this.affaire = affaire;
+        this.fetchedAffaire = true;
+      });
+      
     });
   }
 

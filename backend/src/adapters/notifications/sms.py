@@ -8,10 +8,10 @@ def send(*args):
     auth_token = current_app.config['TWILIO_AUTH_TOKEN']
     client = Client(account_sid, auth_token)
 
-    message = client.messages \
-        .create(
+    message = client.messages.create(
         body=f"Une nouvelle intervention a commencé, pour plus d'"
-             f"informations Veuillez trouver  {current_app.config['ENKI_FRONT_BASE_URI']}/detail-intervention/{args[2]}",
+             f"informations Veuillez trouver  "
+             f"{current_app.config['ENKI_FRONT_BASE_URI']}/detail-intervention/{args[2]}",
         from_=current_app.config['FROM_TEL_NUMBER'],
         to=current_app.config['FROM_TEL_NUMBER'],
     )

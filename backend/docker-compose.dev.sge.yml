@@ -19,6 +19,7 @@ services:
       - ./jdd/xml_cisu:/jdd/xml_cisu
     networks:
       - default
+      - sge_default
 
   postgres:
     image: postgres
@@ -40,3 +41,6 @@ services:
 networks:
   default:
     driver: bridge
+  sge_default:
+    external: true
+

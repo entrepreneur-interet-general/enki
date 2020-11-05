@@ -5,8 +5,6 @@ services:
   sapeurs-api:
     image: sapeurs-api
     build: .
-    depends_on:
-      - postgres
     command: flask run --host=0.0.0.0
     env_file:
       - .envs/.local/.env.flaskenv
@@ -19,7 +17,6 @@ services:
       - ./jdd/xml_cisu:/jdd/xml_cisu
     networks:
       - default
-
   postgres:
     image: postgres
     restart: unless-stopped
@@ -37,6 +34,7 @@ services:
       - "8025:8025"
     networks:
       - default
+
 networks:
   default:
     driver: bridge

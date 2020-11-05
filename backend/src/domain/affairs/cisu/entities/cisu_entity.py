@@ -213,7 +213,6 @@ class MessageCisuEntity(object):
         else:
             choice_type = "create_event"
 
-
         return template.render(message=self, choice_type=choice_type).replace("&", "&amp;")
 
 

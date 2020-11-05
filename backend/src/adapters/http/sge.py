@@ -15,15 +15,16 @@ class SgeHelper:
 
     @staticmethod
     def send_ack_message(xml_ack_message: str) -> requests.Response:
-        response = requests.post(SgeHelper.base_url, payload=xml_ack_message)
-        current_app.logger.info(f"Response {response}")
-        current_app.logger.info(f"Response data  {response.json}")
+        response = requests.post(SgeHelper.base_url,
+                                 data=xml_ack_message,
+                                 headers={
+                                     'Content-Type': "text/xml",
+                                 })
 
         return response
 
     @staticmethod
     def send_ack_to_sge(event: events.AffairCreatedEvent):
-
         edxl_message: EdxlEntity = event.data
         ack_message = EdxlMessageFactory.build_ack_from_another_message(
             my_uuid=str(uuid4()),
@@ -32,4 +33,3 @@ class SgeHelper:
         )
 
         SgeHelper.send_ack_message(ack_message.to_xml())
-

@@ -5,22 +5,19 @@ from datetime import datetime
 from typing import Any, Callable, Coroutine
 
 from domain.affairs.entities.affair_entity import AffairEntity
-from domain.core.topics import AffairCreatedTopic, AffairReceivedTopic, Topic
-from entrypoints.extensions import clock
+from domain.core.topics import AffairCreatedTopic, Topic
 
 EventCallback = Callable[[Any], Coroutine[Any, Any, Any]]
 
 
 @dataclass
 class Event:
-    uuid: str
-    timestamp: datetime
     data: Any
     topic: Topic
 
     def __post_init__(self):
-        self.uuid = str(uuid4())
-        self.timestamp = clock.get_now()
+        self.uuid: str = str(uuid4())
+        self.timestamp: datetime = datetime.now()
 
 
 @dataclass

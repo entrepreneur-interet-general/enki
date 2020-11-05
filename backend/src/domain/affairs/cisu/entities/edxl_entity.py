@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from dataclasses import dataclass
 
-from .cisu_entity import CisuEntity
+from .cisu_entity import CisuEntity,AckMessage
 from .commons import DateType
 from .commons.utils import get_data_from_tag_name
 
@@ -46,5 +46,9 @@ class EdxlEntity:
         xml_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), '../templates/')
         print(xml_path)
         env = Environment(loader=FileSystemLoader(str(xml_path)))
+        if isinstance(self.resource.message.choice, AckMessage):
+            choice_type = "ack_message"
+        else:
+            choice_type = "create_event"
         template = env.get_template('message.xml')
-        return template.render(edxl=self)
+        return template.render(edxl=self, choice_type=choice_type)

@@ -14,7 +14,7 @@ const routes: Routes = [
     data: { roles: ['watchEvents'] }
   },
   {
-    path: 'detail-intervention',
+    path: 'detail-intervention/:uuid',
     canActivate: [AuthGuard],
     component: DetailInterventionComponent,
     data: {

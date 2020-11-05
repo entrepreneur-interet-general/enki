@@ -1,1 +1,43 @@
-<p>liste-interventions works!</p>
+<h1>Liste des interventions</h1>
+<ul class="interventions">
+  <li class="intervention">
+    <a class="intervention--wrapper" [routerLink]="['/detail-intervention', 1]">
+      <div class="infosSecondaires">
+        <div class="infosSecondaires--dateTemps">
+          24/11/2020 à 16:22
+        </div>
+        <div class="status">
+          En cours
+        </div>
+      </div>
+      <div class="infosPrincipales">
+        <div class="infosPrincipales--natureDeFait">
+          Accident de la circulation<span class="more-info"> — 2 roues</span>
+        </div>
+        <div class="infosPrincipales--icon">
+          <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
+        </div>
+      </div>
+    </a>
+  </li>
+  <li class="intervention">
+    <a class="intervention--wrapper" [routerLink]="['/detail-intervention', 2]">
+      <div class="infosSecondaires">
+        <div class="infosSecondaires--dateTemps">
+          24/11/2020 à 16:22
+        </div>
+        <div class="status">
+          En cours
+        </div>
+      </div>
+      <div class="infosPrincipales">
+        <div class="infosPrincipales--natureDeFait">
+          Accident de la circulation<span class="more-info"> — 2 roues</span>
+        </div>
+        <div class="infosPrincipales--icon">
+          <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
+        </div>
+      </div>
+    </a>
+  </li>
+</ul>

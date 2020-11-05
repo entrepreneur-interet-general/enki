@@ -1,5 +1,9 @@
 @import "enki-design-system/styles/variables";
 
+:focus {
+  outline: 0;
+}
+
 .logout {
   padding: 32px;
   background-color: $lightestGrey;

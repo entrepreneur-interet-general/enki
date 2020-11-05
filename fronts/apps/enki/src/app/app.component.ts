@@ -33,9 +33,7 @@ export class AppComponent {
       this.affaire = affaire;
     })
   }
-  getAffaire(): Observable<Affaire> {
-    return of(this.affaire)
-  }
+
   logout(): void {
     this.keycloakService.logout()
   }

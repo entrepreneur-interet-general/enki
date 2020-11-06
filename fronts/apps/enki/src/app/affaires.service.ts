@@ -46,7 +46,7 @@ export class AffairesService {
           newInterventions = interventions.affairs.map(intervention => {
             return {
               uuid: intervention.distributionID,
-              dateTimeSent: intervention.dateTimeSent,
+              dateTimeSent: intervention.dateTimeSent.value,
               natureDeFait: intervention.resource.message.choice.primaryAlert.alertCode.whatsHappen.label,
               victims: intervention.resource.message.choice.primaryAlert.alertCode.victims.count,
               coord: {
@@ -77,7 +77,7 @@ export class AffairesService {
       .pipe(
         map(affaire => {
           let newAffaire: Affaire = {
-            dateTimeSent: affaire.affair.dateTimeSent,
+            dateTimeSent: affaire.affair.dateTimeSent.value,
             natureDeFait: affaire.affair.resource.message.choice.primaryAlert.alertCode.whatsHappen.label,
             victims: affaire.affair.resource.message.choice.primaryAlert.alertCode.victims.count,
             coord: {

@@ -4,9 +4,9 @@
 <main>
   <!-- <button (click)="loadNewAffaire()">RANDOM AFFAIRE</button> -->
   <div class="top-header">
-    <nav *ngIf="canSeeEvents()">
+    <!-- <nav *ngIf="canSeeEvents()">
       <a [routerLink]="['/liste-interventions']">Voir la liste des interventions</a>
-    </nav>
+    </nav> -->
     <p *ngIf="!canSeeEvents()">
       Désolé, vous ne pouvez pas accéder à ces informations...
     </p>

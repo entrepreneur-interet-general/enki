@@ -81,7 +81,7 @@ export class InterventionsService {
           interventionsArray = this.mapHTTPInterventions(interventionsArray)
           return interventionsArray[0]
         }),
-        tap(_ => this.log('fetched une intervention'))
+        tap(_ => this.log('fetched one intervention'))
       );
   }
 

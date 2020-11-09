@@ -29,7 +29,7 @@ class AbstractAffairRepository(abc.ABC):
         if self._match_uuid(affair.distributionID):
             raise AlreadyExistingAffairUuid()
         self._add(affair)
-        event_bus.publish(events.AffairCreatedEvent(uuid=affair.distributionID, timestamp=clock.get_now()))
+        event_bus.publish(events.AffairCreatedEvent(data=affair))
 
     def get_one(self) -> AffairEntity:
         return self.get_all()[0]
@@ -58,8 +58,6 @@ class AbstractAffairRepository(abc.ABC):
     @staticmethod
     def build_affair_from_xml_string(xml_string: str) -> AffairEntity:
         affair_dom = xml.dom.minidom.parseString(xml_string)
-        #with open(f"/jdd/xml_cisu/{uuid4()}.xml", "w") as xml_file:
-        #    affair_dom.writexml(xml_file)
         return AffairEntity.from_xml(affair_dom)
 
     @staticmethod

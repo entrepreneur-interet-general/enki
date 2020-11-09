@@ -49,6 +49,13 @@ class AnyURI(str):
 
     """
 
+    @property
+    def path_name(self) -> str:
+        if ":" in self:
+            return self.split(":")[1]
+        else:
+            return self
+
 
 @dataclass
 class Call(object):

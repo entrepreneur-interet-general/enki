@@ -19,7 +19,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     keycloak.init({
       config: {
         "realm": "sapeurs",
-        "url": "http://localhost:8080/auth/",
+        "url": "http://localhost:8084/auth/",
         "clientId": "enki",
       },
       initOptions: {

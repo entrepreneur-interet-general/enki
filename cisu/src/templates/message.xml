@@ -13,7 +13,7 @@
     <language>fr-FR</language>
     <explicitAddress>
       <explicitAddressScheme>sge</explicitAddressScheme>
-        {% for receiverAddress in edxl.receiverAddresses %}
+        {% for receiverAddress in edxl.receiversAddress %}
       <explicitAddressValue>{{ receiverAddress }}</explicitAddressValue>
        {% endfor %}
     </explicitAddress>

@@ -16,9 +16,10 @@ class AffairEntityFactory(EdxlMessageFactory):
             senderID=UidFactory().build(),
             dateTimeSent=self.clock_seed.generate(),
             dateTimeExpires=self.clock_seed.generate(),
-            distributionStatus="status",
-            distributionKind="kind",
+            distributionStatus="Report",
+            distributionKind="Actual",
             resource=CisuEntityFactory().build(),
+            receiversAddress=["sgc-enki"]
         )
 
 

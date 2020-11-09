@@ -43,10 +43,10 @@ export class InterventionsService {
 
   mapHTTPInterventions(interventions): Intervention[] {
     let updatedInterventions: Intervention[];
-    debugger;
-    updatedInterventions = interventions.affairs.map(intervention => {
+    interventions = environment.HTTPClientInMemory ? interventions : interventions.affairs
+    updatedInterventions = interventions.map(intervention => {
       return {
-        uuid: intervention.distributionID,
+        uuid:  environment.HTTPClientInMemory ? intervention.id : intervention.distributionID,
         dateTimeSent: new Date(intervention.dateTimeSent),
         natureDeFait: intervention.resource.message.choice.primaryAlert.alertCode.whatsHappen.label,
         victims: intervention.resource.message.choice.primaryAlert.alertCode.victims.count,
@@ -64,42 +64,33 @@ export class InterventionsService {
     return this.http.get<any>(this.interventionsUrl, this.httpOptions)
       .pipe(
         map(interventions => {
-          
-          // newInterventions = interventions.affairs.map(intervention => {
-          //   return {
-          //     uuid: intervention.distributionID,
-          //     dateTimeSent: new Date(intervention.dateTimeSent),
-          //     natureDeFait: intervention.resource.message.choice.primaryAlert.alertCode.whatsHappen.label,
-          //     victims: intervention.resource.message.choice.primaryAlert.alertCode.victims.count,
-          //     coord: {
-          //       lat: intervention.resource.message.choice.eventLocation.coord.lat,
-          //       long: intervention.resource.message.choice.eventLocation.coord.lon
-          //     },
-          //     address: intervention.resource.message.choice.eventLocation.address
-          //   }
-          // })
           let updatedInterventions = this.mapHTTPInterventions(interventions)
           this.interventions = updatedInterventions
           return updatedInterventions
-        })
+        }),
+        tap(_ => this.log('fetched all interventions'))
       )
   }
 
   httpGetIntervention(uuid: string): Observable<Intervention> {
-    return this.http.get<any>(this.interventionUrl + uuid, this.httpOptions)
+    return this.http.get<any>(`${this.interventionsUrl}/${uuid}`, this.httpOptions)
       .pipe(
         map(intervention => {
-          let interventionsArray: Intervention[];
-          interventionsArray = [ ...intervention ];
+          let interventionsArray: Intervention[] = [];
+          interventionsArray.push(intervention);
           interventionsArray = this.mapHTTPInterventions(interventionsArray)
           return interventionsArray[0]
         }),
-        tap(_ => this.log('fetched affaires'))
+        tap(_ => this.log('fetched une intervention'))
       );
   }
 
+  getInterventionsFromMemory(): Intervention[] {
+    return this.interventions;
+  }
+
   getInterventionFromMemory(uuid: string): Intervention {
-    return this.interventions.filter(intervention => intervention.uuid === uuid)[0]
+    return this.interventions ? this.interventions.filter(intervention => intervention.uuid == uuid)[0] : null
   }
   /**
    * Handle Http operation that failed.

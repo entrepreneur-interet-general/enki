@@ -21,19 +21,17 @@ export class DetailInterventionComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.uuid = params['uuid'];
+      // debugger;
+      console.log(this.interventionsService.getInterventionFromMemory(this.uuid))
       if (this.interventionsService.getInterventionFromMemory(this.uuid)) {
         this.intervention = this.interventionsService.getInterventionFromMemory(this.uuid)
         this.fetchedIntervention = true
       } else {
-        this.interventionsService.httpGetIntervention(this.uuid).subscribe((affaire) => {
-          this.intervention = affaire;
+        this.interventionsService.httpGetIntervention(this.uuid).subscribe((intervention) => {
+          this.intervention = intervention;
           this.fetchedIntervention = true;
         });
       }
-      /* this.affairesService.getAffaire(this.uuid).subscribe((affaire) => {
-        this.affaire = affaire;
-        this.fetchedAffaire = true;
-      }); */
     });
   }
 

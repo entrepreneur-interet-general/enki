@@ -19,7 +19,6 @@ from tempfile import NamedTemporaryFile
 
 
 def test_build_ack_message():
-
     ack_message_id = str(uuid4())
     edxl: EdxlEntity = EdxlMessageFactory.create(
         uuid=str(uuid4()),
@@ -28,6 +27,7 @@ def test_build_ack_message():
         distribution_status="Actual",
         distribution_kind="Report",
         sender_id=str(uuid4()),
+        receivers_address=["sgc-enki"],
         resource=CisuEntity(
             message=MessageCisuFactory.create(
                 uuid=str(uuid4()),
@@ -41,11 +41,10 @@ def test_build_ack_message():
                 choice=AckMessage(ackMessageId=ack_message_id)
             )
         )
-
     )
 
     assert isinstance(edxl.resource.message.choice, AckMessage)
-    assert edxl.resource.message.choice.ackMessageId  == ack_message_id
+    assert edxl.resource.message.choice.ackMessageId == ack_message_id
 
 
 filenames = list(pathlib.Path(pathlib.Path(__file__).parent.absolute()).glob("data/*.xml"))
@@ -55,10 +54,9 @@ filenames = list(pathlib.Path(pathlib.Path(__file__).parent.absolute()).glob("da
 def test_build_ack_message_from_another_message(filename):
     dom = xml.dom.minidom.parse(str(filename))
     other_edxl = EdxlEntity.from_xml(dom)
-
+    ack_sender = AddressType("test", AnyURI("test"))
     ack_message = EdxlMessageFactory.build_ack_from_another_message(
-        my_uuid=str(uuid4()),
-        my_sender_address=AddressType("test", AnyURI("test")),
+        sender_address=ack_sender,
         other_message=other_edxl,
     )
 
@@ -67,6 +65,9 @@ def test_build_ack_message_from_another_message(filename):
     assert ack_message.resource.message.recipients == Recipients([
         other_edxl.resource.message.sender
     ])
+    assert ack_message.senderID == ack_sender.URI.path_name
+    assert ack_message.resource.message.sender == ack_sender
+
 
 @pytest.mark.parametrize("filename", filenames)
 def test_edxl_xml_generation(filename):
@@ -74,15 +75,13 @@ def test_edxl_xml_generation(filename):
     other_edxl = EdxlEntity.from_xml(dom)
 
     ack_message = EdxlMessageFactory.build_ack_from_another_message(
-        my_uuid=str(uuid4()),
-        my_sender_address=AddressType("test", AnyURI("test")),
+        sender_address=AddressType("test", AnyURI("test")),
         other_message=other_edxl,
     )
 
     schema_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), "../../src/entities/schema/cisu.xsd")
 
     xml_string = ack_message.resource.message.to_xml()
-    print(xml_string)
     temp_file = NamedTemporaryFile(mode="w", suffix=".xml")
     with open(temp_file.name, "w") as f:
         f.write(xml_string)

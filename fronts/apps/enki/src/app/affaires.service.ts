@@ -29,7 +29,7 @@ export class AffairesService {
   constructor(
     private http: HttpClient,
     private keycloakService: KeycloakService
-    ) { 
+    ) {
       this.affaireUrl = 'http://localhost:5000/api/enki/v1/affairs/'
       this.interventionsUrl = 'http://localhost:5000/api/enki/v1/affairs'
       this.httpOptions = {

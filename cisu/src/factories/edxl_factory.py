@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
 from uuid import uuid4
 
+from typing import List
+
 from .cisu_factory import CisuEntityFactory, MessageCisuFactory
 from .factory import Factory
 from .uid_factory import UidFactory
@@ -19,6 +21,7 @@ class EdxlMessageFactory(Factory):
             distribution_status="status",
             distribution_kind="kind",
             resource=CisuEntityFactory().build(),
+            receivers_address=["sgc-enki"]
         )
 
     @staticmethod
@@ -28,6 +31,7 @@ class EdxlMessageFactory(Factory):
                date_time_expires: DateType,
                distribution_status: str,
                distribution_kind: str,
+               receivers_address: List[str],
                resource: CisuEntity) -> EdxlEntity:
         return EdxlEntity(
             distributionID=uuid,
@@ -37,23 +41,25 @@ class EdxlMessageFactory(Factory):
             distributionStatus=distribution_status,
             distributionKind=distribution_kind,
             resource=resource,
+            receiversAddress=receivers_address
         )
 
     @classmethod
-    def build_ack_from_another_message(cls, my_uuid: str,
-                                       my_sender_address: AddressType,
+    def build_ack_from_another_message(cls,
+                                       sender_address: AddressType,
                                        other_message: EdxlEntity) -> EdxlEntity:
         return cls.create(
             uuid=str(uuid4()),
             date_time_sent=DateType(datetime.now()),
             date_time_expires=DateType(datetime.now() + timedelta(days=1)),
             distribution_status="Actual",
-            distribution_kind="Report",
-            sender_id=my_uuid,
+            distribution_kind="Ack",
+            sender_id=sender_address.URI.path_name,
+            receivers_address=[other_message.resource.message.sender.URI.path_name],
             resource=CisuEntity(
                 message=MessageCisuFactory.create(
                     uuid=str(uuid4()),
-                    sender=my_sender_address,
+                    sender=sender_address,
                     sent_at=DateType(datetime.now()),
                     msg_type=MessageType.ACK,
                     status=Status.SYSTEM,

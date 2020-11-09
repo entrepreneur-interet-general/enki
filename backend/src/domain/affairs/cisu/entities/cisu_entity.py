@@ -1,12 +1,14 @@
 import pathlib
 from enum import auto
 from typing import List, Union
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from dataclasses_json import config, dataclass_json
 
 from .alert_entity import AlertEntity, PrimaryAlertEntity, OtherAlertEntity
 from .commons import DateType, Severity, LocationType
 from .commons.cisu_enum import CisuEnum
 from .commons.common_alerts import AnyURI
+from .commons.date_type import date_type_encoder
 from .commons.utils import get_data_from_tag_name, get_xml_from_tag_name
 
 
@@ -55,7 +57,7 @@ class AddressType(object):
     @classmethod
     def from_xml(cls, xml):
         name = get_data_from_tag_name(xml, "name")
-        URI = get_data_from_tag_name(xml, "URI")
+        URI = AnyURI(get_data_from_tag_name(xml, "URI"))
         return cls(
             name=name,
             URI=URI
@@ -116,10 +118,11 @@ class AckEvent(object):
     alert: Union[AlertEntity, List[AlertEntity]]
 
 
+@dataclass_json
 @dataclass
 class CreateEvent(object):
     eventId: str
-    createdAt: DateType
+    createdAt: DateType #= field(metadata=config(encoder= date_type_encoder, decoder= date_type_encoder))
     severity: Severity
     eventLocation: LocationType
     primaryAlert: PrimaryAlertEntity
@@ -169,7 +172,7 @@ class UpdateEvent(object):
 class MessageCisuEntity(object):
     messageId: str
     sender: AddressType
-    sentAt: DateType
+    sentAt: DateType = field(metadata={"encoder": date_type_encoder})
     msgType: MessageType
     status: Status
     recipients: Recipients
@@ -212,7 +215,6 @@ class MessageCisuEntity(object):
             choice_type = "ack_message"
         else:
             choice_type = "create_event"
-
 
         return template.render(message=self, choice_type=choice_type).replace("&", "&amp;")
 

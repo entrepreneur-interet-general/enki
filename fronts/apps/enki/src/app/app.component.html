@@ -1,12 +1,13 @@
 <!--This SVG ELEMENT CONTAINS SVG DEFINITION-->
 <app-svg-definitions></app-svg-definitions>
 <app-header></app-header>
+{{environment.interventionsUrl}}
 <main>
   <!-- <button (click)="loadNewAffaire()">RANDOM AFFAIRE</button> -->
   <div class="top-header">
-    <!-- <nav *ngIf="canSeeEvents()">
-      <a [routerLink]="['/liste-interventions']">Voir la liste des interventions</a>
-    </nav> -->
+    <nav *ngIf="canSeeEvents()">
+      <a routerLink="/liste-interventions">Voir la liste des interventions</a>
+    </nav>
     <p *ngIf="!canSeeEvents()">
       Désolé, vous ne pouvez pas accéder à ces informations...
     </p>

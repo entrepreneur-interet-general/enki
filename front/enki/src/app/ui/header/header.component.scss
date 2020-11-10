@@ -1,0 +1,35 @@
+@import "../../../../node_modules/enki-design-system/styles/variables";
+h1 {
+  margin-bottom: 0;
+  font-size: 24px;
+  letter-spacing: 1px;
+  font-weight: 800;
+}
+.header {
+  position: sticky;
+  top: 0;
+  background: $white;
+  z-index: 8000;
+  text-align: left;
+  height: 56px;
+  border-bottom: 1px solid $grey;
+  padding: 0 16px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  &--col {
+    display: flex;
+    align-items: center;
+    img {
+      display: block;
+      margin-right: 16px;
+    }
+    &.-right {
+      justify-content: flex-end;
+    }
+  }
+  .burger {
+    display: flex;
+    justify-content: center;
+  }
+}

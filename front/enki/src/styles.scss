@@ -1,0 +1,44 @@
+@charset "UTF-8";
+@import "../node_modules/enki-design-system/styles/variables";
+@import "../node_modules/enki-design-system/styles/styles";
+[class^="icon-"],
+[class*=" icon-"] {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+.icon-notification {
+  width: 20px;
+  height: 20px;
+}
+.icon-burger-menu {
+  width: 24px;
+  height: 24px;
+}
+
+
+.info-block {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+.title-with-icon {
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 16px;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-transform: uppercase;
+  .icon {
+    margin-right: 8px;
+  }
+}
+
+@import "~leaflet/dist/leaflet.css";
+
+/* https://coolors.co/11151c-212d40-364156-7d4e57-d66853 */

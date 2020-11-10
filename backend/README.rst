@@ -18,12 +18,12 @@ Pre-requisite
 For development
 ^^^^^^^^^^^^^^^
 
-Before you start, create a virtual environment and activate it.
-
 .. code-block:: bash
 
-   $ python3 -m venv venv
-   $ source venv/bin/activate
+   $ make up
+
+For Local Testing
+^^^^^^^^^^^^^^^^^
 
 Make sure you have the latest pip version!
 
@@ -38,29 +38,8 @@ Install the requirements
    $ pip install -r requirements.txt
    $ pip install -r requirements.dev.txt
 
+
+# Run tests
 .. code-block:: bash
 
-   $ pip install -e ./src
-
-Start the app ressources (pg):
-
-.. code-block:: bash
-
-   $ make ressources
-
-Copy the .env.sample file in `backend/.env.sample` and rename the new file to `backend/.env`
-
-Launch the app :
-
-.. code-block:: bash
-
-   $ flask run
-
-# Runnig entire app with docker (no need for `make ressources` in this case):
-
-
-To run the application in docker environement (it will also build the app image)
-
-.. code-block:: bash
-
-   $ make up
+   $ pytest src/tests

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Affaire, AffairesService } from '../../affaires.service'
+import { Intervention, InterventionsService } from '../interventions.service'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
@@ -10,26 +10,31 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./detail-intervention.component.scss']
 })
 export class DetailInterventionComponent implements OnInit {
-  affaire;
-  fetchedAffaire;
+  intervention;
+  fetchedIntervention;
   uuid;
   constructor(
-    private affairesService: AffairesService,
+    private interventionsService: InterventionsService,
     private route: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.uuid = params['uuid'];
-      this.affairesService.getAffaire(this.uuid).subscribe((affaire) => {
-        this.affaire = affaire;
-        this.fetchedAffaire = true;
-      });
+      if (this.interventionsService.getInterventionFromMemory(this.uuid)) {
+        this.intervention = this.interventionsService.getInterventionFromMemory(this.uuid)
+        this.fetchedIntervention = true
+      } else {
+        this.interventionsService.httpGetIntervention(this.uuid).subscribe((intervention) => {
+          this.intervention = intervention;
+          this.fetchedIntervention = true;
+        });
+      }
     });
   }
 
-  getIntervention(): Observable<Affaire> {
-    return of(this.affaire)
+  getIntervention(): Observable<Intervention> {
+    return of(this.intervention)
   }
 
 }

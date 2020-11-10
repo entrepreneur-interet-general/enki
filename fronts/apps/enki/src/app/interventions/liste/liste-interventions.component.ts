@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Affaire, AffairesService } from '../../affaires.service'
+import { Intervention, InterventionsService } from '../interventions.service'
 
 @Component({
   selector: 'app-liste-interventions',
@@ -10,10 +10,10 @@ import { Affaire, AffairesService } from '../../affaires.service'
 export class ListeInterventionsComponent implements OnInit {
   interventions;
   constructor(
-    private affairesService: AffairesService,
+    private interventionsService: InterventionsService,
   ) {
-    this.affairesService.getAllInterventions().subscribe((affaire) => {
-      this.interventions = affaire;
+    this.interventionsService.getAllInterventions().subscribe((interventions) => {
+      this.interventions = interventions;
       // this.fetchedAffaire = true;
     });
   }

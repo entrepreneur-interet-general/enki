@@ -1,20 +1,12 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-// import { KeycloakConfig } from 'keycloak-angular';
-
-// Add here your keycloak setup infos
-/* let keycloakConfig: KeycloakConfig = {
-  url: 'http://KEYCLOAK-IP:8088/auth',
-  realm: 'sapeurs',
-  clientId: 'enki',
-  "credentials": {
-    "secret": "b812df96-3ffc-4fff-be77-71423235cafat"
-  }  
-}; */
 
 export const environment = {
-  production: false
+  production: false,
+  interventionUrl: 'http://localhost:5000/api/enki/v1/affair/random',
+  interventionsUrl: 'http://localhost:5000/api/enki/v1/affairs/random',
+  HTTPClientInMemory: false
 };
 
 /*

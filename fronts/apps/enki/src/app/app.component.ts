@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AffairesService } from './affaires.service'
 import { add } from '@fronts/utilities'
 import { KeycloakService } from 'keycloak-angular';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +14,12 @@ export class AppComponent {
   fetchedAffaire: boolean;
   number = add(1, 2);
   token;
+  environment;
   
 
-  constructor(private affairesService: AffairesService, private keycloakService: KeycloakService
+  constructor(private keycloakService: KeycloakService
     ) {
+      this.environment = environment
       this.keycloakService.getToken().then((res) => {
         this.token = res
       });

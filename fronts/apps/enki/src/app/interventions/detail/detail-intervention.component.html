@@ -1,9 +1,9 @@
 <ul class="menu">
   <!-- <li routerLink="/">Accueil</li> -->
-  <li class="goTo" routerLink="/liste-interventions">< Retourner à la liste des affaires</li>
+  <li class="goTo" routerLink="/liste-interventions">< Retourner à la liste des interventions</li>
   <!-- <li class="goTo" routerLink="/detail-intervention">Aller à une affaire</li> -->
 </ul>
-<div class="affaire" *ngIf="fetchedAffaire">
+<div class="intervention" *ngIf="fetchedIntervention">
   <div class="info-block niveauAlerte">
     Niveau d'alerte : 
     <svg class="icon-notification -active"><use xlink:href="#icon-notification"></use></svg>
@@ -16,10 +16,10 @@
     </div>
     <div>
       <div class="infosPrincipales--natureDeFait">
-        {{affaire.natureDeFait}}
+        {{intervention.natureDeFait}}
       </div>
       <div class="infosPrincipales--dateTemps">
-        {{affaire.dateTimeSent}}
+        {{intervention.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
       </div>
     </div>
   </div>
@@ -33,7 +33,7 @@
     </div>
     <div class="localisation--details">
       <div class="localisation--adresse">
-        {{affaire.address}}
+        {{intervention.address}}
       </div>
       <div class="localisation--type">
         Circulation / transport, voie rapide

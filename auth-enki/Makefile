@@ -1,11 +1,7 @@
 .PHONY: run clean
 
-
-build:
-	docker-compose build
-
-run:
-	docker-compose up -d
+up:
+	docker-compose up
 
 clean:
 	docker-compose down --remove-orphans

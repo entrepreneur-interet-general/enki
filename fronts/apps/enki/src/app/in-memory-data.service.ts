@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import data from '../../data/interventionsx10.json'
-// import { Hero } from './hero';
 
 @Injectable({
   providedIn: 'root',

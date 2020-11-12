@@ -35,13 +35,9 @@ class SapeursConfig(object):
 
     ## Athentication
 
-    SECRET_KEY='SomethingNotEntirelySecret',
-    OIDC_CLIENT_SECRETS='client_secrets.json'
-    OIDC_USER_INFO_ENABLED: True
-    OIDC_OPENID_REALM='enki',
-    OIDC_SCOPES=['openid', 'email', 'profile']
-    OIDC_INTROSPECTION_AUTH_METHOD='client_secret_post'
-
-
-
-
+    SECRET_KEY = 'SomethingNotEntirelySecret',
+    OIDC_CLIENT_SECRETS = 'client_secrets.json'
+    OIDC_USER_INFO_ENABLED = True
+    OIDC_OPENID_REALM = 'enki',
+    OIDC_SCOPES = ['openid', 'email', 'profile']
+    OIDC_INTROSPECTION_AUTH_METHOD = 'client_secret_post'

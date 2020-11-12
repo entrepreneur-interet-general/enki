@@ -33,6 +33,15 @@ class SapeursConfig(object):
     ELASTIC_USER = os.environ.get('ELASTIC_HOST', "elastic")
     ELASTIC_PASSWORD = os.environ.get('ELASTIC_PASSWORD', "changeme")
 
+    ## Athentication
+
+    SECRET_KEY='SomethingNotEntirelySecret',
+    OIDC_CLIENT_SECRETS='client_secrets.json'
+    OIDC_USER_INFO_ENABLED: True
+    OIDC_OPENID_REALM='enki',
+    OIDC_SCOPES=['openid', 'email', 'profile']
+    OIDC_INTROSPECTION_AUTH_METHOD='client_secret_post'
+
 
 
 

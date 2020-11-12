@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  keycloak:
+      image: keycloak
+      build: .
+      environment:
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: Pa55w0rd
+      volumes:
+        - ./realms/sapeurs.json:/tmp/quarkus-realm.json
+        - ./enki-theme/:/opt/jboss/keycloak/themes/enki-theme
+      networks:
+        - auth_default
+        - backend_default
+
+      keycloak-fwd:
+        image: marcnuri/port-forward
+        environment:
+          REMOTE_HOST: keycloak
+          REMOTE_PORT: 8080
+          LOCAL_PORT: 8084
+        ports:
+          - 8084:8084
+
+networks:
+  auth_default:
+    driver: bridge
+  backend_default:
+    external: true

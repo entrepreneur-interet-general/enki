@@ -3,11 +3,19 @@ version: '3.5'
 services:
   front:
     build: .
-  ports:
-    - "4200:4200"
-  volumes:
-    - ./src:/app/src
-  networks:
-    - default
-    - backend_default
-    - auth_default
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/app/src
+    networks:
+      - default
+      - backend_default
+      - auth_default
+
+networks:
+  default:
+    driver: bridge
+  backend_default:
+    external: true
+  auth_default:
+    external: true

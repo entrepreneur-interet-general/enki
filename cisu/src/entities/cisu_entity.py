@@ -210,6 +210,7 @@ class MessageCisuEntity(object):
         from jinja2 import Environment, FileSystemLoader
         xml_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), '../templates/')
         env = Environment(loader=FileSystemLoader(str(xml_path)))
+        env.filters['cisu_time_format'] = date_type_encoder
         template = env.get_template('cisu.xml')
         if isinstance(self.choice, AckMessage):
             choice_type = "ack_message"
@@ -243,6 +244,8 @@ class CisuEntity:
         xml_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), '../templates/')
 
         env = Environment(loader=FileSystemLoader(str(xml_path)))
+        env.filters['cisu_time_format'] = date_type_encoder
+
         template = env.get_template('cisu.xml')
 
         choice_type = "create_event" if isinstance(self.message.choice, CreateEvent) else "ack_message"

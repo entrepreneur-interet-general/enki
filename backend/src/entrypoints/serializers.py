@@ -3,6 +3,7 @@ from datetime import date, datetime
 
 from flask import make_response
 
+from domain.affairs.cisu.entities.commons import DateType
 from domain.affairs.cisu.entities.commons.cisu_enum import CisuEnum
 from domain.affairs.cisu.entities.commons.common_alerts import AttributeType, Victims
 from domain.tasks.entities.event_entity import Severity
@@ -15,6 +16,8 @@ class SapeurJsonEncoder(json.JSONEncoder):
             if isinstance(obj, datetime):
                 return str(obj)
             elif isinstance(obj, date):
+                return str(obj)
+            elif isinstance(obj, DateType):
                 return str(obj)
             elif isinstance(obj, CisuEnum):
                 return str(obj)

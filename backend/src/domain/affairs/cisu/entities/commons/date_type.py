@@ -9,9 +9,10 @@ def remove_extra_last_char_(original_string, char=":", replace_char=""):
     last_char_index = original_string.rfind(char)
     return original_string[:last_char_index] + replace_char + original_string[last_char_index+1:]
 
-@dataclass_json
-@dataclass
-class DateType(object):
+
+
+
+class DateType(datetime):
     """
         L'indicateur de fuseau horaire Z ne doit pas être utilisé. Le fuseau horaire pour UTC doit être représenté par '-00:00'.
 
@@ -25,21 +26,12 @@ class DateType(object):
 
     """
 
-    value: datetime
-    pattern = "\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d[\\-+]\\d\\d:\\d\\d"
-
-    # def __new__(cls, *args, **kwargs):
-    #     value = args[0]
-    #     if isinstance(value, str):
-    #         return datetime.strptime(remove_extra_last_char_(value), '%Y-%m-%dT%H:%M:%S%z')
-    #     else:
-    #         return value
-
-    def __init__(self, value: Union[str, datetime]):
+    def __new__(cls, *args, **kwargs):
+        value = args[0]
         if isinstance(value, str):
-            self.value = datetime.strptime(remove_extra_last_char_(value), '%Y-%m-%dT%H:%M:%S%z')
+            return datetime.strptime(remove_extra_last_char_(value), '%Y-%m-%dT%H:%M:%S%z')
         else:
-            self.value =value
+            return value
 
     def __repr__(self):
         string_value = self.value.astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%S%z')
@@ -50,7 +42,6 @@ class DateType(object):
 
     def _to_dict(self):
         return self.__repr__()
-
 
 def date_type_encoder(d:datetime):
     string_value = d.astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%S%z')

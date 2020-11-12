@@ -5,8 +5,8 @@
                   xmlns:ct="urn:oasis:names:tc:emergency:edxl:ct:1.0">
   <distributionID>{{ edxl.distributionID }}</distributionID>
   <senderID>{{ edxl.senderID }}</senderID>
-  <dateTimeSent>{{ edxl.dateTimeSent }}</dateTimeSent>
-  <dateTimeExpires>{{ edxl.dateTimeExpires }}</dateTimeExpires>
+  <dateTimeSent>{{ edxl.dateTimeSent|cisu_time_format }}</dateTimeSent>
+  <dateTimeExpires>{{ edxl.dateTimeExpires|cisu_time_format }}</dateTimeExpires>
   <distributionStatus>{{ edxl.distributionStatus }}</distributionStatus>
   <distributionKind>{{ edxl.distributionKind }}</distributionKind>
   <descriptor xlink:type="resource">

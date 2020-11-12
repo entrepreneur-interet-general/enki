@@ -2,8 +2,10 @@ import random
 from typing import List
 import logging
 
-from domain.affairs.cisu.factories.cisu_factory import CisuEntityFactory
+from domain.affairs.cisu.entities.commons import Severity
+from domain.affairs.cisu.factories.alert_factory import PrimaryAlertFactory
 from domain.affairs.cisu.factories.edxl_factory import EdxlMessageFactory
+from domain.affairs.cisu.factories.location_factory import LocationTypeFactory
 from domain.affairs.cisu.factories.uid_factory import UidFactory
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, affairsList
@@ -12,14 +14,12 @@ from domain.affairs.ports.affair_repository import AbstractAffairRepository, aff
 class AffairEntityFactory(EdxlMessageFactory):
     def build(self) -> AffairEntity:
         return AffairEntity(
-            distributionID=UidFactory().build(),
-            senderID=UidFactory().build(),
-            dateTimeSent=self.clock_seed.generate(),
-            dateTimeExpires=self.clock_seed.generate(),
-            distributionStatus="Report",
-            distributionKind="Actual",
-            resource=CisuEntityFactory().build(),
-            receiversAddress=["sgc-enki"]
+            eventId=UidFactory().build(),
+            createdAt=self.clock_seed.generate(),
+            severity=Severity.random(),
+            eventLocation=LocationTypeFactory().build(),
+            primaryAlert=PrimaryAlertFactory().build(),
+            otherAlert=[],
         )
 
 

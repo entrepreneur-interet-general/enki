@@ -5,7 +5,7 @@ from entrypoints.flask_app import create_app
 
 @pytest.fixture(scope="session")
 def app():
-    load_dotenv(".envs/.test/example.env.flaskenv")
+    load_dotenv(".envs/.test/.env.flaskenv")
     app = create_app(testing=True)
     yield app
     app.context.reset()

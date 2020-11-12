@@ -1,6 +1,6 @@
 from typing import Optional
 
-from .repositories.repositories import Repositories, InMemoryRepository, SQLRepository, REPOSITORY_TYPES
+from .repositories.repositories import Repositories, InMemoryRepositories, REPOSITORY_TYPES
 from .serializers import SapeurJsonEncoder
 import os
 
@@ -10,11 +10,12 @@ class SapeursConfig(object):
         'indent': 2,
         'cls': SapeurJsonEncoder
     }
-    REPO_INFRA: str = os.environ.get('REPOSITORIES', InMemoryRepository.name)
+    REPO_INFRA: str = os.environ.get('REPOSITORIES', InMemoryRepositories.name)
     SGE_HUB_BASE_URI: str = os.environ.get('SGE_HUB_BASE_URI',
                                            'http://docker.for.mac.localhost:9090')
     SGE_REF_BASE_URI: str = os.environ.get('SGE_REF_BASE_URI',
                                            'http://docker.for.mac.localhost:10010')
+    DATABASE_URI: str = os.environ.get("DATABASE_URI", "sqlite:///:memory:")
     ENKI_SGE_ID = "sgc-enki"
     ENKI_SGE_ADDRESS = "sge:sgc-enki"
     CONTEXT_FACTORY: Repositories = REPOSITORY_TYPES[REPO_INFRA]
@@ -27,6 +28,11 @@ class SapeursConfig(object):
         'ENKI_FRONT_BASE_URI',
         'http://localhost:4200'
     )
+
+    ELASTIC_HOST = os.environ.get('ELASTIC_USER', "http://elasticsearch:9200")
+    ELASTIC_USER = os.environ.get('ELASTIC_HOST', "elastic")
+    ELASTIC_PASSWORD = os.environ.get('ELASTIC_PASSWORD', "changeme")
+
 
 
 

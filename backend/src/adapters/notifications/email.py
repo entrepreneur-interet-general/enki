@@ -9,7 +9,6 @@ import os
 
 env = Environment(loader=FileSystemLoader('%s/templates/' % os.path.dirname(__file__)))
 
-
 def send(*args):
     current_app.logger.info(f'SENDING EMAIL: {args}', )
     to_email, intervention_id, what_happens_label = args

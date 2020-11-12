@@ -1,6 +1,6 @@
 <createEvent>
     <eventId>{{ message.choice.eventId }}</eventId>
-    <createdAt>{{ message.choice.createdAt }}</createdAt>
+    <createdAt>{{ message.choice.createdAt|cisu_time_format }}</createdAt>
     <severity>{{ message.choice.severity }}</severity>
     {% if message.choice.eventLocation %}
     <eventLocation>
@@ -34,7 +34,7 @@
     {% set primaryAlert = message.choice.primaryAlert  %}
     <primaryAlert>
       <alertId>{{ primaryAlert.alertId }}</alertId>
-      <receivedAt>{{ primaryAlert.receivedAt }}</receivedAt>
+      <receivedAt>{{ primaryAlert.receivedAt|cisu_time_format }}</receivedAt>
       <reporting>{{ primaryAlert.reporting }}</reporting>
       {% if  primaryAlert.alertInformation %}
       <alertInformation>{{ primaryAlert.alertInformation }}</alertInformation>

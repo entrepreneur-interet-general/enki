@@ -54,5 +54,6 @@ class EdxlEntity:
         xml_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), '../templates/')
         choice_type = "create_event" if isinstance(self.resource.message.choice, CreateEvent) else "ack_message"
         env = Environment(loader=FileSystemLoader(str(xml_path)))
+        env.filters['cisu_time_format'] = date_type_encoder
         template = env.get_template('message.xml')
         return template.render(edxl=self, choice_type=choice_type)

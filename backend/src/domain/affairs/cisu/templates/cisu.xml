@@ -5,7 +5,7 @@
     <name>{{ message.sender.name }}</name>
     <URI>{{ message.sender.URI }}</URI>
   </sender>
-  <sentAt>{{ message.sentAt }}</sentAt>
+  <sentAt>{{ message.sentAt|cisu_time_format }}</sentAt>
   <msgType>{{ message.msgType }}</msgType>
   <status>{{ message.status }}</status>
   <recipients>

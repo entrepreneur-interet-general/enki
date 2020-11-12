@@ -1,10 +1,10 @@
 import abc
-from typing import List
+from typing import List, Union
 import xml.dom.minidom
-from uuid import uuid4
 
 from werkzeug.exceptions import HTTPException
 
+from domain.affairs.cisu import EdxlEntity
 from domain.affairs.entities.affair_entity import AffairEntity
 from entrypoints.extensions import event_bus, clock
 from domain.core import events
@@ -26,7 +26,7 @@ class NotFoundAffair(HTTPException):
 class AbstractAffairRepository(abc.ABC):
 
     def add(self, affair: AffairEntity) -> None:
-        if self._match_uuid(affair.distributionID):
+        if self._match_uuid(affair.uuid):
             raise AlreadyExistingAffairUuid()
         self._add(affair)
         event_bus.publish(events.AffairCreatedEvent(data=affair))
@@ -38,10 +38,10 @@ class AbstractAffairRepository(abc.ABC):
         return self.get_all()[0:n]
 
     def get_by_uuid(self, uuid: str) -> AffairEntity:
-        matches = self._match_uuid(uuid)
-        if not matches:
+        match = self._match_uuid(uuid)
+        if not match:
             raise NotFoundAffair
-        return matches[0]
+        return match
 
     @abc.abstractmethod
     def _add(self, entity: AffairEntity):
@@ -52,18 +52,20 @@ class AbstractAffairRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _match_uuid(self, uuid: str) -> List[AffairEntity]:
+    def _match_uuid(self, uuid: str) -> Union[AffairEntity,None]:
         raise NotImplementedError
 
     @staticmethod
     def build_affair_from_xml_string(xml_string: str) -> AffairEntity:
         affair_dom = xml.dom.minidom.parseString(xml_string)
-        return AffairEntity.from_xml(affair_dom)
+        edxl_message = EdxlEntity.from_xml(affair_dom)
+        return AffairEntity(**edxl_message.resource.message.choice.to_dict())
 
     @staticmethod
     def build_affair_from_xml_file(xml_path: str) -> AffairEntity:
         affair_dom = xml.dom.minidom.parse(xml_path)
-        return AffairEntity.from_xml(affair_dom)
+        edxl_message = EdxlEntity.from_xml(affair_dom)
+        return AffairEntity(**edxl_message.resource.message.choice.to_dict())
 
 
 class InMemoryAffairRepository(AbstractAffairRepository):
@@ -76,7 +78,7 @@ class InMemoryAffairRepository(AbstractAffairRepository):
         return self._affairs
 
     def _match_uuid(self, uuid: str) -> List[AffairEntity]:
-        return [affair for affair in self._affairs if affair.distributionID == uuid]
+        return [affair for affair in self._affairs if affair.uuid == uuid]
 
     # next methods are only for test purposes
     @property

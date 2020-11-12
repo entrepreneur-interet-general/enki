@@ -66,7 +66,7 @@ def test_edxl_xml_parsing(filename):
     edxl = EdxlEntity.from_xml(dom)
     assert edxl.distributionID == expected[suffix]["distributionID"]
     assert isinstance(edxl.resource.message.choice, CreateEvent)
-    assert edxl.resource.message.choice.primaryAlert.receivedAt.value == expected[suffix]["receivedAt"]
+    assert edxl.resource.message.choice.primaryAlert.receivedAt == expected[suffix]["receivedAt"]
     assert isinstance(edxl.resource.message.choice.primaryAlert, PrimaryAlertEntity)
 
     assert isinstance(edxl.resource.message.choice.primaryAlert.resource, list)

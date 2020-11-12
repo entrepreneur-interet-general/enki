@@ -17,8 +17,7 @@ services:
       - ./jdd/xml_cisu:/jdd/xml_cisu
     networks:
       - default
-    extra_hosts:
-      - "localhost:192.168.1.11"
+      - elk_default
 
   postgres:
     image: postgres
@@ -40,4 +39,6 @@ services:
 
 networks:
   default:
-    driver: overlay
+    driver: bridge
+  elk_default:
+    external: true

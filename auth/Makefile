@@ -1,7 +1,14 @@
-.PHONY: run clean
+build:
+	docker-compose -f docker-compose.yml build
 
 up:
-	docker-compose up
+	docker-compose -f docker-compose.yml up
 
-clean:
-	docker-compose down --remove-orphans
+upd:
+	docker-compose -f docker-compose.yml up -d
+
+down:
+	docker-compose -f docker-compose.yml down --remove-orphans
+
+logs:
+	docker-compose -f docker-compose.yml logs

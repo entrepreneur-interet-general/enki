@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+  front:
+    build: .
+  ports:
+    - "4200:4200"
+  volumes:
+    - ./src:/app/src
+  networks:
+    - default
+    - backend_default
+    - auth_default

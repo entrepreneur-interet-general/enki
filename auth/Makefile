@@ -1,6 +1,13 @@
 build:
 	docker-compose -f docker-compose.yml build
 
+setup:
+	docker-compose -f docker-compose.yml up -d keycloak
+	sleep 5
+	docker-compose -f docker-compose.yml up -d keycloak-db
+	sleep 5
+provision:
+	docker-compose -f docker-compose.yml run keycloak-provision
 up:
 	docker-compose -f docker-compose.yml up
 
@@ -8,7 +15,7 @@ upd:
 	docker-compose -f docker-compose.yml up -d
 
 down:
-	docker-compose -f docker-compose.yml down --remove-orphans
+	docker-compose -f docker-compose.yml down --remove-orphans -v
 
 logs:
 	docker-compose -f docker-compose.yml logs

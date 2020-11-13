@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  postgres:
+  keycloak-db:
       image: postgres
       environment:
         POSTGRES_DB: keycloak
@@ -9,19 +9,21 @@ services:
         POSTGRES_PASSWORD: password
 
   keycloak:
-      image: keycloak
       build: .
       environment:
         DB_VENDOR: POSTGRES
-        DB_ADDR: postgres
+        DB_ADDR: keycloak-db
         DB_DATABASE: keycloak
         DB_USER: keycloak
         DB_SCHEMA: public
         DB_PASSWORD: password
         KEYCLOAK_USER: admin
         KEYCLOAK_PASSWORD: Pa55w0rd
+        KEYCLOAK_IMPORT: /tmp/enki-realm-export.json
+      ports:
+        - 8080:8080
       volumes:
-        - ./realms/sapeurs.json:/tmp/quarkus-realm.json
+        - ./realms/enki-realm-export.json:/tmp/enki-realm-export.json
         - ./enki-theme/:/opt/jboss/keycloak/themes/enki-theme
 
   keycloak-fwd:
@@ -34,6 +36,13 @@ services:
       - 8084:8084
     networks:
         - default
+
+  keycloak-provision:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.provision
+    env_file:
+      - .env
 
 networks:
   default:

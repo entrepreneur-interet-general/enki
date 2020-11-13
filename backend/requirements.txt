@@ -10,7 +10,6 @@ flask-cors
 sqlalchemy-utils
 twilio
 elasticsearch
-
 #pandas
 
 #Cisu Package

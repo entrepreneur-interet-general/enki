@@ -45,3 +45,9 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
     def exists(self, uuid: str) -> bool:
         return self.client.get(index=self.index_name, id=uuid)
 
+    def get_all(self) -> List[AffairEntity]:
+        results = self.client.search(
+            index=self.index_name,
+            body={"query": {"match_all": {}}}
+        )
+        return [AffairEntity(**hit["_source"]) for hit in results['hits']['hits']]

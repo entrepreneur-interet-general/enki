@@ -1,7 +1,13 @@
 version: '3.4'
 
 networks:
-  kong-net:
+  default:
+    driver: bridge
+  backend_default:
+    external: true
+  auth_default:
+    external: true
+
 
 volumes:
   kong-datastore:
@@ -12,7 +18,7 @@ services:
     volumes:
       - kong-datastore:/var/lib/postgresql/data
     networks:
-      - kong-net
+      - default
     ports:
       - "15432:5432"
     environment:
@@ -25,12 +31,16 @@ services:
     depends_on:
       - kong-db
     networks:
-      - kong-net
+      - default
+      - backend_default
+      - auth_default
     ports:
       - "8000:8000" # Listener
       - "8001:8001" # Admin API
+      - "8002:8002" # Admin GUI
       - "8443:8443" # Listener  (SSL)
       - "8444:8444" # Admin API (SSL)
+
     environment:
       KONG_DATABASE:         postgres
       KONG_PG_HOST:          kong-db
@@ -43,3 +53,14 @@ services:
       KONG_PROXY_LISTEN:     0.0.0.0:8000, 0.0.0.0:8443 ssl
       KONG_ADMIN_LISTEN:     0.0.0.0:8001, 0.0.0.0:8444 ssl
       KONG_PLUGINS:          oidc
+
+  kong-provision:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.provision
+    depends_on:
+      - kong-db
+      - kong
+    env_file:
+      - .env
+

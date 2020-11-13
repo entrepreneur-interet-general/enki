@@ -6,4 +6,6 @@ RUN yum install -y git unzip && yum clean all
 RUN yum install -y openssl-devel -y
 RUN yum install -y gcc
 
-RUN luarocks install kong-oidc 1.0.1
+RUN luarocks install lua-resty-session
+RUN luarocks install lua-resty-openidc
+RUN luarocks install kong-oidc

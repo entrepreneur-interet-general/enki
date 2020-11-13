@@ -40,5 +40,5 @@ services:
 networks:
   default:
     driver: bridge
-  elk_default:
+  enki_default:
     external: true

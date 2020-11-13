@@ -46,6 +46,8 @@ services:
 networks:
   default:
     driver: bridge
+  enki_default:
+    external: true
 
 volumes:
   elasticsearch:

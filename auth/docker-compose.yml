@@ -47,5 +47,5 @@ services:
 networks:
   default:
     driver: bridge
-  backend_default:
+  enki_default:
     external: true

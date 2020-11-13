@@ -3,9 +3,7 @@ version: '3.4'
 networks:
   default:
     driver: bridge
-  backend_default:
-    external: true
-  auth_default:
+  enki_default:
     external: true
 
 

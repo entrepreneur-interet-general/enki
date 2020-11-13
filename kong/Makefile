@@ -9,7 +9,7 @@ setup:
 	docker-compose -f docker-compose.yml up -d kong
 
 provision:
-	docker-compose -f docker-compose.yml run --rm kong-provision
+	docker-compose -f docker-compose.provision.yml run --rm kong-provision
 
 up:
 	docker-compose -f docker-compose.yml up kong-db

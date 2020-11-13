@@ -1,0 +1,17 @@
+version: '3.4'
+
+networks:
+  default:
+    driver: bridge
+
+services:
+  kong-provision:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.provision
+    depends_on:
+      - kong-db
+      - kong
+    env_file:
+      - .env
+

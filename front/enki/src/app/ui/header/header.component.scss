@@ -1,5 +1,5 @@
 @import "../../../../node_modules/enki-design-system/styles/variables";
-h1 {
+.enki-logo {
   margin-bottom: 0;
   font-size: 24px;
   letter-spacing: 1px;
@@ -9,12 +9,11 @@ h1 {
   position: sticky;
   top: 0;
   background: $white;
-  z-index: 8000;
+  z-index: 5000;
   text-align: left;
   height: 56px;
   border-bottom: 1px solid $grey;
   padding: 0 16px;
-  margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
   &--col {
@@ -33,3 +32,34 @@ h1 {
     justify-content: center;
   }
 }
+
+.right-menu {
+  position: absolute;
+  transform: translate3d(100%, 0, 0);
+  width: 100%;
+  background: $white;
+  z-index: 8000;
+  height: 100vh;
+  padding: 16px;
+  transition: .5s ease all;
+    &.-active {
+    transform: translate3d(0, 0, 0);
+    transition: .5s ease all;
+  }
+  &--item {
+    font-size: 20px;
+    margin-bottom: 16px;
+    a {
+      color: $primary;
+    }
+  }
+}
+
+.overlay.-active {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: $darkestGrey;
+  opacity: .5;
+}
+

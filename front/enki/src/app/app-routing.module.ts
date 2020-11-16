@@ -4,9 +4,14 @@ import { AuthGuard } from './app-auth-guard.service';
 // import { AppComponent } from './app.component';
 import { ListeInterventionsComponent } from './interventions/liste/liste-interventions.component';
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 const routes: Routes = [
+  {
+    path: 'dashboard',
+    component: DashboardComponent
+  },
   {
     path: 'liste-interventions',
     canActivate: [ AuthGuard ],
@@ -20,6 +25,10 @@ const routes: Routes = [
     data: {
       roles: ['watchEvents']
     }
+  },
+  {
+    path: '',
+    redirectTo: '/dashboard', pathMatch: 'full'
   }
 ];
 

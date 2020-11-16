@@ -1,4 +1,6 @@
-<h1>Liste des interventions</h1>
+<div class="title-container">
+  <h1>Liste des interventions</h1>
+</div>
 <ul class="interventions">
   <li class="intervention" *ngFor="let intervention of interventions">
     <a class="intervention--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">

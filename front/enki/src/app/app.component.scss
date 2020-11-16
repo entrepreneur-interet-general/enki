@@ -4,8 +4,19 @@
   outline: 0;
 }
 
+.u-dev-info {
+  background: $grey;
+  padding: 10px;
+}
+
+
+
 .top-header {
-  padding: 0 16px;
+  padding: 0 16px 16px 16px;
+}
+
+main {
+  margin-top: 16px;
 }
 
 .logout {

@@ -1,13 +1,12 @@
 <!--This SVG ELEMENT CONTAINS SVG DEFINITION-->
 <app-svg-definitions></app-svg-definitions>
 <app-header></app-header>
-<div *ngIf="!environment.production">{{environment.interventionsUrl}}</div>
+
 <main>
   <!-- <button (click)="loadNewAffaire()">RANDOM AFFAIRE</button> -->
   <div class="top-header">
-    <nav *ngIf="canSeeEvents()">
-      <a routerLink="/liste-interventions">Voir la liste des interventions</a>
-    </nav>
+    <div *ngIf="!environment.production" class="u-dev-info">Logs [url api] : {{environment.interventionsUrl}}</div>
+
     <p *ngIf="!canSeeEvents()">
       Désolé, vous ne pouvez pas accéder à ces informations...
     </p>

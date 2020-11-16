@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { InterventionsService } from '../interventions.service'
+import { InterventionsService } from '../interventions/interventions.service';
 
 @Component({
-  selector: 'app-liste-interventions',
-  templateUrl: './liste-interventions.component.html',
-  styleUrls: ['./liste-interventions.component.scss']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: [
+    './dashboard.component.scss',
+    '../interventions/liste/liste-interventions.component.scss'
+  ]
 })
-export class ListeInterventionsComponent implements OnInit {
+export class DashboardComponent implements OnInit {
+
   interventions;
   constructor(
     private interventionsService: InterventionsService,

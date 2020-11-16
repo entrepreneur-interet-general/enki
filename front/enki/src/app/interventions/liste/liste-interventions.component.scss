@@ -1,24 +1,14 @@
 @import "../../../../node_modules/enki-design-system/styles/variables";
 
-h1 {
-  font-size: 32px;
-  padding-bottom: 24px;
-  margin: 0 16px;
-  position: relative;
-  &:after {
-    content: '';
-    width: 62px;
-    background-color: $grey;
-    height: 1px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-  }
+.interventions {
+  padding: 0 16px;
 }
 
 .intervention {
   padding-top: 20px;
   border-bottom: 1px solid $grey;
+  background: $white;
+  border-left: 4px solid $primary;
   &--wrapper {
     margin: 0 16px;
     display: block;

@@ -61,6 +61,10 @@ export class InterventionsService {
   }
 
   getAllInterventions(): Observable<Intervention[]> {
+    // if there's already interventions in memory, send these
+    if (this.interventions !== undefined && this.interventions.length > 0) {
+      return of(this.interventions)
+    }
     return this.http.get<any>(this.interventionsUrl, this.httpOptions)
       .pipe(
         map(interventions => {
@@ -69,7 +73,7 @@ export class InterventionsService {
           return updatedInterventions
         }),
         tap(_ => this.log('fetched all interventions'))
-      )
+      );
   }
 
   httpGetIntervention(uuid: string): Observable<Intervention> {

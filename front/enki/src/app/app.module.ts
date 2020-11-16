@@ -14,6 +14,7 @@ import { HeaderComponent } from './ui/header/header.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -35,7 +36,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ListeInterventionsComponent,
     DetailInterventionComponent,
     SvgDefinitionsComponent,
-    HeaderComponent
+    HeaderComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

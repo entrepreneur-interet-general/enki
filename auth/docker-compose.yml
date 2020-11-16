@@ -38,14 +38,8 @@ services:
     ports:
       - 8084:8084
     networks:
-        - default
-
-  keycloak-provision:
-    build:
-      context: ./docker
-      dockerfile: Dockerfile.provision
-    env_file:
-      - .env
+      - default
+      - enki_default
 
 networks:
   default:

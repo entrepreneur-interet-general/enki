@@ -17,6 +17,7 @@ services:
       - kong-datastore:/var/lib/postgresql/data
     networks:
       - default
+      - enki_default
     ports:
       - "15432:5432"
     environment:
@@ -52,13 +53,4 @@ services:
       KONG_ADMIN_LISTEN:     0.0.0.0:8001, 0.0.0.0:8444 ssl
       KONG_PLUGINS:          oidc
 
-  kong-provision:
-    build:
-      context: ./docker
-      dockerfile: Dockerfile.provision
-    depends_on:
-      - kong-db
-      - kong
-    env_file:
-      - .env
 

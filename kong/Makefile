@@ -12,12 +12,10 @@ provision:
 	docker-compose -f docker-compose.provision.yml run --rm kong-provision
 
 up:
-	docker-compose -f docker-compose.yml up kong-db
-	docker-compose -f docker-compose.yml up kong
+	docker-compose -f docker-compose.yml up
 
 upd:
-	docker-compose -f docker-compose.yml up -d kong-db
-	docker-compose -f docker-compose.yml up -d kong
+	docker-compose -f docker-compose.yml up -d
 
 down:
 	docker-compose -f docker-compose.yml down --remove-orphans -v

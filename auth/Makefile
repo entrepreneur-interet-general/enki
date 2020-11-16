@@ -8,7 +8,7 @@ setup:
 	sleep 10
 
 provision:
-	docker-compose -f docker-compose.yml run keycloak-provision
+	docker-compose -f docker-compose.provision.yml run keycloak-provision
 up:
 	docker-compose -f docker-compose.yml up
 

@@ -23,7 +23,7 @@ services:
     environment:
       POSTGRES_DB:       api-gw
       POSTGRES_USER:     kong
-      POSTGRES_PASSWORD:
+      POSTGRES_PASSWORD: kong
 
   kong:
     build: .
@@ -44,6 +44,8 @@ services:
       KONG_DATABASE:         postgres
       KONG_PG_HOST:          kong-db
       KONG_PG_PORT:          5432
+      KONG_PG_USER:          kong
+      KONG_PG_PASSWORD:      kong
       KONG_PG_DATABASE:      api-gw
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_ADMIN_ACCESS_LOG: /dev/stdout

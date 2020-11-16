@@ -2,8 +2,7 @@
 version: '3'
 
 services:
-  sapeurs-api:
-    image: sapeurs-api
+  enki-api:
     build: .
     command: flask run --host=0.0.0.0
     env_file:
@@ -17,7 +16,7 @@ services:
       - ./jdd/xml_cisu:/jdd/xml_cisu
     networks:
       - default
-      - elk_default
+      - enki_default
 
   postgres:
     image: postgres

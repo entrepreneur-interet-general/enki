@@ -30,8 +30,8 @@ services:
       - kong-db
     networks:
       - default
-      - backend_default
-      - auth_default
+      - enki_default
+
     ports:
       - "8000:8000" # Listener
       - "8001:8001" # Admin API

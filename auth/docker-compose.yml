@@ -25,6 +25,9 @@ services:
       volumes:
         - ./realms/enki-realm-export.json:/tmp/enki-realm-export.json
         - ./enki-theme/:/opt/jboss/keycloak/themes/enki-theme
+      networks:
+        - default
+        - enki_default
 
   keycloak-fwd:
     image: marcnuri/port-forward

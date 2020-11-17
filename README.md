@@ -14,6 +14,9 @@ docker network create --driver=bridge enki_default
 ``` 
 
 ### Keycloak
+```
+cd auth
+```
 Copy example.env to .env 
 ```
 cp example.env .env
@@ -21,7 +24,7 @@ cp example.env .env
 Change variables if needed
 
 ```
-cd auth && docker-compose -f docker-compose.yml up 
+ docker-compose -f docker-compose.yml up 
 ```
 wait keycloak startup
 ``` 
@@ -35,6 +38,10 @@ make upd && sleep 5 && make provision
 
 Get kong client secret from Keycloak admin in Client section and change it in .env file
 ### Kong Api Gateway
+
+```
+cd kong
+```
 Copy example.env to .env 
 ```
 cp example.env .env
@@ -42,7 +49,7 @@ cp example.env .env
 Change CLIENT_SECRET with keycloak kong client
 
 ``` 
-cd kong && docker-compose -f docker-compose.yml setup 
+docker-compose -f docker-compose.yml setup 
 ```
 wait kong startup 
 ```
@@ -55,16 +62,22 @@ make setup && sleep 5 && make provision
 ```
 # Elasticsearch and Kibana
 ```
-cd elk && docker-compose -f docker-compose.yml up
+cd elk
+```
+```
+docker-compose -f docker-compose.yml up
 ```
 or with make 
 ```
 make upd
 ```
 ### Backend
+```
+cd backend
+```
 
 ```
-cd backend && docker-compose -f docker-compose.yml up
+docker-compose -f docker-compose.yml up
 ```
 or with make 
 ```
@@ -72,7 +85,11 @@ make upd
 ```
 ### FrontEnd
 ```
-cd front && docker-compose -f docker-compose.yml up
+cd front
+```
+
+```
+docker-compose -f docker-compose.yml up
 ```
 or with make 
 ```

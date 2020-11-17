@@ -5,7 +5,7 @@ services:
     build:
       context: elasticsearch/
       args:
-        ELK_VERSION: $ELK_VERSION
+        ELK_VERSION: 7.9.1
     volumes:
       - type: bind
         source: ./elasticsearch/config/elasticsearch.yml
@@ -30,7 +30,7 @@ services:
     build:
       context: kibana/
       args:
-        ELK_VERSION: $ELK_VERSION
+        ELK_VERSION: 7.9.1
     volumes:
       - type: bind
         source: ./kibana/config/kibana.yml
@@ -46,6 +46,8 @@ services:
 networks:
   default:
     driver: bridge
+  enki_default:
+    external: true
 
 volumes:
   elasticsearch:

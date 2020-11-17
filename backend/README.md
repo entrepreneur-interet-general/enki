@@ -1,22 +1,11 @@
-===============
-Sapeurs Backend
-===============
-
 We followed the guidelines of [cosmic python book](https://www.cosmicpython.com/book/preface.html)
 to structure our repository.
 
 |test-status|
 
-Installation
-------------
+# Installation
 
-Pre-requisite
-^^^^^^^^^^^^^
-
-- python 3.8
-
-For development
-^^^^^^^^^^^^^^^
+## For development
 
 .. code-block:: bash
 
@@ -43,3 +32,4 @@ Install the requirements
 .. code-block:: bash
 
    $ pytest src/tests
+

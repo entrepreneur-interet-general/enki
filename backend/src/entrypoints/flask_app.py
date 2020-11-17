@@ -48,6 +48,7 @@ def create_app(testing=False):
     return app
 
 
+
 def configure_event_bus(context):
     for topic, callbacks in HANDLERS.items():
         for callback in callbacks:

@@ -33,6 +33,6 @@ class SapeursConfig(object):
     ELASTIC_USER = os.environ.get('ELASTIC_HOST', "elastic")
     ELASTIC_PASSWORD = os.environ.get('ELASTIC_PASSWORD', "changeme")
 
+    ## Athentication
 
-
-
+    SECRET_KEY = 'SomethingNotEntirelySecret'

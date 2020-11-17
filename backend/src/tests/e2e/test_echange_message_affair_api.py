@@ -1,28 +1,22 @@
-from typing import Dict
-from uuid import uuid4
+from typing import List
 
 import pytest
 from flask import Response
 from flask.testing import FlaskClient
-
-from domain.tasks.ports.task_repository import AlreadyExistingTaskUuid, NotFoundTask
-from entrypoints.flask_app import app
-from ..factories.task import task_factory
-from ..helpers.filter import filter_dict_with_keys
 import pathlib
 
 BASE_PATH_ECHANGES: str = "/api/v1/echanges/messages"
 BASE_PATH_AFFAIRS: str = "/api/enki/v1/affairs"
 
-
 filenames = list(pathlib.Path(pathlib.Path(__file__).parent.absolute()).glob("../data/*.xml"))
 
+
 @pytest.mark.parametrize("filename", filenames)
-def test_retrieve_random_affair(filename, client: FlaskClient):
-    with open(filename, 'r') as f:
+def test_retrieve_random_affair(filename: pathlib.Path, client: FlaskClient):
+    with open(str(filename), 'r') as f:
         post_new_affair_response = post_new_affair(client=client, xml_string=str(f.read()))
     assert post_new_affair_response.status_code == 200
-    assert post_new_affair_response.json == { "msg": "success" }
+    assert post_new_affair_response.json == {"msg": "success"}
 
 
 def test_retrieve_random_affairs(client: FlaskClient):

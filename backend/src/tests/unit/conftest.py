@@ -5,6 +5,7 @@ from sqlalchemy.orm import sessionmaker, Session, clear_mappers
 
 from adapters.postgres import PgTagRepository, PgTaskRepository
 from adapters.postgres.orm import start_mappers, metadata
+from domain.affairs.ports.affair_repository import InMemoryAffairRepository, AbstractAffairRepository
 from domain.tasks.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 from domain.tasks.ports.task_repository import InMemoryTaskRepository, AbstractTaskRepository
 
@@ -19,7 +20,7 @@ def sqlite_engine() -> Engine:
 def clear_tables(sqlite_engine):
     metadata.drop_all(sqlite_engine)
     metadata.create_all(sqlite_engine)
-    #[table.drop(sqlite_engine) for table in all_tables]
+    # [table.drop(sqlite_engine) for table in all_tables]
 
 
 @pytest.fixture(scope="function")
@@ -70,3 +71,18 @@ def task_repo(request, task_in_memory_repo, task_pg_repo) -> AbstractTaskReposit
         repo = task_in_memory_repo
         repo._tasks = []
     return repo
+
+
+@pytest.fixture(scope="function")
+def affair_in_memory_repo() -> AbstractAffairRepository:
+    affair_repo = InMemoryAffairRepository()
+    affair_repo._affairs = []
+    return affair_repo
+
+
+@pytest.fixture(scope="function", params=["in_memory"])  # , "sqlite"
+def affair_repo(request, affair_in_memory_repo) -> AbstractAffairRepository:
+    if request.param == "in_memory":
+        repo = affair_in_memory_repo
+        repo._affairs = []
+        return repo

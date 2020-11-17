@@ -134,6 +134,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "enki"
+    }
+  },
+  "defaultProject": "enki",
+  "cli": {
+    "analytics": "1dd160d2-ade9-4ece-ae28-56416fb26df0"
+  }
 }

@@ -20,9 +20,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        "realm": "sapeurs",
+        "realm": "enki",
         "url": "http://localhost:8084/auth/",
-        "clientId": "enki",
+        "clientId": "angular_frontend",
       },
       initOptions: {
         onLoad: 'login-required'

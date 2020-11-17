@@ -2,11 +2,12 @@
 
 ## Installation
 
-This is a little trick to redirect to keycloak from localhost 
+* Add localhost keycloak to /etc/hosts
+* This is a little trick to redirect to keycloak from localhost 
 ```
 echo "localhost keycloak" >> /etc/hosts
 ```
-or add it manually with your bests text editor 
+or add it manually with your best text editor 
 
 You need to create global default network with 
 ```
@@ -36,7 +37,9 @@ or with make
 make upd && sleep 5 && make provision 
 ```
 
-Get kong client secret from Keycloak admin in Client section and change it in .env file
+Go to keycloak admin [http://localhost:8080](http://localhost:8080), angular_frontend client, and add http://localhost:4200 to the Web origin field
+
+Get kong client secret from Keycloak admin [http://localhost:8080](http://localhost:8080) in Client section and change it in .env file
 ### Kong Api Gateway
 
 ```

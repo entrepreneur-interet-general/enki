@@ -1,22 +1,49 @@
 @import "../../../node_modules/enki-design-system/styles/variables";
 
 .dashboard {
-  background: #E5EDF5;
   padding: 16px 0;
-  &--title {
-    background: $white;
-    padding: 16px;
+  &--widget {
+    padding: 24px 16px;
   }
 }
-.ville-title {
+.interventions {
+  background: #E5EDF5;
+}
+.meteo {
+  background: $white;
+}
+.vigicrue {
+  background: $white;
+}
+.annuaire {
+  background: $primary;
+  color: $white;
+}
+.stats {
+  background: $white;
+}
+.reseaux-sociaux {
+  background: #E5EDF5;
+  .icon {
+    fill: $primary;
+  }
+}
+.news {
+  background: $white;
+}
+
+.sub-title {
   color: $primary;
   font-size: 17px;
-  padding: 0 16px 8px 16px;
+  padding: 0 16px 8px 0;
 }
 .interventions--seeMore {
-  margin: 20px 0 24px;
+  margin: 20px 0 0;
+  font-size: 17px;
+  line-height: 24px;
   a {
     text-decoration: none;
     color: $primary;
+    display: flex;
   }
 }

@@ -37,8 +37,6 @@ or with make
 make upd && sleep 5 && make provision 
 ```
 
-Go to keycloak admin [http://localhost:8080](http://localhost:8080), angular_frontend client, and add http://localhost:4200 to the Web origin field
-
 Get kong client secret from Keycloak admin [http://localhost:8080](http://localhost:8080) in Client section and change it in .env file
 ### Kong Api Gateway
 

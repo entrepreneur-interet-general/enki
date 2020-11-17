@@ -24,4 +24,4 @@ down:
 	docker-compose -f docker-compose.yml down --remove-orphans -v
 
 logs:
-	docker-compose -f docker-compose.yml logs -f
+	docker-compose -f docker-compose.yml logs --follow

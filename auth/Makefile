@@ -1,6 +1,9 @@
 build:
 	docker-compose -f docker-compose.yml build
 
+build-provision:
+	docker-compose -f docker-compose.provision.yml build
+
 setup:
 	docker-compose -f docker-compose.yml up -d keycloak-db
 	sleep 5

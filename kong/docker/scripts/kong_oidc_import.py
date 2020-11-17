@@ -1,7 +1,8 @@
 import requests
 import os
+# from dotenv import load_dotenv
+# load_dotenv("../../.env")
 
-BACKEND_HOST_IP = os.environ.get("BACKEND_HOST_IP")
 KONG_HOST_IP = os.environ.get("KONG_HOST_IP")
 KONG_PORT = os.environ.get("KONG_PORT")
 KEYCLOAK_HOST_IP = os.environ.get("KEYCLOAK_HOST_IP")
@@ -16,8 +17,12 @@ data = {
     'name': 'enki_api',
     'url': f'{BACKEND_URI}'
 }
+print(f'http://{KONG_HOST_IP}:{KONG_PORT}/services')
+print(data)
 
 response = requests.post(f'http://{KONG_HOST_IP}:{KONG_PORT}/services', data=data)
+
+print(response.json())
 
 created_service_id = response.json()["id"]
 

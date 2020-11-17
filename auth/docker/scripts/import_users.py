@@ -7,6 +7,8 @@ USERNAME = os.environ.get("KEYCLOAK_ADMIN_USER", "admin")
 PASSWORD = os.environ.get("KEYCLOAK_ADMIN_PASSWORD", "Pa55w0rd")
 REALM_NAME = os.environ.get("KEYCLOAK_REALM", "enki")
 
+print(REALM_NAME)
+print(KEYCLOAK_URL)
 keycloak_admin = KeycloakAdmin(server_url=KEYCLOAK_URL,
                                username=USERNAME,
                                password=PASSWORD,
@@ -49,11 +51,12 @@ def create_groups(admin, realm_roles):
 
 
 def create_user(admin, username, password, code_commune):
-    password = password or os.environ.get("DEFAULT_PASSWORD")
+    password = password or os.environ.get("DEFAULT_PASSWORD", "defaultpassword")
     new_user = admin.create_user({
                     "username": username,
                     "enabled": True,
-                    "credentials": [{"value": password,"type": "password",}]})
+    })
+    response = admin.set_user_password(user_id=new_user, password=password, temporary=False)
     return new_user
 
 

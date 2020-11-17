@@ -3,10 +3,10 @@ from dataclasses_json import dataclass_json
 from datetime import datetime
 from enum import Enum
 
-from typing import Union
+from typing import Union, List
 
-from domain.core.entity import Entity
-from domain.core.timestamped import TimeStamped
+from domain.core.entity import TimeStampedEntity
+from domain.tasks.entities.resource_entity import ResourceEntity
 
 
 class Severity(Enum):
@@ -19,10 +19,11 @@ class Severity(Enum):
 
 @dataclass_json
 @dataclass
-class MessageEventEntity(Entity, TimeStamped):
+class MessageEventEntity(TimeStampedEntity):
     title: str
     description: str
     event_type: str
+    resources: List[ResourceEntity] = field(default_factory=lambda: [])
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
     creator_id: Union[str, None] = field(default_factory=lambda: None)
     creator_type: Union[str, None] = field(default_factory=lambda: None)

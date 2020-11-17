@@ -10,6 +10,7 @@ flask-cors
 sqlalchemy-utils
 twilio
 elasticsearch
+minio
 #pandas
 
 #Cisu Package

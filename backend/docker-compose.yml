@@ -1,6 +1,16 @@
 # WARNING: this file is not suitable for production, please use with caution
 version: '3'
 
+volumes:
+  minio-data:
+
+networks:
+  default:
+    driver: bridge
+  enki_default:
+    external: true
+
+
 services:
   enki-api:
     build: .
@@ -27,6 +37,25 @@ services:
       - ./pgdata/dev:/var/lib/postgresql/data
     networks:
       - default
+  minio1:
+    image: minio/minio
+    volumes:
+      - minio-data:/data
+    ports:
+    - "9000:9000"
+    expose:
+      - "9000"
+    env_file:
+      - .envs/.local/.env.minio
+    command: server data/
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - default
+      - enki_default
 
   mailhog:
     image: mailhog/mailhog
@@ -35,9 +64,3 @@ services:
       - "8025:8025"
     networks:
       - default
-
-networks:
-  default:
-    driver: bridge
-  enki_default:
-    external: true

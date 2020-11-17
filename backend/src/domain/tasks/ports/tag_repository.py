@@ -30,15 +30,15 @@ class AbstractTagRepository(abc.ABC):
             raise NotFoundTag
         return matches
 
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def get_all(self) -> TagsList:
         raise NotImplementedError
 
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def _add(self, tag: TagEntity) -> None:
         raise NotImplementedError
 
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> Union[TagEntity, None]:
         raise NotImplementedError
 

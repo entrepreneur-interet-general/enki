@@ -1,7 +1,7 @@
 from flask import current_app, request
 from flask_restful import Resource
 
-from domain.affairs.affair_service import list_affairs, get_by_uuid
+from domain.affairs.services.affair_service import AffairService
 
 
 class WithAffairRepoResource(Resource):
@@ -19,7 +19,7 @@ class AffairResource(WithAffairRepoResource):
 
     def get(self, uuid):
         return {
-                   "affair": get_by_uuid(uuid, current_app.context.affair),
+                   "affair": AffairService.get_by_uuid(uuid, current_app.context.affair),
                }, 200
 
 
@@ -33,5 +33,5 @@ class AffairListResource(WithAffairRepoResource):
 
     def get(self):
         return {
-                   "affairs": list_affairs(current_app.context.affair),
+                   "affairs": AffairService.list_affairs(current_app.context.affair),
                }, 200

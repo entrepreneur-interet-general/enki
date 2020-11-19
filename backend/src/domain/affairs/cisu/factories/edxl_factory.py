@@ -47,7 +47,7 @@ class EdxlMessageFactory(Factory):
     @classmethod
     def build_ack_from_another_message(cls,
                                        sender_address: AddressType,
-                                       recipients,
+                                       recipients: str,
                                        messageId: str,
                                        other_message: EdxlEntity) -> EdxlEntity:
         return cls.create(

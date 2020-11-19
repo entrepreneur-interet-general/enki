@@ -46,15 +46,15 @@ export class InterventionsService {
     interventions = environment.HTTPClientInMemory ? interventions : interventions.affairs
     updatedInterventions = interventions.map(intervention => {
       return {
-        uuid:  environment.HTTPClientInMemory ? intervention.id : intervention.distributionID,
-        dateTimeSent: new Date(intervention.dateTimeSent),
-        natureDeFait: intervention.resource.message.choice.primaryAlert.alertCode.whatsHappen.label,
-        victims: intervention.resource.message.choice.primaryAlert.alertCode.victims.count,
+        uuid:  environment.HTTPClientInMemory ? intervention.id : intervention.eventId,
+        dateTimeSent: new Date(intervention.createdAt),
+        natureDeFait: intervention.primaryAlert.alertCode.whatsHappen.label,
+        victims: intervention.primaryAlert.alertCode.victims.count,
         coord: {
-          lat: intervention.resource.message.choice.eventLocation.coord.lat,
-          long: intervention.resource.message.choice.eventLocation.coord.lon
+          lat: intervention.eventLocation.coord.lat,
+          long: intervention.eventLocation.coord.lon
         },
-        address: intervention.resource.message.choice.eventLocation.address
+        address: intervention.eventLocation.address
       }
     })
     return updatedInterventions

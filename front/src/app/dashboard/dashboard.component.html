@@ -1,0 +1,85 @@
+<div class="dashboard">
+  <div class="title-container">
+    <h1>Tableau de bord</h1>
+  </div>
+  <div class="meteo dashboard--widget">
+    <h2 class="meteo--title title-with-icon">
+      <svg class="icon-sun icon"><use xlink:href="#icon-sun"></use></svg>
+      Météo
+    </h2>
+  </div>
+  <ul class="interventions dashboard--widget">
+    <div class="sub-title">
+      Ivry-sur-Seine
+    </div>
+    <h2 class="interventions--title title-with-icon">
+      <svg class="icon-post-it icon"><use xlink:href="#icon-post-it"></use></svg>
+      Dernières interventions
+    </h2>
+    <li class="intervention" *ngFor="let intervention of interventions | slice:0:3">
+      <a class="intervention--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
+        <div class="infosSecondaires">
+          <div class="infosSecondaires--dateTemps">
+            {{intervention.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
+          </div>
+          <div class="status">
+            En cours
+          </div>
+        </div>
+        <div class="infosPrincipales">
+          <div class="infosPrincipales--natureDeFait">
+            {{intervention.natureDeFait}}<span class="more-info"></span>
+          </div>
+          <div class="infosPrincipales--icon">
+            <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
+          </div>
+        </div>
+      </a>
+    </li>
+    <div class="interventions--seeMore">
+      <a routerLink="/liste-interventions">
+        <svg class="icon-add title-icon"><use xlink:href="#icon-add"></use></svg>
+        <span>Voir plus d'interventions</span>
+      </a>
+    </div>
+  </ul>
+  <div class="vigicrue dashboard--widget">
+    <h2 class="title-with-icon">
+      <svg class="icon-water icon"><use xlink:href="#icon-water"></use></svg>
+      Vigicrue
+    </h2>
+  </div>
+  <div class="annuaire dashboard--widget">
+    <h2 class="title-with-icon">
+      <svg class="icon-contacts icon"><use xlink:href="#icon-contacts"></use></svg>
+      Contacts
+    </h2>
+  </div>
+  <div class="stats dashboard--widget">
+    <div class="sub-title">
+      Ivry-sur-Seine
+    </div>
+    <h2 class="title-with-icon">
+      <svg class="icon-stats icon"><use xlink:href="#icon-stats"></use></svg>
+      En chiffres
+    </h2>
+  </div>
+  <div class="reseaux-sociaux dashboard--widget">
+    <div class="sub-title">
+      @mairieivry
+    </div>
+    <h2 class="title-with-icon">
+      <svg class="icon-twitter icon"><use xlink:href="#icon-twitter"></use></svg>
+      Twitter
+    </h2>
+  </div>
+  <div class="stats dashboard--widget">
+    <div class="sub-title">
+      Val de Marne
+    </div>
+    <h2 class="title-with-icon">
+      <svg class="icon-news icon"><use xlink:href="#icon-news"></use></svg>
+      Actualités
+    </h2>
+  </div>
+</div>

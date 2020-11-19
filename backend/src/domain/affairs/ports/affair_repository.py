@@ -59,7 +59,7 @@ class AbstractAffairRepository(abc.ABC):
     def build_affair_from_xml_string(xml_string: str) -> AffairEntity:
         affair_dom = xml.dom.minidom.parseString(xml_string)
         edxl_message = EdxlEntity.from_xml(affair_dom)
-        return AffairEntity(**edxl_message.resource.message.choice.to_dict())
+        return AffairEntity.from_create_event(edxl_message.resource.message.choice)
 
     @staticmethod
     def build_affair_from_xml_file(xml_path: str) -> AffairEntity:

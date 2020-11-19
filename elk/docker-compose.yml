@@ -25,6 +25,7 @@ services:
       discovery.type: single-node
     networks:
       - default
+      - enki_default
 
   kibana:
     build:
@@ -40,6 +41,7 @@ services:
       - "5601:5601"
     networks:
       - default
+      - enki_default
     depends_on:
       - elasticsearch
 

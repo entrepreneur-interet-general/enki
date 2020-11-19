@@ -15,7 +15,9 @@ class EchangeMessageResource(Resource):
 
     def post(self):
         if request.headers['Content-Type'] == 'text/xml':
+            current_app.logger.info("post message")
             xml = request.data.decode("utf-8")
+            current_app.logger.info(f"receive message {xml}")
             AffairService.add_affair(xml, repo=current_app.context.affair)
         return {
                    "msg": "success"

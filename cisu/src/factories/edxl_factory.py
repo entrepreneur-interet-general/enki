@@ -7,7 +7,7 @@ from .cisu_factory import CisuEntityFactory, MessageCisuFactory
 from .factory import Factory
 from .uid_factory import UidFactory
 from ..entities.edxl_entity import EdxlEntity
-from ..entities.cisu_entity import CisuEntity, MessageType, Status, AddressType, Recipients, AckMessage
+from ..entities.cisu_entity import CisuEntity, MessageType, Status, AddressType, Recipients, AckMessage, CreateEvent
 from ..entities.commons import DateType
 
 
@@ -65,6 +65,32 @@ class EdxlMessageFactory(Factory):
                     status=Status.SYSTEM,
                     recipients=Recipients([other_message.resource.message.sender]),
                     choice=AckMessage(ackMessageId=other_message.resource.message.messageId)
+                )
+            )
+
+        )
+    @classmethod
+    def build_ack_from_create_event(cls,
+                                       sender_address: AddressType,
+                                        sender_uri_path_name:str,
+                                       create_event: CreateEvent) -> EdxlEntity:
+        return cls.create(
+            uuid=str(uuid4()),
+            date_time_sent=DateType(datetime.now()),
+            date_time_expires=DateType(datetime.now() + timedelta(days=1)),
+            distribution_status="Actual",
+            distribution_kind="Ack",
+            sender_id=sender_address.URI.path_name,
+            receivers_address=[sender_uri_path_name],
+            resource=CisuEntity(
+                message=MessageCisuFactory.create(
+                    uuid=str(uuid4()),
+                    sender=sender_address,
+                    sent_at=DateType(datetime.now()),
+                    msg_type=MessageType.ACK,
+                    status=Status.SYSTEM,
+                    recipients=Recipients([create_event.sender]),
+                    choice=AckMessage(ackMessageId=create_event.eventId)
                 )
             )
 

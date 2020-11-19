@@ -47,6 +47,8 @@ class EdxlMessageFactory(Factory):
     @classmethod
     def build_ack_from_another_message(cls,
                                        sender_address: AddressType,
+                                       recipients,
+                                       messageId: str,
                                        other_message: EdxlEntity) -> EdxlEntity:
         return cls.create(
             uuid=str(uuid4()),
@@ -64,7 +66,7 @@ class EdxlMessageFactory(Factory):
                     msg_type=MessageType.ACK,
                     status=Status.SYSTEM,
                     recipients=Recipients([other_message.resource.message.sender]),
-                    choice=AckMessage(ackMessageId=other_message.resource.message.messageId)
+                    choice=AckMessage(ackMessageId=messageId)
                 )
             )
 

@@ -7,6 +7,7 @@ from domain.affairs.cisu import EdxlEntity
 from domain.affairs.cisu.entities.cisu_entity import AddressType
 from domain.affairs.cisu.entities.commons.common_alerts import AnyURI
 from domain.affairs.cisu.factories.edxl_factory import EdxlMessageFactory
+from domain.affairs.entities.affair_entity import AffairEntity
 from entrypoints.config import SapeursConfig
 from domain.core import events
 
@@ -26,7 +27,7 @@ class SgeHelper:
 
     @staticmethod
     def send_ack_to_sge(event: events.AffairCreatedEvent) -> Response:
-        edxl_message: EdxlEntity = event.data
+        edxl_message: AffairEntity = event.data
         ack_message = EdxlMessageFactory.build_ack_from_another_message(
             sender_address=AddressType(current_app.config['ENKI_SGE_ID'],
                                        AnyURI(current_app.config['ENKI_SGE_ADDRESS'])),

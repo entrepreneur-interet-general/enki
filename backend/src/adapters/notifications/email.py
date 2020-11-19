@@ -15,7 +15,8 @@ def send(*args):
     from_email = current_app.config["FROM_EMAIL"]
 
     template = env.get_template('email.html')
-    intervention_url = f"{current_app.config['ENKI_FRONT_BASE_URI']}/detail-intervention/{intervention_id}"
+    #intervention_url = f"{current_app.config['ENKI_FRONT_BASE_URI']}/detail-intervention/{intervention_id}"
+    intervention_url = f"{current_app.config['ENKI_FRONT_BASE_URI']}/liste-interventions"
     body_content = template.render(
         intervention_url=intervention_url,
         what_happens_label=what_happens_label

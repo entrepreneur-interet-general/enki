@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  interventionUrl: 'http://localhost:5000/api/enki/v1/affair/random',
-  interventionsUrl: 'http://localhost:5000/api/enki/v1/affairs/random',
+  interventionUrl: 'http://localhost:5000/api/enki/v1/affair',
+  interventionsUrl: 'http://localhost:5000/api/enki/v1/affairs',
   HTTPClientInMemory: false
 };
 

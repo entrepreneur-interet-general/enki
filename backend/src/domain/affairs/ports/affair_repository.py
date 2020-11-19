@@ -84,8 +84,6 @@ class InMemoryAffairRepository(AbstractAffairRepository):
         else:
             return None
 
-
-    # next methods are only for test purposes
     @property
     def affairs(self) -> affairsList:
         return self._affairs

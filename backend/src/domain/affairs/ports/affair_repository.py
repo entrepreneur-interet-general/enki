@@ -2,6 +2,7 @@ import abc
 from typing import List, Union
 import xml.dom.minidom
 
+from flask import current_app
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.cisu import EdxlEntity
@@ -26,9 +27,13 @@ class NotFoundAffair(HTTPException):
 class AbstractAffairRepository(abc.ABC):
 
     def add(self, affair: AffairEntity) -> None:
+        current_app.logger.info("starting adding affair")
         if self._match_uuid(affair.uuid):
+            current_app.logger.info("affair already exists")
             raise AlreadyExistingAffairUuid()
+        current_app.logger.info("add affair")
         self._add(affair)
+        current_app.logger.info("publish event")
         event_bus.publish(events.AffairCreatedEvent(data=affair))
 
     def get_one(self) -> AffairEntity:

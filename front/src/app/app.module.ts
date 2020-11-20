@@ -21,7 +21,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     keycloak.init({
       config: {
         "realm": "enki",
-        "url": "http://localhost:8080/auth/",
+        "url": "http://localhost:8084/auth/",
         "clientId": "angular_frontend",
       },
       initOptions: {

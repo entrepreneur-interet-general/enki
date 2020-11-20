@@ -82,8 +82,10 @@ class InMemoryAffairRepository(AbstractAffairRepository):
     def get_all(self) -> affairsList:
         return self._affairs
 
-    def _match_uuid(self, uuid: str) -> List[AffairEntity]:
-        return [affair for affair in self._affairs if affair.uuid == uuid]
+    def _match_uuid(self, uuid: str)  -> Union[AffairEntity,None]:
+        matches = [affair for affair in self._affairs if affair.uuid == uuid]
+        if matches:
+            return matches[0]
 
     # next methods are only for test purposes
     @property

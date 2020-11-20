@@ -19,10 +19,10 @@ class PgMaireRepository(PgRepositoryMixin, AbstractMaireRepository):
         if matches:
             return matches[0]
 
-    def _add(self, tag: MaireEntity):
-        if self._match_uuid(tag.uuid):
+    def _add(self, maire: MaireEntity):
+        if self._match_uuid(maire.id):
             raise AlreadyExistingMaireUuid()
-        self.session.add(tag)
+        self.session.add(maire)
         self.commit()
 
     def get_by_dept_code(self, dept_code, from_: int, to_: int) -> mairesList:

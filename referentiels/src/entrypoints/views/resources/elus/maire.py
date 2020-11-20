@@ -1,7 +1,8 @@
-from flask_restful import Resource
 from flask import current_app, request
 
-from domain.affairs.services.affair_service import AffairService
+from flask_restful import Resource, reqparse
+
+from .....domain.elus.maires.service import MaireService
 
 
 class MairesResource(Resource):
@@ -14,10 +15,31 @@ class MairesResource(Resource):
     """
 
     def get(self):
-        if request.headers['Content-Type'] == 'text/xml':
-            current_app.logger.info("receive post message")
-            xml = request.data.decode("utf-8")
-            AffairService.add_affair(xml, repo=current_app.context.affair)
+        # maires = MaireService.list_maires(repo=current_app.context.maire)
+
+        parser = reqparse.RequestParser()
+        parser.add_argument('code_insee', type=str, help='Insee code')
+        parser.add_argument('dept_code', type=str, help='Insee code')
+        parser.add_argument('from', type=int, help='Insee code')
+        parser.add_argument('to', type=int, help='Insee code')
+
+
+        args = parser.parse_args()
+        from_ = args.get("from", 0)
+        to_ = args.get("to_", 10)
+
+        if args["code_insee"]:
+            matches = MaireService.get_maire_by_code_insee(uuid=args["code_insee"],
+                                                           repo=current_app.context.maire)
+        elif args["dept_code"]:
+            matches = MaireService.list_maires_by_dept_code(dept_code=args["dept_code"],
+                                                            from_=from_, to_=to_,
+                                                            repo=current_app.context.maire)
+        else:
+            matches = MaireService.list_maires(from_=from_,
+                                               to_=to_,
+                                               repo=current_app.context.maire)
         return {
-                   "msg": "success"
+                   "msg": "success",
+                   "maires": matches
                }, 200

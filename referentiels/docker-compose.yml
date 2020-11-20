@@ -4,16 +4,14 @@ version: '3'
 services:
   referentiels-api:
     build: .
-    command: flask run --host=0.0.0.0
+    command: flask run --host=0.0.0.0 --port=5001
     env_file:
-      - .envs/.local/.env.flaskenv
-      - .envs/.local/.env.pg
+      - .env
     ports:
-      - "5000:5000"
+      - "5001:5001"
     volumes:
       - ./src:/code/src
       - ./tests:/code/tests
-      - ./jdd/xml_cisu:/jdd/xml_cisu
     networks:
       - default
       - enki_default
@@ -21,12 +19,14 @@ services:
   postgres:
     image: postgres
     restart: unless-stopped
-    environment:
-      -
+    env_file:
+      - .env
     volumes:
       - ./pgdata/dev:/var/lib/postgresql/data
     networks:
       - default
+    ports:
+      - "5432:5432"
 
 networks:
   default:

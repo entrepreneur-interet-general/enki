@@ -1,0 +1,35 @@
+# WARNING: this file is not suitable for production, please use with caution
+version: '3'
+
+services:
+  referentiels-api:
+    build: .
+    command: flask run --host=0.0.0.0
+    env_file:
+      - .envs/.local/.env.flaskenv
+      - .envs/.local/.env.pg
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/code/src
+      - ./tests:/code/tests
+      - ./jdd/xml_cisu:/jdd/xml_cisu
+    networks:
+      - default
+      - enki_default
+
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      -
+    volumes:
+      - ./pgdata/dev:/var/lib/postgresql/data
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+  enki_default:
+    external: true

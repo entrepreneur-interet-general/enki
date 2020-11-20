@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { InterventionsService } from '../interventions.service'
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-liste-interventions',
@@ -12,9 +13,11 @@ export class ListeInterventionsComponent implements OnInit {
   constructor(
     private interventionsService: InterventionsService,
   ) {
-    this.interventionsService.getAllInterventions().subscribe((interventions) => {
-      this.interventions = interventions;
-      // this.fetchedAffaire = true;
+    this.interventionsService.httpGetAllInterventions().subscribe((interventions) => {
+        this.interventions = environment.HTTPClientInMemory ? interventions.map((intervention, index) => {
+          intervention.uuid = (index + 1).toString()
+          return intervention
+        }) : interventions
     });
   }
 

@@ -14,18 +14,15 @@ affairsList = List[AffairEntity]
 
 class AlreadyExistingAffairUuid(HTTPException):
     code = 409
-    description = "test"
-    message = "ok"
+    description = "Cette intervention existe déjà"
 
 
 class NotFoundAffair(HTTPException):
     code = 404
-    description = "test"
-    message = "ok"
+    description = "Cette intervention n'existe pas"
 
 
 class AbstractAffairRepository(abc.ABC):
-
     def add(self, affair: AffairEntity) -> None:
         current_app.logger.info("starting adding affair")
         if self._match_uuid(affair.uuid):

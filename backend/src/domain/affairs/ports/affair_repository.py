@@ -21,7 +21,6 @@ class NotFoundAffair(HTTPException):
     code = 404
     description = "Cette intervention n'existe pas"
 
-
 class AbstractAffairRepository(abc.ABC):
     def add(self, affair: AffairEntity) -> None:
         current_app.logger.info("starting adding affair")

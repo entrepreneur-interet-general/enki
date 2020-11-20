@@ -22,7 +22,7 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
         if not self.client.indices.exists(index=self.index_name):
             self.client.indices.create(self.index_name)
 
-    def _match_uuid(self, uuid: str) -> Union[AffairEntity,None]:
+    def _match_uuid(self, uuid: str) -> Union[AffairEntity, None]:
         try:
             return AffairEntity(**self.client.get(index=self.index_name, id=uuid)["_source"])
         except NotFoundError as e:

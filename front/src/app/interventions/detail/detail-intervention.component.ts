@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Intervention, InterventionsService } from '../interventions.service'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'fronts-detail-intervention',
@@ -26,7 +27,7 @@ export class DetailInterventionComponent implements OnInit {
         this.fetchedIntervention = true
       } else {
         this.interventionsService.httpGetIntervention(this.uuid).subscribe((intervention) => {
-          this.intervention = intervention;
+          this.intervention = intervention
           this.fetchedIntervention = true;
         });
       }

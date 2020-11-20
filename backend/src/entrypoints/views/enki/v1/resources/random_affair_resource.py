@@ -2,7 +2,7 @@ from flask import current_app
 from flask_restful import Resource
 
 from adapters.random.random_cisu_repository import RandomCisuRepository
-from domain.affairs.affair_service import list_affairs, get_random_affair, get_random_list_affairs
+from domain.affairs.services.affair_service import AffairService
 
 
 class WithAffairRepoResource(Resource):
@@ -20,7 +20,7 @@ class AffairRandomResource(WithAffairRepoResource):
 
     def get(self):
         return {
-                   "affair": get_random_affair(self.random_repo),
+                   "affair": AffairService.get_random_affair(self.random_repo),
                }, 200
 
 
@@ -34,5 +34,5 @@ class AffairRandomListResource(WithAffairRepoResource):
 
     def get(self):
         return {
-                   "affairs": get_random_list_affairs(self.random_repo),
+                   "affairs": AffairService.get_random_list_affairs(self.random_repo),
                }, 200

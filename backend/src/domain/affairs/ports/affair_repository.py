@@ -2,6 +2,7 @@ import abc
 from typing import List, Union
 import xml.dom.minidom
 
+from flask import current_app
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.cisu import EdxlEntity
@@ -13,22 +14,23 @@ affairsList = List[AffairEntity]
 
 class AlreadyExistingAffairUuid(HTTPException):
     code = 409
-    description = "test"
-    message = "ok"
+    description = "Cette intervention existe déjà"
 
 
 class NotFoundAffair(HTTPException):
     code = 404
-    description = "test"
-    message = "ok"
+    description = "Cette intervention n'existe pas"
 
 
 class AbstractAffairRepository(abc.ABC):
-
     def add(self, affair: AffairEntity) -> None:
+        current_app.logger.info("starting adding affair")
         if self._match_uuid(affair.uuid):
+            current_app.logger.info("affair already exists")
             raise AlreadyExistingAffairUuid()
+        current_app.logger.info("add affair")
         self._add(affair)
+        current_app.logger.info("publish event")
         event_bus.publish(events.AffairCreatedEvent(data=affair))
 
     def get_one(self) -> AffairEntity:
@@ -77,8 +79,10 @@ class InMemoryAffairRepository(AbstractAffairRepository):
     def get_all(self) -> affairsList:
         return self._affairs
 
-    def _match_uuid(self, uuid: str) -> List[AffairEntity]:
-        return [affair for affair in self._affairs if affair.uuid == uuid]
+    def _match_uuid(self, uuid: str)  -> Union[AffairEntity,None]:
+        matches = [affair for affair in self._affairs if affair.uuid == uuid]
+        if matches:
+            return matches[0]
 
     # next methods are only for test purposes
     @property

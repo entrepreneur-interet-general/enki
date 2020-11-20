@@ -15,7 +15,21 @@ class AffairService:
         repo.add(affair)
 
     @staticmethod
+    def get_by_uuid(uuid: str, repo: AbstractAffairRepository):
+        return repo.get_by_uuid(uuid=uuid).to_dict()
+
+    @staticmethod
     def list_affairs(repo: AbstractAffairRepository) -> List[Dict[str, Any]]:
         affairs: List[AffairEntity] = repo.get_all()
         serialized_affairs = [affair.to_dict() for affair in affairs]
         return serialized_affairs
+
+    @staticmethod
+    def get_random_affair(repo: AbstractAffairRepository) -> Dict[str, Any]:
+        affair: AffairEntity = repo.get_one()
+        return affair.to_dict()
+
+    @staticmethod
+    def get_random_list_affairs(repo: AbstractAffairRepository, n=10) -> List[Dict[str, Any]]:
+        affairs: List[AffairEntity] = repo.get_many(n)
+        return [affair.to_dict() for affair in affairs]

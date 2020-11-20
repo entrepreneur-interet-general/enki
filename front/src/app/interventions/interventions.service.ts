@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { KeycloakService } from 'keycloak-angular';
 
 export interface Intervention {
+  id?: string; // used for in memory db
   uuid: string;
   dateTimeSent: object;
   natureDeFait: string;
@@ -24,7 +25,6 @@ interface Coordinates {
 })
 
 export class InterventionsService {
-  interventionUrl: string;
   interventionsUrl: string;
   interventions: Intervention[];
   httpOptions: object;
@@ -33,7 +33,6 @@ export class InterventionsService {
     private http: HttpClient,
     private keycloakService: KeycloakService
     ) { 
-      this.interventionUrl = environment.interventionUrl;
       this.interventionsUrl = environment.interventionsUrl;
       this.httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json',
@@ -43,24 +42,23 @@ export class InterventionsService {
 
   mapHTTPInterventions(interventions): Intervention[] {
     let updatedInterventions: Intervention[];
-    interventions = environment.HTTPClientInMemory ? interventions : interventions.affairs
     updatedInterventions = interventions.map(intervention => {
       return {
-        uuid:  environment.HTTPClientInMemory ? intervention.id : intervention.distributionID,
-        dateTimeSent: new Date(intervention.dateTimeSent),
-        natureDeFait: intervention.resource.message.choice.primaryAlert.alertCode.whatsHappen.label,
-        victims: intervention.resource.message.choice.primaryAlert.alertCode.victims.count,
+        uuid: intervention.eventId,
+        dateTimeSent: new Date(intervention.createdAt),
+        natureDeFait: intervention.primaryAlert.alertCode.whatsHappen.label,
+        victims: intervention.primaryAlert.alertCode.victims.count,
         coord: {
-          lat: intervention.resource.message.choice.eventLocation.coord.lat,
-          long: intervention.resource.message.choice.eventLocation.coord.lon
+          lat: intervention.eventLocation.coord.lat,
+          long: intervention.eventLocation.coord.lon
         },
-        address: intervention.resource.message.choice.eventLocation.address
+        address: intervention.eventLocation.address
       }
     })
     return updatedInterventions
   }
 
-  getAllInterventions(): Observable<Intervention[]> {
+  httpGetAllInterventions(): Observable<Intervention[]> {
     // if there's already interventions in memory, send these
     if (this.interventions !== undefined && this.interventions.length > 0) {
       return of(this.interventions)
@@ -68,6 +66,7 @@ export class InterventionsService {
     return this.http.get<any>(this.interventionsUrl, this.httpOptions)
       .pipe(
         map(interventions => {
+          interventions = environment.HTTPClientInMemory ? interventions : interventions.affairs
           let updatedInterventions = this.mapHTTPInterventions(interventions)
           this.interventions = updatedInterventions
           return updatedInterventions
@@ -80,6 +79,7 @@ export class InterventionsService {
     return this.http.get<any>(`${this.interventionsUrl}/${uuid}`, this.httpOptions)
       .pipe(
         map(intervention => {
+          intervention = environment.HTTPClientInMemory ? intervention : intervention.affair
           let interventionsArray: Intervention[] = [];
           interventionsArray.push(intervention);
           interventionsArray = this.mapHTTPInterventions(interventionsArray)

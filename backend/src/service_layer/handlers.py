@@ -8,16 +8,16 @@ from adapters.http.sge import SgeHelper
 def send_affair_created_email_notification(event: events.AffairCreatedEvent):
     email.send(
         'mairie@chelles.com',
-        f'{event.data.distributionID}',
-        f'{event.data.resource.message.choice.primaryAlert.alertCode.whatsHappen.label}'
+        f'{event.data.eventId}',
+        f'{event.data.primaryAlert.alertCode.whatsHappen.label}'
     )
 
 
 def send_affair_created_sms_notification(event: events.AffairCreatedEvent):
     sms.send(
         'mairie@chelles.com',
-        f'{event.data.distributionID}',
-        f'{event.data.resource.message.choice.primaryAlert.alertCode.whatsHappen.label}'
+        f'{event.data.eventId}',
+        f'{event.data.primaryAlert.alertCode.whatsHappen.label}'
     )
 
 

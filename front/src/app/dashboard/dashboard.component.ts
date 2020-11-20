@@ -15,9 +15,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private interventionsService: InterventionsService,
   ) {
-    this.interventionsService.getAllInterventions().subscribe((interventions) => {
+    this.interventionsService.httpGetAllInterventions().subscribe((interventions) => {
       this.interventions = interventions;
-      // this.fetchedAffaire = true;
     });
   }
 

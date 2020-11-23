@@ -1,0 +1,474 @@
+{
+  "affairs": [
+    {
+      "id": 1,
+      "eventId": "06871dc2-80f1-43ae-80db-f1698a032e3f",
+      "createdAt": "2020-01-01 00:04:24.608339",
+      "severity": "MODERATE",
+      "eventLocation": {
+        "name": "location_name",
+        "address": "12, boulevard Adrien Reynaud\n59659 Julien",
+        "coord": {
+          "lat": 48.892781341166085,
+          "lon": 2.5978034040196945,
+          "height": 0
+        },
+        "type": "POINT"
+      },
+      "primaryAlert": {
+        "alertId": "80413f17-345d-4bef-9ef2-e126523212c6",
+        "receivedAt": "2020-01-01 00:07:27.006149",
+        "reporting": "STANDARD",
+        "alertInformation": "Tu pendre d'autres sien figure. Noir sentier contenter secrétaire poète.",
+        "alertLocation": {
+          "name": "location_name",
+          "address": "59, avenue Lucas Voisin\n72423 Sainte GillesBourg",
+          "coord": {
+            "lat": 48.89290110796676,
+            "lon": 2.649364188965322,
+            "height": 0
+          },
+          "type": "POINT"
+        },
+        "call": {
+          "source": "source_test",
+          "dialledURI": "ok:ok"
+        },
+        "caller": {
+          "callerURI": "ok:ok",
+          "callbackURI": "ok:ok",
+          "spokenLanguage": "fr_FR",
+          "callerInformation": "Mentir réduire quarante quatre. Valeur gros combien charger menacer observer. Nommer taire former acte.\nTrace beauté muet inutile regretter. Vague court retirer mort fine plonger."
+        },
+        "callTaker": {
+          "organization": "ansc",
+          "controlRoom": "enki",
+          "calltakerURI": "ok:ok"
+        },
+        "resource": [
+          
+        ],
+        "alertCode": {
+          "version": "latest",
+          "whatsHappen": {
+            "code": "M02.00",
+            "label": "Blessure",
+            "comment": null
+          },
+          "locationKind": {
+            "code": "L02.05.12",
+            "label": "Bateau de voyageurs",
+            "comment": null
+          },
+          "riskThreat": [
+            {
+              "code": "R30",
+              "label": "Patient/Victime blessé",
+              "comment": null
+            },
+            {
+              "code": "R02",
+              "label": "Auteur(s) en fuite",
+              "comment": null
+            },
+            {
+              "code": "R32",
+              "label": "Patient/Victime confiné",
+              "comment": null
+            }
+          ],
+          "healthMotive": {
+            "code": "M02.01",
+            "label": "Saignements",
+            "comment": null
+          },
+          "victims": {
+            "count": "UNKNOWN",
+            "mainVictim": "SENIOR",
+            "comment": "Appartenir siècle nombreux paix plein vraiment. Travail dessus faible sol goutte. Vers politique pousser placer que soin."
+          }
+        },
+        "primary": true
+      },
+      "otherAlert": [
+        
+      ]
+    },
+    {
+      "id": 2,
+      "eventId": "48a7af1b-45f2-4f57-84ef-ef22fb574afd",
+      "createdAt": "2020-01-01 00:05:16.727183",
+      "severity": "EXTREME",
+      "eventLocation": {
+        "name": "location_name",
+        "address": "439, boulevard de Hamel\n26384 Marie",
+        "coord": {
+          "lat": 48.909568764691954,
+          "lon": 2.6584349524347677,
+          "height": 0
+        },
+        "type": "POINT"
+      },
+      "primaryAlert": {
+        "alertId": "49d12b3a-eb38-4780-a7fc-9eaaa8e6bb85",
+        "receivedAt": "2020-01-01 00:02:30.662325",
+        "reporting": "STANDARD",
+        "alertInformation": "Eh éclat promettre songer rapport. Chasser pont ouvrage causer examiner douleur.\nRentrer doigt siècle rester. Réussir avant marché changement paix rocher étrange.",
+        "alertLocation": {
+          "name": "location_name",
+          "address": "890, chemin Michèle Blanchard\n23719 Dupont-la-Forêt",
+          "coord": {
+            "lat": 48.92068101857817,
+            "lon": 2.630613706544856,
+            "height": 0
+          },
+          "type": "POINT"
+        },
+        "call": {
+          "source": "source_test",
+          "dialledURI": "ok:ok"
+        },
+        "caller": {
+          "callerURI": "ok:ok",
+          "callbackURI": "ok:ok",
+          "spokenLanguage": "fr_FR",
+          "callerInformation": "Haute convenir intérieur. Mettre sourd révolution vif demain montagne oh extraordinaire. Tendre neuf lever but vous vieux."
+        },
+        "callTaker": {
+          "organization": "ansc",
+          "controlRoom": "enki",
+          "calltakerURI": "ok:ok"
+        },
+        "resource": [
+          
+        ],
+        "alertCode": {
+          "version": "latest",
+          "whatsHappen": {
+            "code": "M06.03",
+            "label": "Personne restant à terre suite à une chute",
+            "comment": null
+          },
+          "locationKind": {
+            "code": "L04.12.03",
+            "label": "Résidence / club de vacances",
+            "comment": null
+          },
+          "riskThreat": [
+            {
+              "code": "R06",
+              "label": "Suspicion d\"attaque terroriste",
+              "comment": null
+            },
+            {
+              "code": "R04",
+              "label": "Présence d’individu(s) muni(s) d’une arme blanche",
+              "comment": null
+            },
+            {
+              "code": "R07",
+              "label": "Présence de matière ou matériel dangereux",
+              "comment": null
+            }
+          ],
+          "healthMotive": {
+            "code": "M02.06",
+            "label": "Traumatisme bénin, petite plaie, lésion bénigne",
+            "comment": null
+          },
+          "victims": {
+            "count": "1",
+            "mainVictim": "PREGNANT",
+            "comment": "Mémoire naître départ où mêler. Toile françois marquer presque miser chaise cour public.\nFumée achever compagnie."
+          }
+        },
+        "primary": true
+      },
+      "otherAlert": [
+        
+      ]
+    },
+    {
+      "id": 3,
+      "eventId": "36dd377c-c044-4408-bcdc-cd6f67b40878",
+      "createdAt": "2020-01-01 00:07:16.045339",
+      "severity": "MINOR",
+      "eventLocation": {
+        "name": "location_name",
+        "address": "994, boulevard de Leveque\n40862 Saint Élodieboeuf",
+        "coord": {
+          "lat": 48.90115609424666,
+          "lon": 2.655329713804618,
+          "height": 0
+        },
+        "type": "POINT"
+      },
+      "primaryAlert": {
+        "alertId": "0ac36870-78da-419e-9768-9083996bd876",
+        "receivedAt": "2020-01-01 00:07:20.374005",
+        "reporting": "STANDARD",
+        "alertInformation": "Près forme marchand engager examiner naturel. Usage tandis que arracher contenter. Contraire lire avoir volonté.",
+        "alertLocation": {
+          "name": "location_name",
+          "address": "43, avenue Valentine Henry\n08492 Maurice-sur-Berthelot",
+          "coord": {
+            "lat": 48.902961274378185,
+            "lon": 2.64759744816837,
+            "height": 0
+          },
+          "type": "POINT"
+        },
+        "call": {
+          "source": "source_test",
+          "dialledURI": "ok:ok"
+        },
+        "caller": {
+          "callerURI": "ok:ok",
+          "callbackURI": "ok:ok",
+          "spokenLanguage": "fr_FR",
+          "callerInformation": "Parcourir découvrir arrivée précéder douceur partie beaux. Printemps reprendre pain être petit où paraître. Nul village mince rose fer."
+        },
+        "callTaker": {
+          "organization": "ansc",
+          "controlRoom": "enki",
+          "calltakerURI": "ok:ok"
+        },
+        "resource": [
+          
+        ],
+        "alertCode": {
+          "version": "latest",
+          "whatsHappen": {
+            "code": "M04.04",
+            "label": "Intoxication éthylique aiguë",
+            "comment": null
+          },
+          "locationKind": {
+            "code": "L02.05.00",
+            "label": "A bord d'un moyen de transport",
+            "comment": null
+          },
+          "riskThreat": [
+            {
+              "code": "R04",
+              "label": "Présence d’individu(s) muni(s) d’une arme blanche",
+              "comment": null
+            },
+            {
+              "code": "R05",
+              "label": "Présence d’individu(s) muni(s) d’une arme à feu",
+              "comment": null
+            },
+            {
+              "code": "R32",
+              "label": "Patient/Victime confiné",
+              "comment": null
+            }
+          ],
+          "healthMotive": {
+            "code": "M07.00",
+            "label": "Non renseigné",
+            "comment": null
+          },
+          "victims": {
+            "count": "MANY",
+            "mainVictim": "PREGNANT",
+            "comment": "Toit endroit tendre cou prendre trente puissance."
+          }
+        },
+        "primary": true
+      },
+      "otherAlert": [
+        
+      ]
+    },
+    {
+      "id": 4,
+      "eventId": "c3aad91f-f45b-420f-abdd-cbc5b1b4ffc4",
+      "createdAt": "2020-01-01 00:00:36.763666",
+      "severity": "SEVERE",
+      "eventLocation": {
+        "name": "location_name",
+        "address": "27, boulevard Faure\n15534 Dupont",
+        "coord": {
+          "lat": 48.89215724315166,
+          "lon": 2.6210110371872672,
+          "height": 0
+        },
+        "type": "POINT"
+      },
+      "primaryAlert": {
+        "alertId": "3a35582e-20e3-4099-9a00-ffd3f9dcd4b8",
+        "receivedAt": "2020-01-01 00:06:09.166806",
+        "reporting": "ATTENTION",
+        "alertInformation": "Tant comme front charge me bien etc effacer. Noire nuit danger type fruit l'une morceau. Nation principe voici tu faire écraser.",
+        "alertLocation": {
+          "name": "location_name",
+          "address": "51, rue Vallet\n45004 GirardVille",
+          "coord": {
+            "lat": 48.91127778933492,
+            "lon": 2.628330230466174,
+            "height": 0
+          },
+          "type": "POINT"
+        },
+        "call": {
+          "source": "source_test",
+          "dialledURI": "ok:ok"
+        },
+        "caller": {
+          "callerURI": "ok:ok",
+          "callbackURI": "ok:ok",
+          "spokenLanguage": "fr_FR",
+          "callerInformation": "Mener passer encore.\nNez pas forme milieu.\nSuffire permettre terme habiller moyen. Famille former horizon clair."
+        },
+        "callTaker": {
+          "organization": "ansc",
+          "controlRoom": "enki",
+          "calltakerURI": "ok:ok"
+        },
+        "resource": [
+          
+        ],
+        "alertCode": {
+          "version": "latest",
+          "whatsHappen": {
+            "code": "M02.06",
+            "label": "Traumatisme bénin, petite plaie, lésion bénigne",
+            "comment": null
+          },
+          "locationKind": {
+            "code": "L06.01.00",
+            "label": "Site industriel",
+            "comment": null
+          },
+          "riskThreat": [
+            {
+              "code": "R37",
+              "label": "Situation instable/indéterminée",
+              "comment": null
+            },
+            {
+              "code": "R13",
+              "label": "Risque d\"explosion, présence de gaz",
+              "comment": null
+            },
+            {
+              "code": "R02",
+              "label": "Auteur(s) en fuite",
+              "comment": null
+            }
+          ],
+          "healthMotive": {
+            "code": "M06.04",
+            "label": "Autres motifs ou pas de motif identifié",
+            "comment": null
+          },
+          "victims": {
+            "count": "MANY",
+            "mainVictim": "ADULT",
+            "comment": "Ensuite circonstance saison partir grain. D'Autres beauté pierre ressembler tempête hier.\nFacile race tirer."
+          }
+        },
+        "primary": true
+      },
+      "otherAlert": [
+        
+      ]
+    },
+    {
+      "id": 5,
+      "eventId": "bf79001e-bcfb-4604-9196-17002b641292",
+      "createdAt": "2020-01-01 00:09:03.593789",
+      "severity": "MINOR",
+      "eventLocation": {
+        "name": "location_name",
+        "address": "2, chemin Grondin\n31814 Le Gall",
+        "coord": {
+          "lat": 48.89812044035122,
+          "lon": 2.6220231350403638,
+          "height": 0
+        },
+        "type": "POINT"
+      },
+      "primaryAlert": {
+        "alertId": "25e8dc2b-3952-4249-aeae-f36cb68b476d",
+        "receivedAt": "2020-01-01 00:04:32.014244",
+        "reporting": "STANDARD",
+        "alertInformation": "Quel attendre sorte plus plaine léger rose prendre. Fils y sang prouver.",
+        "alertLocation": {
+          "name": "location_name",
+          "address": "932, rue de Pires\n76308 Faure",
+          "coord": {
+            "lat": 48.899589534105296,
+            "lon": 2.6422385388517444,
+            "height": 0
+          },
+          "type": "POINT"
+        },
+        "call": {
+          "source": "source_test",
+          "dialledURI": "ok:ok"
+        },
+        "caller": {
+          "callerURI": "ok:ok",
+          "callbackURI": "ok:ok",
+          "spokenLanguage": "fr_FR",
+          "callerInformation": "Étaler chercher noire parti vent. Avance en un titre emporter poche. Espèce professeur chaise décider commun fond."
+        },
+        "callTaker": {
+          "organization": "ansc",
+          "controlRoom": "enki",
+          "calltakerURI": "ok:ok"
+        },
+        "resource": [
+          
+        ],
+        "alertCode": {
+          "version": "latest",
+          "whatsHappen": {
+            "code": "M02.01",
+            "label": "Saignements",
+            "comment": null
+          },
+          "locationKind": {
+            "code": "L04.11.04",
+            "label": "Circuit ou installation pour sport motorisé",
+            "comment": null
+          },
+          "riskThreat": [
+            {
+              "code": "R24",
+              "label": "Implication d’un agent public",
+              "comment": null
+            },
+            {
+              "code": "R28",
+              "label": "Patient/Victime incarcéré",
+              "comment": null
+            },
+            {
+              "code": "R36",
+              "label": "Discrimination raciale, religieuse, sexiste ou autre",
+              "comment": null
+            }
+          ],
+          "healthMotive": {
+            "code": "M06.02",
+            "label": "Demande de conseil médical, certificats - ordonnance",
+            "comment": null
+          },
+          "victims": {
+            "count": "SEVERAL",
+            "mainVictim": "INFANT",
+            "comment": "Champ selon faible conduire malade pas. Dont vent quelque battre."
+          }
+        },
+        "primary": true
+      },
+      "otherAlert": [
+        
+      ]
+    }
+  ]
+}

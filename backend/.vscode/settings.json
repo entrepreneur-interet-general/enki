@@ -1,0 +1,14 @@
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#921c25",
+    "titleBar.inactiveBackground": "#a13c44",
+    "titleBar.activeForeground": "#ffffff",
+    "titleBar.inactiveForeground": "#b4b4b4"
+  },
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+  "[python]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4  
+  }
+}

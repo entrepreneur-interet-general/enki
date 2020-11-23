@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edxlDistribution xlink:type="extended"
+                  xmlns="urn:oasis:names:tc:emergency:EDXL:DE:2.0"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlns:ct="urn:oasis:names:tc:emergency:edxl:ct:1.0">
+  <distributionID>1c864ef5-0f2b-4d1b-969c-555e03dfad93</distributionID>
+  <senderID>test</senderID>
+  <dateTimeSent>2020-11-05T21:03:33+00:00</dateTimeSent>
+  <dateTimeExpires>2020-11-06T21:03:33+00:00</dateTimeExpires>
+  <distributionStatus>Actual</distributionStatus>
+  <distributionKind>Ack</distributionKind>
+  <descriptor xlink:type="resource">
+    <language>fr-FR</language>
+    <explicitAddress>
+      <explicitAddressScheme>sge</explicitAddressScheme>
+        
+      <explicitAddressValue>cga-pompier-sdis77</explicitAddressValue>
+       
+    </explicitAddress>
+  </descriptor>
+  <content xlink:type="resource">
+    <contentObject xlink:type="resource">
+      <contentXML>
+        <embeddedXMLContent>
+          <message xmlns="urn:emergency:cisu:2.0">
+  
+  <messageId>afe95f87-d4dd-45fb-8629-c57a3f0f5b9d</messageId>
+  <sender>
+    <name>test</name>
+    <URI>sge:test</URI>
+  </sender>
+  <sentAt>2020-11-05T21:03:33+00:00</sentAt>
+  <msgType>ACK</msgType>
+  <status>SYSTEM</status>
+  <recipients>
+    
+    <recipient>
+      <name>pompier-sdis77</name>
+      <URI>sge:cga-pompier-sdis77</URI>
+    </recipient>
+    
+  </recipients>
+  
+      <ackMessage>
+  <ackMessageId>26bba083-1021-405a-900e-8fd598adb51d</ackMessageId>
+</ackMessage>
+  
+</message>
+        </embeddedXMLContent>
+      </contentXML>
+    </contentObject>
+  </content>
+</edxlDistribution>

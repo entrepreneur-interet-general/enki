@@ -1,0 +1,31 @@
+@import "../../node_modules/enki-design-system/styles/variables";
+
+:focus {
+  outline: 0;
+}
+
+.u-dev-info {
+  background: $grey;
+  padding: 10px;
+}
+
+
+
+.top-header {
+  padding: 0 16px 16px 16px;
+}
+
+main {
+  margin-top: 16px;
+}
+
+.logout {
+  padding: 32px;
+  background-color: $lightestGrey;
+  text-align: center;
+  &--link {
+    color: $lightestRed;
+  }
+}
+
+

@@ -1,0 +1,16 @@
+flask==1.1.2
+flask-restful
+sqlalchemy
+python-dotenv
+psycopg2-binary
+dataclasses-json
+apispec[yaml]
+apispec-webframeworks
+flask-cors
+sqlalchemy-utils
+twilio
+elasticsearch
+#pandas
+
+#Cisu Package
+faker

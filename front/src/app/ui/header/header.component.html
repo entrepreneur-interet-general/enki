@@ -1,0 +1,20 @@
+<header class="header">
+  <div class="header--col" routerLink="/">
+    <div class="logo-marianne">
+      <img src="../assets/Marianne.jpg" />
+    </div>
+    <div class="enki-logo">ENKI</div>
+  </div>
+  <div class="header--col -right">
+    <div class="burger" (click)="openCloseMenu()">
+      <svg class="icon-burger-menu"><use xlink:href="#icon-burger-menu"></use></svg>
+    </div>
+  </div>
+</header>
+<div class="right-menu" [class.-active]="menuActive">
+  <nav>
+    <li class="right-menu--item"><a routerLink="/" (click)="openCloseMenu()">Dashboard</a></li>
+    <li class="right-menu--item"><a routerLink="/liste-interventions" (click)="openCloseMenu()" *ngIf="canSeeEvents()">Voir la liste des interventions</a></li>
+  </nav>
+</div>
+<div class="overlay" [class.-active]="menuActive"></div>

@@ -1,0 +1,34 @@
+<div class="dashboard">
+  <div class="title-container">
+    <h1>Tableau de bord</h1>
+  </div>
+  <div class="ville-title">
+    Ivry-sur-Seine
+  </div>
+  <ul class="interventions">
+    <h2 class="interventions--title">Dernières interventions</h2>
+    <li class="intervention" *ngFor="let intervention of interventions | slice:0:3">
+      <a class="intervention--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
+        <div class="infosSecondaires">
+          <div class="infosSecondaires--dateTemps">
+            {{intervention.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
+          </div>
+          <div class="status">
+            En cours
+          </div>
+        </div>
+        <div class="infosPrincipales">
+          <div class="infosPrincipales--natureDeFait">
+            {{intervention.natureDeFait}}<span class="more-info"></span>
+          </div>
+          <div class="infosPrincipales--icon">
+            <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
+          </div>
+        </div>
+      </a>
+    </li>
+    <div class="interventions--seeMore">
+      <a routerLink="/liste-interventions">Voir plus d'interventions</a>
+    </div>
+  </ul>
+</div>

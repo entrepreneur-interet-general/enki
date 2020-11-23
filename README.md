@@ -86,7 +86,7 @@ make upd
 
 It's now possible to post new "affaires" in postman with this endpoint:
 
-````
+```
 http://localhost:5000/api/v1/echanges/messages
 ```
 

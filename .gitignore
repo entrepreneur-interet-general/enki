@@ -9,6 +9,7 @@ node_modules/
 web_modules/
 # C extensions
 *.so
+pgdata/
 
 # Distribution / packaging
 .Python

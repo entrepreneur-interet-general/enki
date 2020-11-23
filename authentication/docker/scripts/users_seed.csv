@@ -1,4 +1,4 @@
-username,password,code_insee,group
-mairiechelles,,77108,mairie
-mairechelles,,77108,maire
+email,password,code_insee,group
+mairie@chelles.fr,,77108,mairie
+maire@chelles.fr,,77108,maire
 

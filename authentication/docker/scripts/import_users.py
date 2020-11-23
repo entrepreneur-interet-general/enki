@@ -50,10 +50,11 @@ def create_groups(admin, realm_roles):
         # assign_role_to_group(admin, found_group["id"], roles=roles, realm_roles=realm_roles)
 
 
-def create_user(admin, username, password, code_commune):
+def create_user(admin, email, password, code_commune):
     password = password or os.environ.get("DEFAULT_PASSWORD", "defaultpassword")
     new_user = admin.create_user({
-                    "username": username,
+                    "username": email,
+                    "email": email,
                     "enabled": True,
     })
     response = admin.set_user_password(user_id=new_user, password=password, temporary=False)
@@ -67,7 +68,7 @@ def assign_user_group(admin, user_id, group_id):
 def create_users(admin):
     users = pd.read_csv("./users_seed.csv")
     for r, row in users.where(pd.notnull(users), None).iterrows():
-        user = create_user(admin, row['username'], row['password'], row['code_insee'])
+        user = create_user(admin, row['email'], row['password'], row['code_insee'])
         found_group = admin.get_group_by_path(f"/{row['group']}")
         assign_user_group(admin, user, found_group["id"])
 

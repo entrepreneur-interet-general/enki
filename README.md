@@ -83,16 +83,29 @@ or with make
 ```
 make upd 
 ```
+
+It's now possible to post new "affaires" in postman with this endpoint:
+
+````
+http://localhost:5000/api/v1/echanges/messages
+```
+
 ### FrontEnd
 ```
 cd front
 ```
 
 ```
-docker-compose -f docker-compose.yml up
+yarn
 ```
-or with make 
+
+and run angular
 ```
-make upd 
+ng serve 
 ```
+
+Go to http://localhost:4200
+You can login with:
+Login: maire@chelles.fr
+PWD: defaultpassword
 

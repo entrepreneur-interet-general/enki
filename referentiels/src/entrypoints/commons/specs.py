@@ -14,11 +14,11 @@ class APISpecExt:
             self.init_app(app, **kwargs)
 
     def init_app(self, app, **kwargs):
-        app.config.setdefault("APISPEC_TITLE", "sapeurs_api")
+        app.config.setdefault("APISPEC_TITLE", "Enki Referentiel")
         app.config.setdefault("APISPEC_VERSION", "1.0.0")
         app.config.setdefault("OPENAPI_VERSION", "3.0.2")
         app.config.setdefault("SWAGGER_JSON_URL", "/swagger.json")
-        app.config.setdefault("SWAGGER_UI_URL", "/swagger-ui")
+        app.config.setdefault("SWAGGER_UI_URL", "/documentation")
         app.config.setdefault("SWAGGER_URL_PREFIX", None)
 
         self.spec = APISpec(

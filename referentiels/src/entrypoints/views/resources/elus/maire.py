@@ -9,9 +9,39 @@ class MairesResource(Resource):
     """Single object resource
 
     ---
-    post:
-      tags:
-        - Maires
+
+    get:
+        description: Getting all current french mayors
+        parameters:
+          - in: query
+            name: code_insee
+            schema:
+              type: string
+            required: false
+            description: City code
+          - in: query
+            name: dept_code
+            schema:
+              type: string
+            required: false
+            description: Department code
+          - in: query
+            name: from
+            schema:
+              type: int
+            required: false
+            default: 0
+            description: From Pagination
+          - in: query
+            name: to
+            schema:
+              type: int
+            default: 10
+            required: false
+            description: To Pagination
+        tags:
+            - Maires
+
     """
 
     def get(self):

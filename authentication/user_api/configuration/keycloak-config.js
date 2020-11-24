@@ -4,12 +4,16 @@ var Keycloak = require('keycloak-connect');
 let _keycloak;
 
 var keycloakConfig = {
-    clientId: 'api-nodejs',
-    bearerOnly: false,
-    serverUrl: 'http://localhost:8084/auth',
-    realm: 'enki',
-    credentials: {
-        secret: '37c0ed6d-8036-4ddf-9b5d-d4e9c8afa1f7'
+    "realm": "enki",
+    "bearer-only": true,
+    "auth-server-url": "http://localhost:8084/auth/",
+    "ssl-required": "external",
+    "resource": "api-nodejs",
+    "verify-token-audience": true,
+    "use-resource-role-mappings": true,
+    "confidential-port": 0,
+    "credentials": {
+        "clientSecret": "06783024-faa8-450b-b94d-9c25c64bf697"
     }
 };
 

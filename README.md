@@ -15,7 +15,7 @@ docker network create --driver=bridge enki_default
 
 ### Keycloak
 ```
-cd auth
+cd authentication
 ```
 Copy example.env to .env 
 ```

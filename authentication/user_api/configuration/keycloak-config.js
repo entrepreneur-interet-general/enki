@@ -7,15 +7,11 @@ var keycloakConfig = {
     "realm": "enki",
     "bearer-only": true,
     "auth-server-url": "http://localhost:8084/auth/",
-    "ssl-required": "external",
     "resource": "api-nodejs",
-    "verify-token-audience": true,
     "use-resource-role-mappings": true,
     "confidential-port": 0,
-    "credentials": {
-        "clientSecret": "06783024-faa8-450b-b94d-9c25c64bf697"
-    }
-};
+    "expose-token": true
+  };
 
 function initKeycloak() {
     if (_keycloak) {

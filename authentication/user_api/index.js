@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 
 app.use(cors());
 app.use(bodyParser());
+
 const keycloak = require('./configuration/keycloak-config.js').initKeycloak();
 app.use(keycloak.middleware());
 

@@ -9,8 +9,8 @@ app.use(bodyParser());
 const keycloak = require('./configuration/keycloak-config.js').initKeycloak();
 app.use(keycloak.middleware());
 
-var testController = require('./test-controller.js');
-app.use('/test', testController);
+var controller = require('./controller/controller.js');
+app.use('/api', controller);
 
 app.get('/', function(req, res){
    res.send("Server is up!");

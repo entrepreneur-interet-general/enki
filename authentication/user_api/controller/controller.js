@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var fetch = require('node-fetch');
 var jwt_decode = require('jwt-decode');
-const keycloak = require('./configuration/keycloak-config.js').getKeycloak();
+const keycloak = require('../configuration/keycloak-config.js').getKeycloak();
+
 
 const KEYCLOAK_URL = `http://localhost:8084/auth`;
 const KEYCLOAK_REALM = `enki`;

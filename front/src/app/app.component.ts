@@ -20,6 +20,7 @@ export class AppComponent {
       this.environment = environment
       this.keycloakService.getToken().then((res) => {
         this.token = res
+        window.localStorage.setItem('token', res)
       });
       this.fetchedAffaire = false;
   }

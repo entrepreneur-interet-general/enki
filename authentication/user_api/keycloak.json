@@ -1,0 +1,8 @@
+{
+  "realm": "enki",
+  "bearer-only": true,
+  "auth-server-url": "http://localhost:8084/auth/",
+  "ssl-required": "external",
+  "resource": "api-nodejs",
+  "confidential-port": 0
+}

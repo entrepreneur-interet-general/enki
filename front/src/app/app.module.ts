@@ -15,7 +15,11 @@ import { HeaderComponent } from './ui/header/header.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FirstStepComponent } from './registration/first-step/first-step.component';
+import { SecondStepComponent } from './registration/second-step/second-step.component';
 
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -37,11 +41,15 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DetailInterventionComponent,
     SvgDefinitionsComponent,
     HeaderComponent,
-    DashboardComponent
+    DashboardComponent,
+    FirstStepComponent,
+    SecondStepComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.

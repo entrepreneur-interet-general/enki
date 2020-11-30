@@ -1,0 +1,31 @@
+<h1>Finaliser l'inscription</h1>
+<p>Renseigner les informations suivantes</p>
+<form action="" [formGroup]="userGroup" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <input type="text" formControlName="lastName">
+    <label for="">Nom</label>
+  </div>
+  <div class="form-group">
+    <input type="text" formControlName="firstName">
+    <label for="">Prénom</label>
+  </div>
+  <div class="form-group">
+    <select formControlName="fonction">
+      <option value="maire">Maire</option>
+    </select>
+    <label for="">Fonction</label>
+  </div>
+  <div class="form-group">
+    <input type="text" formControlName="codeCommune">
+    <label for="">Commune</label>
+  </div>
+  <div class="form-group">
+    <input type="submit" value="Valider l'inscription" [disabled]="!userGroup.valid">
+  </div>
+</form>
+<p>
+  Form values: {{userGroup.value | json}}
+</p>
+<p>
+  Form Status: {{ userGroup.status }}
+</p>

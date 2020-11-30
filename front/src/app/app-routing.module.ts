@@ -5,12 +5,24 @@ import { AuthGuard } from './app-auth-guard.service';
 import { ListeInterventionsComponent } from './interventions/liste/liste-interventions.component';
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FirstStepComponent } from './registration/first-step/first-step.component';
+import { SecondStepComponent } from './registration/second-step/second-step.component';
 
 
 const routes: Routes = [
   {
+    path: 'register/step1',
+    component: FirstStepComponent
+  },
+  {
+    path: 'register/step2',
+    component: SecondStepComponent
+  },
+  {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [ AuthGuard ],
+    data: { roles: ['watchEvents'] }
   },
   {
     path: 'liste-interventions',
@@ -28,7 +40,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/dashboard', pathMatch: 'full'
+    redirectTo: '/register/step1', pathMatch: 'full'
   }
 ];
 

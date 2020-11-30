@@ -34,6 +34,7 @@ router.get('/user', keycloak.protect('realm:user'), function(req, res){
 
 
 router.put('/user', keycloak.protect('realm:user'), function(req, res) {
+  // throw new Error('BROKEN')
   const bearerToken = req.headers.authorization.split(' ')[1]
   const userId = jwt_decode(bearerToken).sub;
   const headers = {
@@ -47,13 +48,11 @@ router.put('/user', keycloak.protect('realm:user'), function(req, res) {
   fetch(`${KEYCLOAK_USERS_ENDPOINT}/${userId}`, {
     method: 'PUT',
     headers: headers,
-    body: JSON.stringify({
-      attributes: req.body.attributes
-    })
+    body: JSON.stringify(req.body)
   })
   // .then(response => response.json())
   .then(response => {
-    if (req.body.user_fonction) {
+/*     if (req.body.user_fonction) {
       // fetch all the existing groups
       fetch(`${KEYCLOAK_GROUPS_ENDPOINT}`, {
         method: 'GET',
@@ -79,9 +78,9 @@ router.put('/user', keycloak.protect('realm:user'), function(req, res) {
       }).catch((error) => {
         console.error("Error when trying to fetch groups: " + error)
       })
-    } else {
+    } else { */
       res.json(response)
-    }
+    /* } */
   }).catch(error => {
     console.error('Error while fetching update user: ' + error)
   })
@@ -91,8 +90,6 @@ router.put('/user', keycloak.protect('realm:user'), function(req, res) {
 })
 
 router.get('/admin', keycloak.protect('realm:app-admin'), function(req, res){
-  // const userId = jwt_decode(req.headers.authorization.split(' ')[1]).sub
-  console.log('ça marche quand même')
   res.send("Hello Admin ");
 });
 

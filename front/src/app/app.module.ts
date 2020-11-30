@@ -20,6 +20,8 @@ import { SecondStepComponent } from './registration/second-step/second-step.comp
 
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -43,7 +45,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HeaderComponent,
     DashboardComponent,
     FirstStepComponent,
-    SecondStepComponent
+    SecondStepComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

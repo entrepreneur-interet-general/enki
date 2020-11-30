@@ -4,6 +4,7 @@ import { Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { KeycloakService } from 'keycloak-angular';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-first-step',
@@ -23,7 +24,8 @@ export class FirstStepComponent {
 
   constructor(
     private http: HttpClient,
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService,
+    private router: Router,
   ) {
     this.updateUserUrl = `http://localhost:4201/api/user`;
     
@@ -50,6 +52,7 @@ export class FirstStepComponent {
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
       console.log(response)
+      this.router.navigate(['register/step2'])
     })
   }
 

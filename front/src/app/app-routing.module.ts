@@ -1,22 +1,26 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './app-auth-guard.service';
+import { GuardRegisterGuard } from './guards/guard-register.guard';
 // import { AppComponent } from './app.component';
 import { ListeInterventionsComponent } from './interventions/liste/liste-interventions.component';
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FirstStepComponent } from './registration/first-step/first-step.component';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
   {
     path: 'register/step1',
-    component: FirstStepComponent
+    component: FirstStepComponent,
+    canActivate: [ GuardRegisterGuard ]
   },
   {
     path: 'register/step2',
-    component: SecondStepComponent
+    component: SecondStepComponent,
+    canActivate: [ GuardRegisterGuard ]
   },
   {
     path: 'dashboard',
@@ -41,7 +45,8 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: '/register/step1', pathMatch: 'full'
-  }
+  },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

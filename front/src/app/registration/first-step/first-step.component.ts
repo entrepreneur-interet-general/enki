@@ -49,7 +49,7 @@ export class FirstStepComponent {
       lastName: this.userGroup.value.lastName
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
-      console.log(response.ok)
+      console.log(response)
     })
   }
 

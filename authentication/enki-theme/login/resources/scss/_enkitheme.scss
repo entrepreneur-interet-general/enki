@@ -2,11 +2,6 @@ html,
 body {
   height: 100%;
 }
-:root {
-  --main-color: #034EA2;
-  --error-color: #E1000F;
-}
-
 body {
   display: flex;
   flex-direction: row;
@@ -25,7 +20,7 @@ input {
 }
 
 a {
-  color: var(--main-color);
+  color: $primary;
 }
 
 .login-container {
@@ -140,7 +135,7 @@ label.form-control {
 input:focus + label.form-control {
   top: -7px;
   font-size: 12px;
-  color: var(--main-color);
+  color: $primary;
   transition: ease .2s all;
 }
 
@@ -163,7 +158,7 @@ input[type=text], input[type=password] {
 input[type=text]:focus, input[type=password]:focus {
   outline: 0;
   padding: 0 0 0 15px;
-  border: 2px solid var(--main-color);
+  border: 2px solid $primary;
 }
 
 input[type=text]::placeholder, input[type=password]::placeholder {
@@ -219,46 +214,10 @@ input[type=submit]:disabled {
 }
 
 .alert.alert-error {
-  color: var(--error-color);
+  color: $red;
 }
 
 
-
-#kc-form-options div {
-  display: inline-block;
-  margin-right: 20px;
-  font-size: 25px;
-}
-
-#kc-form-options div label {
-  font-size: 20px;
-}
-
-#kc-feedback {
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-}
-
-#kc-feedback-wrapper {
-  padding: 1em;
-}
-
-.feedback-success {
-  background-color: rgba(155, 155, 255, 0.1);
-}
-
-.feedback-warning {
-  background-color: rgba(255, 175, 0, 0.1);
-}
-
-.feedback-error {
-  background-color: rgba(255, 0, 0, 0.1);
-}
-
-.h1-title {
-  font-size: 48px;
+.title-container {
+  margin: 20px 0;
 }

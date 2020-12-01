@@ -3,6 +3,10 @@
   <#if section = "header">
     ${msg("doLogIn")}
   <#elseif section = "form">
+  <div class="title-container">
+    <h1 class="login-title">Bienvenue sur ENKI</h1>
+    <p class="login-subtitle">Première visite ? <a href="${url.registrationUrl}" class="login-signupLink">Créer un compte</a>
+  </div>
   <div id="kc-form" <#if realm.password && social.providers??>class="${properties.kcContentWrapperClass!}"</#if>>
     <div id="kc-form-wrapper" <#if realm.password && social.providers??>class="${properties.kcFormSocialAccountContentClass!} ${properties.kcFormSocialAccountClass!}"</#if>>
       <#if realm.password>
@@ -61,11 +65,11 @@
       </#if>
     </div>
   <#elseif section = "info" >
-    <#if realm.password && realm.registrationAllowed && !usernameEditDisabled??>
+    <#--  <#if realm.password && realm.registrationAllowed && !usernameEditDisabled??>
       <div id="kc-registration">
         <span>${msg("noAccount")} <a tabindex="6" href="${url.registrationUrl}">${msg("doRegister")}</a></span>
       </div>
-    </#if>
+    </#if>  -->
   </#if>
 
 </@layout.registrationLayout>

@@ -40,8 +40,6 @@
         <header class="form-header ${properties.kcFormHeaderClass!}">
           <img class="form-header__illus" src="${url.resourcesPath}/img/illus.png" />
           <img class="form-header__imgRepu" src="${url.resourcesPath}/img/Republique_Francaise.png" />
-          <h1 class="login-title">Bienvenue sur ENKI</h1>
-          <p class="login-subtitle">Première visite ? <a href="#" class="login-signupLink">Créer un compte</a>
         </header>
         <div id="kc-content">
           <div id="kc-content-wrapper">

@@ -12,3 +12,12 @@ down:
 
 logs:
 	docker-compose -f docker-compose.yml logs --follow
+
+
+# Provisions
+
+build-provision:
+	docker-compose -f docker-compose.provision.yml build
+
+provision:
+	docker-compose -f docker-compose.provision.yml run --rm affairs-provision

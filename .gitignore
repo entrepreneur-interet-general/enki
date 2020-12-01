@@ -9,8 +9,9 @@ node_modules/
 web_modules/
 # C extensions
 *.so
+*.sqlite
 pgdata/
-
+dist/
 # Distribution / packaging
 .Python
 env/

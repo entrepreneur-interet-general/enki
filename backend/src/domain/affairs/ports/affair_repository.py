@@ -5,7 +5,7 @@ import xml.dom.minidom
 from flask import current_app
 from werkzeug.exceptions import HTTPException
 
-from domain.affairs.cisu import EdxlEntity
+from cisu.entities.edxl_entity import EdxlEntity
 from domain.affairs.entities.affair_entity import AffairEntity
 from entrypoints.extensions import event_bus, clock
 from domain.core import events
@@ -23,13 +23,10 @@ class NotFoundAffair(HTTPException):
 
 class AbstractAffairRepository(abc.ABC):
     def add(self, affair: AffairEntity) -> None:
-        current_app.logger.info("starting adding affair")
         if self._match_uuid(affair.uuid):
-            current_app.logger.info("affair already exists")
             raise AlreadyExistingAffairUuid()
-        current_app.logger.info("add affair")
         self._add(affair)
-        current_app.logger.info("publish event")
+
         event_bus.publish(events.AffairCreatedEvent(data=affair))
 
     def get_one(self) -> AffairEntity:

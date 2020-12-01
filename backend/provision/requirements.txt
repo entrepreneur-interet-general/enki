@@ -1,0 +1,7 @@
+pandas
+requests
+tqdm
+elasticsearch
+cisu-python
+dataclasses_json
+faker

@@ -12,9 +12,11 @@ BACKEND_URI = os.environ.get("BACKEND_URI")
 CLIENT_ID = os.environ.get("CLIENT_ID")
 CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
 
+ENKI_API_SERVICE_ID = os.environ.get("ENKI_API_SERVICE_ID")
+
 # Add Service for enki URL
 data = {
-    'name': 'enki_api',
+    'name': ENKI_API_SERVICE_ID,
     'url': f'{BACKEND_URI}'
 }
 print(f'http://{KONG_HOST_IP}:{KONG_PORT}/services')
@@ -34,7 +36,7 @@ data = {
     'paths[]': '/enki',
 }
 
-_ = requests.post(f'http://{KONG_HOST_IP}:{KONG_PORT}/services/enki_api/routes', data=data)
+_ = requests.post(f'http://{KONG_HOST_IP}:{KONG_PORT}/services/{ENKI_API_SERVICE_ID}/routes', data=data)
 
 # # Configure OIDC Plugin
 

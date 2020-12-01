@@ -19,5 +19,5 @@ logs:
 build-provision:
 	docker-compose -f docker-compose.provision.yml build
 
-provision:
+run-provision:
 	docker-compose -f docker-compose.provision.yml run --rm affairs-provision

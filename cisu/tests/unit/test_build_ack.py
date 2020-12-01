@@ -6,14 +6,14 @@ from uuid import uuid4
 import pytest
 import xmlschema
 
-from cisu.src import EdxlEntity
-from cisu.src.entities.cisu_entity import CisuEntity, AddressType, MessageType, Status, AckMessage, \
+from cisu.src.cisu.entities.edxl_entity import EdxlEntity
+from cisu.src.cisu.entities.cisu_entity import CisuEntity, AddressType, MessageType, Status, AckMessage, \
     Recipients
-from cisu.src.entities.cisu_entity import Recipient
-from cisu.src.entities.commons import DateType
-from cisu.src.entities.commons.common_alerts import AnyURI
-from cisu.src.factories.cisu_factory import MessageCisuFactory
-from cisu.src.factories.edxl_factory import EdxlMessageFactory
+from cisu.src.cisu.entities.cisu_entity import Recipient
+from cisu.src.cisu.entities.commons import DateType
+from cisu.src.cisu.entities.commons.common_alerts import AnyURI
+from cisu.src.cisu.factories.cisu_factory import MessageCisuFactory
+from cisu.src.cisu.factories.edxl_factory import EdxlMessageFactory
 import xml.dom.minidom
 from tempfile import NamedTemporaryFile
 
@@ -79,7 +79,7 @@ def test_edxl_xml_generation(filename):
         other_message=other_edxl,
     )
 
-    schema_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), "../../src/entities/schema/cisu.xsd")
+    schema_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), "../../src/cisu/entities/schema/cisu.xsd")
 
     xml_string = ack_message.resource.message.to_xml()
     temp_file = NamedTemporaryFile(mode="w", suffix=".xml")

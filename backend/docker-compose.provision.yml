@@ -1,0 +1,19 @@
+# WARNING: this file is not suitable for production, please use with caution
+version: '3'
+
+services:
+  affairs-provision:
+    build:
+      context: ./provision
+      dockerfile: Dockerfile.provision
+    env_file:
+      - provision/.env
+    networks:
+      - default
+      - enki_default
+
+networks:
+  default:
+    driver: bridge
+  enki_default:
+    external: true

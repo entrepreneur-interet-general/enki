@@ -1,6 +1,7 @@
 stages:
   - install
   - build-test
+  - deploy
 
 cache:
   paths:
@@ -24,7 +25,7 @@ install-fronts-dependencies:
       - fronts/*
 
 install-backend-dependencies:
-  image: python:3.8
+  image: python:3.8-alpine
   stage: install
   script:
     - cd backend
@@ -45,7 +46,7 @@ install-backend-dependencies:
       - backend/venv/
 
 install-cisu-package-dependencies:
-  image: python:3.8
+  image: python:3.8-alpine
   stage: install
   script:
     - cd cisu
@@ -83,7 +84,7 @@ front-enki-build-and-test:
       - fronts/*
 
 back-build-and-test:
-  image: python:3.8
+  image: python:3.8-alpine
   stage: build-test
   script:
     - cd backend
@@ -101,7 +102,7 @@ back-build-and-test:
       - backend/*
 
 cisu-build-and-test:
-  image: python:3.8
+  image: python:3.8-alpine
   stage: build-test
   script:
     - cd cisu
@@ -113,3 +114,20 @@ cisu-build-and-test:
       - merge_requests
     changes:
       - cisu/*
+
+#cisu-deploy-package:
+#  stage: deploy
+#  image: python:3.8-alpine
+#  script:
+#    - cd cisu
+#    - cat $PYPIRC > /tmp/.pypirc
+#    - sed -i 's/PYPI_TOKEN_TO_RELACE/$PYPI_TOKEN/' /tmp/.pypirc
+#    - sed /tmp/.pypirc
+#    - pip install twine
+#    - python setup.py  bdist_wheel
+#    - python -m twine upload --repository pypi dist/* --config-file /tmp/.pypirc
+#  only:
+#    refs:
+#      - merge_requests
+#    changes:
+#      - cisu/*

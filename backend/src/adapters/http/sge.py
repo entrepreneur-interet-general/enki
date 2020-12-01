@@ -3,10 +3,10 @@ import requests
 from flask import current_app
 from requests import Response
 
-from domain.affairs.cisu import EdxlEntity
-from domain.affairs.cisu.entities.cisu_entity import AddressType
-from domain.affairs.cisu.entities.commons.common_alerts import AnyURI
-from domain.affairs.cisu.factories.edxl_factory import EdxlMessageFactory
+from cisu.entities.edxl_entity import EdxlEntity
+from cisu.entities.cisu_entity import AddressType
+from cisu.entities.commons.common_alerts import AnyURI
+from cisu.factories.edxl_factory import EdxlMessageFactory
 from entrypoints.config import SapeursConfig
 from domain.core import events
 

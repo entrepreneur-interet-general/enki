@@ -1,0 +1,20 @@
+@import "../../../../../design-system/styles/variables";
+
+.userInfoForm {
+  padding: 0 16px;
+}
+.enkiform {
+  &__input {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  &__group {
+    .icon {
+      position: absolute;
+      right: 10px;
+      top: 28px;
+      transform: translate(0, -50%);
+    }
+  }
+}

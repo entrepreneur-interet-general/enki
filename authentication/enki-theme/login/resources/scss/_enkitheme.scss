@@ -68,20 +68,6 @@ a {
   transform: translateX(-50%);
 }
 
-.login-title {
-  font-size: 32px;
-  line-height: 32px;
-  font-weight: 300;
-  letter-spacing: 1px;
-  margin-bottom: 12px;
-}
-
-.login-subtitle {
-  margin-top: 12px;
-}
-
-
-
 .login-wrapper {
   display: flex;
   justify-content: center;
@@ -105,64 +91,6 @@ a {
 
 .login-form ul {
   list-style-type: none;
-}
-
-.login-form label {
-  cursor: pointer;
-  color: black;
-}
-
-.form-group {
-  width: 100%;
-  position: relative;
-  text-align: left;
-}
-
-label.form-control {
-  font-size: 12px;
-  line-height: 16px;
-  position: absolute;
-  top: 0;
-  background: white;
-  color: #9BA8B5;
-  font-size: 16px;
-  top: 20px;
-  left: 14px;
-  cursor: text;
-  padding: 0 4px;
-  transition: ease .2s all;
-}
-input:focus + label.form-control {
-  top: -7px;
-  font-size: 12px;
-  color: $primary;
-  transition: ease .2s all;
-}
-
-input:valid + label.form-control {
-  top: -7px;
-  font-size: 12px;
-}
-
-/*fields*/
-input[type=text], input[type=password] {
-  box-sizing: border-box;
-  width: 100%;
-  border-radius: 4px;
-  border: 1px solid #B3BDC7;
-  height: 56px;
-  padding: 0 0 0 16px;
-  margin-bottom: 32px;
-}
-
-input[type=text]:focus, input[type=password]:focus {
-  outline: 0;
-  padding: 0 0 0 15px;
-  border: 2px solid $primary;
-}
-
-input[type=text]::placeholder, input[type=password]::placeholder {
-  color: #999;
 }
 
 .show-password {
@@ -215,9 +143,4 @@ input[type=submit]:disabled {
 
 .alert.alert-error {
   color: $red;
-}
-
-
-.title-container {
-  margin: 20px 0;
 }

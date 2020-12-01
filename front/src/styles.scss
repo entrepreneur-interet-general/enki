@@ -1,26 +1,10 @@
 @charset "UTF-8";
-@import "../node_modules/enki-design-system/styles/variables";
-@import "../node_modules/enki-design-system/styles/styles";
+@import "../../design-system/styles/variables";
+@import "../../design-system/styles/styles";
 
 body {
   overflow-x: hidden;
 }
-
-h1 {
-  font-size: 32px;
-  padding-bottom: 24px;
-  position: relative;
-  &:after {
-    content: '';
-    width: 62px;
-    background-color: $grey;
-    height: 1px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-  }
-}
-
 
 :focus {
   outline: none;
@@ -38,9 +22,6 @@ h1 {
 }
 .title-icon {
   margin-right: 8px;
-}
-.title-container {
-  padding: 0 16px 16px;
 }
 .icon-notification {
   width: 20px;

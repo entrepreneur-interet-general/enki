@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ENKI - Design System</title>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <link rel="stylesheet" href="styles/main.scss">
+</head>
+<body>
+
+  <header class="styleguideHeader">
+    <h1 class="styleguideHeader__title">Design system de Enki</h1>
+    <nav class="styleguideHeader__nav">
+      <a href="#" class="active">Présentation</a>
+      <a href="#">Grille</a>
+    </nav>
+  </header>
+
+  <div class="wrapper">
+    <div class="styleguideContainer">
+      <aside class="sidebar">
+          <h2 class="sidebar__title">Thèmes</h2> 
+          <nav class="styleguideNav">
+              <a href="#forms" class="styleguideNav__link -active">Forms</a>
+              <a href="#colors" class="styleguideNav__link">Couleurs</a>
+              <a href="#text" class="styleguideNav__link">Textes</a>
+              <a href="#callToActions" class="styleguideNav__link">Call to actions</a>
+          </nav>
+      </aside>
+      <div>
+        <div class="styleguideContent">
+          <section id="forms">
+              <h2 class="styleguideContent__title">Forms</h2>
+              <h3 class="styleguideContent__subtitle">Buttons</h3>
+              <input type="submit" class="enkiform__submit" value="Connexion" />
+              <h3 class="styleguideContent__subtitle">Input</h3>
+              <div class="enkiform__group">
+                <input type="text" class="enkiform__input" id="example" required>
+                <label for="example" class="enkiform__label">Example input</label>
+              </div>
+          </section>
+  
+        </div>
+        <div class="styleguideContent">
+            <section id="colors">
+                <h2 class="styleguideContent__title">Couleurs</h2>
+            </section>
+  
+        </div>
+      </div>
+    </div>
+    <!-- <script type="text/javascript" src="./global_js/styleguide.js" ></script> -->
+</body>
+</html>

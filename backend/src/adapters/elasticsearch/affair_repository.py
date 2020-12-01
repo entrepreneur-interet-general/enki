@@ -9,7 +9,7 @@ from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository
 from elasticsearch.exceptions import NotFoundError
 
-from entrypoints.serializers import SapeurJsonEncoder
+from entrypoints.serializers import EnkiJsonEncoder
 
 
 class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
@@ -17,10 +17,8 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
     def __init__(self, client: Elasticsearch):
         ElasticRepositoryMixin.__init__(self, client=client, index_name="affairs")
         AbstractAffairRepository.__init__(self)
+        self.create_indice()
 
-    def create_indice(self):
-        if not self.client.indices.exists(index=self.index_name):
-            self.client.indices.create(self.index_name)
 
     def _match_uuid(self, uuid: str) -> Union[AffairEntity, None]:
         try:
@@ -29,7 +27,7 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
             return None
 
     def _add(self, affair: AffairEntity) -> bool:
-        return self.client.index(index=self.index_name, id=affair.uuid, body=json.dumps(affair.to_dict(), cls=SapeurJsonEncoder,))
+        return self.client.index(index=self.index_name, id=affair.uuid, body=json.dumps(affair.to_dict(), cls=EnkiJsonEncoder, ))
 
     def _bulk_add(self, affairs: List[AffairEntity]):
         actions = [

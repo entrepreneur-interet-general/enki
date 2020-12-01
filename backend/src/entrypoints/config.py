@@ -1,14 +1,14 @@
 from typing import Optional
 
 from .repositories.repositories import Repositories, InMemoryRepositories, REPOSITORY_TYPES
-from .serializers import SapeurJsonEncoder
+from .serializers import EnkiJsonEncoder
 import os
 
 
 class SapeursConfig(object):
     RESTFUL_JSON = {
         'indent': 2,
-        'cls': SapeurJsonEncoder
+        'cls': EnkiJsonEncoder
     }
     REPO_INFRA: str = os.environ.get('REPOSITORIES', InMemoryRepositories.name)
     SGE_HUB_BASE_URI: str = os.environ.get('SGE_HUB_BASE_URI',

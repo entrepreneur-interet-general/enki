@@ -14,4 +14,9 @@ class AffairEntity(CreateEvent):
     def uuid(self):
         return self.eventId
 
-
+    @property
+    def location(self):
+        return {
+            "lat": self.eventLocation.coord.lat,
+            "lon": self.eventLocation.coord.lon
+        }

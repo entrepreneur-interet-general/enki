@@ -93,7 +93,7 @@ print(f"{len(affairs)} affairs were created")
 for affair in tqdm(affairs):
     lat = affair["eventLocation"]["coord"]["lat"]
     lon = affair["eventLocation"]["coord"]["lon"]
-    affair["eventLocation"]["location"] = {
+    affair["location"] = {
         "lat": float(lat),
         "lon": float(lon)
     }
@@ -102,6 +102,7 @@ for affair in tqdm(affairs):
 def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
+
 
 for chunk in chunks(affairs, 5000):
     actions = [
@@ -114,3 +115,4 @@ for chunk in chunks(affairs, 5000):
     ]
 
     response = helpers.bulk(client, actions)
+    print(response)

@@ -1,0 +1,108 @@
+.btn {
+    border: none;
+    border-radius: 4px;
+    font-size: rem-calc(16);
+    font-weight: 400;
+    height: 40px;
+    max-width: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    box-sizing: border-box;
+    background-color: $primary;
+    color: $white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px;
+    @media screen and (min-width: 768px) {
+        max-width: 300px;
+    }
+
+    &.-center {
+        margin: 0 auto;
+    }
+
+    &.-noflex {
+        display: inline-block;
+    }
+
+    &.-auto {
+        @media screen and (min-width: 768px) {
+            width: auto;
+            max-width: none;
+        }
+       
+    }
+    &.-small {
+        font-size: 11px;
+    }
+
+    &-primary {
+        color: $white;
+        background: $black;
+
+        &:hover, &.-hover {
+            background: $grey;
+            text-decoration: none;
+        }
+
+        &:disabled {
+            background: $grey;
+        }
+    }
+
+    &-secondary {
+        color: $black;
+        background: none;
+        border: 1px solid $black;
+
+        &:hover, &.-hover {
+            background: $black;
+            color: $white;
+            text-decoration: none;
+        }
+
+        &:disabled {
+            background: none;
+            color: $grey;
+            border-color: $grey;
+        }
+    }
+
+    &-icon {
+
+        .icon {
+            margin-right: 12px;
+        }
+    }
+}
+
+// btn group
+.btn-group {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 0;
+    @media screen and (min-width: 768px) {
+        flex-wrap: nowrap;
+        .btn:not(:first-child)  {
+            margin-left: 15px;
+        }
+    }
+    &.-center {
+        justify-content: center;
+    }
+    &.-spacebetween {
+        justify-content: space-between;
+    }
+
+
+    .btn {
+        margin-top: 15px;
+    }
+    
+}

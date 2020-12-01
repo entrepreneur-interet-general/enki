@@ -1,26 +1,30 @@
-<h1>Finaliser l'inscription</h1>
-<p>Renseigner les informations suivantes</p>
-<form action="" [formGroup]="userGroup" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <input type="text" formControlName="lastName">
-    <label for="">Nom</label>
+<div class="title-container">
+  <h1 class="login-title">Finaliser l'inscription</h1>
+  <h2 class="login-subtitle">Renseigner les informations suivantes</h2>
+</div>
+<form action="" class="userInfoForm" [formGroup]="userGroup" (ngSubmit)="onSubmit()">
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" formControlName="lastName" required>
+    <label for="" class="enkiform__label">Nom</label>
   </div>
-  <div class="form-group">
-    <input type="text" formControlName="firstName">
-    <label for="">Prénom</label>
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" formControlName="firstName" required>
+    <label for="" class="enkiform__label">Prénom</label>
   </div>
-  <div class="form-group">
-    <select formControlName="fonction">
+  <div class="enkiform__group">
+    <select class="enkiform__input" formControlName="fonction" required>
       <option value="maire">Maire</option>
     </select>
-    <label for="">Fonction</label>
+    <label for="" class="enkiform__label">Fonction</label>
+    <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
   </div>
-  <div class="form-group">
-    <input type="text" formControlName="codeCommune">
-    <label for="">Commune</label>
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" formControlName="codeCommune" required>
+    <label for="" class="enkiform__label">Commune</label>
+    <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
   </div>
-  <div class="form-group">
-    <input type="submit" value="Valider l'inscription" [disabled]="!userGroup.valid">
+  <div class="enkiform__group">
+    <input type="submit" class="enkiform__submit" value="Valider l'inscription" [disabled]="!userGroup.valid">
   </div>
 </form>
 <p>

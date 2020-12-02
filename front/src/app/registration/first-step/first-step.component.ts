@@ -48,11 +48,11 @@ export class FirstStepComponent {
         "fonction": this.userGroup.value.fonction
       },
       firstName: this.userGroup.value.firstName,
-      lastName: this.userGroup.value.lastName
+      lastName: this.userGroup.value.lastName,
+      user_fonction: this.userGroup.value.fonction
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
-      console.log(response)
-      this.router.navigate(['register/step2'])
+      this.router.navigate(['dashboard'])
     })
   }
 

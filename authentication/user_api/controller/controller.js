@@ -48,7 +48,14 @@ router.put('/user', keycloak.protect('realm:user'), function(req, res) {
   fetch(`${KEYCLOAK_USERS_ENDPOINT}/${userId}`, {
     method: 'PUT',
     headers: headers,
-    body: JSON.stringify(req.body)
+    body: JSON.stringify({
+      attributes: {
+        "communes": req.body.attributes.communes,
+        "fonction": req.body.attributes.fonction
+      },
+      firstName: req.body.firstName,
+      lastName: req.body.lastName
+    })
   })
   // .then(response => response.json())
   .then(response => {

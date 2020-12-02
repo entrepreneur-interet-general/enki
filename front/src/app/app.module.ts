@@ -59,8 +59,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     environment.HTTPClientInMemory ? HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ) : [],
-    AppRoutingModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    AppRoutingModule
   ],
   providers: [{
     provide: APP_INITIALIZER,

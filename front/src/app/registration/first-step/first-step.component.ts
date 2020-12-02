@@ -52,7 +52,7 @@ export class FirstStepComponent {
       user_fonction: this.userGroup.value.fonction
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
-      this.router.navigate(['dashboard'])
+      this.router.parseUrl('dashboard')
     })
   }
 

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { InterventionsService } from '../interventions/interventions.service';
+import { InterventionsService } from '../../interventions/interventions.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
+  selector: 'app-user-dashboard',
+  templateUrl: './user-dashboard.component.html',
   styleUrls: [
-    './dashboard.component.scss',
-    '../interventions/liste/liste-interventions.component.scss'
+    './user-dashboard.component.scss',
+    '../../interventions/liste/liste-interventions.component.scss'
   ]
 })
-export class DashboardComponent implements OnInit {
+export class UserDashboardComponent implements OnInit {
 
   interventions;
   constructor(
@@ -22,5 +22,4 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

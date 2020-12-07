@@ -5,7 +5,7 @@ import { GuardRegisterGuard } from './guards/guard-register.guard';
 // import { AppComponent } from './app.component';
 import { ListeInterventionsComponent } from './interventions/liste/liste-interventions.component';
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard/user-dashboard.component';
 import { FirstStepComponent } from './registration/first-step/first-step.component';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -24,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    component: UserDashboardComponent,
     canActivate: [ AuthGuard ],
     data: { roles: ['watchEvents'] }
   },

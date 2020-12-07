@@ -14,13 +14,15 @@ import { HeaderComponent } from './ui/header/header.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
-import { DashboardComponent } from './dashboard/dashboard.component';
+// import { DashboardComponent } from './dashboard/dashboard.component';
 import { FirstStepComponent } from './registration/first-step/first-step.component';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
+import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -43,7 +45,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DetailInterventionComponent,
     SvgDefinitionsComponent,
     HeaderComponent,
-    DashboardComponent,
+    // DashboardComponent,
     FirstStepComponent,
     SecondStepComponent,
     PageNotFoundComponent
@@ -60,7 +62,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
       InMemoryDataService, { dataEncapsulation: false }
     ) : [],
     KeycloakAngularModule,
-    AppRoutingModule
+    AppRoutingModule,
+    UserDashboardModule
   ],
   providers: [{
     provide: APP_INITIALIZER,

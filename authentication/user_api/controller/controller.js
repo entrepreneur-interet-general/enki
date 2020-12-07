@@ -48,11 +48,20 @@ router.put('/user', keycloak.protect('realm:user'), function(req, res) {
   fetch(`${KEYCLOAK_USERS_ENDPOINT}/${userId}`, {
     method: 'PUT',
     headers: headers,
-    body: JSON.stringify(req.body)
+    body: JSON.stringify({
+      attributes: {
+        "communes": req.body.attributes.communes,
+        "fonction": req.body.attributes.fonction
+      },
+      firstName: req.body.firstName,
+      lastName: req.body.lastName
+    })
   })
   // .then(response => response.json())
   .then(response => {
-/*     if (req.body.user_fonction) {
+
+    // we had directly without verifying the user to the group being user_fonction
+    if (req.body.user_fonction) {
       // fetch all the existing groups
       fetch(`${KEYCLOAK_GROUPS_ENDPOINT}`, {
         method: 'GET',
@@ -78,9 +87,9 @@ router.put('/user', keycloak.protect('realm:user'), function(req, res) {
       }).catch((error) => {
         console.error("Error when trying to fetch groups: " + error)
       })
-    } else { */
+    } else {
       res.json(response)
-    /* } */
+    }
   }).catch(error => {
     console.error('Error while fetching update user: ' + error)
   })

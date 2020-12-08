@@ -33,7 +33,7 @@ class PgAffairRepository(PgRepositoryMixin, AbstractAffairRepository):
     def get_all(self) -> List[AffairEntity]:
         return self.session.query(AffairEntity).all()
 
-    def _get_from_city_codes(self, multipolygon: List) -> affairsList:
+    def _get_from_polygon(self, multipolygon: List) -> affairsList:
         return self.get_all()  # TODO: define postgres polygon query
 
 

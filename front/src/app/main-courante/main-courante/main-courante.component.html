@@ -1,9 +1,14 @@
 <div class="mc">
-  <p>La main courante est vide</p>
+  <p *ngIf="!(messages.length > 0) ">La main courante est vide</p>
   
   <ul>
     <li *ngFor="let message of messages">
-      {{message.title}}
+      <div class="mc--title">
+        Titre : {{ message.title }}
+      </div>
+      <div class="mc--content">
+        Contenu : {{ message.content }}
+      </div>
     </li>
   </ul>
   

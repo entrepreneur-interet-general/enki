@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessagesService } from '../messages.service';
 
 @Component({
   selector: 'app-main-courante',
@@ -7,14 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainCouranteComponent implements OnInit {
   messages;
-  constructor() {
-    this.messages = [
-      {
-        "title": "Bonjour"
-      }, {
-        "title": "Hello"
-      }
-    ]
+  constructor(messagesService: MessagesService) {
+    this.messages = messagesService.getMessages();
+    window.sessionStorage.setItem('messages', JSON.stringify(this.messages))
   }
 
   ngOnInit(): void {

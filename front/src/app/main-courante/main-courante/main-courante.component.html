@@ -1,0 +1,13 @@
+<div class="mc">
+  <p>La main courante est vide</p>
+  
+  <ul>
+    <li *ngFor="let message of messages">
+      {{message.title}}
+    </li>
+  </ul>
+  
+  <div class="mc--addMessage">
+    <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
+  </div>
+</div>

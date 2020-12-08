@@ -1,0 +1,21 @@
+@import "../../../../../design-system/styles/variables";
+
+
+.mc {
+  padding: 16px;
+  &--addMessage {
+    width: 56px;
+    height: 56px;
+    border-radius: 56px;
+    background-color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    .icon {
+      fill: white;
+    }
+  }
+}

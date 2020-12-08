@@ -23,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
+import { MainCouranteModule } from './main-courante/main-courante.module';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -63,7 +64,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ) : [],
     KeycloakAngularModule,
     AppRoutingModule,
-    UserDashboardModule
+    UserDashboardModule,
+    MainCouranteModule
   ],
   providers: [{
     provide: APP_INITIALIZER,

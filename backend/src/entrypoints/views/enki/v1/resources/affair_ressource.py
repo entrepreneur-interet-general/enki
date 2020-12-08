@@ -50,8 +50,8 @@ class AffairListResource(WithAffairRepoResource):
 
     def get(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('insee_code', type=str, help='Insee code')
-        parser.add_argument('postal_code', type=str, help='Postal code')
+        parser.add_argument('insee_code', type=str, help='Insee code', action='append')
+        parser.add_argument('postal_code', type=str, help='Postal code', action='append')
         args = parser.parse_args()
 
         postal_codes: Union[str, List[str], None] = args.get("postal_code")

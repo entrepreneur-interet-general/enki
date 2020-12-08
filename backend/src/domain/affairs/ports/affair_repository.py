@@ -9,6 +9,7 @@ from cisu.entities.edxl_entity import EdxlEntity
 from domain.affairs.entities.affair_entity import AffairEntity
 from entrypoints.extensions import event_bus, clock
 from domain.core import events
+
 affairsList = List[AffairEntity]
 
 
@@ -20,6 +21,7 @@ class AlreadyExistingAffairUuid(HTTPException):
 class NotFoundAffair(HTTPException):
     code = 404
     description = "Cette intervention n'existe pas"
+
 
 class AbstractAffairRepository(abc.ABC):
     def add(self, affair: AffairEntity) -> None:
@@ -50,7 +52,14 @@ class AbstractAffairRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _match_uuid(self, uuid: str) -> Union[AffairEntity,None]:
+    def _get_from_city_codes(self, multipolygon: List) -> affairsList:
+        raise NotImplementedError
+
+    def get_from_city_codes(self, multipolygon: List) -> affairsList:
+        return self._get_from_city_codes(multipolygon)
+
+    @abc.abstractmethod
+    def _match_uuid(self, uuid: str) -> Union[AffairEntity, None]:
         raise NotImplementedError
 
     @staticmethod
@@ -75,7 +84,7 @@ class InMemoryAffairRepository(AbstractAffairRepository):
     def get_all(self) -> affairsList:
         return self._affairs
 
-    def _match_uuid(self, uuid: str)  -> Union[AffairEntity,None]:
+    def _match_uuid(self, uuid: str) -> Union[AffairEntity, None]:
         matches = [affair for affair in self._affairs if affair.uuid == uuid]
         if matches:
             return matches[0]
@@ -87,3 +96,6 @@ class InMemoryAffairRepository(AbstractAffairRepository):
 
     def set_affairs(self, affairs: affairsList) -> None:
         self._affairs = affairs
+
+    def _get_from_city_codes(self, multipolygon: List) -> affairsList:
+        return self.get_all()

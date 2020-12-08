@@ -7,24 +7,7 @@ SIG_API_URL = os.environ.get("SIG_API_URL")
 SIG_API_KEY = os.environ.get("SIG_API_KEY")
 
 
-
 class SigApiAdapter:
-
-    @staticmethod
-    def textual_search(query: str, limit: int = 5) -> Response:
-
-        url = f"{SIG_API_URL}/recherche-localisation/textuelle"
-
-        querystring = {"q": query, "type": "municipality", "limit": str(limit)}
-
-        headers = {
-            'x-api-key': SIG_API_KEY,
-        }
-
-        response = requests.request("GET", url, headers=headers, params=querystring)
-
-        return response
-
     @staticmethod
     def code_territory_search(postal_code: Union[str, List[str]], insee_code: Union[str, List[str]]) -> Response:
         url = f"{SIG_API_URL}/decoupage-administratif/territoire/codes"
@@ -32,7 +15,7 @@ class SigApiAdapter:
         querystring = {"codesInsee": insee_code, "codesPostaux": postal_code}
 
         headers = {
-            'x-api-key': SIG_API_KEY,
+            'x-api-key': SIG_API_KEY
         }
 
         response = requests.request("GET", url, headers=headers, params=querystring)

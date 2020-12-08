@@ -1,1 +1,21 @@
-<p>add-message works!</p>
+<div class="addMessage">
+  <p>Nouveau message</p>
+  <a href="" class="addMessage--cancel" routerLink="/maincourante">
+    <svg class="icon-close icon"><use xlink:href="#icon-close"></use></svg>
+    Annuler
+  </a>
+  <form action="" class="addMessage--form" [formGroup]="messageGroup" (ngSubmit)="onSubmit()">
+    <div class="enkiform__group">
+      <input type="text" class="enkiform__input" formControlName="title" required>
+      <label for="" class="enkiform__label">Titre</label>
+    </div>
+    <div class="enkiform__group">
+      <textarea formControlName="content" id="" cols="30" rows="10"></textarea>
+    </div>
+    <div class="enki__group">
+      <input type="submit" class="btn" value="Publier le message">
+    </div>
+
+  </form>
+
+</div>

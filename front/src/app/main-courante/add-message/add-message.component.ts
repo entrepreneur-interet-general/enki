@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-message',
@@ -6,8 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-message.component.scss']
 })
 export class AddMessageComponent implements OnInit {
-
+  messageGroup = new FormGroup({
+    title: new FormControl('', Validators.required),
+    content: new FormControl('', Validators.required)
+  })
   constructor() { }
+
+  onSubmit(): void {
+    console.log('submit message')
+  }
 
   ngOnInit(): void {
   }

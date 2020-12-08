@@ -4,9 +4,11 @@ from elasticsearch import Elasticsearch, helpers
 
 from typing import List, Union
 
+from flask import current_app
+
 from adapters.elasticsearch.base_repo import ElasticRepositoryMixin
 from domain.affairs.entities.affair_entity import AffairEntity
-from domain.affairs.ports.affair_repository import AbstractAffairRepository
+from domain.affairs.ports.affair_repository import AbstractAffairRepository, affairsList
 from elasticsearch.exceptions import NotFoundError
 
 from entrypoints.serializers import EnkiJsonEncoder
@@ -19,15 +21,37 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
         AbstractAffairRepository.__init__(self)
         self.create_indice()
 
-
     def _match_uuid(self, uuid: str) -> Union[AffairEntity, None]:
         try:
             return AffairEntity(**self.client.get(index=self.index_name, id=uuid)["_source"])
         except NotFoundError as e:
             return None
 
+    def _get_from_city_codes(self, multipolygon: List) -> affairsList:
+        results = self.client.search(
+            index=self.index_name,
+            body={
+                "query": {
+                    "bool": {
+                        "must": {
+                            "match_all": {}
+                        },
+                        "filter": {
+                            "geo_polygon": {
+                                "location": {
+                                    "points": multipolygon
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        )
+        return [AffairEntity(**hit["_source"]) for hit in results['hits']['hits']]
+
     def _add(self, affair: AffairEntity) -> bool:
-        return self.client.index(index=self.index_name, id=affair.uuid, body=json.dumps(affair.to_dict(), cls=EnkiJsonEncoder, ))
+        return self.client.index(index=self.index_name, id=affair.uuid,
+                                 body=json.dumps(affair.to_dict(), cls=EnkiJsonEncoder, ))
 
     def _bulk_add(self, affairs: List[AffairEntity]):
         actions = [

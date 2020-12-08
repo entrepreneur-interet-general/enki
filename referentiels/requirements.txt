@@ -7,3 +7,4 @@ apispec[yaml]
 apispec-webframeworks
 flask-cors
 sqlalchemy-utils
+requests

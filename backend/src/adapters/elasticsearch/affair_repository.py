@@ -16,8 +16,8 @@ from entrypoints.serializers import EnkiJsonEncoder
 
 class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
 
-    def __init__(self, client: Elasticsearch):
-        ElasticRepositoryMixin.__init__(self, client=client, index_name="affairs")
+    def __init__(self, client: Elasticsearch, index_name="affairs"):
+        ElasticRepositoryMixin.__init__(self, client=client, index_name=index_name)
         AbstractAffairRepository.__init__(self)
         self.create_indice()
 
@@ -27,10 +27,8 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
         except NotFoundError as e:
             return None
 
-    def _get_from_city_codes(self, multipolygon: List) -> affairsList:
-        results = self.client.search(
-            index=self.index_name,
-            body={
+    def _get_from_polygon(self, multipolygon: List) -> affairsList:
+        query = {
                 "query": {
                     "bool": {
                         "must": {
@@ -46,6 +44,10 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
                     }
                 }
             }
+        print(query)
+        results = self.client.search(
+            index=self.index_name,
+            body=query
         )
         return [AffairEntity(**hit["_source"]) for hit in results['hits']['hits']]
 

@@ -2,10 +2,8 @@ import abc
 from typing import List, Union
 import xml.dom.minidom
 
-from flask import current_app
 from werkzeug.exceptions import HTTPException
 
-from cisu.entities.edxl_entity import EdxlEntity
 from domain.affairs.entities.affair_entity import AffairEntity
 from entrypoints.extensions import event_bus, clock
 from domain.core import events
@@ -24,12 +22,13 @@ class NotFoundAffair(HTTPException):
 
 
 class AbstractAffairRepository(abc.ABC):
-    def add(self, affair: AffairEntity) -> None:
+    def add(self, affair: AffairEntity) -> Union[bool, None]:
         if self._match_uuid(affair.uuid):
             raise AlreadyExistingAffairUuid()
-        self._add(affair)
+        result = self._add(affair)
 
         event_bus.publish(events.AffairCreatedEvent(data=affair))
+        return result
 
     def get_one(self) -> AffairEntity:
         return self.get_all()[0]
@@ -52,27 +51,15 @@ class AbstractAffairRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _get_from_city_codes(self, multipolygon: List) -> affairsList:
+    def _get_from_polygon(self, multipolygon: List) -> affairsList:
         raise NotImplementedError
 
-    def get_from_city_codes(self, multipolygon: List) -> affairsList:
-        return self._get_from_city_codes(multipolygon)
+    def get_from_polygon(self, multipolygon: List) -> affairsList:
+        return self._get_from_polygon(multipolygon)
 
     @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> Union[AffairEntity, None]:
         raise NotImplementedError
-
-    @staticmethod
-    def build_affair_from_xml_string(xml_string: str) -> AffairEntity:
-        affair_dom = xml.dom.minidom.parseString(xml_string)
-        edxl_message = EdxlEntity.from_xml(affair_dom)
-        return AffairEntity(**edxl_message.resource.message.choice.to_dict())
-
-    @staticmethod
-    def build_affair_from_xml_file(xml_path: str) -> AffairEntity:
-        affair_dom = xml.dom.minidom.parse(xml_path)
-        edxl_message = EdxlEntity.from_xml(affair_dom)
-        return AffairEntity(**edxl_message.resource.message.choice.to_dict())
 
 
 class InMemoryAffairRepository(AbstractAffairRepository):
@@ -97,5 +84,5 @@ class InMemoryAffairRepository(AbstractAffairRepository):
     def set_affairs(self, affairs: affairsList) -> None:
         self._affairs = affairs
 
-    def _get_from_city_codes(self, multipolygon: List) -> affairsList:
+    def _get_from_polygon(self, multipolygon: List) -> affairsList:
         return self.get_all()

@@ -29,7 +29,7 @@ class AffairService:
                                                repo: AbstractAffairRepository) -> List[Dict[str, Any]]:
         response: Response = SigApiAdapter.code_territory_search(insee_code=insee_code, postal_code=postal_code)
         result: dict = response.json()
-        affairs: List[AffairEntity] = repo.get_from_city_codes(multipolygon=result["geometrie"]["coordinates"][0][0])
+        affairs: List[AffairEntity] = repo.get_from_polygon(multipolygon=result["geometrie"]["coordinates"][0][0])
         serialized_affairs = [affair.to_dict() for affair in affairs]
         return serialized_affairs
 

@@ -21,3 +21,11 @@ build-provision:
 
 run-provision:
 	docker-compose -f docker-compose.provision.yml run --rm affairs-provision
+
+# Tests
+
+test-resource-up:
+	docker-compose -f docker-compose.test.yml up
+
+test-resource-down:
+	docker-compose -f docker-compose.test.yml down

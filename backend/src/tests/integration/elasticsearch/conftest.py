@@ -1,3 +1,4 @@
+import os
 import pathlib
 import time
 
@@ -12,7 +13,8 @@ from domain.affairs.entities.affair_entity import AffairEntity
 
 @pytest.fixture(scope="session")
 def es_client():
-    client = Elasticsearch("localhost:9201")
+    elastic_search_url = os.environ.get("ELASTICSEARCH_URL", "localhost:9201")
+    client = Elasticsearch(elastic_search_url)
     yield client
 
 

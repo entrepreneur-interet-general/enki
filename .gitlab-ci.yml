@@ -111,7 +111,7 @@ back-build-and-test:
     - echo "Unit testing..."
     - pytest src/tests/unit
     - echo "Integration testing..."
-    - pytest tests/integration
+    - pytest src/tests/integration
     - echo "Flask e2e testing..."
     - pytest src/tests/e2e
   only:

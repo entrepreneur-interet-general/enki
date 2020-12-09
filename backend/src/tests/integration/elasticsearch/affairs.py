@@ -17,11 +17,15 @@ AFFAIRS_MAPPING_PATH = "../../../adapters/elasticsearch/templates/affairs.json"
 
 def test_create_index_and_add_affairs(es_client, affairs_index_name):
     response = create_index(es_client, affairs_index_name, AFFAIRS_MAPPING_PATH)
+    assert response["status"] == 400
+    es_client.indices.delete(index=affairs_index_name)
+    response = create_index(es_client, affairs_index_name, AFFAIRS_MAPPING_PATH)
     assert response == {'acknowledged': True, 'shards_acknowledged': True, 'index': 'affairs_test'}
 
 
 def test_adding_affairs(elastic_repository: ElasticAffairRepository,
                         xml_affairs: List[AffairEntity]):
+    elastic_repository.client.indices.delete(index=elastic_repository.index_name)
     for affair in xml_affairs:
         assert elastic_repository.add(affair=affair)
     with pytest.raises(AlreadyExistingAffairUuid):
@@ -30,6 +34,9 @@ def test_adding_affairs(elastic_repository: ElasticAffairRepository,
 
 def test_index_created_and_fetch_some_affairs(elastic_repository: ElasticAffairRepository,
                                               xml_affairs: List[AffairEntity]):
+    elastic_repository.client.indices.delete(index=elastic_repository.index_name)
+    elastic_repository.create_indice()
+
     for affair in xml_affairs:
         elastic_repository.add(affair=affair)
 
@@ -39,12 +46,10 @@ def test_index_created_and_fetch_some_affairs(elastic_repository: ElasticAffairR
 
 def test_location_query(elastic_repository: ElasticAffairRepository,
                         xml_affairs: List[AffairEntity]):
-    for affair in xml_affairs:
-        elastic_repository.add(affair=affair)
-    print(len(xml_affairs))
     p = Path(__file__).resolve().parent / "../../data/polygons/chelles.json"
     with p.open() as f:
-        polygon = json.load(f)
+        polygon_chelles = json.load(f)
 
-    all_affairs: List[AffairEntity] = elastic_repository.get_from_polygon(multipolygon=polygon[0][0])
-    assert len(all_affairs) == len(xml_affairs)
+    all_affairs: List[AffairEntity] = elastic_repository.get_from_polygon(multipolygon=polygon_chelles[0][0])
+    assert len(all_affairs) == len(
+        [affair for affair in xml_affairs if affair.eventLocation["address"][0] == "Chelles"])

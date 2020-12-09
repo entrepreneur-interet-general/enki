@@ -4,8 +4,6 @@ from elasticsearch import Elasticsearch, helpers
 
 from typing import List, Union
 
-from flask import current_app
-
 from adapters.elasticsearch.base_repo import ElasticRepositoryMixin
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, affairsList
@@ -44,7 +42,6 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
                     }
                 }
             }
-        print(query)
         results = self.client.search(
             index=self.index_name,
             body=query
@@ -52,8 +49,10 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
         return [AffairEntity(**hit["_source"]) for hit in results['hits']['hits']]
 
     def _add(self, affair: AffairEntity) -> bool:
+        print(self.index_name)
         return self.client.index(index=self.index_name, id=affair.uuid,
-                                 body=json.dumps(affair.to_dict(), cls=EnkiJsonEncoder, ))
+                                 body=json.dumps(affair.to_dict(), cls=EnkiJsonEncoder, ),
+                                 refresh=True,)
 
     def _bulk_add(self, affairs: List[AffairEntity]):
         actions = [

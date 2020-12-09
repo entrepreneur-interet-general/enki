@@ -15,4 +15,3 @@ def app():
 def client(app):
     with app.test_client() as client:
         yield client
-

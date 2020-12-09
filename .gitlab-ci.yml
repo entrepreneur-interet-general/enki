@@ -7,8 +7,6 @@ services:
 variables:
   ELASTICSEARCH_URL: "http://elasticsearch:9201"
   SERVER_PORT: 9201
-  discovery.typ: "single-node"
-  bootstrap.memory_lock: "true"
   ES_JAVA_OPTS: "-Xms512m -Xmx512m"
   POSTGRES_NAME: "postgres"
   POSTGRES_PORT: 5432

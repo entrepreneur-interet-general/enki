@@ -1,10 +1,10 @@
 services:
   - name: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
     alias: elasticsearch
-    command: [ "bin/elasticsearch", "-Expack.security.enabled=false", "-Ediscovery.type=single-node" ]
-
-  - name: postgres:11.7
-    alias: postgres
+    command: [ "bin/elasticsearch", "-Ediscovery.type=single-node" ]
+#
+#  - name: postgres:latest
+#    alias: postgres
 
 variables:
   ELASTICSEARCH_URL: "http://elasticsearch:9201"
@@ -15,6 +15,7 @@ variables:
   POSTGRES_DB: "enki-tests"
   POSTGRES_USER: "postgres"
   POSTGRES_PASSWORD: "pg-password"
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 stages:
   - install
@@ -25,7 +26,7 @@ cache:
   paths:
     - fronts/node_modules/
     - backend/venv/
-
+    - .cache/pip
 install-fronts-dependencies:
   image: node:latest
   stage: install
@@ -61,7 +62,7 @@ install-backend-dependencies:
       - backend/*
   artifacts:
     paths:
-      - backend/venv/
+      - venv/
 
 install-cisu-package-dependencies:
   image: python:3.8-alpine

@@ -1,5 +1,5 @@
 services:
-  - name: docker.elastic.co/elasticsearch/elasticsearch:7.10
+  - name: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
     alias: elasticsearch
   - name: postgres:11.7
     alias: postgres
@@ -109,8 +109,8 @@ back-build-and-test:
     - source venv/bin/activate
     - echo "Unit testing..."
     - pytest src/tests/unit
-    #- echo "Integration testing..."
-    #- pytest tests/integration
+    - echo "Integration testing..."
+    - pytest tests/integration
     - echo "Flask e2e testing..."
     - pytest src/tests/e2e
   only:

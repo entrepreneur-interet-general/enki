@@ -8,9 +8,9 @@ from adapters.elasticsearch.affair_repository import ElasticAffairRepository
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AlreadyExistingAffairUuid
 import pytest
+from .utils import create_index
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
-from .utils import create_index
 
 AFFAIRS_MAPPING_PATH = "../../../adapters/elasticsearch/templates/affairs.json"
 

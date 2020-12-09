@@ -62,7 +62,7 @@ install-backend-dependencies:
       - backend/*
   artifacts:
     paths:
-      - venv/
+      - backend/venv/
 
 install-cisu-package-dependencies:
   image: python:3.8-alpine

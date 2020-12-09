@@ -14,6 +14,7 @@ from domain.affairs.entities.affair_entity import AffairEntity
 @pytest.fixture(scope="session")
 def es_client():
     elastic_search_url = os.environ.get("ELASTICSEARCH_URL", "localhost:9201")
+    print(elastic_search_url)
     client = Elasticsearch(elastic_search_url)
     yield client
 

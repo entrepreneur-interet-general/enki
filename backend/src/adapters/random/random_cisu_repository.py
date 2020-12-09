@@ -53,3 +53,8 @@ class RandomCisuRepository(AbstractAffairRepository):
 
     def build_one(self):
         return self.factory.build()
+
+    def _get_from_polygon(self, multipolygon: List) -> affairsList:
+        return self.get_many(n=10)
+
+

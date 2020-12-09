@@ -37,15 +37,14 @@ class AffairListResource(WithAffairRepoResource):
               type: string
             required: false
             description: City code
-                parameters:
           - in: query
             name: postal_code
             schema:
               type: string
             required: false
             description: Postal code
-      tags:
-        - affairs
+        tags:
+          - affairs
     """
 
     def get(self):

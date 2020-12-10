@@ -7,6 +7,8 @@ FROM python:3.8
 RUN mkdir /code
 WORKDIR /code
 
+# RUN apk add --no-cache gcc libc-dev geos-dev
+
 COPY requirements.txt ./
 RUN  pip install --upgrade pip && pip install -r requirements.txt
 

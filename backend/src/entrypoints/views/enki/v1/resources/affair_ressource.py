@@ -1,5 +1,6 @@
 from flask import current_app, request
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
+from typing import Union, List
 
 from domain.affairs.services.affair_service import AffairService
 
@@ -25,13 +26,41 @@ class AffairResource(WithAffairRepoResource):
 
 class AffairListResource(WithAffairRepoResource):
     """All affairs list
+
     ---
     get:
-      tags:
-        - affairs
+        description: Getting all current french mayors
+        parameters:
+          - in: query
+            name: insee_code
+            schema:
+              type: string
+            required: false
+            description: City code
+          - in: query
+            name: postal_code
+            schema:
+              type: string
+            required: false
+            description: Postal code
+        tags:
+          - affairs
     """
 
     def get(self):
-        return {
-                   "affairs": AffairService.list_affairs(current_app.context.affair),
-               }, 200
+        parser = reqparse.RequestParser()
+        parser.add_argument('insee_code', type=str, help='Insee code', action='append')
+        parser.add_argument('postal_code', type=str, help='Postal code', action='append')
+        args = parser.parse_args()
+
+        postal_codes: Union[str, List[str], None] = args.get("postal_code")
+        insee_code: Union[str, List[str], None] = args.get("insee_code")
+
+        if postal_codes or insee_code:
+            affairs = AffairService.list_affairs_by_insee_and_postal_codes(insee_code=insee_code,
+                                                                           postal_code=postal_codes,
+                                                                           repo=current_app.context.affair)
+        else:
+            affairs = AffairService.list_affairs(repo=current_app.context.affair)
+
+        return {"affairs": affairs}, 200

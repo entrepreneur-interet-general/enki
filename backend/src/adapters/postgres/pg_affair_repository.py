@@ -3,7 +3,7 @@ from typing import List, Union
 from sqlalchemy.orm import Session
 
 from domain.affairs.entities.affair_entity import AffairEntity
-from domain.affairs.ports.affair_repository import AbstractAffairRepository
+from domain.affairs.ports.affair_repository import AbstractAffairRepository, affairsList
 from domain.tasks.ports.tag_repository import AbstractTagRepository
 from domain.tasks.ports.task_repository import AbstractTaskRepository, AlreadyExistingTaskUuid, NotFoundTask
 from domain.tasks.entities.task_entity import TaskEntity
@@ -32,3 +32,10 @@ class PgAffairRepository(PgRepositoryMixin, AbstractAffairRepository):
 
     def get_all(self) -> List[AffairEntity]:
         return self.session.query(AffairEntity).all()
+
+    def _get_from_polygon(self, multipolygon: List) -> affairsList:
+        return self.get_all()  # TODO: define postgres polygon query
+
+
+
+

@@ -1,3 +1,21 @@
+services:
+  - name: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    alias: elasticsearch
+    command: [ "bin/elasticsearch", "-Ediscovery.type=single-node" ]
+#
+#  - name: postgres:latest
+#    alias: postgres
+
+variables:
+  ELASTICSEARCH_URL: "http://elasticsearch:9200"
+  ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+  POSTGRES_NAME: "postgres"
+  POSTGRES_PORT: 5432
+  POSTGRES_DB: "enki-tests"
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "pg-password"
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
 stages:
   - install
   - build-test
@@ -7,7 +25,7 @@ cache:
   paths:
     - fronts/node_modules/
     - backend/venv/
-
+    - .cache/pip
 install-fronts-dependencies:
   image: node:latest
   stage: install
@@ -25,7 +43,7 @@ install-fronts-dependencies:
       - fronts/*
 
 install-backend-dependencies:
-  image: python:3.8-alpine
+  image: python:3.8
   stage: install
   script:
     - cd backend
@@ -84,15 +102,15 @@ front-enki-build-and-test:
       - fronts/*
 
 back-build-and-test:
-  image: python:3.8-alpine
+  image: python:3.8
   stage: build-test
   script:
     - cd backend
     - source venv/bin/activate
     - echo "Unit testing..."
     - pytest src/tests/unit
-    #- echo "Integration testing..."
-    #- pytest tests/integration
+    - echo "Integration testing..."
+    - pytest src/tests/integration
     - echo "Flask e2e testing..."
     - pytest src/tests/e2e
   only:

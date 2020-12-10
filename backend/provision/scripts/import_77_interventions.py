@@ -16,6 +16,8 @@ from cisu.entities.commons.common_alerts import MainVictim
 from cisu.entities.commons.severity import Severity
 from cisu.constants.constants import WhatsHappenConstants, HealthMotiveConstants
 
+from domain.affairs.entities.affair_entity import AffairEntity
+
 df_final_mapped = pd.read_csv("data/2019_77_interventions.csv", parse_dates=["DAT_DEB"])
 records = df_final_mapped.to_dict(orient="records")
 
@@ -86,17 +88,8 @@ response = client.indices.create(
     ignore=400  # ignore 400 already exists code
 )
 
-affairs = [edxl.resource.message.choice.to_dict()
+affairs = [AffairEntity(**edxl.resource.message.choice.to_dict())
            for edxl in [build_edxl_from_record(record) for record in tqdm(records)] if edxl]
-
-print(f"{len(affairs)} affairs were created")
-for affair in tqdm(affairs):
-    lat = affair["eventLocation"]["coord"]["lat"]
-    lon = affair["eventLocation"]["coord"]["lon"]
-    affair["location"] = {
-        "lat": float(lat),
-        "lon": float(lon)
-    }
 
 
 def chunks(lst, n):

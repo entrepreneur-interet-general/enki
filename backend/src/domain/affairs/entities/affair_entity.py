@@ -9,14 +9,21 @@ class AffairEntity(CreateEvent):
     """
 
     """
+    location: dict = None
+
+    def __post_init__(self):
+        if self.location is None:
+            if isinstance(self.eventLocation, dict):
+                self.location = {
+                    "lat": self.eventLocation["coord"]["lat"],
+                    "lon": self.eventLocation["coord"]["lon"]
+                }
+            else:
+                self.location = {
+                    "lat": self.eventLocation.coord.lat,
+                    "lon": self.eventLocation.coord.lon
+                }
 
     @property
     def uuid(self):
         return self.eventId
-
-    @property
-    def location(self):
-        return {
-            "lat": self.eventLocation.coord.lat,
-            "lon": self.eventLocation.coord.lon
-        }

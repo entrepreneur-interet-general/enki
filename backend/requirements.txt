@@ -11,7 +11,5 @@ sqlalchemy-utils
 twilio
 elasticsearch
 cisu-python==0.1
+shapely
 #pandas
-
-#Cisu Package
-faker

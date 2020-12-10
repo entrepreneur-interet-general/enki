@@ -8,6 +8,8 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard/user-das
 import { FirstStepComponent } from './registration/first-step/first-step.component';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MainCouranteComponent } from './main-courante/main-courante/main-courante.component';
+import { AddMessageComponent } from './main-courante/add-message/add-message.component';
 
 
 const routes: Routes = [
@@ -25,6 +27,18 @@ const routes: Routes = [
     path: 'dashboard',
     component: UserDashboardComponent,
     canActivate: [ AuthGuard ],
+    data: { roles: ['watchEvents'] }
+  },
+  {
+    path: 'maincourante',
+    component: MainCouranteComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['watchEvents'] }
+  },
+  {
+    path: 'addmessage',
+    component: AddMessageComponent,
+    canActivate: [AuthGuard],
     data: { roles: ['watchEvents'] }
   },
   {

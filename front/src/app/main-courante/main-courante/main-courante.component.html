@@ -1,0 +1,18 @@
+<div class="mc">
+  <p *ngIf="!(messages.length > 0) ">La main courante est vide</p>
+  
+  <ul>
+    <li *ngFor="let message of messages">
+      <div class="mc--title">
+        Titre : {{ message.title }}
+      </div>
+      <div class="mc--content">
+        Contenu : {{ message.content }}
+      </div>
+    </li>
+  </ul>
+  
+  <div class="mc--addMessage" routerLink="/addmessage">
+    <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
+  </div>
+</div>

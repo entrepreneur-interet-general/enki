@@ -11,10 +11,12 @@
     </div>
   </div>
 </header>
-<div class="right-menu" [class.-active]="menuActive">
-  <nav>
-    <li class="right-menu--item"><a routerLink="/" (click)="openCloseMenu()">Dashboard</a></li>
-    <li class="right-menu--item"><a routerLink="/liste-interventions" (click)="openCloseMenu()" *ngIf="canSeeEvents()">Voir la liste des interventions</a></li>
-  </nav>
+<div class="menu-container">
+  <div class="right-menu" [class.-active]="!menuActive">
+    <nav>
+      <li class="right-menu--item"><a routerLink="/" (click)="openCloseMenu()">Dashboard</a></li>
+      <li class="right-menu--item"><a routerLink="/liste-interventions" (click)="openCloseMenu()" *ngIf="canSeeEvents()">Voir la liste des interventions</a></li>
+    </nav>
+  </div>
 </div>
 <div class="overlay" [class.-active]="menuActive"></div>

@@ -41,7 +41,6 @@ export class FirstStepComponent {
   }
 
   onSubmit(): void {
-    console.warn(this.userGroup.value)
     let bodyForm = {
       attributes: {
         "communes": this.userGroup.value.codeCommune,

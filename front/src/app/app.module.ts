@@ -14,15 +14,14 @@ import { HeaderComponent } from './ui/header/header.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
-// import { DashboardComponent } from './dashboard/dashboard.component';
 import { FirstStepComponent } from './registration/first-step/first-step.component';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 
-import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
+import { MainCouranteModule } from './main-courante/main-courante.module';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -45,7 +44,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DetailInterventionComponent,
     SvgDefinitionsComponent,
     HeaderComponent,
-    // DashboardComponent,
     FirstStepComponent,
     SecondStepComponent,
     PageNotFoundComponent
@@ -53,7 +51,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule,
     ReactiveFormsModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
@@ -63,7 +60,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ) : [],
     KeycloakAngularModule,
     AppRoutingModule,
-    UserDashboardModule
+    UserDashboardModule,
+    MainCouranteModule
   ],
   providers: [{
     provide: APP_INITIALIZER,

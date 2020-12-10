@@ -1,0 +1,19 @@
+@import "../../../../../design-system/styles/variables";
+
+.addMessage {
+  padding: 16px;
+  position: relative;
+  &--cancel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: $darkestGrey;
+    top: 0;
+    right: 16px;
+    .icon {
+      font-size: 12px;
+      margin-right: 8px;
+    }
+  }
+}

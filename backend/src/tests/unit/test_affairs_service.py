@@ -4,7 +4,6 @@ import pytest
 import pathlib
 
 import requests_mock
-import responses
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, AlreadyExistingAffairUuid
 from domain.affairs.services.affair_service import AffairService
 

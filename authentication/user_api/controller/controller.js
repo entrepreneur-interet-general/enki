@@ -50,7 +50,7 @@ router.put('/user', keycloak.protect('realm:user'), function(req, res) {
     headers: headers,
     body: JSON.stringify({
       attributes: {
-        "communes": req.body.attributes.communes,
+        "code_insee": req.body.attributes.communes,
         "fonction": req.body.attributes.fonction
       },
       firstName: req.body.firstName,

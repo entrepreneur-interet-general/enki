@@ -36,6 +36,16 @@ or with make
 make upd && sleep 5 && make provision 
 ```
 
+````
+cd user_api
+````
+Run the user api
+```
+npm start
+````
+It is now accessible on http://localhost:4201/api
+
+
 Get kong client secret from Keycloak admin in Client section and change it in .env file
 ### Kong Api Gateway
 
@@ -90,6 +100,17 @@ It's now possible to post new "affaires" in postman with this endpoint:
 http://localhost:5000/api/v1/echanges/messages
 ```
 
+You can access affairs from:
+```
+http://localhost:5000/api/enki/v1/affairs?code_insee=77108
+```
+You also have to start SIG in nexsis/sig/api
+```
+make install
+npm run seed
+make start
+```
+
 ### FrontEnd
 ```
 cd front
@@ -104,7 +125,7 @@ and run angular
 ng serve 
 ```
 
-Go to http://localhost:4200
+Go to http://localhost:1337
 You can login with:
 Login: maire@chelles.fr
 PWD: defaultpassword

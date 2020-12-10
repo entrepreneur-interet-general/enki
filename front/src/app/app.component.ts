@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { environment } from '../environments/environment';
+import { UserService } from './user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,9 @@ export class AppComponent {
   environment;
   
 
-  constructor(private keycloakService: KeycloakService
+  constructor(
+    private keycloakService: KeycloakService,
+    public userService: UserService
     ) {
       this.environment = environment
       this.keycloakService.getToken().then((res) => {

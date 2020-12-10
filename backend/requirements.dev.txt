@@ -3,4 +3,4 @@ pytest
 pytest-watch
 pytest-icdiff
 faker
-equests-mock
+requests-mock

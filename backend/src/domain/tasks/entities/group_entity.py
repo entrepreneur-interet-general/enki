@@ -14,6 +14,7 @@ class GroupType(Enum):
     COGIC = 5
     CIC = 6
 
+
 @dataclass_json
 @dataclass
 class GroupEntity(Entity, TimeStamped):

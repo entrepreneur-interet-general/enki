@@ -5,12 +5,16 @@ from requests import Response
 from adapters.http.sig import SigApiAdapter
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository
+from domain.core.events import AffairCreatedEvent
+from entrypoints.extensions import event_bus
+
 
 class AffairService:
     @staticmethod
     def add_affair(xml_string: str, repo: AbstractAffairRepository):
         affair: AffairEntity = repo.build_affair_from_xml_string(xml_string=xml_string)
         repo.add(affair)
+        event_bus.publish(AffairCreatedEvent(data=affair))
 
     @staticmethod
     def get_by_uuid(uuid: str, repo: AbstractAffairRepository):

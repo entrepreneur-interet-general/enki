@@ -6,6 +6,7 @@ from sqlalchemy.engine.base import Engine
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy_utils import ChoiceType
 
+from domain.evenements.entity import EvenementType, EvenementEntity
 from domain.tasks.entities.event_entity import Severity
 from domain.tasks.entities.task_entity import TaskEntity, TaskType
 from domain.tasks.entities.tag_entity import TagEntity
@@ -57,26 +58,42 @@ tagTable = Table(
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False),
     Column('description', String(255)),
-    Column('creator_id', String(255)), # ForeignKey("users.uuid")),
+    Column('creator_id', String(255)),  # ForeignKey("users.uuid")),
     Column('color', String(8)),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
 
+evenementsTable = Table(
+    'evenements', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('title', String(255), nullable=False),
+    Column('description', String(255)),
+    Column('type', Enum(EvenementType)),
+    Column('creator_id', String(255)),  # ForeignKey("users.uuid")),
+    Column('started_at', TIMESTAMP(), nullable=False, default=datetime.now),
+    Column('ended_at', TIMESTAMP(), nullable=True, default=None),
+    Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
+)
 
 all_tables = [
+    userTable,
     tagTaskTable,
     taskHierarchyTaskTable,
     taskTable,
-    tagTable
+    tagTable,
+    evenementsTable
 ]
 
 
 def start_mappers(engine: Engine):
     metadata.create_all(engine)
     mapper(TagEntity, tagTable)
-    mapper(TaskEntity, taskTable,
-           properties={
-               'tags': relationship(TagEntity, backref='tasks', secondary=tagTaskTable)
-           }
+    mapper(EvenementEntity, evenementsTable)
+    mapper(
+        TaskEntity, taskTable,
+        properties={
+            'tags': relationship(TagEntity, backref='tasks', secondary=tagTaskTable)
+        }
     )

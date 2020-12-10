@@ -43,7 +43,7 @@ install-fronts-dependencies:
       - fronts/*
 
 install-backend-dependencies:
-  image: python:3.8-alpine
+  image: python:3.8
   stage: install
   script:
     - cd backend
@@ -102,7 +102,7 @@ front-enki-build-and-test:
       - fronts/*
 
 back-build-and-test:
-  image: python:3.8-alpine
+  image: python:3.8
   stage: build-test
   script:
     - cd backend

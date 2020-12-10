@@ -6,7 +6,6 @@ from adapters.http.sig import SigApiAdapter
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository
 
-
 class AffairService:
     @staticmethod
     def add_affair(xml_string: str, repo: AbstractAffairRepository):
@@ -24,8 +23,8 @@ class AffairService:
         return serialized_affairs
 
     @staticmethod
-    def list_affairs_by_insee_and_postal_codes(insee_code: Union[str, List[str]],
-                                               postal_code: Union[str, List[str]],
+    def list_affairs_by_insee_and_postal_codes(insee_code: Union[str, List[str], None],
+                                               postal_code: Union[str, List[str], None],
                                                repo: AbstractAffairRepository) -> List[Dict[str, Any]]:
         response: Response = SigApiAdapter.code_territory_search(insee_code=insee_code, postal_code=postal_code)
         result: dict = response.json()

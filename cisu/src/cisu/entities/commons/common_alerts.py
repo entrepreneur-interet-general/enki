@@ -244,7 +244,6 @@ class Count(CisuEnum):
 
     @classmethod
     def from_string(cls, value_string):
-        print("from_string")
         if value_string == "1":
             return cls.ONE
         if value_string == "0":

@@ -8,6 +8,8 @@ from werkzeug.exceptions import HTTPException
 from domain.affairs.entities.affair_entity import AffairEntity
 from entrypoints.extensions import event_bus, clock
 from domain.core import events
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
 
 affairsList = List[AffairEntity]
 
@@ -98,4 +100,17 @@ class InMemoryAffairRepository(AbstractAffairRepository):
         self._affairs = affairs
 
     def _get_from_polygon(self, multipolygon: List) -> affairsList:
-        return self.get_all()
+        print(len(self.get_all()))
+        return [
+            affair for affair in self.get_all() if self._contain_point(
+                lat=affair.location["lat"],
+                lon=affair.location["lon"],
+                multipolygon=multipolygon
+            )
+        ]
+
+    @staticmethod
+    def _contain_point(lat: float, lon: float, multipolygon: List) -> bool:
+        point = Point(lon,lat)
+        polygon = Polygon(multipolygon)
+        return polygon.contains(point)

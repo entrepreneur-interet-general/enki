@@ -3,8 +3,8 @@ from requests import Response
 from typing import Union, List
 import os
 
-SIG_API_URL = os.environ.get("SIG_API_URL")
-SIG_API_KEY = os.environ.get("SIG_API_KEY")
+SIG_API_URL = os.environ.get("SIG_API_URL", "http://localhost:8083")
+SIG_API_KEY = os.environ.get("SIG_API_KEY", "http://localhost:8083")
 
 
 class SigApiAdapter:

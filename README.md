@@ -130,3 +130,21 @@ You can login with:
 Login: maire@chelles.fr
 PWD: defaultpassword
 
+
+### Design system
+````
+cd design-system
+````
+
+Develop
+```
+make up
+````
+
+Deploy to heroku
+Merge all design-system modifications to `main` branch
+and run
+```
+make deploy
+```
+(you have to be logged in to heroku and have access)

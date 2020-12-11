@@ -11,7 +11,6 @@ web_modules/
 *.so
 *.sqlite
 pgdata/
-dist/
 # Distribution / packaging
 .Python
 env/

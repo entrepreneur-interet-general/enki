@@ -24,11 +24,10 @@ export class UserService {
 
   loadUserProfile(): void {
     this.keycloakService.loadUserProfile().then((response: any) => {
-      
       this.user = {
         attributes: {
-          code_insee: response.attributes.code_insee[0] ? response.attributes.code_insee[0] : '',
-          fonction: response.attributes.fonction[0] ? response.attributes.fonction[0] : ''
+          code_insee: response.attributes.code_insee ? response.attributes.code_insee[0] : '',
+          fonction: response.attributes.fonction ? response.attributes.fonction[0] : ''
         },
         fullname: response.lastname ? response.lastname : ''
       }

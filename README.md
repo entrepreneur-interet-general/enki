@@ -147,4 +147,4 @@ and run
 ```
 make deploy
 ```
-(you have to be logged in to heroku and have access)
+(you have to be logged in to heroku to have access, and ask admin a collab access)

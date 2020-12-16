@@ -46,17 +46,9 @@ class EvenementListResource(WithEvenementRepoResource):
 
     def post(self):
         body = request.get_json()
-        event = EvenementSchema().load(body)
-        EvenementService.add_evenement(uuid=body.get("uuid"),
-                                       title=body["title"],
-                                       description=body.get("description"),
-                                       started_at=body.get("started_at", datetime.now()),
-                                       ended_at=body.get("started_at", None),
-                                       creator_id=None,
-                                       type=EvenementType.NATURAL,
+        EvenementService.add_evenement(data=body,
                                        repo=current_app.context.evenement)
-        return {"message": "Success",
-                "created_event":EvenementSchema().dump(event)}, 201
+        return {"message": "Success"}, 201
 
 
 class EvenementResource(WithEvenementRepoResource):

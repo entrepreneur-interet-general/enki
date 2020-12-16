@@ -18,7 +18,7 @@ class TaskType(str, Enum):
 @dataclass_json
 @dataclass
 class TaskEntity(MessageEventEntity):
-    task_type: TaskType = field(default_factory=lambda: TaskType.UNKNONW)
+    task_type: TaskType = field(default_factory=lambda: TaskType.UNKNOWN)
     event_type: str = field(default="task")
     executor_id: Union[str, None] = field(default_factory=lambda: None)
     executor_type: Union[str, None] = field(default_factory=lambda: None)

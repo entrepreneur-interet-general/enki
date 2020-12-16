@@ -1,8 +1,8 @@
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields,  post_load
 from marshmallow_enum import EnumField
 from datetime import datetime
 
-from domain.evenements.entity import EvenementType
+from domain.evenements.entity import EvenementType, EvenementEntity
 
 
 class EvenementSchema(Schema):
@@ -15,3 +15,7 @@ class EvenementSchema(Schema):
     ended_at = fields.DateTime(required=False)
     created_at = fields.DateTime(default=datetime.now())
     updated_at = fields.DateTime(default=datetime.now())
+
+    @post_load
+    def make_event(self, data: dict, **kwargs):
+        return EvenementEntity.from_dict(data)

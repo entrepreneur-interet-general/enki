@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Integer, TIMESTAMP, Enum
 from sqlalchemy.engine.base import Engine
-from sqlalchemy.orm import mapper, relationship
+from sqlalchemy.orm import mapper, relationship, clear_mappers
 from sqlalchemy_utils import ChoiceType
 
 from domain.evenements.entity import EvenementType, EvenementEntity
@@ -88,6 +88,7 @@ all_tables = [
 
 
 def start_mappers(engine: Engine):
+    clear_mappers()
     metadata.create_all(engine)
     mapper(TagEntity, tagTable)
     mapper(EvenementEntity, evenementsTable)

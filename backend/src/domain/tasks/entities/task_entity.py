@@ -8,11 +8,11 @@ from typing import List, Union
 from domain.tasks.entities.event_entity import MessageEventEntity
 
 
-class TaskType(Enum):
-    ASK = 1
-    DO = 2
-    NEED_INFO = 3
-    UNKNONW = 4
+class TaskType(str, Enum):
+    ASK = "ask"
+    DO = "do"
+    NEED_INFO = "need_info"
+    UNKNOWN = "unknown"
 
 
 @dataclass_json
@@ -24,7 +24,6 @@ class TaskEntity(MessageEventEntity):
     executor_type: Union[str, None] = field(default_factory=lambda: None)
     done_at: Union[datetime, None] = field(default_factory=lambda: None)
     tags: List = field(default_factory=lambda: [])
-    # user_ids: str = field(default_factory=list)
 
     def __eq__(self, other):
         return self.uuid == other.uuid

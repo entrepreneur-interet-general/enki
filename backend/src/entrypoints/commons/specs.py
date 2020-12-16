@@ -1,3 +1,4 @@
+from apispec.ext.marshmallow import MarshmallowPlugin
 from flask import jsonify, render_template, Blueprint
 from apispec import APISpec
 from .plugin import FlaskRestfulPlugin
@@ -25,7 +26,7 @@ class APISpecExt:
             title=app.config["APISPEC_TITLE"],
             version=app.config["APISPEC_VERSION"],
             openapi_version=app.config["OPENAPI_VERSION"],
-            plugins=[FlaskRestfulPlugin()],
+            plugins=[FlaskRestfulPlugin(), MarshmallowPlugin()],
             **kwargs
         )
 

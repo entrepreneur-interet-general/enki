@@ -15,6 +15,7 @@ export class UserDashboardComponent implements OnInit {
   constructor(
     private interventionsService: InterventionsService,
   ) {
+    debugger;
     this.interventionsService.httpGetAllInterventions().subscribe((interventions) => {
       this.interventions = interventions;
     });

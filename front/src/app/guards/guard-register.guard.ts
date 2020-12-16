@@ -16,7 +16,7 @@ export class GuardRegisterGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (this.keycloakService.isUserInRole('watchEvents')) return this.router.parseUrl('/dashboard')
+      // if (this.keycloakService.isUserInRole('watchEvents')) return this.router.parseUrl('/dashboard')
       return true;
 
   }

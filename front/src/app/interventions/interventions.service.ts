@@ -63,10 +63,11 @@ export class InterventionsService {
 
   httpGetAllInterventions(): Observable<Intervention[]> {
     // if there's already interventions in memory, send these
+    // debugger;
     if (this.interventions !== undefined && this.interventions.length > 0) {
       return of(this.interventions)
     }
-    if (!this.userService.user.attributes) {
+    if (!this.userService.userIsComplete()) {
       return of([]);
     }
     return this.http.get<any>(`${this.interventionsUrl}?code_insee=${this.userService.user.attributes.code_insee}`, this.httpOptions)

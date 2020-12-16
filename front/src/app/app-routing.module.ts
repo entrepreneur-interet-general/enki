@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './app-auth-guard.service';
 import { GuardRegisterGuard } from './guards/guard-register.guard';
+import { GuardTestGuard } from './guards/guard-test.guard';
 import { ListeInterventionsComponent } from './interventions/liste/liste-interventions.component';
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard/user-dashboard.component';
@@ -31,9 +32,7 @@ const routes: Routes = [
   },
   {
     path: 'maincourante',
-    component: MainCouranteComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['watchEvents'] }
+    component: MainCouranteComponent
   },
   {
     path: 'addmessage',
@@ -43,9 +42,8 @@ const routes: Routes = [
   },
   {
     path: 'liste-interventions',
-    canActivate: [ AuthGuard ],
-    component: ListeInterventionsComponent,
-    data: { roles: ['watchEvents'] }
+    canActivate: [ GuardTestGuard ],
+    component: ListeInterventionsComponent
   },
   {
     path: 'detail-intervention/:uuid',

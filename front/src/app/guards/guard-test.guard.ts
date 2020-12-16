@@ -24,16 +24,19 @@ export class GuardTestGuard implements CanActivate {
         }
         this.keycloakService.loadUserProfile().then((response: any) => {
           console.log(response)
-          if (
-            Object.keys(response.attributes).length > 0 &&
-            response.attributes.code_insee !== "" &&
-            response.attributes.fonction !== ""
-            ) {
+          this.userService.user = {
+            attributes: {
+              code_insee: response.attributes.code_insee ? response.attributes.code_insee[0] : '',
+              fonction: response.attributes.fonction ? response.attributes.fonction[0] : ''
+            }
+          }
+          if (this.userService.userIsComplete()) {
               observer.next(true)
           } else {
             this.router.navigate(['register/step1'])
             observer.next(false)
           }
+          observer.complete()
         })
       })
     // return this.userService.userIsComplete() ? true : this.router.navigate(['register/step1']);

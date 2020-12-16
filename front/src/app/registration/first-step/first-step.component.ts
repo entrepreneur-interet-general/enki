@@ -51,11 +51,11 @@ export class FirstStepComponent {
       user_fonction: this.userGroup.value.fonction
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
-      this.keycloakService.updateToken(3600).then(() => {
-        if(this.keycloakService.getUserRoles().includes('watchEvents')) {
-          this.router.navigate(['dashboard'])
-        }
-      })
+      this.router.navigate(['dashboard'])
+      // this.keycloakService.updateToken(3600).then(() => {
+        // if(this.keycloakService.getUserRoles().includes('watchEvents')) {
+        // }
+      // })
     })
   }
 

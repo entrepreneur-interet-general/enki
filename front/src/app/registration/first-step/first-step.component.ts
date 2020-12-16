@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { KeycloakService } from 'keycloak-angular';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-first-step',
@@ -25,6 +26,7 @@ export class FirstStepComponent {
   constructor(
     private http: HttpClient,
     private keycloakService: KeycloakService,
+    private userService: UserService,
     private router: Router,
   ) {
     this.updateUserUrl = `http://localhost:4201/api/user`;
@@ -51,16 +53,21 @@ export class FirstStepComponent {
       user_fonction: this.userGroup.value.fonction
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
-      this.keycloakService.updateToken(3600).then(() => {
-        if(this.keycloakService.getUserRoles().includes('watchEvents')) {
-          this.router.navigate(['dashboard'])
-        }
+      this.getUserInfo().subscribe((response) => {
+        console.log(response, "response")
+        this.userService.updateUser(response)
+        this.router.navigate(['dashboard'])
       })
+      
     })
   }
 
   httpSubmitForm(bodyForm): Observable<object> {
     return this.http.put<any>(this.updateUserUrl, bodyForm, this.httpOptions)
+  }
+
+  getUserInfo(): Observable<object> {
+    return this.http.get<any>(this.updateUserUrl)
   }
 
 }

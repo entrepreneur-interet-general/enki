@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -69,7 +69,7 @@ export class InterventionsService {
     if (!this.userService.user.attributes) {
       return of([]);
     }
-    return this.http.get<any>(`${this.interventionsUrl}?code_insee=${this.userService.user.attributes.code_insee}`, this.httpOptions)
+    return this.http.get<any>(`${this.interventionsUrl}?insee_code=${this.userService.user.attributes.code_insee}`, this.httpOptions)
       .pipe(
         map(interventions => {
           interventions = environment.HTTPClientInMemory ? interventions : interventions.affairs

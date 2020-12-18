@@ -7,7 +7,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 
 from adapters.postgres import PgTagRepository
-from adapters.postgres.orm import start_mappers
 from adapters.postgres.pg_affair_repository import PgAffairRepository
 from adapters.postgres.pg_evenement_repository import PgEvenementRepository
 from adapters.postgres.pg_task_repository import PgTaskRepository
@@ -28,8 +27,6 @@ def build_engine(sql_engine_uri: str) -> Engine:
 
 
 def get_pg_repos(engine: Engine) -> Tuple[AbstractTagRepository, AbstractTaskRepository, AbstractAffairRepository, AbstractEvenementRepository]:
-    start_mappers(engine)
-
     session_factory = sessionmaker(bind=engine)
     session: Session = session_factory()
 

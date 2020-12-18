@@ -15,9 +15,6 @@ class EvenementValidationError(HTTPException):
 class EvenementSchema(Schema):
     __model__ = EvenementEntity
 
-    class Meta:
-        strict = True
-
     uuid = fields.Str(required=True)
     title = fields.Str(required=True)
     description = fields.Str(required=True)
@@ -25,8 +22,8 @@ class EvenementSchema(Schema):
     creator_id = fields.Str(required=False)
     started_at = fields.DateTime(required=True)
     ended_at = fields.DateTime(required=False)
-    created_at = fields.DateTime(default=datetime.now())
-    updated_at = fields.DateTime(default=datetime.now())
+    created_at = fields.DateTime(default=datetime.utcnow())
+    updated_at = fields.DateTime(default=datetime.utcnow())
 
     @post_load
     def make_event(self, data: dict, **kwargs):
@@ -34,3 +31,5 @@ class EvenementSchema(Schema):
 
     def handle_error(self, exc, data, **kwargs):
         raise EvenementValidationError(description=exc.normalized_messages())
+
+

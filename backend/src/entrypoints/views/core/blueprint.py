@@ -19,7 +19,7 @@ hello_page_blueprint = Blueprint('api', __name__, url_prefix="/")
 
 
 @hello_page_blueprint.route('/', methods=["GET"])
-def hello_sapeurs():
-    response = make_response(jsonify({'message': 'Hello, Sapeurs!'}))
+def hello_enki():
+    response = make_response(jsonify({'message': 'Hello, Enki!'}))
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response

@@ -12,7 +12,6 @@ BASE_PATH_TASK: str = "/api/enki/v1/tasks"
 
 
 def test_add_task_then_recovers_it_and_recovers_all(app, client: FlaskClient):
-    app.context.reset()
     task1 = task_factory()
     add_task_response = post_add_task(client, task1)
 
@@ -36,7 +35,6 @@ def test_add_task_then_recovers_it_and_recovers_all(app, client: FlaskClient):
 
 
 def test_already_exists_task(app, client: FlaskClient):
-    app.context.reset()
     task1 = task_factory()
 
     post_add_task(client, task1)
@@ -47,7 +45,6 @@ def test_already_exists_task(app, client: FlaskClient):
 
 
 def test_not_found_exists_task(app, client: FlaskClient):
-    app.context.reset()
     task1 = task_factory()
 
     post_add_task(client, task1)

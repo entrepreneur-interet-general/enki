@@ -14,7 +14,6 @@ class AffairService:
     def add_affair(xml_string: str, repo: AbstractAffairRepository):
         affair: AffairEntity = repo.build_affair_from_xml_string(xml_string=xml_string)
         repo.add(affair)
-        event_bus.publish(AffairCreatedEvent(data=affair))
 
     @staticmethod
     def get_by_uuid(uuid: str, repo: AbstractAffairRepository):

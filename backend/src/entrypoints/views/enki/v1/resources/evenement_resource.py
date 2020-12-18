@@ -4,8 +4,9 @@ from flask import request, current_app
 from flask_restful import Resource
 from typing import Dict, Any
 
-from domain.evenements.entity import EvenementType
-from domain.evenements.schema import EvenementSchema
+from domain.evenements import command
+from domain.evenements.command import CreateEvenement
+from entrypoints.extensions import event_bus
 from domain.evenements.service import EvenementService
 
 
@@ -41,13 +42,14 @@ class EvenementListResource(WithEvenementRepoResource):
 
     def get(self):
         return {
-                   "evenements": EvenementService.list_evenements(current_app.context.evenement)
+                   "evenements": EvenementService.list_evenements(current_app.context)
                }, 200
 
     def post(self):
         body = request.get_json()
-        EvenementService.add_evenement(data=body,
-                                       repo=current_app.context.evenement)
+        command = CreateEvenement(data=body)
+        result = event_bus.publish(command, current_app.context)
+
         return {"message": "Success"}, 201
 
 
@@ -73,5 +75,7 @@ class EvenementResource(WithEvenementRepoResource):
     """
 
     def get(self, uuid: str):
-        return {"evenement": EvenementService.get_by_uuid(uuid, current_app.context.evenement),
-                "message": "success"}, 200
+        return {
+                   "evenement": EvenementService.get_by_uuid(uuid, current_app.context),
+                   "message": "success"
+               }, 200

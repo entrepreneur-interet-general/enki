@@ -15,3 +15,23 @@ class Topic:
 @dataclass
 class AffairCreatedTopic(Topic):
     name: str = "AffairCreated"
+
+
+@dataclass
+class CreateEvenementTopic(Topic):
+    name: str = "CreateEvenement"
+
+
+@dataclass
+class CreateTaskTopic(Topic):
+    name: str = "CreateTask"
+
+
+@dataclass
+class CreateTagTopic(Topic):
+    name: str = "CreateTag"
+
+
+@dataclass
+class AddTagToTaskTopic(Topic):
+    name: str = "AddTagToTask"

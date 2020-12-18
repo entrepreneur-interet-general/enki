@@ -87,9 +87,7 @@ all_tables = [
 ]
 
 
-def start_mappers(engine: Engine):
-    clear_mappers()
-    metadata.create_all(engine)
+def start_mappers():
     mapper(TagEntity, tagTable)
     mapper(EvenementEntity, evenementsTable)
     mapper(

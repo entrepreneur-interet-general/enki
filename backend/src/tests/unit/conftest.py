@@ -40,7 +40,7 @@ def task_in_memory_repo(tag_repo: AbstractTagRepository) -> AbstractTaskReposito
 @pytest.fixture(scope="session")
 def tag_pg_repo(sqlite_engine: Engine) -> AbstractTagRepository:
     clear_mappers()
-    start_mappers(sqlite_engine)
+    start_mappers()
     tag_repository = PgTagRepository(sessionmaker(bind=sqlite_engine, autoflush=False)())
     return tag_repository
 
@@ -48,7 +48,7 @@ def tag_pg_repo(sqlite_engine: Engine) -> AbstractTagRepository:
 @pytest.fixture(scope="session")
 def task_pg_repo(sqlite_engine: Engine, tag_pg_repo: AbstractTagRepository) -> AbstractTaskRepository:
     clear_mappers()
-    start_mappers(sqlite_engine)
+    start_mappers()
     task_repository = PgTaskRepository(sessionmaker(bind=sqlite_engine)(), tag_repo=tag_pg_repo)
     return task_repository
 

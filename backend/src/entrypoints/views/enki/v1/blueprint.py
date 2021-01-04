@@ -33,7 +33,7 @@ api.add_resource(EvenementListResource, '/events', endpoint="events")
 api.add_resource(EvenementResource, '/events/<uuid>', endpoint="events_by_id")
 
 
-#@enki_blueprint_v1.before_app_first_request
+@enki_blueprint_v1.before_app_first_request
 def register_views():
     # Add documents Schemas
     api_spec.spec.components.schema("EvenementSchema", schema=EvenementSchema)

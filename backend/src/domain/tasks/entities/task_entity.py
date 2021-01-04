@@ -5,7 +5,7 @@ from enum import Enum
 
 from typing import List, Union
 
-from domain.tasks.entities.event_entity import MessageEventEntity
+from domain.tasks.entities.message_entity import MessageEventEntity
 
 
 class TaskType(str, Enum):
@@ -18,8 +18,7 @@ class TaskType(str, Enum):
 @dataclass_json
 @dataclass
 class TaskEntity(MessageEventEntity):
-    task_type: TaskType = field(default_factory=lambda: TaskType.UNKNOWN)
-    event_type: str = field(default="task")
+    type: TaskType = field(default_factory=lambda: TaskType.UNKNOWN)
     executor_id: Union[str, None] = field(default_factory=lambda: None)
     executor_type: Union[str, None] = field(default_factory=lambda: None)
     done_at: Union[datetime, None] = field(default_factory=lambda: None)

@@ -4,20 +4,18 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
 
-from adapters.postgres import PgTaskRepository, PgTagRepository
+from adapters.postgres import PgTaskRepository, PgTagRepository, PgAffairRepository, PgEvenementRepository
 from adapters.postgres.orm import metadata
-from adapters.postgres.pg_affair_repository import PgAffairRepository
-from adapters.postgres.pg_evenement_repository import PgEvenementRepository
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, InMemoryAffairRepository
 from domain.evenements.repository import AbstractEvenementRepository
-from domain.tasks.ports.tag_repository import AbstractTagRepository
-from domain.tasks.ports.task_repository import AbstractTaskRepository
+from domain.tasks.ports import AbstractInformationRepository, AbstractTagRepository, AbstractTaskRepository
 from entrypoints.repositories.repositories import ElasticRepositories
 
 
 class AbstractUnitOfWork(abc.ABC):
     tag: AbstractTagRepository
     task: AbstractTaskRepository
+    information: AbstractInformationRepository
     evenement: AbstractEvenementRepository
     affair: AbstractAffairRepository
 
@@ -58,11 +56,9 @@ def build_engine(sql_engine_uri: str) -> Engine:
 class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
 
     def __init__(self, config):
-        print(config.DATABASE_URI)
         self.engine = build_engine(sql_engine_uri=config.DATABASE_URI)
         self.session_factory = sessionmaker(bind=self.engine)
         metadata.create_all(self.engine)
-        print(config.AFFAIR_REPOSITORY)
 
         if config.AFFAIR_REPOSITORY == "ELASTIC":
             self.elastic_repositories = ElasticRepositories(config=config)
@@ -74,6 +70,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.session = self.session_factory()
         self.tag = PgTagRepository(self.session)
         self.task = PgTaskRepository(self.session, tag_repo=self.tag)
+        self.information = PgInformationRepository(self.session)
         self.evenement = PgEvenementRepository(self.session)
         return super().__enter__()
 

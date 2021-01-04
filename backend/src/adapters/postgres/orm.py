@@ -7,7 +7,8 @@ from sqlalchemy.orm import mapper, relationship, clear_mappers
 from sqlalchemy_utils import ChoiceType
 
 from domain.evenements.entity import EvenementType, EvenementEntity
-from domain.tasks.entities.event_entity import Severity
+from domain.tasks.entities.info_entity import InformationEntity
+from domain.tasks.entities.message_entity import Severity
 from domain.tasks.entities.task_entity import TaskEntity, TaskType
 from domain.tasks.entities.tag_entity import TagEntity
 
@@ -27,13 +28,23 @@ tagTaskTable = Table(
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
 )
 
-taskHierarchyTaskTable = Table(
-    'task_hierarchy', metadata,
-    Column('parent_task_uuid', String(60), ForeignKey("tasks.uuid")),
-    Column('children_task_uuid', String(60), ForeignKey("tasks.uuid")),
-    Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
+tagInformationsTable = Table(
+    'tag_informations', metadata,
+    Column('information_uuid', String(60), ForeignKey("informations.uuid")),
+    Column('tag_uuid', String(60), ForeignKey("tags.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
+)
 
+informationTable = Table(
+    'informations', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('title', String(255), nullable=False),
+    Column('description', String(255)),
+    Column('type', Enum(TaskType)),
+    Column('creator_id', String(60), ForeignKey("users.uuid")),
+    Column('severity', ChoiceType(Severity, impl=Integer()), nullable=False),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
+    Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
 )
 
 taskTable = Table(
@@ -41,12 +52,9 @@ taskTable = Table(
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False),
     Column('description', String(255)),
-    Column('task_type', Enum(TaskType)),
-    Column('event_type', String(60)),
+    Column('type', Enum(TaskType)),
     Column('executor_id', String(60), ForeignKey("users.uuid")),
-    Column('executor_type', String(60)),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
-    Column('creator_type', String(60)),
     Column('done_at', TIMESTAMP()),
     Column('started_at', TIMESTAMP()),
     Column('severity', ChoiceType(Severity, impl=Integer()), nullable=False),
@@ -80,16 +88,22 @@ evenementsTable = Table(
 all_tables = [
     userTable,
     tagTaskTable,
-    taskHierarchyTaskTable,
     taskTable,
     tagTable,
-    evenementsTable
+    evenementsTable,
+    informationTable
 ]
 
 
 def start_mappers():
     mapper(TagEntity, tagTable)
     mapper(EvenementEntity, evenementsTable)
+    mapper(
+        InformationEntity, informationTable,
+        properties={
+            'tags': relationship(TagEntity, backref='informations', secondary=tagTaskTable)
+        }
+    )
     mapper(
         TaskEntity, taskTable,
         properties={

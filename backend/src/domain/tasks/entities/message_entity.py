@@ -22,10 +22,8 @@ class Severity(Enum):
 class MessageEventEntity(Entity, TimeStamped):
     title: str
     description: str
-    event_type: str
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
     creator_id: Union[str, None] = field(default_factory=lambda: None)
-    creator_type: Union[str, None] = field(default_factory=lambda: None)
     started_at: Union[datetime, None] = field(default_factory=lambda: None)
 
     # parents: any = field(default_factory=lambda: None)

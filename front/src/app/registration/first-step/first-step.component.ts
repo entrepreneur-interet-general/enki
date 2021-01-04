@@ -4,6 +4,7 @@ import { Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { KeycloakService } from 'keycloak-angular';
+import { UserService } from '../../user/user.service'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -26,6 +27,7 @@ export class FirstStepComponent {
     private http: HttpClient,
     private keycloakService: KeycloakService,
     private router: Router,
+    private userService: UserService
   ) {
     this.updateUserUrl = `http://localhost:4201/api/user`;
     
@@ -51,11 +53,16 @@ export class FirstStepComponent {
       user_fonction: this.userGroup.value.fonction
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
-      this.keycloakService.updateToken(3600).then(() => {
-        if(this.keycloakService.getUserRoles().includes('watchEvents')) {
+      this.userService.user.attributes = {
+        code_insee: this.userGroup.value.codeCommune,
+        fonction: this.userGroup.value.fonction
+      }
+      this.userService.user.fullname = `${this.userGroup.value.firstName} ${this.userGroup.value.lastName}`
+      /* this.keycloakService.updateToken(3600).then(() => {
+        if(this.keycloakService.getUserRoles().includes('watchEvents')) { */
           this.router.navigate(['dashboard'])
-        }
-      })
+/*         }
+      }) */
     })
   }
 

@@ -32,6 +32,9 @@
       justify-content: flex-end;
     }
   }
+  &--link {
+    cursor: pointer;
+  }
   .burger {
     display: flex;
     justify-content: center;

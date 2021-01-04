@@ -26,34 +26,27 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: UserDashboardComponent,
-    canActivate: [ AuthGuard ],
-    data: { roles: ['watchEvents'] }
+    canActivate: [ AuthGuard ]
   },
   {
     path: 'maincourante',
     component: MainCouranteComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['watchEvents'] }
+    canActivate: [AuthGuard]
   },
   {
     path: 'addmessage',
     component: AddMessageComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['watchEvents'] }
+    canActivate: [AuthGuard]
   },
   {
     path: 'liste-interventions',
     canActivate: [ AuthGuard ],
-    component: ListeInterventionsComponent,
-    data: { roles: ['watchEvents'] }
+    component: ListeInterventionsComponent
   },
   {
     path: 'detail-intervention/:uuid',
     canActivate: [AuthGuard],
-    component: DetailInterventionComponent,
-    data: {
-      roles: ['watchEvents']
-    }
+    component: DetailInterventionComponent
   },
   {
     path: '',

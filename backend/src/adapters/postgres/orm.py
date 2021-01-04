@@ -100,7 +100,7 @@ def start_mappers():
     mapper(
         InformationEntity, informationTable,
         properties={
-            'tags': relationship(TagEntity, backref='informations', secondary=tagTaskTable)
+            'tags': relationship(TagEntity, backref='informations', secondary=tagInformationsTable)
         }
     )
     mapper(

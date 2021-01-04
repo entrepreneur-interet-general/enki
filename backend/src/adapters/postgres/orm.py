@@ -40,7 +40,6 @@ informationTable = Table(
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False),
     Column('description', String(255)),
-    Column('type', Enum(TaskType)),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
     Column('severity', ChoiceType(Severity, impl=Integer()), nullable=False),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),

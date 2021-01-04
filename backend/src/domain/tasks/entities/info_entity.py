@@ -7,4 +7,5 @@ from domain.tasks.entities.message_entity import MessageEventEntity
 @dataclass_json
 @dataclass
 class InformationEntity(MessageEventEntity):
-    pass
+    tags: List = field(default_factory=lambda: [])
+

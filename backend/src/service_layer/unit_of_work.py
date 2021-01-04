@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
 
-from adapters.postgres import PgTaskRepository, PgTagRepository, PgAffairRepository, PgEvenementRepository
+from adapters.postgres import PgTaskRepository, PgTagRepository, PgInformationRepository, PgEvenementRepository
 from adapters.postgres.orm import metadata
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, InMemoryAffairRepository
 from domain.evenements.repository import AbstractEvenementRepository

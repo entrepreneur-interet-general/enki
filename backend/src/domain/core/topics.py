@@ -33,5 +33,10 @@ class CreateTagTopic(Topic):
 
 
 @dataclass
+class CreateInformationTopic(Topic):
+    name: str = "CreateInformation"
+
+
+@dataclass
 class AddTagToTaskTopic(Topic):
     name: str = "AddTagToTask"

@@ -24,7 +24,7 @@ class TaskSchema(Schema):
     type = EnumField(TaskType, by_value=True)
     event_type = fields.Str(default="task")
     executor_id = fields.Str(required=False)
-    executor_type = fields.Str(required=False)
+    #executor_type = fields.Str(required=False)
     done_atv= fields.DateTime(default=datetime.utcnow())
     created_at = fields.DateTime(default=datetime.utcnow())
     updated_at = fields.DateTime(default=datetime.utcnow())

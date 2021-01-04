@@ -20,7 +20,7 @@ class TaskType(str, Enum):
 class TaskEntity(MessageEventEntity):
     type: TaskType = field(default_factory=lambda: TaskType.UNKNOWN)
     executor_id: Union[str, None] = field(default_factory=lambda: None)
-    executor_type: Union[str, None] = field(default_factory=lambda: None)
+    #executor_type: Union[str, None] = field(default_factory=lambda: None)
     done_at: Union[datetime, None] = field(default_factory=lambda: None)
     tags: List = field(default_factory=lambda: [])
 

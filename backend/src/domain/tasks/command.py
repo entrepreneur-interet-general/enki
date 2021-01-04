@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from domain.core.commands import Command
-from domain.core.topics import Topic, CreateTaskTopic, CreateTagTopic
+from domain.core.topics import Topic, CreateTaskTopic, CreateTagTopic, CreateInformationTopic
 
 
 @dataclass
@@ -13,3 +13,8 @@ class CreateTask(Command):
 class CreateTag(Command):
     data: dict
     topic: Topic = CreateTagTopic
+
+@dataclass
+class CreateInformation(Command):
+    data: dict
+    topic: Topic = CreateInformationTopic

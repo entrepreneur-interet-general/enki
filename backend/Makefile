@@ -10,6 +10,9 @@ upd:
 down:
 	docker-compose -f docker-compose.yml down --remove-orphans
 
+clean:
+	docker-compose -f docker-compose.yml down -v --remove-orphans
+
 logs:
 	docker-compose -f docker-compose.yml logs --follow
 

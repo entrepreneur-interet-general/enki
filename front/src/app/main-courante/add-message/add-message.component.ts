@@ -19,8 +19,9 @@ export class AddMessageComponent implements OnInit {
   ) { }
 
   onSubmit(): void {
-    console.log('submit message')
-    this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content)
+    this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content).subscribe(response => {
+      console.log(response)
+    })
     this.router.navigate(['maincourante'])
   }
 

@@ -1,8 +1,11 @@
+import { catchError, map, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export interface Message {
   title: string;
-  content: string;
+  description: string;
 }
 
 @Injectable({
@@ -10,20 +13,41 @@ export interface Message {
 })
 
 export class MessagesService {
-
+  messagesUrl: string;
   messages: Array<Message>;
-  constructor() {
+  httpHeaders: object;
+  constructor(
+    private http: HttpClient,
+  ) {
     this.messages = window.sessionStorage.getItem("messages") ? JSON.parse(window.sessionStorage.getItem("messages")) : [];
+    this.messagesUrl = 'http://localhost:5000/api/enki/v1/tasks'
+    this.httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin':'*'
+      })
+    }
   }
 
-  addMessage(title, content) : void {
-    this.messages.push({
+  addMessage(title, description) : Observable<Message> {
+    let message = {
+      "title":title,
+      "description:":description,
+      "uuid":"5"
+    }
+    return this.http.post<any>(this.messagesUrl, message, this.httpHeaders)
+    /* this.messages.push({
       title: title,
-      content: content
-    });
+      description: description
+    }); */
   }
 
-  getMessages(): Array<Message> {
-    return this.messages;
+  getMessages(): Observable<Message[]> {
+    return this.http.get<any>(this.messagesUrl)
+      .pipe(
+        map(tasks => {
+          return tasks.tasks
+        })
+      )
   }
 }

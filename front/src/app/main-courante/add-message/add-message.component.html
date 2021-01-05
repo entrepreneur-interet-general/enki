@@ -1,18 +1,17 @@
 <div class="addMessage">
-  <p>Nouveau message</p>
-  <a href="" class="addMessage--cancel" routerLink="/maincourante">
+  <p class="addMessage--heading addMessage--title">Nouveau message</p>
+  <a href="" class="addMessage--heading addMessage--cancel" routerLink="/maincourante">
     <svg class="icon-close icon"><use xlink:href="#icon-close"></use></svg>
     Annuler
   </a>
   <form action="" class="addMessage--form" [formGroup]="messageGroup" (ngSubmit)="onSubmit()">
-    <div class="enkiform__group">
-      <input type="text" class="enkiform__input" formControlName="title" required>
-      <label for="" class="enkiform__label">Titre</label>
+    <div class="enkiSpecialform__group">
+      <input type="text" class="enkiSpecialform__input" formControlName="title" placeholder="Sans titre" required>
     </div>
-    <div class="enkiform__group">
-      <textarea formControlName="content" id="" cols="30" rows="10"></textarea>
+    <div class="enkiSpecialform__group">
+      <textarea formControlName="content" id="" cols="30" rows="10" placeholder="Appuyer ici pour ajouter une description"></textarea>
     </div>
-    <div class="enki__group">
+    <div class="enkiSpecialForm__group">
       <input type="submit" class="btn" value="Publier le message">
     </div>
 

@@ -23,17 +23,23 @@ export class MessagesService {
     this.messagesUrl = 'http://localhost:5000/api/enki/v1/tasks'
     this.httpHeaders = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin':'*'
+        'Content-Type':  'application/json'
       })
     }
+  }
+
+  uuidv4(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
   }
 
   addMessage(title, description) : Observable<Message> {
     let message = {
       "title":title,
-      "description:":description,
-      "uuid":"5"
+      "description": description,
+      "uuid": this.uuidv4()
     }
     return this.http.post<any>(this.messagesUrl, message, this.httpHeaders)
     /* this.messages.push({

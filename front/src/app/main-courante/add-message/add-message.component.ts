@@ -17,12 +17,12 @@ export class AddMessageComponent implements OnInit {
     private messagesService: MessagesService,
     private router: Router
   ) { }
+  
 
   onSubmit(): void {
     this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content).subscribe(response => {
-      console.log(response)
+      this.router.navigate(['maincourante'])
     })
-    this.router.navigate(['maincourante'])
   }
 
   ngOnInit(): void {

@@ -26,7 +26,6 @@ class TagSchema(Schema):
 
     uuid = fields.Str(required=True)
     title = fields.Str(required=True)
-    description = fields.Str(required=True)
     creator_id = fields.Str(required=False)
     created_at = fields.DateTime(default=datetime.utcnow())
     updated_at = fields.DateTime(default=datetime.utcnow())

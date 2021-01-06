@@ -1,4 +1,7 @@
 from typing import Any, Dict, List
+
+from flask import current_app
+
 from domain.tasks.entities.tag_entity import TagEntity
 from domain.tasks.entities.task_entity import TaskEntity
 from domain.tasks.schema import TaskSchema, TagSchema
@@ -9,10 +12,15 @@ class TaskService:
     schema = TaskSchema
 
     @staticmethod
-    def add_task(uuid: str, title: str, description: str, uow: AbstractUnitOfWork):
-        new_task = TaskEntity(uuid=uuid, title=title, description=description)
+    def add_task(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
+        task: TaskEntity = TaskService.schema().load(data)
+        current_app.logger.info("TaskDeserialized")
+        current_app.logger.info(task)
+        current_app.logger.info(task.created_at)
+        return_value = TaskService.schema().dump(task)
         with uow:
-            uow.task.add(new_task)
+            uow.task.add(task)
+        return return_value
 
     @staticmethod
     def add_tag_to_task(task_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:

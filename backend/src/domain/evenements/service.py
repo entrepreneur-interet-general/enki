@@ -10,26 +10,28 @@ from service_layer.unit_of_work import AbstractUnitOfWork
 
 
 class EvenementService:
-    schema = EvenementSchema()
+    schema = EvenementSchema
 
     @staticmethod
     def add_evenement(data: dict,
                       uow: AbstractUnitOfWork):
         try:
-            evenement: EvenementEntity = EvenementSchema().load(data)
+            evenement: EvenementEntity = EvenementService.schema().load(data)
+            return_value = EvenementService.schema().dump(evenement)
         except ValidationError as ve:
             raise ve
+
         with uow:
-            uow.evenement.add(evenement)
+            _ = uow.evenement.add(evenement)
+        return return_value
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
-            return EvenementService.schema.dump(uow.evenement.get_by_uuid(uuid=uuid))
+            return EvenementService.schema().dump(uow.evenement.get_by_uuid(uuid=uuid))
 
     @staticmethod
     def list_evenements(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             evenements: List[EvenementEntity] = uow.evenement.get_all()
-            serialized_evenements = [EvenementService.schema.dump(evenement) for evenement in evenements]
-            return serialized_evenements
+            return EvenementService.schema(many=True).dump(evenements)

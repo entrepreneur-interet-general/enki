@@ -32,7 +32,10 @@ class TaskListResource(WithTaskRepoResource):
         body = request.get_json()
         command = CreateTask(data=body)
         result = event_bus.publish(command, current_app.context)
-        return {"message": "Success"}, 201
+        return {
+                   "message": "Success",
+            "task":result[0]
+               }, 201
 
 
 class TaskResource(WithTaskRepoResource):

@@ -23,7 +23,7 @@ class AbstractEventBus(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def publish(self, event: Event, uow: AbstractUnitOfWork = None) -> None:
+    def publish(self, event: Event, uow: AbstractUnitOfWork = None) -> List[Any]:
         raise NotImplementedError
 
 

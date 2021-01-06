@@ -13,22 +13,17 @@ def create_evenement(command: CreateEvenement, uow: AbstractUnitOfWork):
 
 def create_task(command: CreateTask, uow: AbstractUnitOfWork):
     return TaskService.add_task(
-        uuid=command.data["uuid"],
-        title=command.data["title"],
-        description=command.data["description"],
+        data=command.data,
         uow=uow)
 
 
 def create_tag(command: CreateTag, uow: AbstractUnitOfWork):
     return TagService.add_tag(
-        uuid=command.data["uuid"],
-        title=command.data["title"],
+        data=command.data,
         uow=uow)
 
 
 def create_information(command: CreateTag, uow: AbstractUnitOfWork):
     return InformationService.add_information(
-        uuid=command.data["uuid"],
-        title=command.data["title"],
-        description=command.data["description"],
+        data=command.data,
         uow=uow)

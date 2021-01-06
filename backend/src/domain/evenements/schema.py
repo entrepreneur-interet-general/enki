@@ -1,3 +1,6 @@
+from uuid import uuid4
+
+from flask import current_app
 from marshmallow import Schema, fields, post_load
 from marshmallow_enum import EnumField
 from datetime import datetime
@@ -15,18 +18,19 @@ class EvenementValidationError(HTTPException):
 class EvenementSchema(Schema):
     __model__ = EvenementEntity
 
-    uuid = fields.Str(required=True)
+    uuid = fields.Str(missing=lambda: str(uuid4()))
     title = fields.Str(required=True)
     description = fields.Str(required=True)
     type = EnumField(EvenementType, required=True, by_value=True)
-    creator_id = fields.Str(required=False)
     started_at = fields.DateTime(required=True)
+    creator_id = fields.Str(required=False)
     ended_at = fields.DateTime(required=False)
-    created_at = fields.DateTime(default=datetime.utcnow())
-    updated_at = fields.DateTime(default=datetime.utcnow())
+    created_at = fields.DateTime(missing=lambda: datetime.utcnow())
+    updated_at = fields.DateTime(missing=lambda: datetime.utcnow())
 
     @post_load
     def make_event(self, data: dict, **kwargs):
+        current_app.logger.info(f"data {data}")
         return EvenementEntity.from_dict(data)
 
     def handle_error(self, exc, data, **kwargs):

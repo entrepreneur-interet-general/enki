@@ -1,7 +1,5 @@
 from typing import Any, Dict, List
 
-from flask import current_app
-
 from domain.tasks.entities.tag_entity import TagEntity
 from domain.tasks.entities.info_entity import InformationEntity
 from domain.tasks.schema import InformationSchema, TagSchema
@@ -12,10 +10,12 @@ class InformationService:
     schema = InformationSchema
 
     @staticmethod
-    def add_information(uuid: str, title: str, description: str, uow: AbstractUnitOfWork):
-        new_information = InformationEntity(uuid=uuid, title=title, description=description)
+    def add_information(data: Dict[str, Any], uow: AbstractUnitOfWork):
+        information: InformationEntity = InformationService.schema().load(data)
+        return_value = InformationService.schema().dump(information)
         with uow:
-            uow.information.add(new_information)
+            uow.information.add(information)
+        return return_value
 
     @staticmethod
     def add_tag_to_information(information_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:
@@ -43,8 +43,7 @@ class InformationService:
     def list_informations(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             informations: List[InformationEntity] = uow.information.get_all()
-            serialized_informations = InformationService.schema(many=True).dump(informations)
-            return serialized_informations
+            return InformationService.schema(many=True).dump(informations)
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:

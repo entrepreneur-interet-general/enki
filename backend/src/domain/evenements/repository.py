@@ -23,11 +23,11 @@ class NotFoundEvenement(HTTPException):
 
 
 class AbstractEvenementRepository(abc.ABC):
-    def add(self, event: EvenementEntity) -> Union[bool, None]:
+    def add(self, event: EvenementEntity) -> EvenementEntity:
         if self._match_uuid(event.uuid):
             raise AlreadyExistingEvenementUuid()
-        result = self._add(event)
-        return result
+        _ = self._add(event)
+        return event
 
     def get_by_uuid(self, uuid: str) -> EvenementEntity:
         matches = self._match_uuid(uuid)

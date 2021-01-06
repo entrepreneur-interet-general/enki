@@ -50,7 +50,10 @@ class EvenementListResource(WithEvenementRepoResource):
         command = CreateEvenement(data=body)
         result = event_bus.publish(command, current_app.context)
 
-        return {"message": "Success"}, 201
+        return {
+                   "message": "Success",
+                   "evenement": result[0],
+               }, 201
 
 
 class EvenementResource(WithEvenementRepoResource):

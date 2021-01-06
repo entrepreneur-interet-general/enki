@@ -1,3 +1,6 @@
+from uuid import uuid4
+
+from flask import current_app
 from marshmallow import Schema, fields, post_load, validate
 from marshmallow_enum import EnumField
 from datetime import datetime
@@ -24,11 +27,11 @@ class InformationValidationError(HTTPException):
 class TagSchema(Schema):
     __model__ = TagEntity
 
-    uuid = fields.Str(required=True)
-    title = fields.Str(required=True)
+    uuid = fields.Str(missing=lambda: str(uuid4()))
+    title = fields.Str(required=True, validate=validate.Length(min=5))
     creator_id = fields.Str(required=False)
-    created_at = fields.DateTime(default=datetime.utcnow())
-    updated_at = fields.DateTime(default=datetime.utcnow())
+    created_at = fields.DateTime(missing=lambda: datetime.utcnow())
+    updated_at = fields.DateTime(missing=lambda: datetime.utcnow())
 
     @post_load
     def make_tag(self, data: dict, **kwargs):
@@ -41,30 +44,35 @@ class TagSchema(Schema):
 class MessageEventEntitySchema(Schema):
     __model__ = MessageEventEntity
 
-    uuid = fields.Str(required=True)
+    uuid = fields.Str(missing=lambda: str(uuid4()))
     title = fields.Str(required=True, validate=validate.Length(min=5))
     description = fields.Str(required=True, validate=validate.Length(min=5))
-    event_id = fields.Str(required=True)
+    evenement_id = fields.Str(required=True)
     severity = EnumField(Severity)
     creator_id: fields.Str(required=False)
     started_at: fields.DateTime()
     tags = fields.Nested(TagSchema, required=False, many=True)
-    created_at = fields.DateTime(default=datetime.utcnow())
-    updated_at = fields.DateTime(default=datetime.utcnow())
+    created_at = fields.DateTime(missing=lambda: datetime.now())
+    updated_at = fields.DateTime(missing=lambda: datetime.now())
 
 
 class TaskSchema(MessageEventEntitySchema):
     __model__ = TaskEntity
 
     type = EnumField(TaskType, by_value=True)
-    event_type = fields.Str(default="task")
+    event_type = fields.Str(missing="task")
     executor_id = fields.Str(required=False)
     # executor_type = fields.Str(required=False)
-    done_at = fields.DateTime(default=datetime.utcnow())
+    done_at = fields.DateTime(default=None)
 
     @post_load
     def make_task(self, data: dict, **kwargs):
-        return TaskEntity.from_dict(data)
+        current_app.logger.info("make_task")
+        current_app.logger.info(data)
+        entity = TaskEntity.from_dict(data)
+        current_app.logger.info(entity.created_at)
+
+        return entity
 
     def handle_error(self, exc, data, **kwargs):
         raise TaskValidationError(description=exc.normalized_messages())
@@ -73,7 +81,7 @@ class TaskSchema(MessageEventEntitySchema):
 class InformationSchema(MessageEventEntitySchema):
     __model__ = InformationEntity
     type = EnumField(TaskType, by_value=True)
-    event_type = fields.Str(default="information")
+    event_type = fields.Str(missing="information")
 
     @post_load
     def make_information(self, data: dict, **kwargs):

@@ -38,9 +38,7 @@ class InMemoryEventBus(AbstractEventBus):
 
     def publish(self, message: Message, uow: AbstractUnitOfWork = None) -> List[Any]:
         results = []
-        current_app.logger.info("test")
         current_app.logger.info(self._subscriptions[message.topic])
-
         for callback in set(self._subscriptions[message.topic]):
             current_app.logger.debug(f"callback {callback}")
             if isinstance(message, events.Event):

@@ -2,6 +2,8 @@ from flask_restful import Resource
 from flask import current_app, request
 
 from domain.affairs.services.affair_service import AffairService
+from domain.core.events import AffairCreatedEvent
+from entrypoints.extensions import event_bus
 
 
 class EchangeMessageResource(Resource):
@@ -17,7 +19,8 @@ class EchangeMessageResource(Resource):
         if request.headers['Content-Type'] in ["application/xml", 'text/xml']:
             current_app.logger.info("post message")
             xml = request.data.decode("utf-8")
-            AffairService.add_affair(xml, repo=current_app.context.affair)
+            affair = AffairService.add_affair(xml, repo=current_app.context.affair)
+            event_bus.publish(AffairCreatedEvent(data=affair))
             return {
                    "msg": "success"
                }, 200

@@ -9,11 +9,9 @@ class TagService:
     schema = TagSchema
 
     @staticmethod
-    def add_tag(uuid: str, title: str, uow: AbstractUnitOfWork, description: str = None, color: str = None, ):
+    def add_tag(uuid: str, title: str, uow: AbstractUnitOfWork):
         new_tag = TagEntity(uuid=uuid,
-                            title=title,
-                            description=description,
-                            color=color)
+                            title=title)
         with uow:
             uow.tag.add(new_tag)
 

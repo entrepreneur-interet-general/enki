@@ -23,7 +23,6 @@ def create_tag(command: CreateTag, uow: AbstractUnitOfWork):
     return TagService.add_tag(
         uuid=command.data["uuid"],
         title=command.data["title"],
-        description=command.data["description"],
         uow=uow)
 
 

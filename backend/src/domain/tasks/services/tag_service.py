@@ -1,10 +1,12 @@
 from typing import Any, Dict, List
 from domain.tasks.entities.tag_entity import TagEntity
 from domain.tasks.ports.tag_repository import AbstractTagRepository
+from domain.tasks.schema import TagSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
 class TagService:
+    schema = TagSchema
 
     @staticmethod
     def add_tag(uuid: str, title: str, uow: AbstractUnitOfWork, description: str = None, color: str = None, ):

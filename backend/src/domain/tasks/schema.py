@@ -53,7 +53,7 @@ class MessageEventEntitySchema(Schema):
     updated_at = fields.DateTime(default=datetime.utcnow())
 
 
-class TaskSchema(Schema):
+class TaskSchema(MessageEventEntitySchema):
     __model__ = TaskEntity
 
     type = EnumField(TaskType, by_value=True)

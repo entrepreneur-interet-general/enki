@@ -51,6 +51,12 @@ class AbstractTaskRepository(abc.ABC):
             raise NotFoundTagInThisTask
         return match
 
+    def get_tags(self, uuid: str):
+        match = self.get_by_uuid(uuid=uuid)
+        if not match:
+            raise NotFoundTagInThisTask
+        return match.tags
+
     def add_tag_to_task(self, uuid: str, tag_uuid: str) -> None:
         print("method add_tag_to_task")
         match: TaskEntity = self.get_by_uuid(uuid)

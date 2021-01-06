@@ -1,42 +1,47 @@
 from typing import Any, Dict, List
-
 from domain.tasks.entities.tag_entity import TagEntity
 from domain.tasks.entities.task_entity import TaskEntity
-from domain.tasks.ports.task_repository import AbstractTaskRepository
-from domain.tasks.ports.tag_repository import AbstractTagRepository
+from service_layer.unit_of_work import AbstractUnitOfWork
 
 
 class TaskService:
     @staticmethod
-    def add_task(uuid: str, title: str, description: str, repo: AbstractTaskRepository):
+    def add_task(uuid: str, title: str, description: str, uow: AbstractUnitOfWork):
         new_task = TaskEntity(uuid=uuid, title=title, description=description)
-        repo.add(new_task)
+        with uow:
+            uow.task.add(new_task)
 
     @staticmethod
-    def add_tag_to_task(task_uuid, tag_uuid, repo: AbstractTaskRepository) -> None:
-        repo.add_tag_to_task(task_uuid, tag_uuid)
+    def add_tag_to_task(task_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:
+        with uow:
+            uow.task.add_tag_to_task(task_uuid, tag_uuid)
 
     @staticmethod
-    def remove_tag_to_task(task_uuid, tag_uuid, repo: AbstractTaskRepository) -> None:
-        repo.remove_tag_to_task(task_uuid, tag_uuid)
+    def remove_tag_to_task(task_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:
+        with uow:
+            uow.task.remove_tag_to_task(task_uuid, tag_uuid)
 
     @staticmethod
-    def list_tags(uuid: str, repo: AbstractTaskRepository) -> List[Dict[str, Any]]:
-        task: TaskEntity = repo.get_by_uuid(uuid)
-        return [tag.to_dict() for tag in task.tags]
+    def list_tags(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            task: TaskEntity = uow.task.get_tags(uuid)
+            return [tag.to_dict() for tag in task.tags]
 
     @staticmethod
-    def get_task_tag(uuid: str, tag_uuid: str, repo: AbstractTaskRepository) -> Dict[str, Any]:
-        tag: TagEntity = repo.get_tag_by_task(uuid=uuid, tag_uuid=tag_uuid)
-        return tag
+    def get_task_tag(uuid: str, tag_uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
+        with uow:
+            tag: TagEntity = uow.task.get_tag_by_task(uuid=uuid, tag_uuid=tag_uuid)
+            return tag.to_dict()
 
     @staticmethod
-    def list_tasks(repo: AbstractTaskRepository) -> List[Dict[str, Any]]:
-        tasks: List[TaskEntity] = repo.get_all()
-        serialized_tasks = [task.to_dict() for task in tasks]
-        return serialized_tasks
+    def list_tasks(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            tasks: List[TaskEntity] = uow.task.get_all()
+            serialized_tasks = [task.to_dict() for task in tasks]
+            return serialized_tasks
 
     @staticmethod
-    def get_by_uuid(uuid: str, repo: AbstractTaskRepository) -> Dict[str, Any]:
-        task = repo.get_by_uuid(uuid)
-        return task.to_dict()
+    def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
+        with uow:
+            task = uow.task.get_by_uuid(uuid)
+            return task.to_dict()

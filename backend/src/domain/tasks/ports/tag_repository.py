@@ -9,7 +9,7 @@ TagsList = List[TagEntity]
 
 
 class AlreadyExistingTagUuid(HTTPException):
-    code = 404
+    code = 409
     description = "Tag already exists"
 
 
@@ -30,7 +30,7 @@ class AbstractTagRepository(abc.ABC):
             raise NotFoundTag
         return matches
 
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def get_all(self) -> TagsList:
         raise NotImplementedError
 

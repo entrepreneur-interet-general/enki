@@ -49,7 +49,6 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
         return [AffairEntity(**hit["_source"]) for hit in results['hits']['hits']]
 
     def _add(self, affair: AffairEntity) -> bool:
-        print(self.index_name)
         return self.client.index(index=self.index_name, id=affair.uuid,
                                  body=json.dumps(affair.to_dict(), cls=EnkiJsonEncoder, ),
                                  refresh=True,)

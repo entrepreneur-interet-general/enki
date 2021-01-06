@@ -2,6 +2,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker, clear_mappers
+from typing import Dict, Any
 
 from adapters.postgres.orm import start_mappers, metadata
 from adapters.postgres.pg_evenement_repository import PgEvenementRepository
@@ -31,7 +32,7 @@ def evenement_in_memory_repo() -> AbstractEvenementRepository:
 @pytest.fixture(scope="session")
 def evenement_pg_repo(sqlite_engine: Engine) -> AbstractEvenementRepository:
     clear_mappers()
-    start_mappers(sqlite_engine)
+    start_mappers()
     evenement_repository = PgEvenementRepository(sessionmaker(bind=sqlite_engine, autoflush=False)())
     return evenement_repository
 

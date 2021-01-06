@@ -5,6 +5,8 @@ import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { KeycloakService } from 'keycloak-angular';
 
+import { User, UserService } from '../user/user.service';
+
 export interface Intervention {
   id?: string; // used for in memory db
   uuid: string;
@@ -31,12 +33,13 @@ export class InterventionsService {
 
   constructor(
     private http: HttpClient,
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService,
+    private userService: UserService
     ) { 
       this.interventionsUrl = environment.interventionsUrl;
       this.httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.keycloakService.getToken() })
+/*         headers: new HttpHeaders({ 'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.keycloakService.getToken() }) */
       };
     }
 
@@ -63,7 +66,10 @@ export class InterventionsService {
     if (this.interventions !== undefined && this.interventions.length > 0) {
       return of(this.interventions)
     }
-    return this.http.get<any>(this.interventionsUrl, this.httpOptions)
+    if (!this.userService.user.attributes) {
+      return of([]);
+    }
+    return this.http.get<any>(`${this.interventionsUrl}?insee_code=${this.userService.user.attributes.code_insee}`, this.httpOptions)
       .pipe(
         map(interventions => {
           interventions = environment.HTTPClientInMemory ? interventions : interventions.affairs

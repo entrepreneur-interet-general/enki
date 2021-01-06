@@ -7,12 +7,12 @@ from cisu.entities.edxl_entity import EdxlEntity
 from cisu.entities.cisu_entity import AddressType
 from cisu.entities.commons.common_alerts import AnyURI
 from cisu.factories.edxl_factory import EdxlMessageFactory
-from entrypoints.config import SapeursConfig
+from entrypoints.config import EnkiConfig
 from domain.core import events
 
 
 class SgeHelper:
-    base_url: str = SapeursConfig.SGE_HUB_BASE_URI
+    base_url: str = EnkiConfig.SGE_HUB_BASE_URI
 
     @staticmethod
     def send_ack_message(xml_ack_message: str) -> requests.Response:

@@ -1,14 +1,11 @@
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
+from typing import List
 
-from domain.tasks.entities.event_entity import MessageEventEntity
-from typing import Union, List
+from domain.tasks.entities.message_entity import MessageEventEntity
 
 
 @dataclass_json
 @dataclass
 class InformationEntity(MessageEventEntity):
-    event_type: str = field(default="information")
-    executor_id: Union[str, None] = field(default_factory=lambda: None)
-    executor_type: Union[str, None] = field(default_factory=lambda: None)
-    user_ids: List = field(default_factory=list)
+    pass

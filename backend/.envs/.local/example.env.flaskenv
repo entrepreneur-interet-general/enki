@@ -2,7 +2,7 @@ FLASK_ENV=development
 FLASK_APP=src/entrypoints/flask_app
 DEBUG=True
 SECRET_KEY=changeme
-DATABASE_URI=postgresql://postgres:pg-password@postgres:5432/sapeurs-dev
+DATABASE_URI=postgresql://postgres:pg-password@postgres:5432/enki-dev
 
 #### TWILIO
 TWILIO_ACCOUNT_SID=aski-it

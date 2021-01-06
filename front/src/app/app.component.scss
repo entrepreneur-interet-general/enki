@@ -27,6 +27,7 @@ main {
   text-align: center;
   &--link {
     color: $lightestRed;
+    cursor: pointer;
   }
 }
 

@@ -11,7 +11,6 @@ from ..factories.task import task_factory
 from ..helpers.filter import filter_dict_with_keys
 
 def test_add_task_add_tag_then_link_them(app, client: FlaskClient):
-    app.context.reset()
     task1 = task_factory()
     _ = post_add_task(client, task1)
     tag1 = tag_factory()
@@ -36,7 +35,6 @@ def test_add_task_add_tag_then_link_them(app, client: FlaskClient):
 
 
 def test_add_task_add_tag_then_link_them_and_unlinks(app, client: FlaskClient):
-    app.context.reset()
     task1 = task_factory()
     _ = post_add_task(client, task1)
     tag1 = tag_factory()

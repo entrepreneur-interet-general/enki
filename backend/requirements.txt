@@ -13,3 +13,5 @@ elasticsearch
 cisu-python==0.1
 shapely
 #pandas
+faker
+marshmallow_enum

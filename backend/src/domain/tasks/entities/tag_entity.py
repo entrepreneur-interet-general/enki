@@ -8,6 +8,4 @@ from dataclasses_json import dataclass_json
 @dataclass
 class TagEntity(Entity):
     title: str
-    description: Optional[str] = field(default_factory=lambda: None)
     creator_id: Union[str, None] = field(default_factory=lambda: None)
-    color: Union[str, None] = field(default_factory=lambda: None)

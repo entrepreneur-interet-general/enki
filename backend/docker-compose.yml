@@ -14,6 +14,9 @@ services:
       - ./src:/code/src
       - ./tests:/code/tests
       - ./jdd/xml_cisu:/jdd/xml_cisu
+    depends_on:
+      - postgres
+      - mailhog
     networks:
       - default
       - enki_default
@@ -21,10 +24,12 @@ services:
   postgres:
     image: postgres
     restart: unless-stopped
+    ports:
+      - "5432:5432"
     env_file:
       - .envs/.local/.env.pg
-    volumes:
-      - ./pgdata/dev:/var/lib/postgresql/data
+#    volumes:
+#      - ./pgdata/dev:/var/lib/postgresql/data
     networks:
       - default
 

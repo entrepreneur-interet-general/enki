@@ -1,0 +1,49 @@
+@import "../../../../../design-system/styles/variables";
+
+.addMessage {
+  padding: 0 16px;
+  position: relative;
+  &--heading {
+    position: absolute;
+    top: 0;
+    font-family: $secondaryFont;
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    color: $darkestGrey;
+  }
+  &--title {
+    left: 16px;
+  }
+  &--cancel {
+    position: absolute;
+    display: flex;
+    align-items: baseline;
+    text-decoration: none;
+    right: 16px;
+    .icon {
+      font-size: 12px;
+      margin-right: 8px;
+    }
+  }
+}
+form {
+  padding: 32px 0;
+}
+input[type="text"] {
+  border: 0;
+  padding: 0;
+  font-size: 24px;
+  font-weight: 700;
+  &::placeholder {
+    color: $darkerGrey;
+  }
+}
+textarea {
+  border: 0;
+  color: $darkestPrimary;
+  width: 100%;
+  resize: none;
+  &::placeholder {
+    color: $darkerGrey;
+  }
+}

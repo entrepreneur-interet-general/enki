@@ -1,35 +1,35 @@
 from datetime import datetime
 from typing import Any, Dict, List, Union
 
+from marshmallow import ValidationError
+
 from domain.evenements.entity import EvenementEntity, EvenementType
 from domain.evenements.repository import AbstractEvenementRepository
+from domain.evenements.schema import EvenementSchema
+from service_layer.unit_of_work import AbstractUnitOfWork
 
 
 class EvenementService:
-    @staticmethod
-    def add_evenement(uuid: str,
-                      title: str,
-                      description: str,
-                      type: EvenementType,
-                      started_at: datetime,
-                      ended_at: Union[datetime, None],
-                      creator_id: str,
-                      repo: AbstractEvenementRepository):
-        evenement: EvenementEntity = EvenementEntity(uuid=uuid,
-                                                     title=title,
-                                                     description=description,
-                                                     type=type,
-                                                     started_at=started_at,
-                                                     ended_at=ended_at,
-                                                     creator_id=creator_id, )
-        repo.add(evenement)
+    schema = EvenementSchema()
 
     @staticmethod
-    def get_by_uuid(uuid: str, repo: AbstractEvenementRepository):
-        return repo.get_by_uuid(uuid=uuid).to_dict()
+    def add_evenement(data: dict,
+                      uow: AbstractUnitOfWork):
+        try:
+            evenement: EvenementEntity = EvenementSchema().load(data)
+        except ValidationError as ve:
+            raise ve
+        with uow:
+            uow.evenement.add(evenement)
 
     @staticmethod
-    def list_evenements(repo: AbstractEvenementRepository) -> List[Dict[str, Any]]:
-        evenements: List[EvenementEntity] = repo.get_all()
-        serialized_evenements = [evenement.to_dict() for evenement in evenements]
-        return serialized_evenements
+    def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
+        with uow:
+            return EvenementService.schema.dump(uow.evenement.get_by_uuid(uuid=uuid))
+
+    @staticmethod
+    def list_evenements(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            evenements: List[EvenementEntity] = uow.evenement.get_all()
+            serialized_evenements = [EvenementService.schema.dump(evenement) for evenement in evenements]
+            return serialized_evenements

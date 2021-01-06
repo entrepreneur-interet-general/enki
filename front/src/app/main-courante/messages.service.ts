@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 export interface Message {
   title: string;
   description: string;
+  created_at: string;
 }
 
 @Injectable({

@@ -22,6 +22,7 @@ class Severity(Enum):
 class MessageEventEntity(Entity, TimeStamped):
     title: str
     description: str
+    event_id: str
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
     creator_id: Union[str, None] = field(default_factory=lambda: None)
     started_at: Union[datetime, None] = field(default_factory=lambda: None)

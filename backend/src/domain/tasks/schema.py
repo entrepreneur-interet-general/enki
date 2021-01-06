@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, validate
 from marshmallow_enum import EnumField
 from datetime import datetime
 from werkzeug.exceptions import HTTPException
@@ -42,8 +42,9 @@ class MessageEventEntitySchema(Schema):
     __model__ = MessageEventEntity
 
     uuid = fields.Str(required=True)
-    title = fields.Str(required=True)
-    description = fields.Str(required=True)
+    title = fields.Str(required=True, validate=validate.Length(min=5))
+    description = fields.Str(required=True, validate=validate.Length(min=5))
+    event_id = fields.Str(required=True)
     severity = EnumField(Severity)
     creator_id: fields.Str(required=False)
     started_at: fields.DateTime()

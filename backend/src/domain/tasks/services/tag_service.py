@@ -19,11 +19,10 @@ class TagService:
     def list_tags(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             tags: List[TagEntity] = uow.tag.get_all()
-            serialized_tags = [tag.to_dict() for tag in tags]
-            return serialized_tags
+            return TagService.schema(many=True).dump(tags)
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
             tag = uow.tag.get_by_uuid(uuid)
-            return tag.to_dict()
+            return TagService.schema().dump(tag)

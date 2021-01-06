@@ -1,13 +1,28 @@
 <div class="mc">
   <p *ngIf="!(messages.length > 0) ">La main courante est vide</p>
   
-  <ul>
-    <li *ngFor="let message of messages">
-      <div class="mc--title">
-        Titre : {{ message.title }}
-      </div>
-      <div class="mc--content">
-        Contenu : {{ message.description }}
+  <ul class="">
+    <li class="list--element" *ngFor="let message of messages">
+      <div class="list--wrapper">
+        <div class="secondInfos">
+          <div class="secondInfos--dateTime">
+            24/11/2020 à 16:23
+          </div>
+          <div class="badge">
+            Préfecture
+          </div>
+        </div>
+        <div class="mainInfos">
+          <div class="mainInfos--title">
+            {{ message.title }} —
+          </div>
+          <div class="mainInfos--content">
+            {{ message.description }}
+          </div>
+          <!-- <div class="mainInfos--icon">
+            <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
+          </div> -->
+        </div>
       </div>
     </li>
   </ul>

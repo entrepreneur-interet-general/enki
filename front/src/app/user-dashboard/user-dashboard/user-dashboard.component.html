@@ -24,21 +24,21 @@
       <svg class="icon-post-it icon"><use xlink:href="#icon-post-it"></use></svg>
       Dernières interventions
     </h2>
-    <li class="intervention" *ngFor="let intervention of interventions | slice:0:3">
-      <a class="intervention--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
-        <div class="infosSecondaires">
-          <div class="infosSecondaires--dateTemps">
+    <li class="intervention list--element" *ngFor="let intervention of interventions | slice:0:3">
+      <a class="intervention--wrapper list--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
+        <div class="secondInfos">
+          <div class="secondInfos--dateTime">
             {{intervention.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
           </div>
-          <div class="status">
+          <div class="badge">
             En cours
           </div>
         </div>
-        <div class="infosPrincipales">
-          <div class="infosPrincipales--natureDeFait">
-            {{intervention.natureDeFait}}<span class="more-info"></span>
+        <div class="mainInfos">
+          <div class="mainInfos--title">
+            {{intervention.natureDeFait}}
           </div>
-          <div class="infosPrincipales--icon">
+          <div class="mainInfos--icon">
             <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
           </div>
         </div>

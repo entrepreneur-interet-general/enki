@@ -4,7 +4,6 @@ from uuid import uuid4
 from flask.testing import FlaskClient
 
 from domain.tasks.ports.tag_repository import NotFoundTag, AlreadyExistingTagUuid
-from entrypoints.flask_app import app
 from ..factories.tag import tag_factory
 from ..helpers.filter import filter_dict_with_keys
 

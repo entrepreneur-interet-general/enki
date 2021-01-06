@@ -1,6 +1,4 @@
 from typing import Dict
-from uuid import uuid4
-
 from flask.testing import FlaskClient
 
 from domain.tasks.ports.task_repository import AlreadyExistingTagInThisTask
@@ -9,6 +7,7 @@ from .test_task_api import BASE_PATH_TASK, get_task
 from ..factories.tag import tag_factory
 from ..factories.task import task_factory
 from ..helpers.filter import filter_dict_with_keys
+
 
 def test_add_task_add_tag_then_link_them(app, client: FlaskClient):
     task1 = task_factory()
@@ -20,7 +19,8 @@ def test_add_task_add_tag_then_link_them(app, client: FlaskClient):
     link_task1_tag1_response = post_add_tag_to_task(client, task1["uuid"], tag1["uuid"])
     assert link_task1_tag1_response.status_code == 201
     assert link_task1_tag1_response.json == {
-        "message": f"tag {tag1['uuid']} successfully added from task {task1['uuid']}"}
+        "message": f"tag {tag1['uuid']} successfully added from task {task1['uuid']}"
+    }
 
     link_task1_tag1_response = post_add_tag_to_task(client, task1["uuid"], tag1["uuid"])
     assert link_task1_tag1_response.status_code == AlreadyExistingTagInThisTask.code

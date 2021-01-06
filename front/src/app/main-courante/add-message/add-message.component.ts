@@ -11,13 +11,19 @@ import { MessagesService } from '../messages.service';
 export class AddMessageComponent implements OnInit {
   messageGroup = new FormGroup({
     title: new FormControl('', Validators.required),
-    content: new FormControl('', Validators.required)
+    content: new FormControl('', Validators.required),
+    tag: new FormControl('')
   })
   constructor(
     private messagesService: MessagesService,
     private router: Router
   ) { }
-  
+  submitTag(): void {
+    this.messagesService.addTag(this.messageGroup.value.tag).subscribe(tag => {
+      console.log(tag)
+      this.messagesService.tags.push(tag)
+    })
+  }
 
   onSubmit(): void {
     this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content).subscribe(response => {

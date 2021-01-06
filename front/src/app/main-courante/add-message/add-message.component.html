@@ -9,6 +9,12 @@
       <input type="text" class="enkiSpecialform__input" formControlName="title" placeholder="Sans titre" required>
     </div>
     <div class="enkiSpecialform__group">
+      <input type="text" class="enkiSpecialform__input" formControlName="tag" placeholder="Ajouter un label" >
+      <button type="button" (click)="submitTag()">Ajouter tag</button>
+      
+      <button type="button" (click)="assignTag()">Assigner le tag</button>
+    </div>
+    <div class="enkiSpecialform__group">
       <textarea formControlName="content" id="" cols="30" rows="10" placeholder="Appuyer ici pour ajouter une description"></textarea>
     </div>
     <div class="enkiSpecialForm__group">

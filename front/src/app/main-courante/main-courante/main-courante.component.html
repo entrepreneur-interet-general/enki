@@ -19,6 +19,7 @@
           <div class="mainInfos--content">
             {{ message.description }}
           </div>
+          <p *ngFor="let tag of message.tags">{{ tag.title }}</p>
           <!-- <div class="mainInfos--icon">
             <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
           </div> -->

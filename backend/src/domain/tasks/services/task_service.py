@@ -20,7 +20,7 @@ class TaskService:
             if tags:
                 tags = uow.tag.get_by_uuid_list(tags)
                 for tag in tags:
-                    uow.task._add_tag_to_task(task=task, tag=tag)
+                    uow.task.add_tag_to_task(task=task, tag=tag)
             new_task = uow.task.get_by_uuid(task.uuid)
             return TaskService.schema().dump(new_task)
 
@@ -32,7 +32,7 @@ class TaskService:
             if results:
                 raise AlreadyExistingTagInThisTask()
             tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
-            uow.task._add_tag_to_task(task=match, tag=tag)
+            uow.task.add_tag_to_task(task=match, tag=tag)
 
 
     @staticmethod

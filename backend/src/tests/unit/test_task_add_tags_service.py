@@ -18,6 +18,7 @@ def test_add_task_and_add_tag(task_repo: AbstractTaskRepository, tag_repo: Abstr
     added_task = task_repo.get_by_uuid(task_uuid)
     added_tag = tag_repo.get_by_uuid(tag_uuid)
     print(added_tag)
+    print(added_task)
 
     task_repo.add_tag_to_task(task=added_task,
                               tag=added_tag)

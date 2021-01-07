@@ -66,7 +66,7 @@ taskTable = Table(
 tagTable = Table(
     'tags', metadata,
     Column('uuid', String(60), primary_key=True),
-    Column('title', String(255), nullable=False),
+    Column('title', String(255), nullable=False, unique=True),
     Column('creator_id', String(255)),  # ForeignKey("users.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)

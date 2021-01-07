@@ -31,8 +31,7 @@ class TaskListResource(WithTaskRepoResource):
     def post(self):
         body = request.get_json()
         current_app.logger.info(f"body {body}")
-        tags = body.pop("tags", [])
-        command = CreateTask(data=body, tags=tags)
+        command = CreateTask(data=body)
         result = event_bus.publish(command, current_app.context)
         return {
                    "message": "Success",

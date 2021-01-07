@@ -8,7 +8,6 @@ from domain.core.topics import Topic, CreateTaskTopic, CreateTagTopic, CreateInf
 @dataclass
 class CreateTask(Command):
     data: dict
-    tags: List[str] = field(default_factory=lambda: [])
     topic: Topic = CreateTaskTopic
 
 

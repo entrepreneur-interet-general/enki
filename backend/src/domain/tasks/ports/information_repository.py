@@ -31,9 +31,6 @@ class NotFoundTagInThisInformation(HTTPException):
 
 
 class AbstractInformationRepository(abc.ABC):
-    def __init__(self, tag_repo: AbstractTagRepository):
-        self.tag_repo = tag_repo
-
     def add(self, information: InformationEntity) -> None:
         if self._match_uuid(information.uuid):
             raise AlreadyExistingInformationUuid()
@@ -57,20 +54,6 @@ class AbstractInformationRepository(abc.ABC):
             raise NotFoundTagInThisInformation
         return match.tags
 
-    def add_tag_to_information(self, uuid: str, tag_uuid: str) -> None:
-        match: InformationEntity = self.get_by_uuid(uuid)
-        if self._get_tag_by_information(uuid=uuid, tag_uuid=tag_uuid):
-            raise AlreadyExistingTagInThisInformation()
-        tag: TagEntity = self.tag_repo.get_by_uuid(uuid=tag_uuid)
-        self._add_tag_to_information(information=match, tag=tag)
-
-    def remove_tag_to_information(self, uuid: str, tag_uuid: str) -> None:
-        if not self._get_tag_by_information(uuid=uuid, tag_uuid=tag_uuid):
-            raise NotFoundTagInThisInformation
-        match: InformationEntity = self.get_by_uuid(uuid)
-        tag: TagEntity = self.tag_repo.get_by_uuid(uuid=tag_uuid)
-        self._remove_tag_to_information(match, tag=tag)
-
     @abc.abstractmethod
     def get_all(self) -> InformationsList:
         raise NotImplementedError
@@ -80,11 +63,11 @@ class AbstractInformationRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _add_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
+    def add_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _remove_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
+    def remove_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -119,10 +102,10 @@ class InMemoryInformationRepository(AbstractInformationRepository):
     def set_informations(self, informations: InformationsList) -> None:
         self._informations = informations
 
-    def _add_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
+    def add_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
         information.tags.append(tag)
 
-    def _remove_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
+    def remove_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
         information.tags.remove(tag)
 
     def _get_tag_by_information(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:

@@ -7,8 +7,11 @@ from sqlalchemy.orm import sessionmaker
 from adapters.postgres import PgTaskRepository, PgTagRepository, PgInformationRepository, PgEvenementRepository
 from adapters.postgres.orm import metadata
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, InMemoryAffairRepository
-from domain.evenements.repository import AbstractEvenementRepository
+from domain.evenements.repository import AbstractEvenementRepository, InMemoryEvenementRepository
 from domain.tasks.ports import AbstractInformationRepository, AbstractTagRepository, AbstractTaskRepository
+from domain.tasks.ports.information_repository import InMemoryInformationRepository
+from domain.tasks.ports.tag_repository import InMemoryTagRepository
+from domain.tasks.ports.task_repository import InMemoryTaskRepository
 from entrypoints.repositories.repositories import ElasticRepositories
 
 
@@ -72,6 +75,33 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.task = PgTaskRepository(self.session)
         self.information = PgInformationRepository(self.session, tag_repo=self.tag)
         self.evenement = PgEvenementRepository(self.session)
+        return super().__enter__()
+
+    def __exit__(self, *args):
+        super().__exit__(*args)
+        self.session.close()  # (3)
+
+    def commit(self):  # (4)
+        self.session.commit()
+
+    def rollback(self):  # (4)
+        self.session.rollback()
+
+    def reset(self):
+        self.tag.reset()
+        self.task.reset()
+
+
+class InMemoryUnitOfWork(AbstractUnitOfWork):
+
+    def __init__(self, config):
+        self.config = config
+        self.tag = InMemoryTagRepository()
+        self.task = InMemoryTaskRepository()
+        self.information = InMemoryInformationRepository()
+        self.evenement = InMemoryEvenementRepository()
+
+    def __enter__(self):
         return super().__enter__()
 
     def __exit__(self, *args):

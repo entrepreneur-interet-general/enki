@@ -13,21 +13,15 @@ class PgInformationRepository(PgRepositoryMixin, AbstractInformationRepository):
 
     def __init__(self, session: Session, tag_repo: AbstractTagRepository):
         PgRepositoryMixin.__init__(self, session=session, entity_type=InformationEntity)
-        AbstractInformationRepository.__init__(self, tag_repo=tag_repo)
+        AbstractInformationRepository.__init__(self)
 
-    def _add_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
-        p = self.session.query(InformationEntity).get(information.uuid)
-        if p:
-            t = self.session.query(TagEntity).get(tag.uuid)
-            p.tags.append(t)
-            self.commit()
+    def add_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
+        information.tags.append(tag)
+        self.commit()
 
-    def _remove_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
-        p = self.session.query(InformationEntity).get(information.uuid)
-        if p:
-            t = self.session.query(TagEntity).get(tag.uuid)
-            p.tags.remove(t)
-            self.commit()
+    def remove_tag_to_information(self, information: InformationEntity, tag: TagEntity) -> None:
+        information.tags.remove(tag)
+        self.commit()
 
     def _match_uuid(self, uuid: str) -> InformationEntity:
         matches = self.session.query(InformationEntity).filter(InformationEntity.uuid == uuid).all()

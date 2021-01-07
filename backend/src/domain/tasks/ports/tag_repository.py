@@ -23,6 +23,7 @@ class AbstractTagRepository(abc.ABC):
         if self._match_uuid(tag.uuid):
             raise AlreadyExistingTagUuid()
         self._add(tag)
+        # TODO : test if title already exists
 
     def get_by_uuid(self, uuid: str) -> TagEntity:
         matches = self._match_uuid(uuid)

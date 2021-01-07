@@ -16,18 +16,12 @@ class PgTaskRepository(PgRepositoryMixin, AbstractTaskRepository):
         AbstractTaskRepository.__init__(self)
 
     def add_tag_to_task(self, task: TaskEntity, tag: TagEntity) -> None:
-        p = self.session.query(TaskEntity).get(task.uuid)
-        if p:
-            t = self.session.query(TagEntity).get(tag.uuid)
-            p.tags.append(t)
-            self.commit()
+        task.tags.append(tag)
+        self.commit()
 
     def remove_tag_to_task(self, task: TaskEntity, tag: TagEntity) -> None:
-        p = self.session.query(TaskEntity).get(task.uuid)
-        if p:
-            t = self.session.query(TagEntity).get(tag.uuid)
-            p.tags.remove(t)
-            self.commit()
+        task.tags.remove(tag)
+        self.commit()
 
     def _match_uuid(self, uuid: str) -> TaskEntity:
         matches = self.session.query(TaskEntity).filter(TaskEntity.uuid == uuid).all()

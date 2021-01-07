@@ -14,7 +14,6 @@ def create_evenement(command: CreateEvenement, uow: AbstractUnitOfWork):
 def create_task(command: CreateTask, uow: AbstractUnitOfWork):
     return TaskService.add_task(
         data=command.data,
-        tags=command.tags,
         uow=uow)
 
 

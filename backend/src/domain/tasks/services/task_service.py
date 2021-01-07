@@ -13,7 +13,8 @@ class TaskService:
     schema = TaskSchema
 
     @staticmethod
-    def add_task(data: Dict[str, Any], tags: List[str], uow: AbstractUnitOfWork) -> Dict[str, Any]:
+    def add_task(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
+        tags = data.pop("tags", [])
         task: TaskEntity = TaskService.schema().load(data)
         with uow:
             uow.task.add(task)
@@ -28,21 +29,20 @@ class TaskService:
     def add_tag_to_task(task_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:
         with uow:
             match: TaskEntity = uow.task.get_by_uuid(task_uuid)
-            results = uow.task._get_tag_by_task(uuid=task_uuid, tag_uuid=tag_uuid)
+            results = uow.task.get_tag_by_task(uuid=task_uuid, tag_uuid=tag_uuid)
             if results:
                 raise AlreadyExistingTagInThisTask()
             tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
             uow.task.add_tag_to_task(task=match, tag=tag)
 
-
     @staticmethod
     def remove_tag_to_task(task_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:
         with uow:
-            if not uow.task._get_tag_by_task(uuid=task_uuid, tag_uuid=tag_uuid):
+            if not uow.task.get_tag_by_task(uuid=task_uuid, tag_uuid=tag_uuid):
                 raise NotFoundTagInThisTask()
             match: TaskEntity = uow.task.get_by_uuid(task_uuid)
             tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
-            uow.task._remove_tag_to_task(match, tag=tag)
+            uow.task.remove_tag_to_task(match, tag=tag)
 
     @staticmethod
     def list_tags(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:

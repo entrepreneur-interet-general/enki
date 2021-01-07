@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from typing import List
+
 from domain.core.commands import Command
 from domain.core.topics import Topic, CreateTaskTopic, CreateTagTopic, CreateInformationTopic
 
@@ -6,6 +8,7 @@ from domain.core.topics import Topic, CreateTaskTopic, CreateTagTopic, CreateInf
 @dataclass
 class CreateTask(Command):
     data: dict
+    tags: List[str]
     topic: Topic = CreateTaskTopic
 
 

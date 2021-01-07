@@ -52,7 +52,7 @@ export class MessagesService {
     return this.http.post<any>(this.tagUrl, tag, this.httpHeaders)
   }
 
-  addMessage(title, description, tags) : Observable<Message> {
+  addMessage(title, description) : Observable<Message> {
     let uuid = this.uuidv4()
     let message = {
       "title":title,

@@ -4,15 +4,19 @@
     <svg class="icon-close icon"><use xlink:href="#icon-close"></use></svg>
     Annuler
   </a>
-  <form action="" class="addMessage--form" [formGroup]="messageGroup" (ngSubmit)="onSubmit()">
+  <form action="" class="addMessageForm" [formGroup]="messageGroup" (ngSubmit)="onSubmit()">
     <div class="enkiSpecialform__group">
-      <input type="text" class="enkiSpecialform__input" formControlName="title" placeholder="Sans titre" required>
+      <input type="text" class="addMessageForm--titleInput" formControlName="title" placeholder="Sans titre" required>
     </div>
     <div class="enkiSpecialform__group">
-      <input type="text" class="enkiSpecialform__input" formControlName="tag" placeholder="Ajouter un label" >
-      <button type="button" (click)="submitTag()">Ajouter tag</button>
+      <a href="" class="addMessageForm--labelLink" routerLink="/addlabel">
+        <svg class="icon-add-circle icon"><use xlink:href="#icon-add-circle"></use></svg>
+        Ajouter un label
+      </a>
+      <!-- <bu type="text" class="enkiSpecialform__input" formControlName="tag" placeholder="Ajouter un label" > -->
+      <!-- <button type="button" (click)="submitTag()">Ajouter tag</button> -->
       
-      <button type="button" (click)="assignTag()">Assigner le tag</button>
+      <!-- <button type="button" (click)="assignTag()">Assigner le tag</button> -->
     </div>
     <div class="enkiSpecialform__group">
       <textarea formControlName="content" id="" cols="30" rows="10" placeholder="Appuyer ici pour ajouter une description"></textarea>

@@ -8,6 +8,7 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard/user-das
 import { FirstStepComponent } from './registration/first-step/first-step.component';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MainCouranteModule } from './main-courante/main-courante.module';
 import { MainCouranteComponent } from './main-courante/main-courante/main-courante.component';
 import { AddMessageComponent } from './main-courante/add-message/add-message.component';
 
@@ -29,16 +30,6 @@ const routes: Routes = [
     canActivate: [ AuthGuard ]
   },
   {
-    path: 'maincourante',
-    component: MainCouranteComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'addmessage',
-    component: AddMessageComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'liste-interventions',
     canActivate: [ AuthGuard ],
     component: ListeInterventionsComponent
@@ -56,7 +47,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes),
+    MainCouranteModule
+  ],
   exports: [RouterModule],
   providers: [AuthGuard]
 })

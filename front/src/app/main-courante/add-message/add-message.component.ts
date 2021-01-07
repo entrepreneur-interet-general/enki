@@ -19,9 +19,13 @@ export class AddMessageComponent implements OnInit {
     private router: Router
   ) { }
   submitTag(): void {
-    this.messagesService.addTag(this.messageGroup.value.tag).subscribe(tag => {
-      console.log(tag)
-      this.messagesService.tags.push(tag)
+    let uuid = this.messagesService.uuidv4()
+    this.messagesService.addTag(this.messageGroup.value.tag, uuid).subscribe(tag => {
+      // console.log(tag)
+      this.messagesService.tags.push({
+        "title": this.messageGroup.value.tag,
+        "uuid": uuid
+      })
     })
   }
 

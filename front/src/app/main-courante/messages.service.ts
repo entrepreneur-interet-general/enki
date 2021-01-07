@@ -10,6 +10,7 @@ export interface Message {
 }
 export interface Tag {
   title: string;
+  uuid: string;
 }
 
 @Injectable({
@@ -28,6 +29,7 @@ export class MessagesService {
     this.messages = window.sessionStorage.getItem("messages") ? JSON.parse(window.sessionStorage.getItem("messages")) : [];
     this.messagesUrl = 'http://localhost:5000/api/enki/v1/tasks'
     this.tagUrl = 'http://localhost:5000/api/enki/v1/tags'
+    this.tags = []
     this.httpHeaders = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -42,21 +44,27 @@ export class MessagesService {
     });
   }
 
-  addTag(title): Observable<Tag> {
+  addTag(title, uuid): Observable<Tag> {
     let tag = {
       "title": title,
-      "uuid": this.uuidv4()
+      "uuid": uuid
     }
     return this.http.post<any>(this.tagUrl, tag, this.httpHeaders)
   }
 
-  addMessage(title, description) : Observable<Message> {
+  addMessage(title, description, tags) : Observable<Message> {
+    let uuid = this.uuidv4()
     let message = {
       "title":title,
       "description": description,
-      "uuid": this.uuidv4()
+      "uuid": uuid
     }
     return this.http.post<any>(this.messagesUrl, message, this.httpHeaders)
+      /* .pipe(
+        .switchMap((message: any) => {
+          return this.http.put<any>(`${this.messagesUrl}/${uuid}/tags/)
+        })
+      ) */
   }
 
   getMessages(): Observable<Message[]> {

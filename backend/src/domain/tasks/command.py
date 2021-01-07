@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 
 from domain.core.commands import Command
@@ -8,7 +8,7 @@ from domain.core.topics import Topic, CreateTaskTopic, CreateTagTopic, CreateInf
 @dataclass
 class CreateTask(Command):
     data: dict
-    tags: List[str]
+    tags: List[str] = field(default_factory=lambda: [])
     topic: Topic = CreateTaskTopic
 
 
@@ -16,6 +16,7 @@ class CreateTask(Command):
 class CreateTag(Command):
     data: dict
     topic: Topic = CreateTagTopic
+
 
 @dataclass
 class CreateInformation(Command):

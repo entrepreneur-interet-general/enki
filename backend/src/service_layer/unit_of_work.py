@@ -69,7 +69,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
     def __enter__(self):
         self.session = self.session_factory()
         self.tag = PgTagRepository(self.session)
-        self.task = PgTaskRepository(self.session, tag_repo=self.tag)
+        self.task = PgTaskRepository(self.session)
         self.information = PgInformationRepository(self.session, tag_repo=self.tag)
         self.evenement = PgEvenementRepository(self.session)
         return super().__enter__()

@@ -30,16 +30,26 @@ class AbstractTagRepository(abc.ABC):
             raise NotFoundTag
         return matches
 
+    def get_by_uuid_list(self, uuids: List[str]) -> List[TagEntity]:
+        matches = self._match_uuids(uuids)
+        if not matches:
+            raise NotFoundTag
+        return matches
+
     @abc.abstractmethod
     def get_all(self) -> TagsList:
         raise NotImplementedError
 
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def _add(self, tag: TagEntity) -> None:
         raise NotImplementedError
 
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> Union[TagEntity, None]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _match_uuids(self, uuids: List[str]) -> List[TagEntity]:
         raise NotImplementedError
 
 
@@ -57,6 +67,10 @@ class InMemoryTagRepository(AbstractTagRepository):
 
     def _add(self, tag: TagEntity) -> None:
         self._tags.append(tag)
+
+    def _match_uuids(self, uuids: List[str]) -> List[TagEntity]:
+        matches = [tag for tag in self._tags if tag.uuid in uuids]
+        return matches
 
     # next methods are only for test purposes
     @property

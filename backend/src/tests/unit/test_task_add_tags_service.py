@@ -7,18 +7,23 @@ from domain.tasks.services.task_service import TaskService
 from uuid import uuid4
 
 
-def test_add_task_and_add_tag(task_repo: AbstractTaskRepository):
+def test_add_task_and_add_tag(task_repo: AbstractTaskRepository, tag_repo: AbstractTagRepository):
     task_uuid = str(uuid4())
     tag_uuid = str(uuid4())
-    task = TaskEntity(task_uuid, "Some title", "Some description")
+    event_uuid = str(uuid4())
+    task = TaskEntity(task_uuid, title="Some title", description="Some description", evenement_id=event_uuid)
     tag = TagEntity(tag_uuid, "Some title")
     task_repo.add(task)
-    task_repo.tag_repo.add(tag)
-    task_repo.add_tag_to_task(uuid=task_uuid,
-                              tag_uuid=tag_uuid)
+    tag_repo.add(tag)
+    added_task = task_repo.get_by_uuid(task_uuid)
+    added_tag = tag_repo.get_by_uuid(tag_uuid)
+    print(added_tag)
+
+    task_repo.add_tag_to_task(task=added_task,
+                              tag=added_tag)
 
     task: TaskEntity = task_repo.get_by_uuid(task_uuid)
-    tag: TagEntity = task_repo.tag_repo.get_by_uuid(tag_uuid)
+    tag: TagEntity = tag_repo.get_by_uuid(tag_uuid)
 
     assert task.tags[0] == tag
 

@@ -31,7 +31,7 @@ def get_pg_repos(engine: Engine) -> Tuple[AbstractTagRepository, AbstractTaskRep
     session: Session = session_factory()
 
     tag_repository = PgTagRepository(session)
-    task_repository = PgTaskRepository(session, tag_repo=tag_repository)
+    task_repository = PgTaskRepository(session)
     affair_repository = PgAffairRepository(session)
     evenement_repository = PgEvenementRepository(session)
     return tag_repository, task_repository, affair_repository, evenement_repository

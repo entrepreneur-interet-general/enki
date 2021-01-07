@@ -37,7 +37,7 @@ class InMemoryRepositories(Repositories):
     def __init__(self, config) -> None:
         super().__init__(config)
         self.tag = InMemoryTagRepository()
-        self.task = InMemoryTaskRepository(tag_repo=self.tag)
+        self.task = InMemoryTaskRepository()
         self.affair = InMemoryAffairRepository()
         self.evenement = InMemoryEvenementRepository()
 

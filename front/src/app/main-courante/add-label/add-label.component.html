@@ -1,1 +1,22 @@
-<p>add-label works!</p>
+<div class="addLabel">
+  <div class="addLabel--heading">
+    <a href="" class="addLabel--cancel" routerLink="/addmessage">
+      <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
+    </a>
+    <input type="text" class="addLabel--searchInput" [formControl]="labelSearch" placeholder="Ajouter un label">
+  </div>
+  <div class="addLabel--searchResults">
+    <div class="searchResults--title">
+      Sélectionner ou créer un label
+    </div>
+    <ul class="labelList">
+      <li class="labelList--element" *ngIf="labelSearch.value" (click)="addLabel()">
+        <div class="badge badge__inverted badge__green">{{labelSearch.value}}</div>
+        <svg class="icon-add icon"><use xlink:href="#icon-add"></use></svg>
+      </li>
+      <li class="labelList--element" *ngFor="let label of labels">
+        <div class="badge badge__inverted">{{label.title}}</div>
+      </li>
+    </ul>
+  </div>
+</div>

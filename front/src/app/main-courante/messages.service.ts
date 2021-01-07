@@ -10,7 +10,6 @@ export interface Message {
 }
 export interface Tag {
   title: string;
-  uuid: string;
 }
 
 @Injectable({
@@ -20,7 +19,8 @@ export interface Tag {
 export class MessagesService {
   messagesUrl: string;
   messages: Array<Message>;
-  tags: Array<Tag>
+  tags: Array<Tag>;
+  selectedTags: Array<Tag>;
   tagUrl: string;
   httpHeaders: object;
   constructor(
@@ -30,6 +30,7 @@ export class MessagesService {
     this.messagesUrl = 'http://localhost:5000/api/enki/v1/tasks'
     this.tagUrl = 'http://localhost:5000/api/enki/v1/tags'
     this.tags = []
+    this.selectedTags = []
     this.httpHeaders = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -44,12 +45,14 @@ export class MessagesService {
     });
   }
 
-  addTag(title, uuid): Observable<Tag> {
+  addTag(title): Observable<Tag> {
     let tag = {
-      "title": title,
-      "uuid": uuid
+      "title": title
     }
     return this.http.post<any>(this.tagUrl, tag, this.httpHeaders)
+      .pipe(
+        map(label => label.tag)
+      )
   }
 
   addMessage(title, description) : Observable<Message> {
@@ -72,6 +75,15 @@ export class MessagesService {
       .pipe(
         map(tasks => {
           return tasks.tasks
+        })
+      )
+  }
+
+  getLabels(): Observable<Tag[]> {
+    return this.http.get<any>(this.tagUrl)
+      .pipe(
+        map(labels => {
+          return labels.tags
         })
       )
   }

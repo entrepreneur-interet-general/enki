@@ -7,6 +7,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../app-auth-guard.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddLabelComponent } from './add-label/add-label.component';
+import { FilterLabelsPipe } from './add-label/filter-labels.pipe';
 
 
 const routes : Routes = [
@@ -27,7 +28,13 @@ const routes : Routes = [
   }
 ];
 @NgModule({
-  declarations: [MainCouranteComponent, MessageComponent, AddMessageComponent, AddLabelComponent],
+  declarations: [
+    MainCouranteComponent,
+    MessageComponent,
+    AddMessageComponent,
+    AddLabelComponent,
+    FilterLabelsPipe
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

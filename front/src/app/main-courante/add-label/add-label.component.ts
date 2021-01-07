@@ -27,7 +27,6 @@ export class AddLabelComponent implements OnInit {
 
   addLabel(): void {
     this.messagesService.addTag(this.labelSearch.value).subscribe(label => {
-      debugger;
       this.messagesService.tags.push(label)
       this.selectLabel(label)
       this.labelSearch.setValue('')

@@ -5,7 +5,7 @@ from domain.tasks.entities.tag_entity import TagEntity
 from domain.tasks.ports.tag_repository import AlreadyExistingTagUuid, InMemoryTagRepository, NotFoundTag, \
     AbstractTagRepository
 from domain.tasks.services.tag_service import TagService
-from ..helpers.filter import filter_dict_with_keys
+from tests.helpers.filter import filter_dict_with_keys
 
 
 def test_add_tag(tag_repo: AbstractTagRepository):

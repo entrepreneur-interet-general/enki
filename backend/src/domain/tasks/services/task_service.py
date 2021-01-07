@@ -29,11 +29,13 @@ class TaskService:
     def add_tag_to_task(task_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:
         with uow:
             match: TaskEntity = uow.task.get_by_uuid(task_uuid)
-            results = uow.task.get_tag_by_task(uuid=task_uuid, tag_uuid=tag_uuid)
-            if results:
-                raise AlreadyExistingTagInThisTask()
-            tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
-            uow.task.add_tag_to_task(task=match, tag=tag)
+            try:
+                results = uow.task.get_tag_by_task(uuid=task_uuid, tag_uuid=tag_uuid)
+                if results:
+                    raise AlreadyExistingTagInThisTask()
+            except NotFoundTagInThisTask:
+                tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
+                uow.task.add_tag_to_task(task=match, tag=tag)
 
     @staticmethod
     def remove_tag_to_task(task_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:

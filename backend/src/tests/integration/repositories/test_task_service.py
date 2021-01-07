@@ -2,7 +2,7 @@ from domain.tasks.entities.task_entity import TaskEntity
 from domain.tasks.ports.task_repository import AlreadyExistingTaskUuid, NotFoundTask, \
     AbstractTaskRepository
 from domain.tasks.services.task_service import TaskService
-from ..helpers.filter import filter_dict_with_keys
+from tests.helpers.filter import filter_dict_with_keys
 from uuid import uuid4
 import pytest
 
@@ -11,9 +11,11 @@ def test_add_task(task_repo: AbstractTaskRepository):
     uuid = str(uuid4())
     expected_title = "My title"
     expected_description = "My description"
+    expected_event = "event_id"
     task = TaskEntity(uuid,
                          title=expected_title,
-                         description=expected_description
+                         description=expected_description,
+                        evenement_id=expected_event
                       )
     task_repo.add(task)
 
@@ -26,10 +28,12 @@ def test_fails_to_add_task_when_already_exists(task_repo: AbstractTaskRepository
         "uuid": task1_uuid,
         "title": "Task 1 title",
         "description": "Task 1 description",
+        "evenement_id":"event_id"
     }
     task1 = TaskEntity(uuid=task1_uuid,
                        title=serialized_task1["title"],
                        description=serialized_task1["description"],
+                       evenement_id=serialized_task1["evenement_id"],
                        )
     task_repo.add(task1)
 
@@ -43,10 +47,13 @@ def test_list_tasks(task_repo: AbstractTaskRepository):
         "uuid": task1_uuid,
         "title": "Task 1 title",
         "description": "Task 1 description",
+        "evenement_id": "event_id"
     }
     task1 = TaskEntity(uuid=task1_uuid,
                        title=serialized_task1["title"],
                        description=serialized_task1["description"],
+                       evenement_id=serialized_task1["evenement_id"],
+
                        )
     task_repo.add(task1)
 
@@ -66,11 +73,15 @@ def test_get_by_uuid_when_task_present(task_repo: AbstractTaskRepository):
     serialized_task1 = {
         "uuid": task1_uuid,
         "title": "Task 1 title",
-        "description": "Task 1 description"
+        "description": "Task 1 description",
+        "evenement_id": "event_id"
+
     }
     task1 = TaskEntity(uuid=task1_uuid,
                        title=serialized_task1["title"],
                        description=serialized_task1["description"],
+                       evenement_id=serialized_task1["evenement_id"],
+
                        )
     task_repo.add(task1)
 

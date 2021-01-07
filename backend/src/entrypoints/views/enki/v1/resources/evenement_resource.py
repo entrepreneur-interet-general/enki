@@ -31,11 +31,10 @@ class EvenementListResource(WithEvenementRepoResource):
                 items: EvenementSchema
     post:
       description: Creating an event
-      parameters:
-        - in: body
-          schema: EvenementSchema
-          required: false
-          description: Evenement Data
+      requestBody:
+        content:
+          application/json:
+            schema:  EvenementSchema
       tags:
         - evenements
     """

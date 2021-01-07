@@ -16,6 +16,11 @@ def sqlite_engine() -> Engine:
     return engine
 
 
+@pytest.fixture(scope="session")
+def session(sqlite_engine: Engine):
+    return sessionmaker(bind=sqlite_engine, autoflush=False)()
+
+
 @pytest.fixture(scope="function", autouse=True)
 def clear_tables(sqlite_engine):
     metadata.drop_all(sqlite_engine)
@@ -38,18 +43,18 @@ def task_in_memory_repo() -> AbstractTaskRepository:
 
 
 @pytest.fixture(scope="session")
-def tag_pg_repo(sqlite_engine: Engine) -> AbstractTagRepository:
+def tag_pg_repo(session, sqlite_engine: Engine) -> AbstractTagRepository:
     clear_mappers()
     start_mappers()
-    tag_repository = PgTagRepository(sessionmaker(bind=sqlite_engine, autoflush=False)())
+    tag_repository = PgTagRepository(session)
     return tag_repository
 
 
 @pytest.fixture(scope="session")
-def task_pg_repo(sqlite_engine: Engine, tag_pg_repo: AbstractTagRepository) -> AbstractTaskRepository:
+def task_pg_repo(session, sqlite_engine: Engine) -> AbstractTaskRepository:
     clear_mappers()
     start_mappers()
-    task_repository = PgTaskRepository(sessionmaker(bind=sqlite_engine)())
+    task_repository = PgTaskRepository(session)
     return task_repository
 
 

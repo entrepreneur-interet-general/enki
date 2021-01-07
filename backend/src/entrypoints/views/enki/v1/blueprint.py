@@ -45,7 +45,7 @@ def register_views():
     # Add documents Schemas
     api_spec.spec.components.schema("EvenementSchema", schema=EvenementSchema)
     api_spec.spec.components.schema("TaskSchema", schema=TaskSchema)
-    api_spec.spec.components.schema("TagSchema", schema=TagSchema)
+    #api_spec.spec.components.schema("TagSchema", schema=TagSchema)
     api_spec.spec.components.schema("InformationSchema", schema=InformationSchema)
 
     # Affairs

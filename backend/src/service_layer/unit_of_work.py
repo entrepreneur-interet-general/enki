@@ -73,7 +73,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.session = self.session_factory()
         self.tag = PgTagRepository(self.session)
         self.task = PgTaskRepository(self.session)
-        self.information = PgInformationRepository(self.session, tag_repo=self.tag)
+        self.information = PgInformationRepository(self.session)
         self.evenement = PgEvenementRepository(self.session)
         return super().__enter__()
 
@@ -106,13 +106,12 @@ class InMemoryUnitOfWork(AbstractUnitOfWork):
 
     def __exit__(self, *args):
         super().__exit__(*args)
-        self.session.close()  # (3)
 
     def commit(self):  # (4)
-        self.session.commit()
+        pass
 
     def rollback(self):  # (4)
-        self.session.rollback()
+        pass
 
     def reset(self):
         self.tag.reset()

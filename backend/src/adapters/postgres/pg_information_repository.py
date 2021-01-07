@@ -11,7 +11,7 @@ from .repository import PgRepositoryMixin
 
 class PgInformationRepository(PgRepositoryMixin, AbstractInformationRepository):
 
-    def __init__(self, session: Session, tag_repo: AbstractTagRepository):
+    def __init__(self, session: Session):
         PgRepositoryMixin.__init__(self, session=session, entity_type=InformationEntity)
         AbstractInformationRepository.__init__(self)
 

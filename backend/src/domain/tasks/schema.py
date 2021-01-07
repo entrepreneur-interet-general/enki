@@ -69,6 +69,7 @@ class TaskSchema(MessageEventEntitySchema):
     def make_task(self, data: dict, **kwargs):
         current_app.logger.info("make_task")
         current_app.logger.info(data)
+        current_app.logger.info(type(data))
         entity = TaskEntity.from_dict(data)
         current_app.logger.info(entity.created_at)
 

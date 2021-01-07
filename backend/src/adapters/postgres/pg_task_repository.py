@@ -1,5 +1,6 @@
 from typing import List, Union
 
+from flask import current_app
 from sqlalchemy.orm import Session
 
 from domain.tasks.ports.tag_repository import AbstractTagRepository

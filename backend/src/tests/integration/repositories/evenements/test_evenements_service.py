@@ -27,12 +27,7 @@ def test_add_evenement(evenement_repo: AbstractEvenementRepository):
     evenement = EvenementEntity(**data)
     evenement_repo.add(evenement)
 
-    assert evenement_repo.get_all()[0] == EvenementEntity(uuid=uuid,
-                                                          title=expected_title,
-                                                          description=expected_description,
-                                                          type=_type,
-                                                          started_at=started_at,
-                                                          creator_id=creator_id)
+    assert evenement_repo.get_all()[0] == evenement
 
 
 def test_fails_to_add_evenement_when_already_exists(evenement_repo: AbstractEvenementRepository):

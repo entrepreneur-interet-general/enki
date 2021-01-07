@@ -10,8 +10,8 @@ from domain.affairs.services.affair_service import AffairService
 BASE_PATH_ECHANGES: str = "/api/v1/echanges/messages"
 BASE_PATH_AFFAIRS: str = "/api/enki/v1/affairs"
 
-filenames = list(pathlib.Path(pathlib.Path(__file__).parent.absolute()).glob("../data/*.xml"))
-response_folder = pathlib.Path(pathlib.Path(__file__).parent.absolute()) / "../data/response/sig"
+filenames = list(pathlib.Path(pathlib.Path(__file__).parent.absolute()).glob("../../data/*.xml"))
+response_folder = pathlib.Path(pathlib.Path(__file__).parent.absolute()) / "../../data/response/sig"
 
 
 @pytest.mark.parametrize("filename", filenames)

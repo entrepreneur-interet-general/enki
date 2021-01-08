@@ -41,7 +41,7 @@ def test_already_exists_message(app, client: FlaskClient):
 
     add_already_exists_message_response = post_add_message(client, message1)
     assert add_already_exists_message_response.status_code == AlreadyExistingMessageUuid.code
-    assert add_already_exists_message_response.json == {"message": AlreadyExistingMessageUuid.description}
+    assert add_already_exists_message_response.json == {"result": AlreadyExistingMessageUuid.description}
 
 
 def test_not_found_exists_message(app, client: FlaskClient):
@@ -51,7 +51,7 @@ def test_not_found_exists_message(app, client: FlaskClient):
 
     fetch_random_message_response = get_message(client, str(uuid4()))
     assert fetch_random_message_response.status_code == NotFoundMessage.code
-    assert fetch_random_message_response.json == {"message": NotFoundMessage.description}
+    assert fetch_random_message_response.json == {"result": NotFoundMessage.description}
 
 
 def post_add_message(client: FlaskClient, body: Dict[str, str]):

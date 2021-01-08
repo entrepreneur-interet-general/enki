@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Tag } from '../messages.service';
+import { Label } from '../labels.service';
 
 @Pipe({
   name: 'filterLabels'
 })
 export class FilterLabelsPipe implements PipeTransform {
 
-  transform(labels: any, ...args: any[]): any {
+  transform(labels: Array<Label>, ...args: any[]): any {
     if(!labels) {
       return [];
     }

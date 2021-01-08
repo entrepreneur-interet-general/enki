@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MessagesService, Tag } from '../messages.service';
+import { MessagesService } from '../messages.service';
+import { Label, LabelsService } from '../labels.service';
+
 
 @Component({
   selector: 'app-add-label',
@@ -9,14 +11,15 @@ import { MessagesService, Tag } from '../messages.service';
 })
 export class AddLabelComponent implements OnInit {
   labelSearch = new FormControl('')
-  selectedLabels: Array<Tag>
+  selectedLabels: Array<Label>
 
   constructor(
-    public messagesService: MessagesService
+    public messagesService: MessagesService,
+    public labelsService: LabelsService
   ) {
     this.selectedLabels = []
-    messagesService.getLabels().subscribe(labels => {
-      this.messagesService.tags = labels
+    labelsService.getLabels().subscribe(labels => {
+      this.labelsService.labels = labels
     })
   }
 
@@ -33,13 +36,13 @@ export class AddLabelComponent implements OnInit {
     return 0;
   }
 
-  sort(labels): Array<Tag> {
+  sort(labels): Array<Label> {
     return labels.sort(this.compare)
   }
 
   addLabel(): void {
-    this.messagesService.addTag(this.labelSearch.value).subscribe(label => {
-      this.messagesService.tags = this.messagesService.tags.concat(label)
+    this.labelsService.addLabel(this.labelSearch.value).subscribe(label => {
+      this.labelsService.labels = this.labelsService.labels.concat(label)
       this.selectLabel(label)
       this.labelSearch.setValue('')
     })

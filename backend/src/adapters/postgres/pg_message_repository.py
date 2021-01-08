@@ -35,7 +35,7 @@ class PgMessageRepository(PgRepositoryMixin, AbstractMessageRepository):
         self.commit()
 
     def get_all(self) -> List[MessageEntity]:
-        return self.session.query(self.entity_type).all()
+        return self.session.query(self.entity_type).order_by(self.entity_type.created_at.desc()).all()
 
     def _get_tag_by_message(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:
         match = self.get_by_uuid(uuid=uuid)

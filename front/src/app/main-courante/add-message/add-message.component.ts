@@ -22,7 +22,8 @@ export class AddMessageComponent implements OnInit {
   
 
   onSubmit(): void {
-    this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content, this.labelsService.selectedLabels).subscribe(response => {
+    let selectedLabelsUUID = this.labelsService.selectedLabels.map(label => label.uuid)
+    this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content, selectedLabelsUUID).subscribe(response => {
       this.router.navigate(['maincourante'])
     })
   }

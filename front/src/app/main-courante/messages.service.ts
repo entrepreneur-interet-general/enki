@@ -56,8 +56,8 @@ export class MessagesService {
   getMessages(): Observable<Message[]> {
     return this.http.get<any>(this.messagesUrl)
       .pipe(
-        map(tasks => {
-          return tasks.tasks
+        map(messages => {
+          return messages.messages
         })
       )
   }

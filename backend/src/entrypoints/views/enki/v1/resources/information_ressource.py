@@ -53,7 +53,7 @@ class InformationListResource(WithInformationRepoResource):
         body = request.get_json()
         command = CreateInformation(data=body)
         result = event_bus.publish(command, current_app.context)
-        return {"message": "Success"}, 201
+        return {"message": "Success", "information": result[0]}, 201
 
 
 class InformationResource(WithInformationRepoResource):

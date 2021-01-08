@@ -9,32 +9,44 @@ import { MessagesService, Tag } from '../messages.service';
 })
 export class AddLabelComponent implements OnInit {
   labelSearch = new FormControl('')
-  labels: Array<Tag>
   selectedLabels: Array<Tag>
 
   constructor(
-    private messagesService: MessagesService
+    public messagesService: MessagesService
   ) {
-    // this.labels = this.messagesService.tags
     this.selectedLabels = []
     messagesService.getLabels().subscribe(labels => {
-      this.labels = labels
+      this.messagesService.tags = labels
     })
   }
 
   ngOnInit(): void {
   }
 
+  compare(a, b): any {
+    if (a.title.toLowerCase() < b.title.toLowerCase()) {
+      return -1;
+    }
+    if (a.title.toLowerCase() > b.title.toLowerCase()) {
+      return 1;
+    }
+    return 0;
+  }
+
+  sort(labels): Array<Tag> {
+    return labels.sort(this.compare)
+  }
+
   addLabel(): void {
     this.messagesService.addTag(this.labelSearch.value).subscribe(label => {
-      this.messagesService.tags.push(label)
+      this.messagesService.tags = this.messagesService.tags.concat(label)
       this.selectLabel(label)
       this.labelSearch.setValue('')
     })
   }
 
-  unselectLabel(): void {
-
+  unselectLabel(labelToUnselect): void {
+    this.selectedLabels = this.selectedLabels.filter(label => label.uuid !== labelToUnselect.uuid)
   }
 
   selectLabel(label): void {

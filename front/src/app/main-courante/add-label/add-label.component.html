@@ -9,6 +9,7 @@
   <div class="addLabel--selectedLabels">
     <div class="selectedLabels--item" *ngFor="let label of selectedLabels">
       {{ label.title }}
+      <svg class="icon-close icon" (click)="unselectLabel(label)"><use xlink:href="#icon-close"></use></svg>
     </div>
   </div>
   <div class="addLabel--searchResults">
@@ -20,7 +21,7 @@
         <div class="badge badge__inverted badge__green">{{labelSearch.value}}</div>
         <svg class="icon-add icon"><use xlink:href="#icon-add"></use></svg>
       </li>
-      <li class="labelList--element" *ngFor="let label of (labels | filterLabels:labelSearch.value:selectedLabels)" (click)="selectLabel(label)">
+      <li class="labelList--element" *ngFor="let label of (sort(messagesService.tags) | filterLabels:labelSearch.value:selectedLabels)" (click)="selectLabel(label)">
         <div class="badge badge__inverted">{{label.title}}</div>
       </li>
     </ul>

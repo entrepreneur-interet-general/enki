@@ -10,6 +10,7 @@ export interface Message {
 }
 export interface Tag {
   title: string;
+  uuid: string;
 }
 
 @Injectable({

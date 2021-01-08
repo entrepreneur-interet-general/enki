@@ -3,11 +3,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker, Session, clear_mappers
 
-from adapters.postgres import PgTagRepository, PgTaskRepository
+from adapters.postgres import PgTagRepository, PgMessageRepository
 from adapters.postgres.orm import start_mappers, metadata
 from domain.affairs.ports.affair_repository import InMemoryAffairRepository, AbstractAffairRepository
-from domain.tasks.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
-from domain.tasks.ports.task_repository import InMemoryTaskRepository, AbstractTaskRepository
+from domain.messages.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
+from domain.messages.ports.task_repository import InMemoryTaskRepository, AbstractTaskRepository
 
 
 @pytest.fixture(scope="session")
@@ -54,7 +54,7 @@ def tag_pg_repo(session, sqlite_engine: Engine) -> AbstractTagRepository:
 def task_pg_repo(session, sqlite_engine: Engine) -> AbstractTaskRepository:
     clear_mappers()
     start_mappers()
-    task_repository = PgTaskRepository(session)
+    task_repository = PgMessageRepository(session)
     return task_repository
 
 

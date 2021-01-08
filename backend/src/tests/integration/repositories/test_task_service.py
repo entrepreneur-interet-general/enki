@@ -1,7 +1,7 @@
-from domain.tasks.entities.task_entity import TaskEntity
-from domain.tasks.ports.task_repository import AlreadyExistingTaskUuid, NotFoundTask, \
+from domain.messages.entities.task_entity import TaskEntity
+from domain.messages.ports.task_repository import AlreadyExistingTaskUuid, NotFoundTask, \
     AbstractTaskRepository
-from domain.tasks.services.task_service import TaskService
+from domain.messages.services.task_service import TaskService
 from tests.helpers.filter import filter_dict_with_keys
 from uuid import uuid4
 import pytest

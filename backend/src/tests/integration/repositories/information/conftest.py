@@ -5,8 +5,7 @@ from sqlalchemy.orm import sessionmaker, clear_mappers
 from typing import Dict, Any
 
 from adapters.postgres.orm import start_mappers, metadata
-from adapters.postgres.pg_information_repository import PgInformationRepository
-from domain.tasks.ports.information_repository import AbstractInformationRepository, InMemoryInformationRepository
+from domain.messages.ports.message_repository import AbstractMessageRepository
 
 
 @pytest.fixture(scope="session")

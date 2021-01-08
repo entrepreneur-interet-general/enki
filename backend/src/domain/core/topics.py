@@ -23,20 +23,14 @@ class CreateEvenementTopic(Topic):
 
 
 @dataclass
-class CreateTaskTopic(Topic):
-    name: str = "CreateTask"
+class CreateMessageTopic(Topic):
+    name: str = "CreateMessage"
 
 
 @dataclass
 class CreateTagTopic(Topic):
     name: str = "CreateTag"
 
-
 @dataclass
-class CreateInformationTopic(Topic):
-    name: str = "CreateInformation"
-
-
-@dataclass
-class AddTagToTaskTopic(Topic):
-    name: str = "AddTagToTask"
+class AddTagToMessageTopic(Topic):
+    name: str = "AddTagToMessage"

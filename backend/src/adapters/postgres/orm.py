@@ -2,15 +2,12 @@ import logging
 
 from datetime import datetime
 from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Integer, TIMESTAMP, Enum
-from sqlalchemy.engine.base import Engine
-from sqlalchemy.orm import mapper, relationship, clear_mappers
+from sqlalchemy.orm import mapper, relationship
 from sqlalchemy_utils import ChoiceType
 
 from domain.evenements.entity import EvenementType, EvenementEntity
-from domain.tasks.entities.info_entity import InformationEntity
-from domain.tasks.entities.message_entity import Severity
-from domain.tasks.entities.task_entity import TaskEntity, TaskType
-from domain.tasks.entities.tag_entity import TagEntity
+from domain.messages.entities.message_entity import MessageType, Severity, MessageEntity
+from domain.messages.entities.tag_entity import TagEntity
 
 logger = logging.getLogger(__name__)
 
@@ -21,39 +18,20 @@ userTable = Table(
     Column('uuid', String(60), primary_key=True),
 )
 
-tagTaskTable = Table(
-    'tag_task', metadata,
-    Column('task_uuid', String(60), ForeignKey("tasks.uuid")),
+tagMessageTable = Table(
+    'tags_messages', metadata,
+    Column('messages_uuid', String(60), ForeignKey("messages.uuid")),
     Column('tag_uuid', String(60), ForeignKey("tags.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
 )
 
-tagInformationsTable = Table(
-    'tag_informations', metadata,
-    Column('information_uuid', String(60), ForeignKey("informations.uuid")),
-    Column('tag_uuid', String(60), ForeignKey("tags.uuid")),
-    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
-)
 
-informationTable = Table(
-    'informations', metadata,
+messagesTable = Table(
+    'messages', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False),
     Column('description', String(255)),
-    Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
-    Column('creator_id', String(60), ForeignKey("users.uuid")),
-    Column('severity', ChoiceType(Severity, impl=Integer()), nullable=False),
-    Column('started_at', TIMESTAMP(), nullable=True),
-    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
-    Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
-)
-
-taskTable = Table(
-    'tasks', metadata,
-    Column('uuid', String(60), primary_key=True),
-    Column('title', String(255), nullable=False),
-    Column('description', String(255)),
-    Column('type', Enum(TaskType)),
+    Column('type', Enum(MessageType)),
     Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
     Column('executor_id', String(60), ForeignKey("users.uuid")),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
@@ -87,11 +65,10 @@ evenementsTable = Table(
 
 all_tables = [
     userTable,
-    tagTaskTable,
-    taskTable,
+    tagMessageTable,
     tagTable,
     evenementsTable,
-    informationTable
+    messagesTable
 ]
 
 
@@ -99,14 +76,8 @@ def start_mappers():
     mapper(TagEntity, tagTable)
     mapper(EvenementEntity, evenementsTable)
     mapper(
-        InformationEntity, informationTable,
+        MessageEntity, messagesTable,
         properties={
-            'tags': relationship(TagEntity, backref='informations', secondary=tagInformationsTable)
-        }
-    )
-    mapper(
-        TaskEntity, taskTable,
-        properties={
-            'tags': relationship(TagEntity, backref='tasks', secondary=tagTaskTable)
+            'tags': relationship(TagEntity, backref='messages', secondary=tagMessageTable)
         }
     )

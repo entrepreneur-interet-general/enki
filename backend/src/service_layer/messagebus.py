@@ -15,15 +15,12 @@ COMMAND_HANDLERS: Dict[Type[Topic], List[Callable]] = {
     topics.CreateEvenementTopic: [
         commands.create_evenement,
     ],
-    topics.CreateTaskTopic: [
-        commands.create_task,
+    topics.CreateMessageTopic: [
+        commands.create_message,
     ],
     topics.CreateTagTopic: [
         commands.create_tag,
-    ],
-    topics.CreateInformationTopic: [
-        commands.create_information,
-    ],
+    ]
 }
 
 HANDLERS: Dict[Type[Topic], List[Callable]] = {**EVENT_HANDLERS, **COMMAND_HANDLERS}

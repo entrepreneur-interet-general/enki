@@ -3,7 +3,7 @@ from typing import List, Union
 
 from werkzeug.exceptions import HTTPException
 
-from domain.tasks.entities.tag_entity import TagEntity
+from domain.messages.entities.tag_entity import TagEntity
 
 TagsList = List[TagEntity]
 

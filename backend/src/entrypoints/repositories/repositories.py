@@ -5,15 +5,13 @@ from adapters.elasticsearch.affair_repository import ElasticAffairRepository
 from adapters.postgres.orm import metadata
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, InMemoryAffairRepository
 from domain.evenements.repository import InMemoryEvenementRepository
-from domain.tasks.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
-from domain.tasks.ports.task_repository import AbstractTaskRepository, InMemoryTaskRepository
+from domain.messages.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 from entrypoints.repositories.factories import get_pg_repos, build_engine
 from elasticsearch import Elasticsearch
 
 
 class Repositories(abc.ABC):
     name: str
-    task: AbstractTaskRepository
     tag: AbstractTagRepository
     affair: AbstractAffairRepository
 
@@ -37,7 +35,6 @@ class InMemoryRepositories(Repositories):
     def __init__(self, config) -> None:
         super().__init__(config)
         self.tag = InMemoryTagRepository()
-        self.task = InMemoryTaskRepository()
         self.affair = InMemoryAffairRepository()
         self.evenement = InMemoryEvenementRepository()
 

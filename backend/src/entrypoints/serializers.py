@@ -7,8 +7,7 @@ from cisu.entities.commons import DateType
 from cisu.entities.commons.cisu_enum import CisuEnum
 from cisu.entities.commons.common_alerts import AttributeType, Victims
 from cisu.entities.commons.location_type import LocationShape
-from domain.tasks.entities.message_entity import Severity
-from domain.tasks.entities.task_entity import TaskType
+from domain.messages.entities.message_entity import Severity, MessageType
 
 
 class EnkiJsonEncoder(json.JSONEncoder):
@@ -26,7 +25,7 @@ class EnkiJsonEncoder(json.JSONEncoder):
                 return str(obj)
             elif isinstance(obj, LocationShape):
                 return str(obj)
-            elif isinstance(obj, TaskType):
+            elif isinstance(obj, MessageType):
                 return str(obj)
             elif isinstance(obj, AttributeType):
                 return obj.to_dict()

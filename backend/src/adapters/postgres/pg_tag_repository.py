@@ -2,9 +2,9 @@ from typing import List, Union
 
 from sqlalchemy.orm import Session
 
-from domain.tasks.ports.tag_repository import AbstractTagRepository, NotFoundTag, AlreadyExistingTagUuid
-from domain.tasks.entities.tag_entity import TagEntity
-from .repository import PgRepositoryMixin, NotFoundException
+from domain.messages.ports.tag_repository import AbstractTagRepository, AlreadyExistingTagUuid
+from domain.messages.entities.tag_entity import TagEntity
+from .repository import PgRepositoryMixin
 
 tagsList = List[TagEntity]
 

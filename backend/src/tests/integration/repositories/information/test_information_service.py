@@ -1,7 +1,7 @@
-from domain.tasks.entities.info_entity import InformationEntity
-from domain.tasks.ports.information_repository import AlreadyExistingInformationUuid, NotFoundInformation, \
+from domain.messages.entities.info_entity import InformationEntity
+from domain.messages.ports.information_repository import AlreadyExistingInformationUuid, NotFoundInformation, \
     AbstractInformationRepository
-from domain.tasks.services.information_service import InformationService
+from domain.messages.services.information_service import InformationService
 from tests.helpers.filter import filter_dict_with_keys
 from uuid import uuid4
 import pytest

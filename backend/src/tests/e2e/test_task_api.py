@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from flask.testing import FlaskClient
 
-from domain.tasks.ports.task_repository import AlreadyExistingTaskUuid, NotFoundTask
+from domain.messages.ports.task_repository import AlreadyExistingTaskUuid, NotFoundTask
 from entrypoints.flask_app import app
 from ..factories.task import task_factory
 from ..helpers.filter import filter_dict_with_keys

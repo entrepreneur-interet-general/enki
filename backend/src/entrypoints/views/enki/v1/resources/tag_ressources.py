@@ -1,9 +1,9 @@
 from flask import request, current_app
 from flask_restful import Resource
 
-from domain.tasks.command import CreateTag
-from domain.tasks.ports.tag_repository import AbstractTagRepository
-from domain.tasks.services.tag_service import TagService
+from domain.messages.command import CreateTag
+from domain.messages.ports.tag_repository import AbstractTagRepository
+from domain.messages.services.tag_service import TagService
 from entrypoints.extensions import event_bus
 
 

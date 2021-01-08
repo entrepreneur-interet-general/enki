@@ -4,21 +4,19 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
 
-from adapters.postgres import PgTaskRepository, PgTagRepository, PgInformationRepository, PgEvenementRepository
+from adapters.postgres import PgMessageRepository, PgTagRepository, PgEvenementRepository
 from adapters.postgres.orm import metadata
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, InMemoryAffairRepository
 from domain.evenements.repository import AbstractEvenementRepository, InMemoryEvenementRepository
-from domain.tasks.ports import AbstractInformationRepository, AbstractTagRepository, AbstractTaskRepository
-from domain.tasks.ports.information_repository import InMemoryInformationRepository
-from domain.tasks.ports.tag_repository import InMemoryTagRepository
-from domain.tasks.ports.task_repository import InMemoryTaskRepository
+from domain.messages.ports import AbstractTagRepository, AbstractMessageRepository
+from domain.messages.ports.message_repository import InMemoryMessageRepository
+from domain.messages.ports.tag_repository import InMemoryTagRepository
 from entrypoints.repositories.repositories import ElasticRepositories
 
 
 class AbstractUnitOfWork(abc.ABC):
     tag: AbstractTagRepository
-    task: AbstractTaskRepository
-    information: AbstractInformationRepository
+    message: AbstractMessageRepository
     evenement: AbstractEvenementRepository
     affair: AbstractAffairRepository
 
@@ -72,8 +70,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
     def __enter__(self):
         self.session = self.session_factory()
         self.tag = PgTagRepository(self.session)
-        self.task = PgTaskRepository(self.session)
-        self.information = PgInformationRepository(self.session)
+        self.message = PgMessageRepository(self.session)
         self.evenement = PgEvenementRepository(self.session)
         return super().__enter__()
 
@@ -97,8 +94,7 @@ class InMemoryUnitOfWork(AbstractUnitOfWork):
     def __init__(self, config):
         self.config = config
         self.tag = InMemoryTagRepository()
-        self.task = InMemoryTaskRepository()
-        self.information = InMemoryInformationRepository()
+        self.message = InMemoryMessageRepository()
         self.evenement = InMemoryEvenementRepository()
 
     def __enter__(self):

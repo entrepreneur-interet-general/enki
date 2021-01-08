@@ -7,7 +7,7 @@ from adapters.postgres import PgTagRepository, PgMessageRepository
 from adapters.postgres.orm import start_mappers, metadata
 from domain.affairs.ports.affair_repository import InMemoryAffairRepository, AbstractAffairRepository
 from domain.messages.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
-from domain.messages.ports.task_repository import InMemoryTaskRepository, AbstractTaskRepository
+from domain.messages.ports.message_repository import InMemoryMessageRepository, AbstractMessageRepository
 
 
 @pytest.fixture(scope="session")
@@ -36,10 +36,10 @@ def tag_in_memory_repo() -> AbstractTagRepository:
 
 
 @pytest.fixture(scope="function")
-def task_in_memory_repo() -> AbstractTaskRepository:
-    task_repo = InMemoryTaskRepository()
-    task_repo._tasks = []
-    return task_repo
+def message_in_memory_repo() -> AbstractMessageRepository:
+    message_repo = InMemoryMessageRepository()
+    message_repo._messages = []
+    return message_repo
 
 
 @pytest.fixture(scope="session")
@@ -51,11 +51,11 @@ def tag_pg_repo(session, sqlite_engine: Engine) -> AbstractTagRepository:
 
 
 @pytest.fixture(scope="session")
-def task_pg_repo(session, sqlite_engine: Engine) -> AbstractTaskRepository:
+def message_pg_repo(session, sqlite_engine: Engine) -> AbstractMessageRepository:
     clear_mappers()
     start_mappers()
-    task_repository = PgMessageRepository(session)
-    return task_repository
+    message_repository = PgMessageRepository(session)
+    return message_repository
 
 
 @pytest.fixture(scope="function", params=["in_memory", "sqlite"])  # ,
@@ -69,12 +69,12 @@ def tag_repo(request, tag_in_memory_repo, tag_pg_repo) -> AbstractTagRepository:
 
 
 @pytest.fixture(scope="function", params=["in_memory", "sqlite"])  # , "sqlite"
-def task_repo(request, task_in_memory_repo, task_pg_repo) -> AbstractTaskRepository:
+def message_repo(request, message_in_memory_repo, message_pg_repo) -> AbstractMessageRepository:
     if request.param == "sqlite":
-        repo = task_pg_repo
+        repo = message_pg_repo
     else:  # request.param == "in_memory"
-        repo = task_in_memory_repo
-        repo._tasks = []
+        repo = message_in_memory_repo
+        repo._messages = []
     return repo
 
 

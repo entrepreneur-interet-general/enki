@@ -44,9 +44,10 @@
     text-decoration: none;
     font-family: $secondaryFont;
     font-size: 17px;
-    padding: 24px 0;
+    padding: 0 0 24px;
     .icon {
       padding-right: 8px;
+      fill: $darkerGrey;
     }
     &:after {
       content: "";

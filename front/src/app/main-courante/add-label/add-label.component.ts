@@ -11,13 +11,11 @@ import { Label, LabelsService } from '../labels.service';
 })
 export class AddLabelComponent implements OnInit {
   labelSearch = new FormControl('')
-  selectedLabels: Array<Label>
 
   constructor(
     public messagesService: MessagesService,
     public labelsService: LabelsService
   ) {
-    this.selectedLabels = []
     labelsService.getLabels().subscribe(labels => {
       this.labelsService.labels = labels
     })
@@ -49,11 +47,11 @@ export class AddLabelComponent implements OnInit {
   }
 
   unselectLabel(labelToUnselect): void {
-    this.selectedLabels = this.selectedLabels.filter(label => label.uuid !== labelToUnselect.uuid)
+    this.labelsService.selectedLabels = this.labelsService.selectedLabels.filter(label => label.uuid !== labelToUnselect.uuid)
   }
 
   selectLabel(label): void {
-    this.selectedLabels = this.selectedLabels.concat(label)
+    this.labelsService.selectedLabels = this.labelsService.selectedLabels.concat(label)
   }
 
   getLabels(): void {

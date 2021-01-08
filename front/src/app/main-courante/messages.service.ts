@@ -23,7 +23,7 @@ export class MessagesService {
     private http: HttpClient,
   ) {
     this.messages = window.sessionStorage.getItem("messages") ? JSON.parse(window.sessionStorage.getItem("messages")) : [];
-    this.messagesUrl = 'http://localhost:5000/api/enki/v1/tasks'
+    this.messagesUrl = 'http://localhost:5000/api/enki/v1/informations'
 
     this.httpHeaders = {
       headers: new HttpHeaders({
@@ -41,12 +41,14 @@ export class MessagesService {
 
 
 
-  addMessage(title, description) : Observable<Message> {
+  addMessage(title, description, selectedLabels) : Observable<Message> {
     let uuid = this.uuidv4()
     let message = {
       "title":title,
       "description": description,
-      "uuid": uuid
+      "uuid": uuid,
+      "tags": selectedLabels,
+      "evenement_id": "event_id"
     }
     return this.http.post<any>(this.messagesUrl, message, this.httpHeaders)
   }

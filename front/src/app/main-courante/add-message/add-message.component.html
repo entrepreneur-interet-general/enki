@@ -9,14 +9,19 @@
       <input type="text" class="addMessageForm--titleInput" formControlName="title" placeholder="Sans titre" required>
     </div>
     <div class="enkiSpecialform__group">
-      <a href="" class="addMessageForm--labelLink" routerLink="/addlabel">
+      <div class="addMessageForm--labelList">
+        <div class="labelElement labelElement badge badge__inverted" *ngFor="let label of labelsService.selectedLabels">
+          {{label.title}}
+        </div>
+      </div>
+      <a href="" class="addMessageForm--labelLink" routerLink="/addlabel" *ngIf="labelsService.labels.length === 0">
         <svg class="icon-add-circle icon"><use xlink:href="#icon-add-circle"></use></svg>
         Ajouter un label
       </a>
-      <!-- <bu type="text" class="enkiSpecialform__input" formControlName="tag" placeholder="Ajouter un label" > -->
-      <!-- <button type="button" (click)="submitTag()">Ajouter tag</button> -->
-      
-      <!-- <button type="button" (click)="assignTag()">Assigner le tag</button> -->
+      <a href="" class="addMessageForm--labelLink" routerLink="/addlabel" *ngIf="labelsService.labels.length > 0">
+        <svg class="icon-pen icon"><use xlink:href="#icon-pen"></use></svg>
+        Modifier les labels
+      </a>
     </div>
     <div class="enkiSpecialform__group">
       <textarea formControlName="content" id="" cols="30" rows="10" placeholder="Appuyer ici pour ajouter une description"></textarea>

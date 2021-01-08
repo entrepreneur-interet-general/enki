@@ -11,7 +11,9 @@ from ..helpers.filter import filter_dict_with_keys
 
 def test_add_task_add_tag_then_link_them(app, client: FlaskClient):
     task1 = task_factory()
+    print("before the first add task")
     _ = post_add_task(client, task1)
+    print("first add task")
     tag1 = tag_factory()
     _ = post_add_tag(client, tag1)
 

@@ -48,7 +48,8 @@ class MessageResource(WithMessageRepoResource):
     """
 
     def get(self, uuid: str):
-        return {"message": MessageService.get_by_uuid(uuid, current_app.context), "message": "success"}, 200
+        return {"message": MessageService.get_by_uuid(uuid, current_app.context),
+                "result": "success"}, 200
 
 
 class MessageTagListResource(WithMessageRepoResource):
@@ -63,7 +64,7 @@ class MessageTagListResource(WithMessageRepoResource):
 
     def get(self, uuid: str):
         tags = MessageService.list_tags(uuid, uow=current_app.context)
-        return {"tags": tags, "message": "success"}, 200
+        return {"tags": tags, "result": "success"}, 200
 
 
 class MessageTagResource(WithMessageRepoResource):
@@ -89,16 +90,16 @@ class MessageTagResource(WithMessageRepoResource):
         tag: Dict[str, Any] = MessageService.get_message_tag(uuid,
                                                              tag_uuid=tag_uuid,
                                                              uow=current_app.context)
-        return {"tag": tag, "message": "Success"}, 200
+        return {"tag": tag, "result": "Success"}, 200
 
     def put(self, uuid: str, tag_uuid: str):
         MessageService.add_tag_to_message(uuid,
                                           tag_uuid=tag_uuid,
                                           uow=current_app.context)
-        return {"message": f"tag {tag_uuid} successfully added from message {uuid}"}, 201
+        return {"result": f"tag {tag_uuid} successfully added from message {uuid}"}, 201
 
     def delete(self, uuid: str, tag_uuid: str):
         MessageService.remove_tag_to_message(uuid,
                                              tag_uuid=tag_uuid,
                                              uow=current_app.context)
-        return {"message": f"tag {tag_uuid} successfully deleted from message {uuid}"}, 202
+        return {"result": f"tag {tag_uuid} successfully deleted from message {uuid}"}, 202

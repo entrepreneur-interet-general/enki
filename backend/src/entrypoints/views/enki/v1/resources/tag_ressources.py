@@ -31,7 +31,7 @@ class TagListResource(WithTagRepoResource):
         body = request.get_json()
         command = CreateTag(data=body)
         result = event_bus.publish(command, current_app.context)
-        return {"message": "Success",
+        return {"result": "Success",
                 "tag": result[0]}, 201
 
 

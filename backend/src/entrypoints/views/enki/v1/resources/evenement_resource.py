@@ -50,7 +50,7 @@ class EvenementListResource(WithEvenementRepoResource):
         result = event_bus.publish(command, current_app.context)
 
         return {
-                   "message": "Success",
+                   "result": "Success",
                    "evenement": result[0],
                }, 201
 
@@ -79,5 +79,5 @@ class EvenementResource(WithEvenementRepoResource):
     def get(self, uuid: str):
         return {
                    "evenement": EvenementService.get_by_uuid(uuid, current_app.context),
-                   "message": "success"
+                   "result": "success"
                }, 200

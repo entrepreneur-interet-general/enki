@@ -34,7 +34,7 @@ class MessageListResource(WithMessageRepoResource):
         command = CreateMessage(data=body)
         result = event_bus.publish(command, current_app.context)
         return {
-                   "message": "Success",
+                   "result": "Success",
                    "message": result[0]
                }, 201
 

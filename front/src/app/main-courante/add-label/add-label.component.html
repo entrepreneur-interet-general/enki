@@ -3,14 +3,13 @@
     <a href="" class="addLabel--cancel" routerLink="/addmessage">
       <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
     </a>
-
-    <input type="text" class="addLabel--searchInput" [formControl]="labelSearch" placeholder="Ajouter un label">
-  </div>
-  <div class="addLabel--selectedLabels">
-    <div class="selectedLabels--item" *ngFor="let label of labelsService.selectedLabels">
-      {{ label.title }}
-      <svg class="icon-close icon" (click)="unselectLabel(label)"><use xlink:href="#icon-close"></use></svg>
+    <div class="addLabel--selectedLabels" *ngIf="labelsService.selectedLabels.length > 0">
+      <div class="selectedLabels--item badge badge__inverted" *ngFor="let label of labelsService.selectedLabels">
+        {{ label.title }}
+        <svg class="icon-close icon" (click)="unselectLabel(label)"><use xlink:href="#icon-close"></use></svg>
+      </div>
     </div>
+    <input type="text" class="addLabel--searchInput" [formControl]="labelSearch" placeholder="Ajouter un label">
   </div>
   <div class="addLabel--searchResults">
     <div class="searchResults--title">

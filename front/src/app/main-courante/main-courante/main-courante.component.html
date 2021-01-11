@@ -19,10 +19,12 @@
           <div class="mainInfos--content">
             {{ message.description }}
           </div>
-          <p class="badge badge__inverted" *ngFor="let tag of message.tags">{{ tag.title }}</p>
           <!-- <div class="mainInfos--icon">
             <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
           </div> -->
+        </div>
+        <div class="list--labels" *ngIf="message.tags.length > 0">
+          <div class="badge badge__inverted" *ngFor="let tag of message.tags">{{ tag.title }}</div>
         </div>
       </div>
     </li>

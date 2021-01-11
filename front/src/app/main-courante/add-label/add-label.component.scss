@@ -30,6 +30,21 @@
       color: $darkerGrey;
     }
   }
+  &--selectedLabels {
+    display: flex;
+    align-items: center;
+  }
+}
+.selectedLabels {
+  &--item {
+    display: flex;
+    align-items: center;
+    svg {
+      font-size: 12px;
+      fill: $primary;
+      margin: 0 4px 0 8px;
+    }
+  }
 }
 .searchResults {
   &--title {

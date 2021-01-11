@@ -23,7 +23,7 @@ export class MessagesService {
     private http: HttpClient,
   ) {
     this.messages = window.sessionStorage.getItem("messages") ? JSON.parse(window.sessionStorage.getItem("messages")) : [];
-    this.messagesUrl = 'http://localhost:5000/api/enki/v1/informations'
+    this.messagesUrl = 'http://localhost:5000/api/enki/v1/messages'
 
     this.httpHeaders = {
       headers: new HttpHeaders({

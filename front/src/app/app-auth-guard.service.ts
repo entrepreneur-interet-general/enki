@@ -27,8 +27,9 @@ export class AuthGuard extends KeycloakAuthGuard {
         redirectUri: window.location.origin + state.url,
       });
     }
-    if (Object.keys(this.userService.user).length === 0) {
-      this.userService.loadUserProfile()
+
+    if (!this.userService.userIsValid()) {
+      return this.router.parseUrl('/register/step1');
     }
  
     // Get the roles required from the route.

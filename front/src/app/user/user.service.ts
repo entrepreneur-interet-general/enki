@@ -19,7 +19,12 @@ export class UserService {
   constructor(
     private keycloakService: KeycloakService
   ) {
-    this.user = {};
+    this.user = {
+      attributes: {
+        code_insee: "",
+        fonction: ""
+      }
+    };
   }
 
   userIsValid(): boolean {

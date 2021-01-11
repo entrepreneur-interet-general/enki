@@ -37,25 +37,32 @@
       color: $darkerGrey;
     }
   }
+}
+.labelGroup {
+  padding: 12px 0 16px;
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 62px;
+    height: 1px;
+    background: $lightGrey;
+    bottom: 0;
+  }
+  &--labelList {
+    padding: 8px 0;
+  }
   &--labelLink {
     display: flex;
-    position: relative;
     color: $darkGrey;
     text-decoration: none;
     font-family: $secondaryFont;
     font-size: 17px;
-    padding: 0 0 24px;
+    padding: 8px 0;
     .icon {
       padding-right: 8px;
+      font-size: 18px;
       fill: $darkerGrey;
-    }
-    &:after {
-      content: "";
-      position: absolute;
-      width: 62px;
-      height: 1px;
-      background: $lightGrey;
-      bottom: 0;
     }
   }
 }

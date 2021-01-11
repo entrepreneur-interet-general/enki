@@ -32,7 +32,7 @@ export class AppComponent {
         this.userService.user.attributes.fonction = decodedJWT.fonction ? decodedJWT.fonction : ""
         this.userService.user.attributes.code_insee = decodedJWT.code_insee ? decodedJWT.code_insee : ""
         if (this.userService.userIsValid()) {
-          this.router.navigate(['dashboard'])
+          // this.router.navigate(['dashboard'])
         }
       });
       this.fetchedAffaire = false;

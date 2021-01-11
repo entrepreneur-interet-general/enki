@@ -6,8 +6,6 @@ from cisu.entities.edxl_entity import EdxlEntity
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.affair_entity import AffairEntity
-from entrypoints.extensions import event_bus, clock
-from domain.core import events
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
@@ -29,8 +27,6 @@ class AbstractAffairRepository(abc.ABC):
         if self._match_uuid(affair.uuid):
             raise AlreadyExistingAffairUuid()
         result = self._add(affair)
-
-        event_bus.publish(events.AffairCreatedEvent(data=affair))
         return result
 
     def get_one(self) -> AffairEntity:

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MessagesService } from '../messages.service';
+import { Message, MessagesService } from '../messages.service';
 
 @Component({
   selector: 'app-main-courante',
@@ -7,10 +7,13 @@ import { MessagesService } from '../messages.service';
   styleUrls: ['./main-courante.component.scss']
 })
 export class MainCouranteComponent implements OnInit {
-  messages;
+  messages: Array<Message>;
   constructor(messagesService: MessagesService) {
-    this.messages = messagesService.getMessages();
-    window.sessionStorage.setItem('messages', JSON.stringify(this.messages))
+    this.messages = []
+    messagesService.getMessages().subscribe(messages => {
+      this.messages = messages
+    })
+    // window.sessionStorage.setItem('messages', JSON.stringify(this.messages))
   }
 
   ngOnInit(): void {

@@ -1,5 +1,6 @@
+from apispec.ext.marshmallow import MarshmallowPlugin
 from flask import jsonify, render_template, Blueprint
-from apispec import APISpec
+from apispec import APISpec, BasePlugin
 from .plugin import FlaskRestfulPlugin
 
 
@@ -14,18 +15,18 @@ class APISpecExt:
             self.init_app(app, **kwargs)
 
     def init_app(self, app, **kwargs):
-        app.config.setdefault("APISPEC_TITLE", "sapeurs_api")
-        app.config.setdefault("APISPEC_VERSION", "1.0.0")
-        app.config.setdefault("OPENAPI_VERSION", "3.0.2")
+        app.config.setdefault("APISPEC_TITLE", "enki_api")
+        app.config.setdefault("APISPEC_VERSION", "4.0.0")
+        app.config.setdefault("OPENAPI_VERSION", "3.0.3")
         app.config.setdefault("SWAGGER_JSON_URL", "/swagger.json")
-        app.config.setdefault("SWAGGER_UI_URL", "/swagger-ui")
+        app.config.setdefault("SWAGGER_UI_URL", "/documentation")
         app.config.setdefault("SWAGGER_URL_PREFIX", None)
 
         self.spec = APISpec(
             title=app.config["APISPEC_TITLE"],
             version=app.config["APISPEC_VERSION"],
             openapi_version=app.config["OPENAPI_VERSION"],
-            plugins=[FlaskRestfulPlugin()],
+            plugins=[FlaskRestfulPlugin(), MarshmallowPlugin(), DisableOptionsOperationPlugin()],
             **kwargs
         )
 
@@ -50,3 +51,12 @@ class APISpecExt:
 
     def swagger_ui(self):
         return render_template("swagger.j2")
+
+
+class DisableOptionsOperationPlugin(BasePlugin):
+
+    def operation_helper(self, operations, **kwargs):
+        # flask-apispec auto generates an options operation, which cannot handled by apispec.
+        # apispec.exceptions.DuplicateParameterError: Duplicate parameter with name body and location body
+        # => remove
+        operations.pop("options", None)

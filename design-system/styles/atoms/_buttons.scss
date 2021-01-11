@@ -6,10 +6,12 @@
     border-radius: 4px;
     background-color: $primary;
     color: #FFF;
-    font-size: 18px;
+    font-size: 16px;
+    letter-spacing: 1px;
     font-weight: 600;
     text-transform: uppercase;
     cursor: pointer;
+    font-family: $secondaryFont;
     &:disabled {
         opacity: .5;
     }

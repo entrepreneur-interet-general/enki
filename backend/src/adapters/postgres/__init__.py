@@ -1,6 +1,8 @@
 from .pg_tag_repository import PgTagRepository
-from .pg_task_repository import PgTaskRepository
+from .pg_message_repository import PgMessageRepository
+from .pg_evenement_repository import PgEvenementRepository
+from .pg_affair_repository import PgAffairRepository
 
 __all__ = [
-    "PgTagRepository", "PgTaskRepository"
+    "PgTagRepository", "PgMessageRepository", "PgEvenementRepository", "PgAffairRepository"
 ]

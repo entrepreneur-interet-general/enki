@@ -6,8 +6,7 @@ import { UserService } from '../../user/user.service'
   selector: 'app-user-dashboard',
   templateUrl: './user-dashboard.component.html',
   styleUrls: [
-    './user-dashboard.component.scss',
-    '../../interventions/liste/liste-interventions.component.scss'
+    './user-dashboard.component.scss'
   ]
 })
 export class UserDashboardComponent implements OnInit {

@@ -1,0 +1,17 @@
+@import "../../../../design-system/styles/variables";
+
+.situations {
+  &--tabs {
+    height: 56px;
+    background-color: $primary;
+    display: flex;
+    align-items: center;
+  }
+  &--element {
+    color: $white;
+    background-color: $lighterPrimary;
+    margin: 0 16px;
+    padding: 6px 16px;
+    border-radius: 26px;
+  }
+}

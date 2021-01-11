@@ -1,0 +1,13 @@
+<div class="title-container">
+  <h1 class="h1-title">Nouvel événement</h1>
+</div>
+<form action="createEvenement" [formGroup]="evenementGroup" (ngSubmit)="onSubmit()">
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" formControlName="nomEvenement" required>
+    <label for="" class="enkiform__label">Nom de l'événement</label>
+  </div>
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" formControlName="descriptionEvenement" required>
+    <label for="" class="enkiform__label">Description</label>
+  </div>
+</form>

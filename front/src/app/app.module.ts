@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { environment } from '../environments/environment';
-import { ListeInterventionsComponent } from './interventions/liste/liste-interventions.component';
+import { ListeInterventionsComponent } from './interventions/liste-interventions/liste-interventions.component';
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
 import { SvgDefinitionsComponent } from './ui/svg-definitions/svg-definitions.component';
 import { HeaderComponent } from './ui/header/header.component';
@@ -22,6 +22,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
 import { MainCouranteModule } from './main-courante/main-courante.module';
+import { SituationsComponent } from './situations/situations.component';
+import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
+import { CreateEvenementComponent } from './evenements/create-evenement/create-evenement.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -46,7 +49,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HeaderComponent,
     FirstStepComponent,
     SecondStepComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SituationsComponent,
+    ListeEvenementsComponent,
+    CreateEvenementComponent
   ],
   imports: [
     BrowserModule,

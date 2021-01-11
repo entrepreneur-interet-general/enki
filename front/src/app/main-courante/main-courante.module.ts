@@ -19,13 +19,15 @@ const routes : Routes = [
   {
     path: 'addmessage',
     component: AddMessageComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'addlabel',
+        component: AddLabelComponent,
+        canActivate: [AuthGuard]
+      }
+    ]
   },
-  {
-    path: 'addlabel',
-    component: AddLabelComponent,
-    canActivate: [AuthGuard]
-  }
 ];
 @NgModule({
   declarations: [

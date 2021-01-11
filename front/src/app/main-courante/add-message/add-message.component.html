@@ -14,7 +14,7 @@
           {{label.title}}
         </div>
       </div>
-      <a href="" class="addMessageForm--labelLink" routerLink="/addlabel" *ngIf="labelsService.labels.length === 0">
+      <a href="" class="addMessageForm--labelLink" routerLink="addlabel" *ngIf="labelsService.labels.length === 0">
         <svg class="icon-add-circle icon"><use xlink:href="#icon-add-circle"></use></svg>
         Ajouter un label
       </a>
@@ -31,5 +31,7 @@
     </div>
 
   </form>
+
+  <router-outlet></router-outlet>
 
 </div>

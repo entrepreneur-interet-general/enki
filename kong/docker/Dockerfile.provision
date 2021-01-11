@@ -4,6 +4,8 @@ COPY requirements.txt .
 
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-COPY scripts/kong_oidc_import.py .
+COPY scripts/* ./
 
-CMD ["python" , "kong_oidc_import.py"]
+RUN chmod a+x run_provision.sh
+
+CMD ["./run_provision.sh" ]

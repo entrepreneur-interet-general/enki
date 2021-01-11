@@ -3,22 +3,26 @@
   <#if section = "header">
     ${msg("doLogIn")}
   <#elseif section = "form">
+  <div class="title-container">
+    <h1 class="login-title">Bienvenue sur ENKI</h1>
+    <p class="login-subtitle">Première visite ? <a href="${url.registrationUrl}" class="login-signupLink">Créer un compte</a>
+  </div>
   <div id="kc-form" <#if realm.password && social.providers??>class="${properties.kcContentWrapperClass!}"</#if>>
     <div id="kc-form-wrapper" <#if realm.password && social.providers??>class="${properties.kcFormSocialAccountContentClass!} ${properties.kcFormSocialAccountClass!}"</#if>>
       <#if realm.password>
         <form id="kc-form-login" onsubmit="login.disabled = true; return true;" action="${url.loginAction}" method="post" novalidate>
-          <div class="form-group">
+          <div class="enkiform__group">
             <#if usernameEditDisabled??>
-              <input tabindex="1" id="username" class="js-loginInputs ${properties.kcInputClass!}" name="username" value="${(login.username!'')}"  type="text" disabled />
+              <input tabindex="1" id="username" class="js-loginInputs enkiform__input" name="username" value="${(login.username!'')}"  type="text" disabled />
             <#else>
-              <input tabindex="1" id="username" class="js-loginInputs ${properties.kcInputClass!}" name="username" value="${(login.username!'')}" required type="text" autofocus autocomplete="off" />
+              <input tabindex="1" id="username" class="js-loginInputs enkiform__input" name="username" value="${(login.username!'')}" required type="text" autofocus autocomplete="off" />
             </#if>
-            <label for="username" class="form-control"><#if !realm.loginWithEmailAllowed>${msg("username")}<#elseif !realm.registrationEmailAsUsername>${msg("usernameOrEmail")}<#else>${msg("email")}</#if></label>
+            <label for="username" class="form-control enkiform__label"><#if !realm.loginWithEmailAllowed>${msg("username")}<#elseif !realm.registrationEmailAsUsername>${msg("usernameOrEmail")}<#else>${msg("email")}</#if></label>
           </div>
 
-          <div class="form-group">
-            <input tabindex="2" id="password" class="js-loginInputs ${properties.kcInputClass!}" name="password" type="password" autocomplete="off" required />
-            <label for="password" class="form-control">${msg("password")}</label>
+          <div class="enkiform__group">
+            <input tabindex="2" id="password" class="js-loginInputs enkiform__input" name="password" type="password" autocomplete="off" required />
+            <label for="password" class="form-control enkiform__label">${msg("password")}</label>
             <div class="js-showPwd show-password"></div>
           </div>
 
@@ -61,11 +65,11 @@
       </#if>
     </div>
   <#elseif section = "info" >
-    <#if realm.password && realm.registrationAllowed && !usernameEditDisabled??>
+    <#--  <#if realm.password && realm.registrationAllowed && !usernameEditDisabled??>
       <div id="kc-registration">
         <span>${msg("noAccount")} <a tabindex="6" href="${url.registrationUrl}">${msg("doRegister")}</a></span>
       </div>
-    </#if>
+    </#if>  -->
   </#if>
 
 </@layout.registrationLayout>

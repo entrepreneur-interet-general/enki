@@ -3,13 +3,13 @@ from datetime import datetime, timezone
 from tempfile import NamedTemporaryFile
 import xml.dom.minidom
 
-from typing import List, Dict, Any
+from typing import Dict, Any
 
-from cisu.src import EdxlEntity
-from cisu.src.entities.alert_entity import PrimaryAlertEntity
-from cisu.src.entities.cisu_entity import CreateEvent, Recipient
-from cisu.src.entities.commons import Severity
-from cisu.src.entities.commons.common_alerts import AnyURI
+from cisu.src.cisu.entities.edxl_entity import EdxlEntity
+from cisu.src.cisu.entities.alert_entity import PrimaryAlertEntity
+from cisu.src.cisu.entities.cisu_entity import CreateEvent, Recipient
+from cisu.src.cisu.entities.commons import Severity
+from cisu.src.cisu.entities.commons.common_alerts import AnyURI
 import xmlschema
 import pytest
 
@@ -75,7 +75,7 @@ def test_edxl_xml_parsing(filename):
 
 @pytest.mark.parametrize("filename", filenames)
 def test_edxl_xml_generation(filename):
-    schema_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), "../../src/entities/schema/cisu.xsd")
+    schema_path = pathlib.Path(pathlib.Path(__file__).parent.absolute(), "../../src/cisu/entities/schema/cisu.xsd")
     dom = xml.dom.minidom.parse(str(filename))
     edxl = EdxlEntity.from_xml(dom)
     xml_string = edxl.resource.message.to_xml()

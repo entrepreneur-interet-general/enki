@@ -1,12 +1,31 @@
+services:
+  - name: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    alias: elasticsearch
+    command: [ "bin/elasticsearch", "-Ediscovery.type=single-node" ]
+#
+#  - name: postgres:latest
+#    alias: postgres
+
+variables:
+  ELASTICSEARCH_URL: "http://elasticsearch:9200"
+  ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+  POSTGRES_NAME: "postgres"
+  POSTGRES_PORT: 5432
+  POSTGRES_DB: "enki-tests"
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "pg-password"
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
 stages:
   - install
   - build-test
+  - deploy
 
 cache:
   paths:
     - fronts/node_modules/
     - backend/venv/
-
+    - .cache/pip
 install-fronts-dependencies:
   image: node:latest
   stage: install
@@ -45,7 +64,7 @@ install-backend-dependencies:
       - backend/venv/
 
 install-cisu-package-dependencies:
-  image: python:3.8
+  image: python:3.8-alpine
   stage: install
   script:
     - cd cisu
@@ -90,8 +109,8 @@ back-build-and-test:
     - source venv/bin/activate
     - echo "Unit testing..."
     - pytest src/tests/unit
-    #- echo "Integration testing..."
-    #- pytest tests/integration
+    - echo "Integration testing..."
+    - pytest src/tests/integration
     - echo "Flask e2e testing..."
     - pytest src/tests/e2e
   only:
@@ -101,7 +120,7 @@ back-build-and-test:
       - backend/*
 
 cisu-build-and-test:
-  image: python:3.8
+  image: python:3.8-alpine
   stage: build-test
   script:
     - cd cisu
@@ -113,3 +132,20 @@ cisu-build-and-test:
       - merge_requests
     changes:
       - cisu/*
+
+#cisu-deploy-package:
+#  stage: deploy
+#  image: python:3.8-alpine
+#  script:
+#    - cd cisu
+#    - cat $PYPIRC > /tmp/.pypirc
+#    - sed -i 's/PYPI_TOKEN_TO_RELACE/$PYPI_TOKEN/' /tmp/.pypirc
+#    - sed /tmp/.pypirc
+#    - pip install twine
+#    - python setup.py  bdist_wheel
+#    - python -m twine upload --repository pypi dist/* --config-file /tmp/.pypirc
+#  only:
+#    refs:
+#      - merge_requests
+#    changes:
+#      - cisu/*

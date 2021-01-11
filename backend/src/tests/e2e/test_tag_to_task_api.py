@@ -1,60 +1,60 @@
 from typing import Dict
-from uuid import uuid4
-
 from flask.testing import FlaskClient
 
-from domain.tasks.ports.task_repository import AlreadyExistingTagInThisTask
+from domain.messages.ports.message_repository import AlreadyExistingTagInThisMessage
 from .test_tag_api import BASE_PATH_TAG
-from .test_task_api import BASE_PATH_TASK, get_task
+from .test_message_api import BASE_PATH_TASK, get_message
 from ..factories.tag import tag_factory
-from ..factories.task import task_factory
+from ..factories.message import message_factory
 from ..helpers.filter import filter_dict_with_keys
 
-def test_add_task_add_tag_then_link_them(app, client: FlaskClient):
-    app.context.reset()
-    task1 = task_factory()
-    _ = post_add_task(client, task1)
+
+def test_add_message_add_tag_then_link_them(app, client: FlaskClient):
+    message1 = message_factory()
+    print("before the first add message")
+    _ = post_add_message(client, message1)
+    print("first add message")
     tag1 = tag_factory()
     _ = post_add_tag(client, tag1)
 
-    # fetching added task
-    link_task1_tag1_response = post_add_tag_to_task(client, task1["uuid"], tag1["uuid"])
-    assert link_task1_tag1_response.status_code == 201
-    assert link_task1_tag1_response.json == {
-        "message": f"tag {tag1['uuid']} successfully added from task {task1['uuid']}"}
-
-    link_task1_tag1_response = post_add_tag_to_task(client, task1["uuid"], tag1["uuid"])
-    assert link_task1_tag1_response.status_code == AlreadyExistingTagInThisTask.code
-    assert link_task1_tag1_response.json == {
-        "message": AlreadyExistingTagInThisTask.description
+    # fetching added message
+    link_message1_tag1_response = post_add_tag_to_message(client, message1["uuid"], tag1["uuid"])
+    assert link_message1_tag1_response.status_code == 201
+    assert link_message1_tag1_response.json == {
+        "result": f"tag {tag1['uuid']} successfully added from message {message1['uuid']}"
     }
 
-    task1_get_response = get_task(client, task1["uuid"])
-    assert task1_get_response.status_code == 200
-    task_tags = task1_get_response.json["task"]["tags"]
-    assert filter_dict_with_keys(task_tags[0], tag1) == tag1
+    link_message1_tag1_response = post_add_tag_to_message(client, message1["uuid"], tag1["uuid"])
+    assert link_message1_tag1_response.status_code == AlreadyExistingTagInThisMessage.code
+    assert link_message1_tag1_response.json == {
+        "result": AlreadyExistingTagInThisMessage.description
+    }
+
+    message1_get_response = get_message(client, message1["uuid"])
+    assert message1_get_response.status_code == 200
+    message_tags = message1_get_response.json["message"]["tags"]
+    assert filter_dict_with_keys(message_tags[0], tag1) == tag1
 
 
-def test_add_task_add_tag_then_link_them_and_unlinks(app, client: FlaskClient):
-    app.context.reset()
-    task1 = task_factory()
-    _ = post_add_task(client, task1)
+def test_add_message_add_tag_then_link_them_and_unlinks(app, client: FlaskClient):
+    message1 = message_factory()
+    _ = post_add_message(client, message1)
     tag1 = tag_factory()
     _ = post_add_tag(client, tag1)
 
-    post_add_tag_to_task(client, task1["uuid"], tag1["uuid"])
-    unlink_task1_tag1_response = post_delete_tag_to_task(client, task1["uuid"], tag1["uuid"])
-    assert unlink_task1_tag1_response.status_code == 202
-    assert unlink_task1_tag1_response.json == {
-        "message": f"tag {tag1['uuid']} successfully deleted from task {task1['uuid']}"}
+    post_add_tag_to_message(client, message1["uuid"], tag1["uuid"])
+    unlink_message1_tag1_response = post_delete_tag_to_message(client, message1["uuid"], tag1["uuid"])
+    assert unlink_message1_tag1_response.status_code == 202
+    assert unlink_message1_tag1_response.json == {
+        "result": f"tag {tag1['uuid']} successfully deleted from message {message1['uuid']}"}
 
-    task1_get_response = get_task(client, task1["uuid"])
-    assert task1_get_response.status_code == 200
-    task_tags = task1_get_response.json["task"]["tags"]
-    assert len(task_tags) == 0
+    message1_get_response = get_message(client, message1["uuid"])
+    assert message1_get_response.status_code == 200
+    message_tags = message1_get_response.json["message"]["tags"]
+    assert len(message_tags) == 0
 
 
-def post_add_task(client: FlaskClient, body: Dict[str, str]):
+def post_add_message(client: FlaskClient, body: Dict[str, str]):
     return client.post(BASE_PATH_TASK, json=body)
 
 
@@ -62,9 +62,9 @@ def post_add_tag(client: FlaskClient, body: Dict[str, str]):
     return client.post(BASE_PATH_TAG, json=body)
 
 
-def post_add_tag_to_task(client: FlaskClient, task_uuid: str, tag_uuid: str):
-    return client.put(BASE_PATH_TASK + f"/{task_uuid}/tags/{tag_uuid}")
+def post_add_tag_to_message(client: FlaskClient, message_uuid: str, tag_uuid: str):
+    return client.put(BASE_PATH_TASK + f"/{message_uuid}/tags/{tag_uuid}")
 
 
-def post_delete_tag_to_task(client: FlaskClient, task_uuid: str, tag_uuid: str):
-    return client.delete(BASE_PATH_TASK + f"/{task_uuid}/tags/{tag_uuid}")
+def post_delete_tag_to_message(client: FlaskClient, message_uuid: str, tag_uuid: str):
+    return client.delete(BASE_PATH_TASK + f"/{message_uuid}/tags/{tag_uuid}")

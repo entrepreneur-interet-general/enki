@@ -10,7 +10,8 @@ flask-cors
 sqlalchemy-utils
 twilio
 elasticsearch
+cisu-python==0.1
+shapely
 #pandas
-
-#Cisu Package
 faker
+marshmallow_enum

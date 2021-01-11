@@ -3,16 +3,16 @@ import requests
 from flask import current_app
 from requests import Response
 
-from domain.affairs.cisu import EdxlEntity
-from domain.affairs.cisu.entities.cisu_entity import AddressType
-from domain.affairs.cisu.entities.commons.common_alerts import AnyURI
-from domain.affairs.cisu.factories.edxl_factory import EdxlMessageFactory
-from entrypoints.config import SapeursConfig
+from cisu.entities.edxl_entity import EdxlEntity
+from cisu.entities.cisu_entity import AddressType
+from cisu.entities.commons.common_alerts import AnyURI
+from cisu.factories.edxl_factory import EdxlMessageFactory
+from entrypoints.config import EnkiConfig
 from domain.core import events
 
 
 class SgeHelper:
-    base_url: str = SapeursConfig.SGE_HUB_BASE_URI
+    base_url: str = EnkiConfig.SGE_HUB_BASE_URI
 
     @staticmethod
     def send_ack_message(xml_ack_message: str) -> requests.Response:

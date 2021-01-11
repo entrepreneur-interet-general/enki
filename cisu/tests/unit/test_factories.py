@@ -1,6 +1,6 @@
-from cisu.src.factories.alert_code_factory import AlertCodeFactory
-from cisu.src.factories.alert_factory import PrimaryAlertFactory
-from cisu.src.factories.edxl_factory import EdxlMessageFactory
+from cisu.src.cisu.factories.alert_code_factory import AlertCodeFactory
+from cisu.src.cisu.factories.alert_factory import PrimaryAlertFactory
+from cisu.src.cisu.factories.edxl_factory import EdxlMessageFactory
 
 
 def test_alert_factory():

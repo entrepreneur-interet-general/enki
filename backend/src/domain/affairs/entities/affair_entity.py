@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
-from domain.affairs.cisu.entities.cisu_entity import CreateEvent
+from cisu.entities.cisu_entity import CreateEvent
 
 
 @dataclass_json
@@ -9,9 +9,21 @@ class AffairEntity(CreateEvent):
     """
 
     """
+    location: dict = None
+
+    def __post_init__(self):
+        if self.location is None:
+            if isinstance(self.eventLocation, dict):
+                self.location = {
+                    "lat": self.eventLocation["coord"]["lat"],
+                    "lon": self.eventLocation["coord"]["lon"]
+                }
+            else:
+                self.location = {
+                    "lat": self.eventLocation.coord.lat,
+                    "lon": self.eventLocation.coord.lon
+                }
 
     @property
     def uuid(self):
         return self.eventId
-
-

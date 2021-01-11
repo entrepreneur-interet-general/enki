@@ -5,13 +5,22 @@
 <main>
   <!-- <button (click)="loadNewAffaire()">RANDOM AFFAIRE</button> -->
   <div class="top-header">
-    <div *ngIf="!environment.production" class="u-dev-info">Logs [url api] : {{environment.interventionsUrl}}</div>
+    <div *ngIf="!environment.production" class="u-dev-info">
+      <div>
+        Logs [url api] : {{environment.interventionsUrl}}
+      </div>
+      <div>
+        {{userService.user | json}}
+      </div>
+    </div>
 
-    <p *ngIf="!canSeeEvents()">
+    <!-- <p *ngIf="!canSeeEvents()">
       Désolé, vous ne pouvez pas accéder à ces informations...
-    </p>
+    </p> -->
   </div>
-
+<!--   <div class="svg-container">
+    <svg class="icon-phone"><use xlink:href="#icon-phone"></use></svg>
+  </div> -->
 
   <router-outlet></router-outlet>
 

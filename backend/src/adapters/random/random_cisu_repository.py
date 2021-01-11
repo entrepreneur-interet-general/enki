@@ -2,11 +2,11 @@ import random
 from typing import List
 import logging
 
-from domain.affairs.cisu.entities.commons import Severity
-from domain.affairs.cisu.factories.alert_factory import PrimaryAlertFactory
-from domain.affairs.cisu.factories.edxl_factory import EdxlMessageFactory
-from domain.affairs.cisu.factories.location_factory import LocationTypeFactory
-from domain.affairs.cisu.factories.uid_factory import UidFactory
+from cisu.entities.commons import Severity
+from cisu.factories.alert_factory import PrimaryAlertFactory
+from cisu.factories.edxl_factory import EdxlMessageFactory
+from cisu.factories.location_factory import LocationTypeFactory
+from cisu.factories.uid_factory import UidFactory
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, affairsList
 
@@ -53,3 +53,8 @@ class RandomCisuRepository(AbstractAffairRepository):
 
     def build_one(self):
         return self.factory.build()
+
+    def _get_from_polygon(self, multipolygon: List) -> affairsList:
+        return self.get_many(n=10)
+
+

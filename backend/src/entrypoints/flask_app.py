@@ -1,11 +1,14 @@
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
-from entrypoints.extensions import api_spec
+from sqlalchemy.orm import clear_mappers
+
+from adapters.postgres.orm import start_mappers
 from entrypoints import views
 from service_layer.messagebus import HANDLERS
-from .config import SapeursConfig
-from .extensions import event_bus
+from .config import EnkiConfig
+from .extensions import event_bus, api_spec
+from .errors import errors
 
 
 def register_blueprints(app: Flask):
@@ -32,27 +35,31 @@ def create_app(testing=False):
 
     :return:
     """
-    app = Flask('sapeurs')
-    app.config.from_object(SapeursConfig)
+    app = Flask('enki')
+    app.config.from_object(EnkiConfig)
     CORS(app)
 
     if testing is True:
         app.config["TESTING"] = True
 
-    api = Api(app)
-    context = app.config["CONTEXT_FACTORY"](config=SapeursConfig())
+    api = Api(app, errors=errors)
+    context = app.config["CONTEXT_FACTORY"](config=EnkiConfig())
     configure_event_bus(context=context)
     context.init_app(app=app)
     configure_apispec(app=app)
     register_blueprints(app)
+    configure_orm()
     return app
 
+
+def configure_orm():
+    clear_mappers()
+    start_mappers()
 
 
 def configure_event_bus(context):
     for topic, callbacks in HANDLERS.items():
         for callback in callbacks:
             event_bus.subscribe(topic=topic, callback=callback)
-
 
 app = create_app()

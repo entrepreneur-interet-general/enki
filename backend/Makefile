@@ -10,5 +10,25 @@ upd:
 down:
 	docker-compose -f docker-compose.yml down --remove-orphans
 
+clean:
+	docker-compose -f docker-compose.yml down -v --remove-orphans
+
 logs:
 	docker-compose -f docker-compose.yml logs --follow
+
+
+# Provisions
+
+build-provision:
+	docker-compose -f docker-compose.provision.yml build
+
+run-provision:
+	docker-compose -f docker-compose.provision.yml run --rm affairs-provision
+
+# Tests
+
+test-resource-up:
+	docker-compose -f docker-compose.test.yml up
+
+test-resource-down:
+	docker-compose -f docker-compose.test.yml down

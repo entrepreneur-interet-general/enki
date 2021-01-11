@@ -3,8 +3,7 @@ from uuid import uuid4
 
 from flask.testing import FlaskClient
 
-from domain.tasks.ports.tag_repository import NotFoundTag, AlreadyExistingTagUuid
-from entrypoints.flask_app import app
+from domain.messages.ports.tag_repository import NotFoundTag, AlreadyExistingTagUuid
 from ..factories.tag import tag_factory
 from ..helpers.filter import filter_dict_with_keys
 
@@ -34,7 +33,6 @@ def test_add_tag_then_recovers_it_and_recovers_all(client: FlaskClient):
 
 
 def test_already_exists_tag(app, client: FlaskClient):
-    app.context.reset()
     tag1 = tag_factory()
 
     post_add_tag(client, tag1)
@@ -45,7 +43,6 @@ def test_already_exists_tag(app, client: FlaskClient):
 
 
 def test_not_found_exists_tag(app, client: FlaskClient):
-    app.context.reset()
     tag1 = tag_factory()
 
     post_add_tag(client, tag1)

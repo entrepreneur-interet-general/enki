@@ -1,0 +1,146 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 0px;
+  padding: 0;
+  color: #011428;
+  font-size: 1rem;
+  font-family: "Overpass", sans-serif;
+  font-weight: 300;
+}
+
+input {
+  font-family: "Overpass", sans-serif;
+}
+
+a {
+  color: $primary;
+}
+
+.login-container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+
+}
+.login-background {
+  background-image: url('../img/background-france.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  display: none;
+}
+@media screen and (min-width: 600px) {
+  .login-background {
+    display: block;
+  }
+}
+
+.form-header {
+  margin-bottom: 48px;
+}
+
+.form-header__imgRepu {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.form-header__illus {
+  display: none;
+}
+@media screen and (min-width: 600px) {
+  .form-header__illus {
+    display: inline;
+  }
+}
+
+.form-footer__imgNexsis {
+  max-width: 120px;
+  position: absolute;
+  bottom: 32px;
+  transform: translateX(-50%);
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 525px;
+  background: white;
+  padding: 16px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.login-form {
+  text-align: center;
+  width: 100%;
+  max-width: 343px;
+}
+
+.login-form h2 {
+  text-align: center;
+}
+
+.login-form ul {
+  list-style-type: none;
+}
+
+.show-password {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  width: 24px;
+  height: 18px;
+  background-image: url('../img/eye-open.svg');
+  background-repeat: no-repeat;
+  background-size: 24px;
+}
+.show-password.-active {
+  background-image: url('../img/eye-close.svg');
+  top: 18px;
+}
+
+/*button*/
+input[type=submit] {
+  width: 100%;
+  height: 42px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #034EA2;
+  color: #FFF;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+input[type=submit]:disabled {
+  opacity: .5;
+}
+
+.login-reset-password a {
+  display: inline-block;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+}
+
+.alert {
+  width: 100%;
+  margin: 30px 0;
+  text-align: left;
+}
+
+.alert.alert-error {
+  color: $red;
+}

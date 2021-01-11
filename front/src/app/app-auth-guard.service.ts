@@ -5,6 +5,8 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
+import { UserService } from './user/user.service';
+
  
 @Injectable({
   providedIn: 'root',
@@ -12,7 +14,8 @@ import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 export class AuthGuard extends KeycloakAuthGuard {
   constructor(
     protected readonly router: Router,
-    protected readonly keycloak: KeycloakService
+    protected readonly keycloak: KeycloakService,
+    private userService: UserService
   ) {
     super(router, keycloak);
   }
@@ -24,17 +27,19 @@ export class AuthGuard extends KeycloakAuthGuard {
         redirectUri: window.location.origin + state.url,
       });
     }
-    
+
+    if (!this.userService.userIsValid()) {
+      return this.router.parseUrl('/register/step1');
+    }
  
     // Get the roles required from the route.
     const requiredRoles = route.data.roles;
- 
     // Allow the user to to proceed if no additional roles are required to access the route.
     if (!(requiredRoles instanceof Array) || requiredRoles.length === 0) {
       return true;
     }
  
     // Allow the user to proceed if all the required roles are present.
-    return requiredRoles.every((role) => this.roles.includes(role));
+    return requiredRoles.every((role) => this.roles.includes(role)) ? true : this.router.parseUrl('/register/step1');
   }
 }

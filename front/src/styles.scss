@@ -1,35 +1,10 @@
 @charset "UTF-8";
-@import "../node_modules/enki-design-system/styles/variables";
-@import "../node_modules/enki-design-system/styles/styles";
+@import "../../design-system/styles/variables";
+@import "../../design-system/styles/styles";
 
-body {
+html, body {
   overflow-x: hidden;
-}
-.title-container {
-  padding: 0 16px 16px;
-}
-h1 {
-  font-size: 32px;
-  padding-bottom: 24px;
-  position: relative;
-  &:after {
-    content: '';
-    width: 62px;
-    background-color: $grey;
-    height: 1px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-  }
-}
-
-h2 {
-  font-size: 20px;
-  letter-spacing: 1px;
-  font-family: $secondaryFont;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  font-weight: 600;
+  height: 100%;
 }
 
 :focus {
@@ -41,9 +16,13 @@ h2 {
   display: inline-block;
   width: 1em;
   height: 1em;
+  font-size: 24px;
   stroke-width: 0;
   stroke: currentColor;
   fill: currentColor;
+}
+.title-icon {
+  margin-right: 8px;
 }
 .icon-notification {
   width: 20px;
@@ -62,6 +41,7 @@ h2 {
 .title-with-icon {
   display: flex;
   align-items: center;
+  font-family: $secondaryFont;
 
   margin-bottom: 16px;
   font-size: 20px;

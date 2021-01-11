@@ -1,0 +1,45 @@
+<div class="title-container">
+  <h1 class="login-title">Finaliser l'inscription</h1>
+  <h2 class="login-subtitle">Renseigner les informations suivantes</h2>
+</div>
+<form action="" class="userInfoForm" [formGroup]="userGroup" (ngSubmit)="onSubmit()">
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" formControlName="lastName" required>
+    <label for="" class="enkiform__label">Nom</label>
+  </div>
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" formControlName="firstName" required>
+    <label for="" class="enkiform__label">Prénom</label>
+  </div>
+  <div class="enkiform__group">
+    <select class="enkiform__input" formControlName="fonction" required>
+      <option value="maire">Maire</option>
+    </select>
+    <label for="" class="enkiform__label">Fonction</label>
+    <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+  </div>
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" formControlName="codeCommune" required>
+    <label for="" class="enkiform__label">Commune</label>
+    <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
+  </div>
+  <div class="searchCommune">
+    <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
+    <input type="text" class="searchCommune__input" placeholder="Département, commune ou code postal">
+    <div class="seachCommune__suggestions">
+      Résultats de votre recherche
+    </div>
+    <div class="searchCommune__overlay">
+      
+    </div>
+  </div>
+  <div class="enkiform__group">
+    <input type="submit" class="btn" value="Valider l'inscription" [disabled]="!userGroup.valid">
+  </div>
+</form>
+<p>
+  Form values: {{userGroup.value | json}}
+</p>
+<p>
+  Form Status: {{ userGroup.status }}
+</p>

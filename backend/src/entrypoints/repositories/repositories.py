@@ -4,15 +4,14 @@ from typing import Dict
 from adapters.elasticsearch.affair_repository import ElasticAffairRepository
 from adapters.postgres.orm import metadata
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, InMemoryAffairRepository
-from domain.tasks.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
-from domain.tasks.ports.task_repository import AbstractTaskRepository, InMemoryTaskRepository
+from domain.evenements.repository import InMemoryEvenementRepository
+from domain.messages.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 from entrypoints.repositories.factories import get_pg_repos, build_engine
 from elasticsearch import Elasticsearch
 
 
 class Repositories(abc.ABC):
     name: str
-    task: AbstractTaskRepository
     tag: AbstractTagRepository
     affair: AbstractAffairRepository
 
@@ -36,8 +35,8 @@ class InMemoryRepositories(Repositories):
     def __init__(self, config) -> None:
         super().__init__(config)
         self.tag = InMemoryTagRepository()
-        self.task = InMemoryTaskRepository(tag_repo=self.tag)
-        self.affair = InMemoryAffairRepository()  # XmlCisuRepository()
+        self.affair = InMemoryAffairRepository()
+        self.evenement = InMemoryEvenementRepository()
 
     def _reset(self):
         """
@@ -55,7 +54,7 @@ class SQLRepositories(Repositories):
     def __init__(self, config):
         super().__init__(config)
         self.engine = build_engine(sql_engine_uri=config.DATABASE_URI)
-        self.tag, self.task, self.affair = get_pg_repos(engine=self.engine)
+        self.tag, self.task, self.affair, self.evenement = get_pg_repos(engine=self.engine)
 
     def _reset(self):
         metadata.drop_all(self.engine)
@@ -89,7 +88,7 @@ class HybridRepositories(Repositories):
     def select_repositories(self):
         self.affair = self.elastic_repositories.affair
         self.tag, self.task = self.in_memory_repositories.tag, self.in_memory_repositories.task
-
+        self.evenement = self.in_memory_repositories.evenement
     def _reset(self):
         self.in_memory_repositories.reset()
         self.sql_repositories.reset()

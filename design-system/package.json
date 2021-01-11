@@ -1,0 +1,25 @@
+{
+  "name": "enki-design-system",
+  "version": "0.9.6",
+  "description": "Design system used on the project Enki",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build index.html --public-url ./ --out-dir=docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bbemol/enki-design-system.git"
+  },
+  "keywords": [],
+  "author": "Emylson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bbemol/enki-design-system/issues"
+  },
+  "homepage": "https://github.com/Bbemol/enki-design-system#readme",
+  "devDependencies": {
+    "parcel": "^1.12.4",
+    "sass": "^1.27.0"
+  }
+}

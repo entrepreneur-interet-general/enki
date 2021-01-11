@@ -414,32 +414,313 @@ li {
 
 @font-face {
   font-family: "Overpass";
-  src: url(./fonts/Overpass-Light.ttf) format("truetype");
-  font-weight: 300;
+  src: url("fonts/overpass/Overpass-Black.eot");
+  src: url("fonts/overpass/Overpass-Black.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-Black.woff2") format("woff2"), url("fonts/overpass/Overpass-Black.woff") format("woff"), url("fonts/overpass/Overpass-Black.ttf") format("truetype"), url("fonts/overpass/Overpass-Black.svg#Overpass-Black") format("svg");
+  font-weight: 900;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Overpass";
-  src: url(./fonts/Overpass-SemiBold.ttf) format("truetype");
+  src: url("fonts/overpass/Overpass-LightItalic.eot");
+  src: url("fonts/overpass/Overpass-LightItalic.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-LightItalic.woff2") format("woff2"), url("fonts/overpass/Overpass-LightItalic.woff") format("woff"), url("fonts/overpass/Overpass-LightItalic.ttf") format("truetype"), url("fonts/overpass/Overpass-LightItalic.svg#Overpass-LightItalic") format("svg");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-Italic.eot");
+  src: url("fonts/overpass/Overpass-Italic.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-Italic.woff2") format("woff2"), url("fonts/overpass/Overpass-Italic.woff") format("woff"), url("fonts/overpass/Overpass-Italic.ttf") format("truetype"), url("fonts/overpass/Overpass-Italic.svg#Overpass-Italic") format("svg");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-ExtraBoldItalic.eot");
+  src: url("fonts/overpass/Overpass-ExtraBoldItalic.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-ExtraBoldItalic.woff2") format("woff2"), url("fonts/overpass/Overpass-ExtraBoldItalic.woff") format("woff"), url("fonts/overpass/Overpass-ExtraBoldItalic.ttf") format("truetype"), url("fonts/overpass/Overpass-ExtraBoldItalic.svg#Overpass-ExtraBoldItalic") format("svg");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-Bold.eot");
+  src: url("fonts/overpass/Overpass-Bold.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-Bold.woff2") format("woff2"), url("fonts/overpass/Overpass-Bold.woff") format("woff"), url("fonts/overpass/Overpass-Bold.ttf") format("truetype"), url("fonts/overpass/Overpass-Bold.svg#Overpass-Bold") format("svg");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-ExtraLightItalic.eot");
+  src: url("fonts/overpass/Overpass-ExtraLightItalic.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-ExtraLightItalic.woff2") format("woff2"), url("fonts/overpass/Overpass-ExtraLightItalic.woff") format("woff"), url("fonts/overpass/Overpass-ExtraLightItalic.ttf") format("truetype"), url("fonts/overpass/Overpass-ExtraLightItalic.svg#Overpass-ExtraLightItalic") format("svg");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-BoldItalic.eot");
+  src: url("fonts/overpass/Overpass-BoldItalic.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-BoldItalic.woff2") format("woff2"), url("fonts/overpass/Overpass-BoldItalic.woff") format("woff"), url("fonts/overpass/Overpass-BoldItalic.ttf") format("truetype"), url("fonts/overpass/Overpass-BoldItalic.svg#Overpass-BoldItalic") format("svg");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-SemiBold.eot");
+  src: url("fonts/overpass/Overpass-SemiBold.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-SemiBold.woff2") format("woff2"), url("fonts/overpass/Overpass-SemiBold.woff") format("woff"), url("fonts/overpass/Overpass-SemiBold.ttf") format("truetype"), url("fonts/overpass/Overpass-SemiBold.svg#Overpass-SemiBold") format("svg");
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Overpass";
-  src: url(./fonts/Overpass-ExtraBold.ttf) format("truetype");
+  src: url("fonts/overpass/Overpass-ExtraLight.eot");
+  src: url("fonts/overpass/Overpass-ExtraLight.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-ExtraLight.woff2") format("woff2"), url("fonts/overpass/Overpass-ExtraLight.woff") format("woff"), url("fonts/overpass/Overpass-ExtraLight.ttf") format("truetype"), url("fonts/overpass/Overpass-ExtraLight.svg#Overpass-ExtraLight") format("svg");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-BlackItalic.eot");
+  src: url("fonts/overpass/Overpass-BlackItalic.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-BlackItalic.woff2") format("woff2"), url("fonts/overpass/Overpass-BlackItalic.woff") format("woff"), url("fonts/overpass/Overpass-BlackItalic.ttf") format("truetype"), url("fonts/overpass/Overpass-BlackItalic.svg#Overpass-BlackItalic") format("svg");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-Thin.eot");
+  src: url("fonts/overpass/Overpass-Thin.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-Thin.woff2") format("woff2"), url("fonts/overpass/Overpass-Thin.woff") format("woff"), url("fonts/overpass/Overpass-Thin.ttf") format("truetype"), url("fonts/overpass/Overpass-Thin.svg#Overpass-Thin") format("svg");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-SemiBoldItalic.eot");
+  src: url("fonts/overpass/Overpass-SemiBoldItalic.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-SemiBoldItalic.woff2") format("woff2"), url("fonts/overpass/Overpass-SemiBoldItalic.woff") format("woff"), url("fonts/overpass/Overpass-SemiBoldItalic.ttf") format("truetype"), url("fonts/overpass/Overpass-SemiBoldItalic.svg#Overpass-SemiBoldItalic") format("svg");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-Regular.eot");
+  src: url("fonts/overpass/Overpass-Regular.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-Regular.woff2") format("woff2"), url("fonts/overpass/Overpass-Regular.woff") format("woff"), url("fonts/overpass/Overpass-Regular.ttf") format("truetype"), url("fonts/overpass/Overpass-Regular.svg#Overpass-Regular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-Light.eot");
+  src: url("fonts/overpass/Overpass-Light.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-Light.woff2") format("woff2"), url("fonts/overpass/Overpass-Light.woff") format("woff"), url("fonts/overpass/Overpass-Light.ttf") format("truetype"), url("fonts/overpass/Overpass-Light.svg#Overpass-Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-ExtraBold.eot");
+  src: url("fonts/overpass/Overpass-ExtraBold.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-ExtraBold.woff2") format("woff2"), url("fonts/overpass/Overpass-ExtraBold.woff") format("woff"), url("fonts/overpass/Overpass-ExtraBold.ttf") format("truetype"), url("fonts/overpass/Overpass-ExtraBold.svg#Overpass-ExtraBold") format("svg");
   font-weight: 800;
   font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass/Overpass-ThinItalic.eot");
+  src: url("fonts/overpass/Overpass-ThinItalic.eot?#iefix") format("embedded-opentype"), url("fonts/overpass/Overpass-ThinItalic.woff2") format("woff2"), url("fonts/overpass/Overpass-ThinItalic.woff") format("woff"), url("fonts/overpass/Overpass-ThinItalic.ttf") format("truetype"), url("fonts/overpass/Overpass-ThinItalic.svg#Overpass-ThinItalic") format("svg");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-Bold.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-Bold.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-Bold.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-Bold.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-Bold.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-Bold.svg#BarlowSemiCondensed-Bold") format("svg");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed ExLight";
+  src: url("fonts/barlow/BarlowSemiCondensed-ExtraLight.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-ExtraLight.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-ExtraLight.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-ExtraLight.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-ExtraLight.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-ExtraLight.svg#BarlowSemiCondensed-ExtraLight") format("svg");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-MediumItalic.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-MediumItalic.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-MediumItalic.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-MediumItalic.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-MediumItalic.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-MediumItalic.svg#BarlowSemiCondensed-MediumItalic") format("svg");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-BlackItalic.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-BlackItalic.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-BlackItalic.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-BlackItalic.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-BlackItalic.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-BlackItalic.svg#BarlowSemiCondensed-BlackItalic") format("svg");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-ThinItalic.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-ThinItalic.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-ThinItalic.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-ThinItalic.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-ThinItalic.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-ThinItalic.svg#BarlowSemiCondensed-ThinItalic") format("svg");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-SemiBold.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-SemiBold.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-SemiBold.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-SemiBold.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-SemiBold.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-SemiBold.svg#BarlowSemiCondensed-SemiBold") format("svg");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-Regular.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-Regular.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-Regular.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-Regular.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-Regular.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-Regular.svg#BarlowSemiCondensed-Regular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-Medium.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-Medium.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-Medium.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-Medium.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-Medium.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-Medium.svg#BarlowSemiCondensed-Medium") format("svg");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-Black.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-Black.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-Black.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-Black.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-Black.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-Black.svg#BarlowSemiCondensed-Black") format("svg");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-Italic.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-Italic.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-Italic.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-Italic.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-Italic.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-Italic.svg#BarlowSemiCondensed-Italic") format("svg");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-LightItalic.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-LightItalic.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-LightItalic.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-LightItalic.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-LightItalic.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-LightItalic.svg#BarlowSemiCondensed-LightItalic") format("svg");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-Light.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-Light.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-Light.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-Light.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-Light.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-Light.svg#BarlowSemiCondensed-Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-SemiBoldItalic.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-SemiBoldItalic.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-SemiBoldItalic.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-SemiBoldItalic.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-SemiBoldItalic.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-SemiBoldItalic.svg#BarlowSemiCondensed-SemiBoldItalic") format("svg");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-Thin.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-Thin.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-Thin.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-Thin.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-Thin.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-Thin.svg#BarlowSemiCondensed-Thin") format("svg");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-BoldItalic.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-BoldItalic.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-BoldItalic.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-BoldItalic.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-BoldItalic.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-BoldItalic.svg#BarlowSemiCondensed-BoldItalic") format("svg");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed ExLight";
+  src: url("fonts/barlow/BarlowSemiCondensed-ExtraLightItalic.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-ExtraLightItalic.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-ExtraLightItalic.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-ExtraLightItalic.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-ExtraLightItalic.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-ExtraLightItalic.svg#BarlowSemiCondensed-ExtraLightItalic") format("svg");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-ExtraBoldItalic.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-ExtraBoldItalic.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-ExtraBoldItalic.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-ExtraBoldItalic.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-ExtraBoldItalic.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-ExtraBoldItalic.svg#BarlowSemiCondensed-ExtraBoldItalic") format("svg");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("fonts/barlow/BarlowSemiCondensed-ExtraBold.eot");
+  src: url("fonts/barlow/BarlowSemiCondensed-ExtraBold.eot?#iefix") format("embedded-opentype"), url("fonts/barlow/BarlowSemiCondensed-ExtraBold.woff2") format("woff2"), url("fonts/barlow/BarlowSemiCondensed-ExtraBold.woff") format("woff"), url("fonts/barlow/BarlowSemiCondensed-ExtraBold.ttf") format("truetype"), url("fonts/barlow/BarlowSemiCondensed-ExtraBold.svg#BarlowSemiCondensed-ExtraBold") format("svg");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
 }
 body {
   font-family: "Overpass";
   margin: 0;
 }
 
+.title-container {
+  padding: 0 16px 16px;
+  margin: 20px 0;
+}
+
+.login-title {
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.login-subtitle {
+  margin-top: 12px;
+}
+
 .h1-title {
-  font-weight: 600;
-  font-size: 1.875rem;
+  padding-bottom: 24px;
+  font-size: 2rem;
+  position: relative;
   color: #000000;
   line-height: 35px;
+}
+.h1-title:after {
+  content: "";
+  width: 62px;
+  background-color: #B3BDC7;
+  height: 1px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 @media all and (max-width:1023px) {
   .h1-title {
@@ -466,12 +747,6 @@ body {
   font-size: 1.25rem;
   color: #000000;
   line-height: 30px;
-}
-
-.product-name-title {
-  font-size: 0.8125rem;
-  line-height: 25px;
-  color: #000000;
 }
 
 .paragraph-title {
@@ -527,45 +802,15 @@ body {
   line-height: 13px;
 }
 .default-link.-disabled {
-  color: #A19A9E;
-}
-
-.price {
-  font-weight: 500;
-  color: #000000;
-  font-size: 0.9375rem;
-  line-height: 25px;
-}
-.price.-crossed {
-  color: #C5BEC2;
-  font-size: 0.8125rem;
-  line-height: 20px;
-  text-decoration-line: line-through;
-}
-
-.callout {
-  font-size: 0.75rem;
-  color: #FF7373;
-}
-
-.badge {
-  padding: 1px 7px;
-  background: #FF7373;
-  font-size: 0.8125rem;
-  line-height: 20px;
-  font-weight: 400;
-}
-.badge.-promo {
-  color: #ffffff;
+  color: #B3BDC7;
 }
 
 .btn {
   border: none;
-  border-radius: 38px;
-  font-size: 0.8125rem;
+  border-radius: 4px;
+  font-size: 1rem;
   font-weight: 400;
-  height: 45px;
-  width: 100%;
+  height: 40px;
   max-width: 100%;
   text-align: center;
   align-items: center;
@@ -573,10 +818,12 @@ body {
   text-decoration: none;
   text-transform: uppercase;
   box-sizing: border-box;
+  background-color: #034EA2;
+  color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 16px;
 }
 @media screen and (min-width: 768px) {
   .btn {
@@ -603,11 +850,11 @@ body {
   background: #000000;
 }
 .btn-primary:hover, .btn-primary.-hover {
-  background: #3A3A3A;
+  background: #B3BDC7;
   text-decoration: none;
 }
 .btn-primary:disabled {
-  background: #A19A9E;
+  background: #B3BDC7;
 }
 .btn-secondary {
   color: #000000;
@@ -621,51 +868,11 @@ body {
 }
 .btn-secondary:disabled {
   background: none;
-  color: #A19A9E;
-  border-color: #A19A9E;
-}
-.btn-basket {
-  color: #ffffff;
-  background: #F9E7E1;
-}
-.btn-basket:hover, .btn-basket:focus, .btn-basket.-hover {
-  background: #3A3A3A;
-  text-decoration: none;
-}
-.btn-basket.-disabled {
-  background: #A19A9E;
+  color: #B3BDC7;
+  border-color: #B3BDC7;
 }
 .btn-icon .icon {
   margin-right: 12px;
-}
-.btn-size {
-  width: 48px;
-  height: 39px;
-  line-height: 39px;
-  padding: 0;
-  border-radius: 0;
-  font-size: 0.6875rem;
-  border: 1px solid #E7E3E5;
-  background: none;
-  color: #000000;
-  text-decoration: none;
-}
-.btn-size:not(.-selected):not(.-disabled):hover, .btn-size:not(.-selected):not(.-disabled).-hover {
-  text-decoration: none;
-  border: 1px solid #000000;
-  font-weight: 600;
-}
-.btn-size.-selected {
-  background: #000000;
-  border: 1px solid #000000;
-}
-.btn-size.-selected a {
-  color: #ffffff;
-}
-.btn-size.-disabled {
-  background: #E7E3E5;
-  border: 2px solid #E7E3E5;
-  color: #C5BEC2;
 }
 
 .btn-group {
@@ -776,7 +983,7 @@ body {
 }
 
 .u-emphasize {
-  color: #F9E7E1;
+  color: #034EA2;
 }
 
 .u-pointer {
@@ -883,19 +1090,24 @@ body {
   margin-top: 12px;
 }
 
-.form__checkbox, .form__radio {
+.enkiform__group {
+  width: 100%;
+  position: relative;
+  text-align: left;
+}
+.enkiform__checkbox, .enkiform__radio {
   display: block;
   position: absolute;
   clip: rect(0, 0, 0, 0);
   visibility: visible;
 }
-.form__checkbox + label, .form__radio + label {
+.enkiform__checkbox + label, .enkiform__radio + label {
   position: relative;
   padding-left: 35px;
   cursor: pointer;
   display: inline-block;
 }
-.form__checkbox + label:before, .form__radio + label:before {
+.enkiform__checkbox + label:before, .enkiform__radio + label:before {
   content: "";
   position: absolute;
   left: 0;
@@ -905,7 +1117,7 @@ body {
   border: 1px solid #000000;
   background: none;
 }
-.form__checkbox + label:after, .form__radio + label:after {
+.enkiform__checkbox + label:after, .enkiform__radio + label:after {
   content: "";
   position: absolute;
   top: 3px;
@@ -916,23 +1128,23 @@ body {
   border-width: 0 2px 2px 0;
   transition: all 0.2s ease-in-out;
 }
-.form__checkbox:not(:checked) + label:after, .form__radio:not(:checked) + label:after {
+.enkiform__checkbox:not(:checked) + label:after, .enkiform__radio:not(:checked) + label:after {
   opacity: 0;
   transform: scale(0);
 }
-.form__checkbox:checked + label:after, .form__radio:checked + label:after {
+.enkiform__checkbox:checked + label:after, .enkiform__radio:checked + label:after {
   opacity: 1;
   transform: scale(1);
 }
-.form__checkbox:checked + label:after {
+.enkiform__checkbox:checked + label:after {
   transform: scale(1) rotate(45deg);
 }
-.form__radio + label:before {
+.enkiform__radio + label:before {
   width: 20px;
   height: 20px;
   border-radius: 100%;
 }
-.form__radio + label:after {
+.enkiform__radio + label:after {
   width: 6px;
   height: 6px;
   background: #000000;
@@ -941,29 +1153,69 @@ body {
   transition: all 0.2s ease;
   border-radius: 100%;
 }
-.form__label {
-  font-size: 0.9375rem;
-  line-height: 24px;
-  color: #000000;
-  display: block;
+.enkiform__label {
+  font-size: 12px;
+  line-height: 16px;
+  position: absolute;
+  top: 0;
+  background: white;
+  color: #9BA8B5;
+  font-size: 16px;
+  top: 20px;
+  left: 14px;
+  cursor: text;
+  padding: 0 4px;
+  transition: ease 0.2s all;
 }
-.form__label + .form__input {
-  margin-top: 10px;
-}
-.form__input {
-  height: 45px;
-  border: 1px solid #A19A9E;
-  border-radius: 5px;
-  padding: 10px;
+.enkiform__input {
   box-sizing: border-box;
-  font-size: 0.9375rem;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #B3BDC7;
+  height: 56px;
+  padding: 0 0 0 16px;
+  margin-bottom: 32px;
 }
-.form__valid {
-  color: #019A10;
+.enkiform__input:focus + label {
+  top: -7px;
+  font-size: 12px;
+  color: #034EA2;
+  transition: ease 0.2s all;
+}
+.enkiform__input:valid + label {
+  top: -7px;
+  font-size: 12px;
+}
+.enkiform__input:focus {
+  outline: 0;
+  padding: 0 0 0 15px;
+  border: 2px solid #034EA2;
+}
+.enkiform__input::placeholder {
+  color: #999;
+}
+.enkiform__submit {
+  width: 100%;
+  height: 42px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #034EA2;
+  color: #FFF;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.enkiform__submit:disabled {
+  opacity: 0.5;
+}
+.enkiform__valid {
+  color: #11836D;
   font-size: 0.8125rem;
 }
-.form__error {
-  color: #D60000;
+.enkiform__error {
+  color: #E1000F;
   font-size: 0.8125rem;
 }
 
@@ -1214,11 +1466,6 @@ body {
   height: 100%;
 }
 
-:root {
-  --main-color: #034EA2;
-  --error-color: #E1000F;
-}
-
 body {
   display: flex;
   flex-direction: row;
@@ -1237,7 +1484,7 @@ input {
 }
 
 a {
-  color: var(--main-color);
+  color: #034EA2;
 }
 
 .login-container {
@@ -1285,18 +1532,6 @@ a {
   transform: translateX(-50%);
 }
 
-.login-title {
-  font-size: 32px;
-  line-height: 32px;
-  font-weight: 300;
-  letter-spacing: 1px;
-  margin-bottom: 12px;
-}
-
-.login-subtitle {
-  margin-top: 12px;
-}
-
 .login-wrapper {
   display: flex;
   justify-content: center;
@@ -1320,65 +1555,6 @@ a {
 
 .login-form ul {
   list-style-type: none;
-}
-
-.login-form label {
-  cursor: pointer;
-  color: black;
-}
-
-.form-group {
-  width: 100%;
-  position: relative;
-  text-align: left;
-}
-
-label.form-control {
-  font-size: 12px;
-  line-height: 16px;
-  position: absolute;
-  top: 0;
-  background: white;
-  color: #9BA8B5;
-  font-size: 16px;
-  top: 20px;
-  left: 14px;
-  cursor: text;
-  padding: 0 4px;
-  transition: ease 0.2s all;
-}
-
-input:focus + label.form-control {
-  top: -7px;
-  font-size: 12px;
-  color: var(--main-color);
-  transition: ease 0.2s all;
-}
-
-input:valid + label.form-control {
-  top: -7px;
-  font-size: 12px;
-}
-
-/*fields*/
-input[type=text], input[type=password] {
-  box-sizing: border-box;
-  width: 100%;
-  border-radius: 4px;
-  border: 1px solid #B3BDC7;
-  height: 56px;
-  padding: 0 0 0 16px;
-  margin-bottom: 32px;
-}
-
-input[type=text]:focus, input[type=password]:focus {
-  outline: 0;
-  padding: 0 0 0 15px;
-  border: 2px solid var(--main-color);
-}
-
-input[type=text]::placeholder, input[type=password]::placeholder {
-  color: #999;
 }
 
 .show-password {
@@ -1432,46 +1608,7 @@ input[type=submit]:disabled {
 }
 
 .alert.alert-error {
-  color: var(--error-color);
-}
-
-#kc-form-options div {
-  display: inline-block;
-  margin-right: 20px;
-  font-size: 25px;
-}
-
-#kc-form-options div label {
-  font-size: 20px;
-}
-
-#kc-feedback {
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-}
-
-#kc-feedback-wrapper {
-  padding: 1em;
-}
-
-.feedback-success {
-  background-color: rgba(155, 155, 255, 0.1);
-}
-
-.feedback-warning {
-  background-color: rgba(255, 175, 0, 0.1);
-}
-
-.feedback-error {
-  background-color: rgba(255, 0, 0, 0.1);
-}
-
-.h1-title {
-  font-size: 48px;
+  color: #E1000F;
 }
 
 /*# sourceMappingURL=main.css.map */

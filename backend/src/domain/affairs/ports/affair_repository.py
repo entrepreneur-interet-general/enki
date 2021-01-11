@@ -2,13 +2,13 @@ import abc
 from typing import List, Union
 import xml.dom.minidom
 
-from flask import current_app
+from cisu.entities.edxl_entity import EdxlEntity
 from werkzeug.exceptions import HTTPException
 
-from domain.affairs.cisu import EdxlEntity
 from domain.affairs.entities.affair_entity import AffairEntity
-from entrypoints.extensions import event_bus, clock
-from domain.core import events
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
+
 affairsList = List[AffairEntity]
 
 
@@ -23,15 +23,11 @@ class NotFoundAffair(HTTPException):
 
 
 class AbstractAffairRepository(abc.ABC):
-    def add(self, affair: AffairEntity) -> None:
-        current_app.logger.info("starting adding affair")
+    def add(self, affair: AffairEntity) -> Union[bool, None]:
         if self._match_uuid(affair.uuid):
-            current_app.logger.info("affair already exists")
             raise AlreadyExistingAffairUuid()
-        current_app.logger.info("add affair")
-        self._add(affair)
-        current_app.logger.info("publish event")
-        event_bus.publish(events.AffairCreatedEvent(data=affair))
+        result = self._add(affair)
+        return result
 
     def get_one(self) -> AffairEntity:
         return self.get_all()[0]
@@ -54,7 +50,14 @@ class AbstractAffairRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _match_uuid(self, uuid: str) -> Union[AffairEntity,None]:
+    def _get_from_polygon(self, multipolygon: List) -> affairsList:
+        raise NotImplementedError
+
+    def get_from_polygon(self, multipolygon: List) -> affairsList:
+        return self._get_from_polygon(multipolygon)
+
+    @abc.abstractmethod
+    def _match_uuid(self, uuid: str) -> Union[AffairEntity, None]:
         raise NotImplementedError
 
     @staticmethod
@@ -79,7 +82,7 @@ class InMemoryAffairRepository(AbstractAffairRepository):
     def get_all(self) -> affairsList:
         return self._affairs
 
-    def _match_uuid(self, uuid: str)  -> Union[AffairEntity,None]:
+    def _match_uuid(self, uuid: str) -> Union[AffairEntity, None]:
         matches = [affair for affair in self._affairs if affair.uuid == uuid]
         if matches:
             return matches[0]
@@ -91,3 +94,19 @@ class InMemoryAffairRepository(AbstractAffairRepository):
 
     def set_affairs(self, affairs: affairsList) -> None:
         self._affairs = affairs
+
+    def _get_from_polygon(self, multipolygon: List) -> affairsList:
+        print(len(self.get_all()))
+        return [
+            affair for affair in self.get_all() if self._contain_point(
+                lat=affair.location["lat"],
+                lon=affair.location["lon"],
+                multipolygon=multipolygon
+            )
+        ]
+
+    @staticmethod
+    def _contain_point(lat: float, lon: float, multipolygon: List) -> bool:
+        point = Point(lon,lat)
+        polygon = Polygon(multipolygon)
+        return polygon.contains(point)

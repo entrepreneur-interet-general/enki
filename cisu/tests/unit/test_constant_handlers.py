@@ -1,6 +1,6 @@
-from cisu.src.constants.constants import WhatsHappenConstants, LocationKindConstants, \
+from cisu.src.cisu.constants.constants import WhatsHappenConstants, LocationKindConstants, \
     RiskThreatConstants, HealthMotiveConstants
-from cisu.src.entities.commons.common_alerts import WhatsHappen, LocationKind, HealthMotive, RiskThreat
+from cisu.src.cisu.entities.commons.common_alerts import WhatsHappen, LocationKind, HealthMotive, RiskThreat
 
 
 def test_what_happens():

@@ -3,14 +3,14 @@ from datetime import date, datetime
 
 from flask import make_response
 
-from domain.affairs.cisu.entities.commons import DateType
-from domain.affairs.cisu.entities.commons.cisu_enum import CisuEnum
-from domain.affairs.cisu.entities.commons.common_alerts import AttributeType, Victims
-from domain.tasks.entities.event_entity import Severity
-from domain.tasks.entities.task_entity import TaskType
+from cisu.entities.commons import DateType
+from cisu.entities.commons.cisu_enum import CisuEnum
+from cisu.entities.commons.common_alerts import AttributeType, Victims
+from cisu.entities.commons.location_type import LocationShape
+from domain.messages.entities.message_entity import Severity, MessageType
 
 
-class SapeurJsonEncoder(json.JSONEncoder):
+class EnkiJsonEncoder(json.JSONEncoder):
     def default(self, obj):
         try:
             if isinstance(obj, datetime):
@@ -23,7 +23,9 @@ class SapeurJsonEncoder(json.JSONEncoder):
                 return str(obj)
             elif isinstance(obj, Severity):
                 return str(obj)
-            elif isinstance(obj, TaskType):
+            elif isinstance(obj, LocationShape):
+                return str(obj)
+            elif isinstance(obj, MessageType):
                 return str(obj)
             elif isinstance(obj, AttributeType):
                 return obj.to_dict()
@@ -37,7 +39,7 @@ class SapeurJsonEncoder(json.JSONEncoder):
 
 
 def custom_json_output(data, code, headers=None):
-    dumped = json.dumps({k: v for k, v in data.items() if v is not None}, cls=SapeurJsonEncoder)
+    dumped = json.dumps({k: v for k, v in data.items() if v is not None}, cls=EnkiJsonEncoder)
     resp = make_response(dumped, code)
     resp.headers.extend(headers or {})
     return resp

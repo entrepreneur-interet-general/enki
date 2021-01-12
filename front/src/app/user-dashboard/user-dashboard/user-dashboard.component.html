@@ -1,16 +1,15 @@
 <div class="dashboard">
-  <p>Bonjour {{user.fullname}}</p>
+  <!-- <p>Bonjour {{user.fullname}}</p> -->
   <div class="title-container">
     <h1 class="h1-title">Tableau de bord</h1>
   </div>
-  <div class="evenement dashboard--widget">
+  <!-- <div class="evenement dashboard--widget">
     <h2 class="evenement--title title-with-icon">
       <svg class="icon-sun icon"><use xlink:href="#icon-sun"></use></svg>
       Événements
     </h2>
     <button routerLink="/maincourante" class="btn">Voir l'événement en cours</button>
-    <!-- <button routerLink="/evenement/create" class="btn">Créer un évenement</button> -->
-  </div>
+  </div> -->
   <div class="meteo dashboard--widget">
     <h2 class="meteo--title title-with-icon">
       <svg class="icon-sun icon"><use xlink:href="#icon-sun"></use></svg>
@@ -23,7 +22,7 @@
     </div>
     <h2 class="interventions--title title-with-icon">
       <svg class="icon-post-it icon"><use xlink:href="#icon-post-it"></use></svg>
-      Dernières interventions
+      Derniers signalements
     </h2>
     <li class="intervention list--element" *ngFor="let intervention of interventions | slice:0:3">
       <a class="intervention--wrapper list--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
@@ -48,7 +47,7 @@
     <div class="interventions--seeMore">
       <a routerLink="/situations/liste-interventions">
         <svg class="icon-add title-icon"><use xlink:href="#icon-add"></use></svg>
-        <span>Voir plus d'interventions</span>
+        <span>Voir plus de signalements</span>
       </a>
     </div>
   </ul>

@@ -1,6 +1,26 @@
 .title-container {
-    padding: 0 16px 16px;
+    padding: 0 16px;
     margin: 20px 0;
+}
+.goTo {
+    margin-bottom: 20px;
+    padding: 0 16px;
+    color: $darkestGrey;
+}
+.small-heading {
+  color: $darkestGrey;
+  padding: 0 16px;
+  position: relative;
+  &--close {
+    position: absolute;
+    right: 16px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    svg {
+      font-size: 12px;
+    }
+  }
 }
 .login-title {
     text-align: center;
@@ -16,20 +36,10 @@
 }
 // Balise title
 .h1-title  {
-    padding-bottom: 24px;
     font-size: rem-calc(32);
     position: relative;
     color: $black;
     line-height: 35px;
-    &:after {
-        content: '';
-        width: 62px;
-        background-color: $grey;
-        height: 1px;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-    }
     @media #{$mediaMobile} {
         font-size: rem-calc(28);
         line-height: 30px;

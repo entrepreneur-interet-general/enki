@@ -5,6 +5,7 @@ from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Integer, TIM
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy_utils import ChoiceType
 
+from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entity import EvenementType, EvenementEntity
 from domain.messages.entities.message_entity import MessageType, Severity, MessageEntity
 from domain.messages.entities.resource import ResourceEntity
@@ -76,6 +77,15 @@ evenementsTable = Table(
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
 
+affairsTable = Table(
+    'affairs', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('sge_hub_id', String(255), nullable=False),
+    Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
+    Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
+)
+
 all_tables = [
     userTable,
     tagMessageTable,
@@ -89,6 +99,7 @@ def start_mappers():
     mapper(TagEntity, tagTable)
     mapper(EvenementEntity, evenementsTable)
     mapper(ResourceEntity, resourceTable)
+    mapper(SimpleAffairEntity, affairsTable)
     mapper(
         MessageEntity, messagesTable,
         properties={

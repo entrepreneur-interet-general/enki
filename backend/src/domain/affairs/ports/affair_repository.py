@@ -2,7 +2,6 @@ import abc
 from typing import List, Union
 import xml.dom.minidom
 
-from cisu.entities.edxl_entity import EdxlEntity
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.affair_entity import AffairEntity
@@ -59,18 +58,6 @@ class AbstractAffairRepository(abc.ABC):
     @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> Union[AffairEntity, None]:
         raise NotImplementedError
-
-    @staticmethod
-    def build_affair_from_xml_string(xml_string: str) -> AffairEntity:
-        affair_dom = xml.dom.minidom.parseString(xml_string)
-        edxl_message = EdxlEntity.from_xml(affair_dom)
-        return AffairEntity(**edxl_message.resource.message.choice.to_dict())
-
-    @staticmethod
-    def build_affair_from_xml_file(xml_path: str) -> AffairEntity:
-        affair_dom = xml.dom.minidom.parse(xml_path)
-        edxl_message = EdxlEntity.from_xml(affair_dom)
-        return AffairEntity(**edxl_message.resource.message.choice.to_dict())
 
 
 class InMemoryAffairRepository(AbstractAffairRepository):

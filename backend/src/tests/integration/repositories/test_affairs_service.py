@@ -18,7 +18,7 @@ response_folder = pathlib.Path(pathlib.Path(__file__).parent.absolute()) / "../.
 def test_add_affair(filename: pathlib.Path, affair_repo: AbstractAffairRepository):
     with open(str(filename), 'r') as f:
         affair_xml_string = str(f.read())
-        AffairService.add_affair(xml_string=affair_xml_string, repo=affair_repo)
+        AffairService.add_affair_from_xml(xml_string=affair_xml_string, repo=affair_repo)
 
     affairs = AffairService.list_affairs(repo=affair_repo)
     assert isinstance(affairs, list)
@@ -30,16 +30,16 @@ def test_add_affair(filename: pathlib.Path, affair_repo: AbstractAffairRepositor
 def test_add_affair(filename: pathlib.Path, affair_repo: AbstractAffairRepository):
     with open(str(filename), 'r') as f:
         affair_xml_string = str(f.read())
-        AffairService.add_affair(xml_string=affair_xml_string, repo=affair_repo)
+        AffairService.add_affair_from_xml(xml_string=affair_xml_string, repo=affair_repo)
         with pytest.raises(AlreadyExistingAffairUuid):
-            AffairService.add_affair(xml_string=affair_xml_string, repo=affair_repo)
+            AffairService.add_affair_from_xml(xml_string=affair_xml_string, repo=affair_repo)
 
 
 def test_add_multiple_affair(affair_repo: AbstractAffairRepository):
     for filename in filenames:
         with open(str(filename), 'r') as f:
             affair_xml_string = str(f.read())
-            AffairService.add_affair(xml_string=affair_xml_string, repo=affair_repo)
+            AffairService.add_affair_from_xml(xml_string=affair_xml_string, repo=affair_repo)
 
     affairs = AffairService.list_affairs(repo=affair_repo)
     assert isinstance(affairs, list)
@@ -51,7 +51,7 @@ def test_affairs_service_with_unknow_code(affair_repo: AbstractAffairRepository)
     for filename in filenames:
         with open(str(filename), 'r') as f:
             affair_xml_string = str(f.read())
-            AffairService.add_affair(xml_string=affair_xml_string, repo=affair_repo)
+            AffairService.add_affair_from_xml(xml_string=affair_xml_string, repo=affair_repo)
 
     with (response_folder / "empty.json").open() as f:
         empty_response = json.load(f)
@@ -71,7 +71,7 @@ def test_affairs_service_with_know_code_chelles(affair_repo: AbstractAffairRepos
     for filename in filenames:
         with open(str(filename), 'r') as f:
             affair_xml_string = str(f.read())
-            AffairService.add_affair(xml_string=affair_xml_string, repo=affair_repo)
+            AffairService.add_affair_from_xml(xml_string=affair_xml_string, repo=affair_repo)
 
     with (response_folder / "chelles.json").open() as f:
         chelles_response = json.load(f)

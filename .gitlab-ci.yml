@@ -2,6 +2,8 @@ services:
   - name: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
     alias: elasticsearch
     command: [ "bin/elasticsearch", "-Ediscovery.type=single-node" ]
+  - name: minio/minio
+    alias: minio
 #
 #  - name: postgres:latest
 #    alias: postgres
@@ -15,6 +17,9 @@ variables:
   POSTGRES_USER: "postgres"
   POSTGRES_PASSWORD: "pg-password"
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  MINIO_ENDPOINT: "minio"
+  MINIO_ACCESS_KEY: "MINIOACCESSKEY"
+  MINIO_SECRET_KEY: "MINIO_SECRET_KEY"
 
 stages:
   - install

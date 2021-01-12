@@ -15,12 +15,12 @@ def test_add_tag_then_recovers_it_and_recovers_all(client: FlaskClient):
     add_tag_response = post_add_tag(client, tag1)
 
     assert add_tag_response.status_code == 201
-    assert add_tag_response.json['message'] == "Success"
+    assert add_tag_response.json['message'] == "success"
 
     # fetching added tag
     fetched_tag1_response = client.get(BASE_PATH_TAG + "/" + tag1["uuid"])
     assert fetched_tag1_response.status_code == 200
-    assert filter_dict_with_keys(fetched_tag1_response.json["tag"], tag1) == tag1
+    assert filter_dict_with_keys(fetched_tag1_response.json["data"], tag1) == tag1
 
     # adding extra tag
     tag2 = tag_factory()
@@ -29,7 +29,7 @@ def test_add_tag_then_recovers_it_and_recovers_all(client: FlaskClient):
     # fetching all tags
     fetched_all_tags_response = client.get(BASE_PATH_TAG)
     assert fetched_all_tags_response.status_code == 200
-    assert [filter_dict_with_keys(tag, tag1) for tag in fetched_all_tags_response.json["tags"]] == [tag1, tag2]
+    assert [filter_dict_with_keys(tag, tag1) for tag in fetched_all_tags_response.json["data"]] == [tag1, tag2]
 
 
 def test_already_exists_tag(app, client: FlaskClient):

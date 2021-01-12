@@ -21,18 +21,18 @@ def test_add_message_add_tag_then_link_them(app, client: FlaskClient):
     link_message1_tag1_response = post_add_tag_to_message(client, message1["uuid"], tag1["uuid"])
     assert link_message1_tag1_response.status_code == 201
     assert link_message1_tag1_response.json == {
-        "result": f"tag {tag1['uuid']} successfully added from message {message1['uuid']}"
+        "message": f"tag {tag1['uuid']} successfully added from message {message1['uuid']}"
     }
 
     link_message1_tag1_response = post_add_tag_to_message(client, message1["uuid"], tag1["uuid"])
     assert link_message1_tag1_response.status_code == AlreadyExistingTagInThisMessage.code
     assert link_message1_tag1_response.json == {
-        "result": AlreadyExistingTagInThisMessage.description
+        "message": AlreadyExistingTagInThisMessage.description
     }
 
     message1_get_response = get_message(client, message1["uuid"])
     assert message1_get_response.status_code == 200
-    message_tags = message1_get_response.json["message"]["tags"]
+    message_tags = message1_get_response.json["data"]["tags"]
     assert filter_dict_with_keys(message_tags[0], tag1) == tag1
 
 
@@ -46,11 +46,11 @@ def test_add_message_add_tag_then_link_them_and_unlinks(app, client: FlaskClient
     unlink_message1_tag1_response = post_delete_tag_to_message(client, message1["uuid"], tag1["uuid"])
     assert unlink_message1_tag1_response.status_code == 202
     assert unlink_message1_tag1_response.json == {
-        "result": f"tag {tag1['uuid']} successfully deleted from message {message1['uuid']}"}
+        "message": f"tag {tag1['uuid']} successfully deleted from message {message1['uuid']}"}
 
     message1_get_response = get_message(client, message1["uuid"])
     assert message1_get_response.status_code == 200
-    message_tags = message1_get_response.json["message"]["tags"]
+    message_tags = message1_get_response.json["data"]["tags"]
     assert len(message_tags) == 0
 
 

@@ -22,9 +22,9 @@ class EchangeMessageResource(Resource):
             affair = AffairService.add_affair(xml, repo=current_app.context.affair)
             event_bus.publish(AffairCreatedEvent(data=affair))
             return {
-                   "msg": "success"
+                   "message": "success"
                }, 200
         return {
-            "msg": "error",
+            "message": "error",
             "contentType": request.headers['Content-Type']
         }, 200

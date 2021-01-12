@@ -2,6 +2,7 @@ from typing import List, Union
 
 from sqlalchemy.orm import Session
 
+from domain.messages.entities.resource import ResourceEntity
 from domain.messages.ports.message_repository import AbstractMessageRepository, AlreadyExistingMessageUuid, NotFoundMessage, MessagesList
 from domain.messages.entities.message_entity import MessageEntity
 from domain.messages.entities.tag_entity import TagEntity
@@ -9,6 +10,8 @@ from .repository import PgRepositoryMixin
 
 
 class PgMessageRepository(PgRepositoryMixin, AbstractMessageRepository):
+
+
 
     def __init__(self, session: Session):
         PgRepositoryMixin.__init__(self, session=session, entity_type=MessageEntity)
@@ -20,6 +23,16 @@ class PgMessageRepository(PgRepositoryMixin, AbstractMessageRepository):
 
     def remove_tag_to_message(self, message: MessageEntity, tag: TagEntity) -> None:
         message.tags.remove(tag)
+        self.commit()
+
+    def add_resource_to_message(self, message: MessageEntity,  resource: ResourceEntity) -> None:
+        message.resources.append(resource)
+        resource.message_id = message.uuid
+        self.commit()
+
+    def remove_resource_to_message(self, message: MessageEntity, resource: ResourceEntity) -> None:
+        message.resources.remove(resource)
+        resource.message_id = None
         self.commit()
 
     def _match_uuid(self, uuid: str) -> MessageEntity:
@@ -40,6 +53,13 @@ class PgMessageRepository(PgRepositoryMixin, AbstractMessageRepository):
     def _get_tag_by_message(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:
         match = self.get_by_uuid(uuid=uuid)
         matches = [tag for tag in match.tags if tag.uuid == tag_uuid]
+        if not matches:
+            return None
+        return matches[0]
+
+    def _get_resource_by_message(self, uuid: str, resource_uuid: str) -> Union[ResourceEntity, None]:
+        match = self.get_by_uuid(uuid=uuid)
+        matches = [resource for resource in match.resources if resource.uuid == resource_uuid]
         if not matches:
             return None
         return matches[0]

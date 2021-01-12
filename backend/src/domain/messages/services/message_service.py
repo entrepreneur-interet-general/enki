@@ -1,11 +1,12 @@
 from typing import Any, Dict, List
 
-from flask import current_app
-
+from domain.messages.entities.resource import ResourceEntity
 from domain.messages.entities.tag_entity import TagEntity
 from domain.messages.entities.message_entity import MessageEntity
-from domain.messages.ports.message_repository import AlreadyExistingTagInThisMessage, NotFoundTagInThisMessage
-from domain.messages.schema import MessageSchema, TagSchema
+from domain.messages.ports.message_repository import AlreadyExistingTagInThisMessage, NotFoundTagInThisMessage, \
+    NotFoundResourceInThisMessage, AlreadyExistingResourceInThisMessage
+from domain.messages.schemas.resource_schema import ResourceSchema
+from domain.messages.schemas.schema import MessageSchema, TagSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
@@ -14,14 +15,20 @@ class MessageService:
 
     @staticmethod
     def add_message(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
-        tags = data.pop("tags", [])
+        tag_ids = data.pop("tags", [])
+        resource_ids = data.pop("resources", [])
         message: MessageEntity = MessageService.schema().load(data)
         with uow:
             uow.message.add(message)
-            if tags:
-                tags = uow.tag.get_by_uuid_list(tags)
+            if tag_ids:
+                tags = uow.tag.get_by_uuid_list(tag_ids)
                 for tag in tags:
                     uow.message.add_tag_to_message(message=message, tag=tag)
+            if resource_ids:
+                resources = uow.resource.get_by_uuid_list(resource_ids)
+                for resource in resources:
+                    uow.message.add_resource_to_message(message=message, resource=resource)
+
             new_message = uow.message.get_by_uuid(message.uuid)
             return MessageService.schema().dump(new_message)
 
@@ -47,10 +54,43 @@ class MessageService:
             uow.message.remove_tag_to_message(match, tag=tag)
 
     @staticmethod
+    def add_resource_to_message(message_uuid, resource_uuid, uow: AbstractUnitOfWork) -> None:
+        with uow:
+            match: MessageEntity = uow.message.get_by_uuid(message_uuid)
+            try:
+                results = uow.message.get_resource_by_message(uuid=message_uuid, resource_uuid=resource_uuid)
+                if results:
+                    raise AlreadyExistingResourceInThisMessage()
+            except NotFoundResourceInThisMessage:
+                resource: ResourceEntity = uow.resource.get_by_uuid(uuid=resource_uuid)
+                uow.message.add_resource_to_message(message=match, resource=resource)
+
+    @staticmethod
+    def remove_resource_to_message(message_uuid, resource_uuid, uow: AbstractUnitOfWork) -> None:
+        with uow:
+            if not uow.message.get_resource_by_message(uuid=message_uuid, resource_uuid=resource_uuid):
+                raise NotFoundResourceInThisMessage()
+            match: MessageEntity = uow.message.get_by_uuid(message_uuid)
+            resource: ResourceEntity = uow.resource.get_by_uuid(uuid=resource_uuid)
+            uow.message.remove_resource_to_message(match, resource=resource)
+            
+    @staticmethod
     def list_tags(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             message: MessageEntity = uow.message.get_tags(uuid)
             return TagSchema(many=True).dump(message.tags)
+
+    @staticmethod
+    def list_resources(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            message: MessageEntity = uow.message.get_resources(uuid)
+            return ResourceSchema(many=True).dump(message.resources)
+
+    @staticmethod
+    def get_message_resource(uuid: str, resource_uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
+        with uow:
+            resource: ResourceEntity = uow.message.get_resource_by_message(uuid=uuid, resource_uuid=resource_uuid)
+            return ResourceSchema().dump(resource)
 
     @staticmethod
     def get_message_tag(uuid: str, tag_uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:

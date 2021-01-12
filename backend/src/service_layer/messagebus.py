@@ -20,6 +20,12 @@ COMMAND_HANDLERS: Dict[Type[Topic], List[Callable]] = {
     ],
     topics.CreateTagTopic: [
         commands.create_tag,
+    ],
+    topics.CreateResourceTopic: [
+        commands.create_resource,
+    ],
+    topics.UploadResourceContentTopic: [
+        commands.upload_resource,
     ]
 }
 

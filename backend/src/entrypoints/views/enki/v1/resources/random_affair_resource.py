@@ -21,6 +21,7 @@ class AffairRandomResource(WithAffairRepoResource):
     def get(self):
         return {
                    "affair": AffairService.get_random_affair(self.random_repo),
+                   "message": "success"
                }, 200
 
 
@@ -34,5 +35,6 @@ class AffairRandomListResource(WithAffairRepoResource):
 
     def get(self):
         return {
-                   "affairs": AffairService.get_random_list_affairs(self.random_repo),
+                   "data": AffairService.get_random_list_affairs(self.random_repo),
+                   "message": "success"
                }, 200

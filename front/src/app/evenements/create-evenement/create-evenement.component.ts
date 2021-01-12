@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EvenementsService } from '../evenements.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-evenement',
@@ -22,7 +23,8 @@ export class CreateEvenementComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private evenementsService: EvenementsService
+    private evenementsService: EvenementsService,
+    private router: Router
   ) {
     this.evenement = {
       "creator_id": "my_id",
@@ -51,8 +53,8 @@ export class CreateEvenementComponent implements OnInit {
       "type": "natural"
     }
     this.httpFormSubmit(formBody).subscribe(response => {
-      console.log(response)
-      this.evenementsService.evenements.push(response.evenement)
+      this.evenementsService.evenements.push(response.data)
+      this.router.navigate([`evenements/${response.data.uuid}`])
     })
   }
 

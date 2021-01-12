@@ -15,8 +15,21 @@ const routes : Routes = [
   {
     path: 'maincourante/:uuid',
     component: MainCouranteComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'addmessage/:uuid',
+    component: AddMessageComponent,
     canActivate: [AuthGuard],
     children: [
+      {
+        path: 'addlabel',
+        component: AddLabelComponent,
+        canActivate: [AuthGuard]
+      }
+    ]
+  }
+/*     children: [
       {
         path: 'addmessage',
         component: AddMessageComponent,
@@ -29,8 +42,8 @@ const routes : Routes = [
           }
         ]
       }
-    ]
-  },
+    ] 
+  },*/
 ];
 @NgModule({
   declarations: [

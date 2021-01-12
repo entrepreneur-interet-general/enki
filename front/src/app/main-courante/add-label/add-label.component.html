@@ -1,6 +1,6 @@
 <div class="addLabel">
   <div class="addLabel--heading">
-    <a href="" class="addLabel--cancel" routerLink="/addmessage">
+    <a class="addLabel--cancel" (click)="goBack()">
       <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
     </a>
     <div class="addLabel--selectedLabels" *ngIf="labelsService.selectedLabels.length > 0">

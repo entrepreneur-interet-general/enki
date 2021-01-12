@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
 from domain.messages.entities.resource import ResourceEntity
 from domain.messages.entities.tag_entity import TagEntity
@@ -102,6 +102,14 @@ class MessageService:
     def list_messages(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             messages: List[MessageEntity] = uow.message.get_all()
+            return MessageService.schema(many=True).dump(messages)
+
+    @staticmethod
+    def list_messages_by_query(evenement_id: str, tag_ids: Union[str, List[str], None], uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        if isinstance(tag_ids, str):
+            tag_ids = [tag_ids]
+        with uow:
+            messages: List[MessageEntity] = uow.message.get_messages_by_query(evenement_id=evenement_id, tag_ids=tag_ids)
             return MessageService.schema(many=True).dump(messages)
 
     @staticmethod

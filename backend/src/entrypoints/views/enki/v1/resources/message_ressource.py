@@ -1,6 +1,6 @@
 from flask import request, current_app
-from flask_restful import Resource
-from typing import Dict, Any
+from flask_restful import Resource, reqparse
+from typing import Dict, Any, Union, List
 from domain.messages.services.message_service import MessageService
 from domain.messages.command import CreateMessage
 from entrypoints.extensions import event_bus
@@ -25,6 +25,19 @@ class MessageListResource(WithMessageRepoResource):
               schema:
                 type: array
                 items: MessageSchema
+      parameters:
+        - in: query
+          name: tags
+          schema:
+            type: array
+            items:
+              type: string
+          description: Tag id or list of tag ids
+        - in: query
+          name: evenement_id
+          schema:
+            type: str
+          description: Evenement ID
     post:
       description: Creating a message
       tags:
@@ -36,14 +49,28 @@ class MessageListResource(WithMessageRepoResource):
       responses:
         201:
           description: Successfully created
+          content:
+            application/json:
+              schema: MessageSchema
         400:
           description: bad request, bad parameters
     """
 
     def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('tags', type=str, help='Tags ids', action='append')
+        parser.add_argument('evenement_id', type=str, help='Evenement id')
+        args = parser.parse_args()
+        tags: Union[str, List[str], None] = args.get("tags")
+        evenement_id: Union[str, None] = args.get("evenement_id")
+        if tags or evenement_id:
+            messages = MessageService.list_messages_by_query(tag_ids=tags, evenement_id=evenement_id, uow=current_app.context)
+        else:
+            messages = MessageService.list_messages(current_app.context)
+
         return {
-                   "data": MessageService.list_messages(current_app.context),
-                   "message": "success",
+                   "data": messages,
+                   "message": "success"
                }, 200
 
     def post(self):

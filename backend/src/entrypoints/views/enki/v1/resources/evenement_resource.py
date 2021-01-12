@@ -31,17 +31,23 @@ class EvenementListResource(WithEvenementRepoResource):
                 items: EvenementSchema
     post:
       description: Creating an event
+      tags:
+        - evenements
       requestBody:
         content:
           application/json:
             schema:  EvenementSchema
-      tags:
-        - evenements
+      responses:
+        201:
+          description: Successfully created
+        400:
+          description: bad request, bad parameters
     """
 
     def get(self):
         return {
-                   "evenements": EvenementService.list_evenements(current_app.context)
+                   "data": EvenementService.list_evenements(current_app.context),
+                   "message": "success",
                }, 200
 
     def post(self):
@@ -50,8 +56,8 @@ class EvenementListResource(WithEvenementRepoResource):
         result = event_bus.publish(command, current_app.context)
 
         return {
-                   "result": "Success",
-                   "evenement": result[0],
+                   "message": "success",
+                   "data": result[0],
                }, 201
 
 
@@ -78,6 +84,6 @@ class EvenementResource(WithEvenementRepoResource):
 
     def get(self, uuid: str):
         return {
-                   "evenement": EvenementService.get_by_uuid(uuid, current_app.context),
-                   "result": "success"
+                   "data": EvenementService.get_by_uuid(uuid, current_app.context),
+                   "message": "success",
                }, 200

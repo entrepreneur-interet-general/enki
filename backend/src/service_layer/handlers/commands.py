@@ -1,6 +1,9 @@
+from minio.datatypes import Upload
+
 from domain.evenements.command import CreateEvenement
 from domain.evenements.service import EvenementService
-from domain.messages.command import CreateTag, CreateMessage
+from domain.messages.command import CreateTag, CreateMessage, UploadResourceContent, CreateResource
+from domain.messages.services.resource_service import ResourceService
 from domain.messages.services.tag_service import TagService
 from domain.messages.services.message_service import MessageService
 from service_layer.unit_of_work import AbstractUnitOfWork
@@ -19,4 +22,15 @@ def create_message(command: CreateMessage, uow: AbstractUnitOfWork):
 def create_tag(command: CreateTag, uow: AbstractUnitOfWork):
     return TagService.add_tag(
         data=command.data,
+        uow=uow)
+
+def create_resource(command: CreateResource, uow: AbstractUnitOfWork):
+    return ResourceService.add_resource(
+        data=command.data,
+        uow=uow)
+
+def upload_resource(command: UploadResourceContent, uow: AbstractUnitOfWork):
+    return ResourceService.upload_resource(
+        data=command.data,
+        file=command.file,
         uow=uow)

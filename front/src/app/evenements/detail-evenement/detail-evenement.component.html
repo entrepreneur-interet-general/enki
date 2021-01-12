@@ -1,0 +1,10 @@
+
+<div class="evenement" *ngIf="fetchedEvenement">
+  <div class="evenement--title">
+    {{evenement.title}}
+  </div>
+  <div class="evenement--description">
+    {{evenement.description}}
+  </div>
+  <a routerLink="/maincourante/{{evenement.uuid}}">Accéder au dossier</a>
+</div>

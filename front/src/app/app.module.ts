@@ -25,6 +25,7 @@ import { MainCouranteModule } from './main-courante/main-courante.module';
 import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
 import { CreateEvenementComponent } from './evenements/create-evenement/create-evenement.component';
+import { DetailEvenementComponent } from './evenements/detail-evenement/detail-evenement.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -52,7 +53,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PageNotFoundComponent,
     SituationsComponent,
     ListeEvenementsComponent,
-    CreateEvenementComponent
+    CreateEvenementComponent,
+    DetailEvenementComponent
   ],
   imports: [
     BrowserModule,

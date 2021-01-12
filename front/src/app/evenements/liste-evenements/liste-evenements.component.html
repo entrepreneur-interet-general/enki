@@ -1,3 +1,8 @@
+<div class="evenements">
+  <div class="evenement--element" *ngFor="let evenement of evenementsService.evenements">
+    <a routerLink="/detail-evenement/{{evenement.uuid}}">Voir evenement</a>
+  </div>
+</div>
 <div class="action--add" routerLink="/evenements/create">
   <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
 </div>

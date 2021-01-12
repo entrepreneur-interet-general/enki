@@ -18,8 +18,9 @@
 .mainInfos {
   display: block;
   align-items: center;
-  // justify-content: space-between;
-  
+  &.-hasIcon {
+    display: flex;
+  }
   &--title {
     display: inline;
     font-size: 17px;

@@ -16,12 +16,12 @@ def test_add_message_then_recovers_it_and_recovers_all(app, client: FlaskClient)
     add_message_response = post_add_message(client, message1)
 
     assert add_message_response.status_code == 201
-    assert add_message_response.json['message'] == "Success"
+    assert add_message_response.json['message'] == "success"
 
     # fetching added message
     fetched_message1_response = get_message(client, message_uuid=message1["uuid"])
     assert fetched_message1_response.status_code == 200
-    assert filter_dict_with_keys(fetched_message1_response.json["message"], message1) == message1
+    assert filter_dict_with_keys(fetched_message1_response.json["data"], message1) == message1
 
     # adding extra message
     message2 = message_factory()
@@ -30,8 +30,11 @@ def test_add_message_then_recovers_it_and_recovers_all(app, client: FlaskClient)
     # fetching all messages
     fetched_all_messages_response = get_all_messages(client)
     assert fetched_all_messages_response.status_code == 200
-    assert [filter_dict_with_keys(message, message1) for message in fetched_all_messages_response.json["messages"]] == [message1,
-                                                                                                         message2]
+    print(fetched_all_messages_response.json["data"])
+    print(message1)
+    print(message2)
+    filtered_list = ([filter_dict_with_keys(message, message1) for message in fetched_all_messages_response.json["data"]])
+    assert filtered_list == [message1, message2] or filtered_list == [message2, message1]
 
 
 def test_already_exists_message(app, client: FlaskClient):
@@ -41,7 +44,7 @@ def test_already_exists_message(app, client: FlaskClient):
 
     add_already_exists_message_response = post_add_message(client, message1)
     assert add_already_exists_message_response.status_code == AlreadyExistingMessageUuid.code
-    assert add_already_exists_message_response.json == {"result": AlreadyExistingMessageUuid.description}
+    assert add_already_exists_message_response.json == {"message": AlreadyExistingMessageUuid.description}
 
 
 def test_not_found_exists_message(app, client: FlaskClient):
@@ -51,7 +54,7 @@ def test_not_found_exists_message(app, client: FlaskClient):
 
     fetch_random_message_response = get_message(client, str(uuid4()))
     assert fetch_random_message_response.status_code == NotFoundMessage.code
-    assert fetch_random_message_response.json == {"result": NotFoundMessage.description}
+    assert fetch_random_message_response.json == {"message": NotFoundMessage.description}
 
 
 def post_add_message(client: FlaskClient, body: Dict[str, str]):

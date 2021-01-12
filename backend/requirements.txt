@@ -15,3 +15,4 @@ shapely
 #pandas
 faker
 marshmallow_enum
+minio

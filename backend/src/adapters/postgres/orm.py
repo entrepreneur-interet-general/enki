@@ -7,6 +7,7 @@ from sqlalchemy_utils import ChoiceType
 
 from domain.evenements.entity import EvenementType, EvenementEntity
 from domain.messages.entities.message_entity import MessageType, Severity, MessageEntity
+from domain.messages.entities.resource import ResourceEntity
 from domain.messages.entities.tag_entity import TagEntity
 
 logger = logging.getLogger(__name__)
@@ -25,7 +26,6 @@ tagMessageTable = Table(
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
 )
 
-
 messagesTable = Table(
     'messages', metadata,
     Column('uuid', String(60), primary_key=True),
@@ -41,12 +41,25 @@ messagesTable = Table(
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
 )
+
 tagTable = Table(
     'tags', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False, unique=True),
     Column('creator_id', String(255)),  # ForeignKey("users.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
+)
+
+resourceTable = Table(
+    'resources', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('bucket_name', String(255), nullable=False, unique=False),
+    Column('object_path', String(255), nullable=False, unique=False),
+    Column('content_type', String(60), nullable=False, unique=False),
+    Column('creator_id', String(255)),  # ForeignKey("users.uuid")),
+    Column('original_name', String(255)),  # ForeignKey("users.uuid")),
+    Column('message_id', String(255), ForeignKey("messages.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
 
@@ -75,9 +88,11 @@ all_tables = [
 def start_mappers():
     mapper(TagEntity, tagTable)
     mapper(EvenementEntity, evenementsTable)
+    mapper(ResourceEntity, resourceTable)
     mapper(
         MessageEntity, messagesTable,
         properties={
-            'tags': relationship(TagEntity, backref='messages', secondary=tagMessageTable)
+            'tags': relationship(TagEntity, backref='messages', secondary=tagMessageTable),
+            'resources': relationship(ResourceEntity, backref='messages')
         }
     )

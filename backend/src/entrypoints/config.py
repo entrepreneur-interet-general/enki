@@ -41,3 +41,11 @@ class EnkiConfig(object):
 
     ##
     API_URL = "http://localhost:5000"
+
+    # MINIO
+    MINIO_ENDPOINT = os.environ.get("MINIO_ENDPOINT", "minio")
+    MINIO_PORT = os.environ.get("MINIO_PORT", "9000")
+    MINIO_URI = f"{MINIO_ENDPOINT}:{MINIO_PORT}"
+    MINIO_MESSAGE_RESOURCES_BUCKET = os.environ.get("MINIO_MESSAGE_RESOURCES_BUCKET", "messages")
+    MINIO_ACCESS_KEY = os.environ.get("MINIO_ACCESS_KEY", "MINIOACCESSKEY")
+    MINIO_SECRET_KEY = os.environ.get("MINIO_SECRET_KEY", "MINIO_SECRET_KEY")

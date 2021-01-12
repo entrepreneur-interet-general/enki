@@ -18,30 +18,70 @@ class TagListResource(WithTagRepoResource):
     get:
       tags:
         - tags
-
+      responses:
+        200:
+          description: Return a list of tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items: TagSchema
     post:
+      description: Creating a tag
       tags:
         - tags
+      requestBody:
+        content:
+          application/json:
+            schema:  TagSchema
+      responses:
+        201:
+          description: Successfully created
+        400:
+          description: bad request, bad parameters
     """
 
     def get(self):
-        return {"tags": TagService.list_tags(current_app.context)}, 200
+        return {
+                   "data": TagService.list_tags(current_app.context),
+                    "message": "success",
+               }, 200
 
     def post(self):
         body = request.get_json()
         command = CreateTag(data=body)
         result = event_bus.publish(command, current_app.context)
-        return {"result": "Success",
-                "tag": result[0]}, 201
+        return {
+                   "message": "success",
+                   "data": result[0]
+               }, 201
 
 
 class TagResource(WithTagRepoResource):
     """Get specific tag
     ---
     get:
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: Tag id
       tags:
         - tags
+      responses:
+        200:
+          description: Return specific tag
+          content:
+            application/json:
+              schema: TagSchema
+        404:
+            description: Tag not found
     """
 
     def get(self, uuid: str):
-        return {"tag": TagService.get_by_uuid(uuid, current_app.context)}, 200
+        return {
+                   "data": TagService.get_by_uuid(uuid, current_app.context),
+                   "message": "success"
+               }, 200

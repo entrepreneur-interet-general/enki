@@ -7,6 +7,7 @@ from datetime import datetime
 from werkzeug.exceptions import HTTPException
 from domain.messages.entities.tag_entity import TagEntity
 from domain.messages.entities.message_entity import MessageEntity, MessageType, Severity
+from domain.messages.schemas.resource_schema import ResourceSchema
 
 
 class MessageValidationError(HTTPException):
@@ -46,6 +47,7 @@ class MessageSchema(Schema):
     creator_id: fields.Str(required=False)
     started_at: fields.DateTime()
     tags = fields.Nested(TagSchema, required=False, many=True)
+    resources = fields.Nested(ResourceSchema, required=False, many=True)
     event_type = fields.Str(missing="task")
     executor_id = fields.Str(required=False)
     # executor_type = fields.Str(required=False)

@@ -1,9 +1,14 @@
+<div class="small-heading">
+  <div class="small-heading--title">
+    Nouveau message
+  </div>
+  <!-- TODO : rendre générique l'id de retour de création du message -->
+  <div class="small-heading--close" routerLink="/maincourante/event_id">
+    Fermer
+    <svg class="icon-close title-icon"><use xlink:href="#icon-close"></use></svg>
+  </div>
+</div>
 <div class="addMessage">
-  <p class="addMessage--heading addMessage--title">Nouveau message</p>
-  <a href="" class="addMessage--heading addMessage--cancel" routerLink="/maincourante">
-    <svg class="icon-close icon"><use xlink:href="#icon-close"></use></svg>
-    Annuler
-  </a>
   <form action="" class="addMessageForm" [formGroup]="messageGroup" (ngSubmit)="onSubmit()">
     <div class="enkiSpecialform__group">
       <input type="text" class="addMessageForm--titleInput" formControlName="title" placeholder="Sans titre" required>

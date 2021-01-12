@@ -19,7 +19,7 @@ class ResourceSchema(Schema):
     object_path = fields.Str(required=False)
     message_id = fields.Str(required=False, dump_only=True)
     original_name = fields.Str(required=False)
-    content_type = fields.Str(required=False, validate=validate.OneOf(content_types))
+    content_type = fields.Str(required=False, validate=validate.OneOf(content_types), dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
     path_to_download = fields.Method("_build_download_link")
 

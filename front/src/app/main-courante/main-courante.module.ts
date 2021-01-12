@@ -12,7 +12,7 @@ import { FilterLabelsPipe } from './add-label/filter-labels.pipe';
 
 const routes : Routes = [
   {
-    path: 'maincourante',
+    path: 'maincourante/:uuid',
     component: MainCouranteComponent,
     canActivate: [AuthGuard]
   },

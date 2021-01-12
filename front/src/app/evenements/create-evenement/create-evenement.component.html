@@ -3,11 +3,12 @@
 </div>
 <form action="createEvenement" [formGroup]="evenementGroup" (ngSubmit)="onSubmit()">
   <div class="enkiform__group">
-    <input type="text" class="enkiform__input" formControlName="nomEvenement" required>
-    <label for="" class="enkiform__label">Nom de l'événement</label>
+    <input type="text" class="enkiform__input" id="nomEvenement" formControlName="nomEvenement" required>
+    <label for="nomEvenement" class="enkiform__label">Nom de l'événement</label>
   </div>
   <div class="enkiform__group">
-    <input type="text" class="enkiform__input" formControlName="descriptionEvenement" required>
-    <label for="" class="enkiform__label">Description</label>
+    <input type="text" class="enkiform__input" id="descriptionEvenement" formControlName="descriptionEvenement" required>
+    <label for="descriptionEvenement" class="enkiform__label">Description</label>
   </div>
+  <input type="submit" class="btn" value="Valider">
 </form>

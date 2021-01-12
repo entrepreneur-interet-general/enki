@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Message, MessagesService } from '../messages.service';
 
 @Component({
@@ -8,15 +9,26 @@ import { Message, MessagesService } from '../messages.service';
 })
 export class MainCouranteComponent implements OnInit {
   messages: Array<Message>;
-  constructor(messagesService: MessagesService) {
+  uuid: string;
+  fetchedMessages: boolean;
+  constructor(
+    private messagesService: MessagesService,
+    private route: ActivatedRoute
+    ) {
     this.messages = []
-    messagesService.getMessages().subscribe(messages => {
+    /* messagesService.getMessages().subscribe(messages => {
       this.messages = messages
-    })
-    // window.sessionStorage.setItem('messages', JSON.stringify(this.messages))
+    }) */
   }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.uuid = params['uuid'];
+      this.messagesService.getMessages(this.uuid).subscribe(messages => {
+        this.messages = messages
+        this.fetchedMessages = true
+      })
+    })
   }
 
 }

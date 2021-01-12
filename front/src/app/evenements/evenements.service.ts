@@ -33,14 +33,14 @@ export class EvenementsService {
   getEvenements(): Observable<Evenement[]> {
     return this.http.get<any>(this.evenementsUrl, this.httpOptions)
       .pipe(
-        map(response => response.evenements)
+        map(response => response.data)
       )
   }
 
   getEvenement(uuid): Observable<Evenement> {
     return this.http.get<any>(`${this.evenementsUrl}/${uuid}`, this.httpOptions)
       .pipe(
-        map(response => response.evenement)
+        map(response => response.data)
       )
   }
 }

@@ -36,12 +36,12 @@ const routes: Routes = [
     component: SituationsComponent,
     children: [
       {
-        path: 'liste-interventions',
+        path: 'interventions',
         canActivate: [ AuthGuard ],
         component: ListeInterventionsComponent
       },
       {
-        path: 'liste-evenements',
+        path: 'evenements',
         canActivate: [ AuthGuard ],
         component: ListeEvenementsComponent
       }
@@ -53,7 +53,7 @@ const routes: Routes = [
     component: CreateEvenementComponent
   },
   {
-    path: 'detail-evenement/:uuid',
+    path: 'evenements/:uuid',
     canActivate: [AuthGuard],
     component: DetailEvenementComponent
   },

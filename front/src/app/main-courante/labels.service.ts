@@ -35,14 +35,14 @@ export class LabelsService {
     }
     return this.http.post<any>(this.labelUrl, tag, this.httpHeaders)
       .pipe(
-        map(label => label.tag)
+        map(label => label.data)
       )
   }
   getLabels(): Observable<Label[]> {
     return this.http.get<any>(this.labelUrl)
       .pipe(
         map(labels => {
-          return labels.tags
+          return labels.data
         })
       )
   }

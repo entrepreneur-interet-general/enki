@@ -58,7 +58,7 @@ export class MessagesService {
     return this.http.get<any>(`${this.messagesUrl}`)
       .pipe(
         map(messages => {
-          return messages.messages
+          return messages.data
         })
       )
   }

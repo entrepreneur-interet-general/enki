@@ -55,7 +55,7 @@ export class MessagesService {
 
   getMessages(uuid): Observable<Message[]> {
     // TODO: ajouter la route pour récupérer les messages en fonction du uuid de l'event
-    return this.http.get<any>(`${this.messagesUrl}/${uuid}`)
+    return this.http.get<any>(`${this.messagesUrl}`, { params: { "evenement_id": uuid }})
       .pipe(
         map(messages => {
           return messages.data

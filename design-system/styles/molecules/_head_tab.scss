@@ -1,0 +1,16 @@
+.head-tab {
+  margin-bottom: 20px;
+  height: 56px;
+  background-color: $primary;
+  display: flex;
+  align-items: center;
+  &--element {
+    color: $white;
+    margin: 0 16px;
+    padding: 6px 16px;
+    border-radius: 26px;
+    &.-active {
+      background-color: $lighterPrimary;
+    }
+  }
+}

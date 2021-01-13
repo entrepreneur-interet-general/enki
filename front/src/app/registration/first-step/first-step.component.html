@@ -4,23 +4,23 @@
 </div>
 <form action="" class="userInfoForm" [formGroup]="userGroup" (ngSubmit)="onSubmit()">
   <div class="enkiform__group">
-    <input type="text" class="enkiform__input" formControlName="lastName" required>
-    <label for="" class="enkiform__label">Nom</label>
+    <input type="text" class="enkiform__input" id="lastName" formControlName="lastName" required>
+    <label for="lastName" class="enkiform__label">Nom</label>
   </div>
   <div class="enkiform__group">
-    <input type="text" class="enkiform__input" formControlName="firstName" required>
-    <label for="" class="enkiform__label">Prénom</label>
+    <input type="text" class="enkiform__input" id="firstName" formControlName="firstName" required>
+    <label for="firstName" class="enkiform__label">Prénom</label>
   </div>
   <div class="enkiform__group">
-    <select class="enkiform__input" formControlName="fonction" required>
+    <select class="enkiform__input" id="fonction" formControlName="fonction" required>
       <option value="maire">Maire</option>
     </select>
-    <label for="" class="enkiform__label">Fonction</label>
+    <label for="fonction" class="enkiform__label">Fonction</label>
     <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
   </div>
   <div class="enkiform__group">
-    <input type="text" class="enkiform__input" formControlName="codeCommune" required>
-    <label for="" class="enkiform__label">Commune</label>
+    <input type="text" class="enkiform__input" id="codeCommune" formControlName="codeCommune" required>
+    <label for="codeCommune" class="enkiform__label">Commune</label>
     <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
   </div>
   <div class="searchCommune">
@@ -37,9 +37,9 @@
     <input type="submit" class="btn" value="Valider l'inscription" [disabled]="!userGroup.valid">
   </div>
 </form>
-<p>
+<!-- <p>
   Form values: {{userGroup.value | json}}
 </p>
 <p>
   Form Status: {{ userGroup.status }}
-</p>
+</p> -->

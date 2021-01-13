@@ -72,7 +72,7 @@ export class InterventionsService {
     return this.http.get<any>(`${this.interventionsUrl}?insee_code=${this.userService.user.attributes.code_insee}`, this.httpOptions)
       .pipe(
         map(interventions => {
-          interventions = environment.HTTPClientInMemory ? interventions : interventions.affairs
+          interventions = environment.HTTPClientInMemory ? interventions : interventions.data
           let updatedInterventions = this.mapHTTPInterventions(interventions)
           this.interventions = updatedInterventions
           return updatedInterventions
@@ -85,7 +85,7 @@ export class InterventionsService {
     return this.http.get<any>(`${this.interventionsUrl}/${uuid}`, this.httpOptions)
       .pipe(
         map(intervention => {
-          intervention = environment.HTTPClientInMemory ? intervention : intervention.affair
+          intervention = environment.HTTPClientInMemory ? intervention : intervention.data
           let interventionsArray: Intervention[] = [];
           interventionsArray.push(intervention);
           interventionsArray = this.mapHTTPInterventions(interventionsArray)

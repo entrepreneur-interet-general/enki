@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessagesService } from '../messages.service';
 import { Label, LabelsService } from '../labels.service';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -14,7 +15,8 @@ export class AddLabelComponent implements OnInit {
 
   constructor(
     public messagesService: MessagesService,
-    public labelsService: LabelsService
+    public labelsService: LabelsService,
+    private _location: Location
   ) {
     labelsService.getLabels().subscribe(labels => {
       this.labelsService.labels = labels
@@ -22,6 +24,10 @@ export class AddLabelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  goBack(): void {
+    this._location.back();
   }
 
   compare(a, b): any {

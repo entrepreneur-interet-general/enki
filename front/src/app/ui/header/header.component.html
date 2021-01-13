@@ -15,7 +15,7 @@
   <div class="right-menu" [class.-active]="!menuActive">
     <nav>
       <li class="right-menu--item"><a routerLink="/" (click)="openCloseMenu()">Dashboard</a></li>
-      <li class="right-menu--item"><a routerLink="/liste-interventions" (click)="openCloseMenu()" *ngIf="canSeeEvents()">Voir la liste des interventions</a></li>
+      <li class="right-menu--item"><a routerLink="/situations/interventions" (click)="openCloseMenu()" *ngIf="canSeeEvents()">Situations</a></li>
     </nav>
   </div>
 </div>

@@ -1,0 +1,21 @@
+
+@import "../../../../../design-system/styles/variables";
+
+.evenement {
+  &--heading {
+    background-color: $primary;
+    color: $white;
+    padding: 16px;
+  }
+  &--body {
+    padding: 16px;
+  }
+  &--title {
+    font-size: 24px;
+  }
+}
+.signalements {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: $lightestGrey;
+}

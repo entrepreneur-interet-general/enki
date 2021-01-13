@@ -70,7 +70,7 @@
           </div>
         </div>
         <footer>
-          <img class="form-footer__imgNexsis" src="${url.resourcesPath}/img/nexsis.svg" />
+          <#--  <img class="form-footer__imgNexsis" src="${url.resourcesPath}/img/nexsis.svg" />  -->
         </footer>
       </div>
     </div>

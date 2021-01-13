@@ -2,32 +2,9 @@
 
 .addMessage {
   padding: 0 16px;
-  position: relative;
-  &--heading {
-    position: absolute;
-    top: 0;
-    font-family: $secondaryFont;
-    font-size: 17px;
-    letter-spacing: 0.5px;
-    color: $darkestGrey;
-  }
-  &--title {
-    left: 16px;
-  }
-  &--cancel {
-    position: absolute;
-    display: flex;
-    align-items: baseline;
-    text-decoration: none;
-    right: 16px;
-    .icon {
-      font-size: 12px;
-      margin-right: 8px;
-    }
-  }
 }
 .addMessageForm {
-  padding: 32px 0;
+  padding: 16px 0;
   &--titleInput {
     border: 0;
     padding: 0;

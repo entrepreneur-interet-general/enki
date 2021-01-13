@@ -2,16 +2,17 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './app-auth-guard.service';
 import { GuardRegisterGuard } from './guards/guard-register.guard';
-import { ListeInterventionsComponent } from './interventions/liste/liste-interventions.component';
+import { ListeInterventionsComponent } from './interventions/liste-interventions/liste-interventions.component';
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard/user-dashboard.component';
 import { FirstStepComponent } from './registration/first-step/first-step.component';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MainCouranteModule } from './main-courante/main-courante.module';
-import { MainCouranteComponent } from './main-courante/main-courante/main-courante.component';
-import { AddMessageComponent } from './main-courante/add-message/add-message.component';
-
+import { SituationsComponent } from './situations/situations.component';
+import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
+import { CreateEvenementComponent } from './evenements/create-evenement/create-evenement.component';
+import { DetailEvenementComponent } from './evenements/detail-evenement/detail-evenement.component';
 
 const routes: Routes = [
   {
@@ -30,9 +31,31 @@ const routes: Routes = [
     canActivate: [ AuthGuard ]
   },
   {
-    path: 'liste-interventions',
+    path: 'situations',
     canActivate: [ AuthGuard ],
-    component: ListeInterventionsComponent
+    component: SituationsComponent,
+    children: [
+      {
+        path: 'interventions',
+        canActivate: [ AuthGuard ],
+        component: ListeInterventionsComponent
+      },
+      {
+        path: 'evenements',
+        canActivate: [ AuthGuard ],
+        component: ListeEvenementsComponent
+      }
+    ]
+  },
+  {
+    path: 'evenements/create',
+    canActivate: [ AuthGuard ],
+    component: CreateEvenementComponent
+  },
+  {
+    path: 'evenements/:uuid',
+    canActivate: [AuthGuard],
+    component: DetailEvenementComponent
   },
   {
     path: 'detail-intervention/:uuid',

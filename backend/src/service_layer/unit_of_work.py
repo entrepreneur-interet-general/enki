@@ -6,19 +6,27 @@ from sqlalchemy.orm import sessionmaker
 
 from adapters.postgres import PgMessageRepository, PgTagRepository, PgEvenementRepository
 from adapters.postgres.orm import metadata
+from adapters.minio.resource_content_repository import MinioResourceContentRepository
+from adapters.postgres.pg_resource_repository import PgResourceRepository
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, InMemoryAffairRepository
 from domain.evenements.repository import AbstractEvenementRepository, InMemoryEvenementRepository
-from domain.messages.ports import AbstractTagRepository, AbstractMessageRepository
+from domain.messages.ports import AbstractTagRepository, AbstractMessageRepository, AbstractResourceRepository
 from domain.messages.ports.message_repository import InMemoryMessageRepository
+from domain.messages.ports.resource_content_repository import AbstractResourceContentRepository
 from domain.messages.ports.tag_repository import InMemoryTagRepository
 from entrypoints.repositories.repositories import ElasticRepositories
 
 
 class AbstractUnitOfWork(abc.ABC):
+    resource_content: AbstractResourceContentRepository
+    resource: AbstractResourceRepository
     tag: AbstractTagRepository
     message: AbstractMessageRepository
     evenement: AbstractEvenementRepository
     affair: AbstractAffairRepository
+
+    def __init__(self, config):
+        self.config = config
 
     def __enter__(self):
         return self
@@ -57,21 +65,24 @@ def build_engine(sql_engine_uri: str) -> Engine:
 class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
 
     def __init__(self, config):
-        self.engine = build_engine(sql_engine_uri=config.DATABASE_URI)
+        super().__init__(config)
+        self.engine = build_engine(sql_engine_uri=self.config.DATABASE_URI)
         self.session_factory = sessionmaker(bind=self.engine)
         metadata.create_all(self.engine)
 
         if config.AFFAIR_REPOSITORY == "ELASTIC":
-            self.elastic_repositories = ElasticRepositories(config=config)
+            self.elastic_repositories = ElasticRepositories(config=self.config)
             self.affair = self.elastic_repositories.affair
         else:
             self.affair = InMemoryAffairRepository()
+        self.resource_content = MinioResourceContentRepository.from_config(self.config)
 
     def __enter__(self):
         self.session = self.session_factory()
         self.tag = PgTagRepository(self.session)
         self.message = PgMessageRepository(self.session)
         self.evenement = PgEvenementRepository(self.session)
+        self.resource = PgResourceRepository(self.session)
         return super().__enter__()
 
     def __exit__(self, *args):

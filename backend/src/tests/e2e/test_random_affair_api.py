@@ -18,7 +18,7 @@ def test_retrieve_random_affair(app, client: FlaskClient):
 def test_retrieve_random_affairs(app, client: FlaskClient):
     get_random_affair_response: Response = get_random_affairs(client)
     assert get_random_affair_response.status_code == 200
-    assert len(get_random_affair_response.json["affairs"]) == 10
+    assert len(get_random_affair_response.json["data"]) == 10
 
 
 def get_random_affair(client: FlaskClient) -> Response:

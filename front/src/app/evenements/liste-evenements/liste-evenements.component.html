@@ -1,0 +1,25 @@
+<div class="evenements list">
+  <div class="evenement--element list--element" *ngFor="let evenement of evenementsService.evenements">
+    <a routerLink="/evenements/{{evenement.uuid}}" class="list--wrapper">
+      <div class="secondInfos">
+        <div class="secondInfos--dateTime">
+          {{evenement.started_at | date:"dd/MM/yyyy à HH:mm"}}
+        </div>
+        <!-- <div class="badge">
+          En cours
+        </div> -->
+      </div>
+      <div class="mainInfos">
+        <div class="mainInfos--title">
+          {{evenement.title}} —
+        </div>
+        <div class="mainInfos--content">
+          {{ evenement.description }}
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<div class="action--add" routerLink="/evenements/create">
+  <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
+</div>

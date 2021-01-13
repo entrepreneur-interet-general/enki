@@ -31,6 +31,17 @@ class CreateMessageTopic(Topic):
 class CreateTagTopic(Topic):
     name: str = "CreateTag"
 
+
 @dataclass
 class AddTagToMessageTopic(Topic):
     name: str = "AddTagToMessage"
+
+
+@dataclass
+class CreateResourceTopic(Topic):
+    name: str = "CreateResource"
+
+
+@dataclass
+class UploadResourceContentTopic(Topic):
+    name: str = "UploadResource"

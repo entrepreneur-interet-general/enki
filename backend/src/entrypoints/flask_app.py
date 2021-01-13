@@ -9,6 +9,10 @@ from service_layer.messagebus import HANDLERS
 from .config import EnkiConfig
 from .extensions import event_bus, api_spec
 from .errors import errors
+import logging
+
+logging.basicConfig()
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
 
 def register_blueprints(app: Flask):
@@ -61,5 +65,6 @@ def configure_event_bus(context):
     for topic, callbacks in HANDLERS.items():
         for callback in callbacks:
             event_bus.subscribe(topic=topic, callback=callback)
+
 
 app = create_app()

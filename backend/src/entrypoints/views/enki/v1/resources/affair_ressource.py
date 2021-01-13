@@ -20,7 +20,8 @@ class AffairResource(WithAffairRepoResource):
 
     def get(self, uuid):
         return {
-                   "affair": AffairService.get_by_uuid(uuid, current_app.context.affair),
+                   "data": AffairService.get_by_uuid(uuid, current_app.context.affair),
+                   "message": "success"
                }, 200
 
 
@@ -63,4 +64,7 @@ class AffairListResource(WithAffairRepoResource):
         else:
             affairs = AffairService.list_affairs(repo=current_app.context.affair)
 
-        return {"affairs": affairs}, 200
+        return {
+                   "data": affairs,
+                   "message": "success"
+               }, 200

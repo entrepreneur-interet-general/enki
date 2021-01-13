@@ -1,7 +1,6 @@
 from typing import Any, Dict, List
 from domain.messages.entities.tag_entity import TagEntity
-from domain.messages.ports.tag_repository import AbstractTagRepository
-from domain.messages.schema import TagSchema
+from domain.messages.schemas.schema import TagSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 

@@ -1,6 +1,6 @@
 from flask import request, current_app
-from flask_restful import Resource
-from typing import Dict, Any
+from flask_restful import Resource, reqparse
+from typing import Dict, Any, Union, List
 from domain.messages.services.message_service import MessageService
 from domain.messages.command import CreateMessage
 from entrypoints.extensions import event_bus
@@ -16,16 +16,61 @@ class MessageListResource(WithMessageRepoResource):
     ---
     get:
       tags:
-        - messages
-
+        - message
+      responses:
+        200:
+          description: Return a list of messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items: MessageSchema
+      parameters:
+        - in: query
+          name: tags
+          schema:
+            type: array
+            items:
+              type: string
+          description: Tag id or list of tag ids
+        - in: query
+          name: evenement_id
+          schema:
+            type: str
+          description: Evenement ID
     post:
+      description: Creating a message
       tags:
-        - messages
+        - message
+      requestBody:
+        content:
+          application/json:
+            schema:  MessageSchema
+      responses:
+        201:
+          description: Successfully created
+          content:
+            application/json:
+              schema: MessageSchema
+        400:
+          description: bad request, bad parameters
     """
 
     def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('tags', type=str, help='Tags ids', action='append')
+        parser.add_argument('evenement_id', type=str, help='Evenement id')
+        args = parser.parse_args()
+        tags: Union[str, List[str], None] = args.get("tags")
+        evenement_id: Union[str, None] = args.get("evenement_id")
+        if tags or evenement_id:
+            messages = MessageService.list_messages_by_query(tag_ids=tags, evenement_id=evenement_id, uow=current_app.context)
+        else:
+            messages = MessageService.list_messages(current_app.context)
+
         return {
-                   "messages": MessageService.list_messages(current_app.context)
+                   "data": messages,
+                   "message": "success"
                }, 200
 
     def post(self):
@@ -34,8 +79,8 @@ class MessageListResource(WithMessageRepoResource):
         command = CreateMessage(data=body)
         result = event_bus.publish(command, current_app.context)
         return {
-                   "result": "Success",
-                   "message": result[0]
+                   "message": "success",
+                   "data": result[0]
                }, 201
 
 
@@ -43,63 +88,26 @@ class MessageResource(WithMessageRepoResource):
     """Get specific message
     ---
     get:
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: Message id
       tags:
-        - messages
+        - message
+      responses:
+        200:
+          description: Return a list of messages
+          content:
+            application/json:
+              schema: MessageSchema
     """
 
     def get(self, uuid: str):
-        return {"message": MessageService.get_by_uuid(uuid, current_app.context),
-                "result": "success"}, 200
+        return {
+                   "data": MessageService.get_by_uuid(uuid, current_app.context),
+                   "message": "success"
+               }, 200
 
-
-class MessageTagListResource(WithMessageRepoResource):
-    """Get message's tags
-    ---
-    get:
-      tags:
-        - messages
-        - tags
-
-    """
-
-    def get(self, uuid: str):
-        tags = MessageService.list_tags(uuid, uow=current_app.context)
-        return {"tags": tags, "result": "success"}, 200
-
-
-class MessageTagResource(WithMessageRepoResource):
-    """Add, Delete and get specific message's tag
-    ---
-    put:
-      tags:
-        - messages
-        - tags
-
-    put:
-      tags:
-        - messages
-        - tags
-
-    delete:
-      tags:
-        - messages
-        - tags
-    """
-
-    def get(self, uuid: str, tag_uuid: str):
-        tag: Dict[str, Any] = MessageService.get_message_tag(uuid,
-                                                             tag_uuid=tag_uuid,
-                                                             uow=current_app.context)
-        return {"tag": tag, "result": "Success"}, 200
-
-    def put(self, uuid: str, tag_uuid: str):
-        MessageService.add_tag_to_message(uuid,
-                                          tag_uuid=tag_uuid,
-                                          uow=current_app.context)
-        return {"result": f"tag {tag_uuid} successfully added from message {uuid}"}, 201
-
-    def delete(self, uuid: str, tag_uuid: str):
-        MessageService.remove_tag_to_message(uuid,
-                                             tag_uuid=tag_uuid,
-                                             uow=current_app.context)
-        return {"result": f"tag {tag_uuid} successfully deleted from message {uuid}"}, 202

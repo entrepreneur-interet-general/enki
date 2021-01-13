@@ -8,16 +8,17 @@ import { AuthGuard } from '../app-auth-guard.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddLabelComponent } from './add-label/add-label.component';
 import { FilterLabelsPipe } from './add-label/filter-labels.pipe';
+import { DetailMessageComponent } from './detail-message/detail-message.component';
 
 
 const routes : Routes = [
   {
-    path: 'maincourante',
+    path: 'maincourante/:uuid',
     component: MainCouranteComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'addmessage',
+    path: 'addmessage/:uuid',
     component: AddMessageComponent,
     canActivate: [AuthGuard],
     children: [
@@ -27,7 +28,22 @@ const routes : Routes = [
         canActivate: [AuthGuard]
       }
     ]
-  },
+  }
+/*     children: [
+      {
+        path: 'addmessage',
+        component: AddMessageComponent,
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: 'addlabel',
+            component: AddLabelComponent,
+            canActivate: [AuthGuard]
+          }
+        ]
+      }
+    ] 
+  },*/
 ];
 @NgModule({
   declarations: [
@@ -35,7 +51,8 @@ const routes : Routes = [
     MessageComponent,
     AddMessageComponent,
     AddLabelComponent,
-    FilterLabelsPipe
+    FilterLabelsPipe,
+    DetailMessageComponent
   ],
   imports: [
     CommonModule,

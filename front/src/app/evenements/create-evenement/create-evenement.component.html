@@ -1,0 +1,23 @@
+<div class="small-heading">
+  <div class="small-heading--title">
+    Créer un événement
+  </div>
+  <div class="small-heading--close" routerLink="/situations/evenements">
+    Fermer
+    <svg class="icon-close title-icon"><use xlink:href="#icon-close"></use></svg>
+  </div>
+</div>
+<div class="title-container">
+  <h1 class="h1-title">Nouvel événement</h1>
+</div>
+<form action="createEvenement" class="createEvenement--form" [formGroup]="evenementGroup" (ngSubmit)="onSubmit()">
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" id="nomEvenement" formControlName="nomEvenement" required>
+    <label for="nomEvenement" class="enkiform__label">Nom de l'événement</label>
+  </div>
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" id="descriptionEvenement" formControlName="descriptionEvenement" required>
+    <label for="descriptionEvenement" class="enkiform__label">Description</label>
+  </div>
+  <input type="submit" class="btn" value="Valider">
+</form>

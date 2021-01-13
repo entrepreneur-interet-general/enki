@@ -9,15 +9,30 @@
       {{evenement.description}}
     </div>
   </div>
+</div>
+<div class="map">
+  <div class="map-container">
+    <div class="map-frame">
+      <div id="mapid"></div>
+    </div>
+  </div>
+</div>
+<div class="evenement" *ngIf="fetchedEvenement">
   <div class="evenement--body">
     <div class="signalements">
       <div class="signalements--map">
-        [TODO] ADD MAP
+        
       </div>
       <div class="signalements--list">
-        [TODO] ADD A LIST OF LINKED "SIGNALEMENTS"
+        <h2 class="title-with-icon">
+          <svg class="icon-signalements icon"><use xlink:href="#icon-signalements"></use></svg>
+          (0) Signalements
+        </h2>
       </div>
     </div>
-    <a routerLink="/maincourante/{{evenement.uuid}}">Accéder au dossier</a>
+    <a routerLink="/maincourante/{{evenement.uuid}}" class="dossiers">
+      <svg class="icon-dossier icon"><use xlink:href="#icon-dossier"></use></svg>
+      Dossiers
+    </a>
   </div>
 </div>

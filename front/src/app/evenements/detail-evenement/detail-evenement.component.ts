@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as L from 'leaflet';
 import { Evenement, EvenementsService } from '../evenements.service';
 
 @Component({
@@ -11,6 +12,9 @@ export class DetailEvenementComponent implements OnInit {
   uuid: string;
   evenement: Evenement;
   fetchedEvenement: boolean;
+  map;
+  icon;
+
   constructor(
     private route: ActivatedRoute,
     private evenementsService: EvenementsService
@@ -20,10 +24,30 @@ export class DetailEvenementComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.uuid = params['uuid'];
       this.evenementsService.getEvenement(this.uuid).subscribe((evenement) => {
-        this.evenement = evenement
         this.fetchedEvenement = true;
+        this.evenement = evenement
       });
     })
+  }
+  initMap(): void {
+    this.icon = L.icon({
+      iconUrl: 'assets/marker-icon-2x.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+    })
+    this.map = L.map('mapid', {
+      center: [ 39, -98 ],
+      zoom: 10
+    })
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+
+    tiles.addTo(this.map);
+  }
+  ngAfterViewInit(): void {
+    this.initMap()
   }
 
 }

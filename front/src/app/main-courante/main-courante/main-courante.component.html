@@ -1,9 +1,19 @@
 <li class="goTo" routerLink="/evenements/{{uuid}}">< Retourner à l'événement</li>
 <div class="title-container">
   <h1 class="h1-title">Dossiers partagés</h1>
+  <div class="subtitle">
+    Mis à jour il y a une minute
+  </div>
 </div>
 <div class="mc">
-
+  <div class="situations--tabs">
+    <div class="situations--element">
+      Main courante
+    </div>
+    <div class="situations--element">
+      Liste des actions
+    </div>
+  </div>
   <div class="mc--empty" *ngIf="!(messages.length > 0) ">
     Le dossier est vide, créez une nouvelle main courante pour démarrer le partage.
     <button class="btn" routerLink="/addmessage/{{uuid}}">Ajouter un nouveau message</button>

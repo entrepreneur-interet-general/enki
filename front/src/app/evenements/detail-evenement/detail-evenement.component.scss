@@ -16,6 +16,25 @@
 }
 .signalements {
   margin-bottom: 20px;
-  padding: 16px;
-  background: $lightestGrey;
+  .icon {
+    fill: $primary;
+  }
+}
+.dossiers {
+  display: flex;
+  text-decoration: none;
+  .icon {
+    margin-right: 8px;
+  }
+}
+.map-container {
+  height: 200px;
+}
+
+.map-frame {
+  height: 100%;
+}
+
+#mapid {
+  height: 100%;
 }

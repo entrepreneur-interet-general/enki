@@ -45,6 +45,10 @@ export class DetailEvenementComponent implements OnInit {
     });
 
     tiles.addTo(this.map);
+
+    this.map.panTo([48.886622, 2.598313])
+      // const marker = L.marker([affaires[0].location.lat, affaires[0].location.lon], {icon: this.icon}).addTo(this.map);
+      L.marker([48.886622, 2.598313], {icon: this.icon}).addTo(this.map);
   }
   ngAfterViewInit(): void {
     this.initMap()

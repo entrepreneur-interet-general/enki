@@ -8,13 +8,15 @@ from adapters.postgres import PgMessageRepository, PgTagRepository, PgEvenementR
 from adapters.postgres.orm import metadata
 from adapters.minio.resource_content_repository import MinioResourceContentRepository
 from adapters.postgres.pg_resource_repository import PgResourceRepository
+from adapters.postgres.pg_simple_affair_repository import PgSimpleAffairRepository
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, InMemoryAffairRepository
+from domain.affairs.ports.simple_affair_repository import AbstractSimpleAffairRepository
 from domain.evenements.repository import AbstractEvenementRepository, InMemoryEvenementRepository
 from domain.messages.ports import AbstractTagRepository, AbstractMessageRepository, AbstractResourceRepository
 from domain.messages.ports.message_repository import InMemoryMessageRepository
 from domain.messages.ports.resource_content_repository import AbstractResourceContentRepository
 from domain.messages.ports.tag_repository import InMemoryTagRepository
-from entrypoints.repositories.repositories import ElasticRepositories
+from entrypoints.repositories import ElasticRepositories
 
 
 class AbstractUnitOfWork(abc.ABC):
@@ -24,6 +26,7 @@ class AbstractUnitOfWork(abc.ABC):
     message: AbstractMessageRepository
     evenement: AbstractEvenementRepository
     affair: AbstractAffairRepository
+    simple_affair: AbstractSimpleAffairRepository
 
     def __init__(self, config):
         self.config = config
@@ -83,6 +86,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.message = PgMessageRepository(self.session)
         self.evenement = PgEvenementRepository(self.session)
         self.resource = PgResourceRepository(self.session)
+        self.simple_affair = PgSimpleAffairRepository(self.session)
         return super().__enter__()
 
     def __exit__(self, *args):

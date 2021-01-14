@@ -11,7 +11,7 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
     EvenementListResource, EvenementResource, \
     ResourceListResource, ResourceResource, \
     MessageResourceResource, MessageResourceListResource, \
-    ResourceContentResource
+    ResourceContentResource, AffairEvenementResource, AffairListEvenementResource
 
 enki_blueprint_v1 = Blueprint(name="enki_blueprint_v1", import_name=__name__, url_prefix="/api/enki/v1")
 
@@ -42,6 +42,10 @@ api.add_resource(MessageResourceListResource, '/messages/<uuid>/resources', endp
 # Evenements
 api.add_resource(EvenementListResource, '/events', endpoint="events")
 api.add_resource(EvenementResource, '/events/<uuid>', endpoint="events_by_id")
+
+# Affairs <> Evenement
+api.add_resource(AffairEvenementResource, '/evenements/<uuid>/affairs/<affair_uuid>', endpoint="evenement_affairs_by_id")
+api.add_resource(AffairListEvenementResource, '/evenement/<uuid>/affairs', endpoint="evenement_affairs_list")
 
 
 @enki_blueprint_v1.before_app_first_request
@@ -80,3 +84,7 @@ def register_views():
     # Evenements
     api_spec.spec.path(view=EvenementListResource, app=current_app)
     api_spec.spec.path(view=EvenementResource, app=current_app)
+
+    # Affairs <> Evenement
+    api_spec.spec.path(view=AffairEvenementResource, app=current_app)
+    api_spec.spec.path(view=AffairListEvenementResource, app=current_app)

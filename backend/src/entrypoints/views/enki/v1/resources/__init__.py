@@ -1,4 +1,5 @@
 from .affair_ressource import AffairListResource, AffairResource
+from .affair_evenement_ressource import AffairEvenementResource, AffairListEvenementResource
 from .random_affair_resource import AffairRandomResource, AffairRandomListResource
 from .message_ressource import MessageResource, MessageListResource
 from .message_tag_resource import MessageTagResource, MessageTagListResource
@@ -17,5 +18,6 @@ __all__ = [
     EvenementListResource, EvenementResource,
     ResourceListResource, ResourceResource,
     ResourceContentResource,
-    MessageResourceListResource, MessageResourceResource
+    MessageResourceListResource, MessageResourceResource,
+    AffairEvenementResource, AffairListEvenementResource
 ]

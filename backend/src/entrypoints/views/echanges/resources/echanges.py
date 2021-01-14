@@ -19,7 +19,7 @@ class EchangeMessageResource(Resource):
         if request.headers['Content-Type'] in ["application/xml", 'text/xml']:
             current_app.logger.info("post message")
             xml = request.data.decode("utf-8")
-            affair = AffairService.add_affair(xml, repo=current_app.context.affair)
+            affair = AffairService.add_affair_from_xml(xml, uow=current_app.context)
             event_bus.publish(AffairCreatedEvent(data=affair))
             return {
                    "message": "success"

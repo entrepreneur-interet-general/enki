@@ -27,31 +27,31 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
 
     def _get_from_polygon(self, multipolygon: List) -> affairsList:
         query = {
-                "query": {
-                    "bool": {
-                        "must": {
-                            "match_all": {}
-                        },
-                        "filter": {
-                            "geo_polygon": {
-                                "location": {
-                                    "points": multipolygon
-                                }
+            "query": {
+                "bool": {
+                    "must": {
+                        "match_all": {}
+                    },
+                    "filter": {
+                        "geo_polygon": {
+                            "location": {
+                                "points": multipolygon
                             }
                         }
                     }
                 }
             }
+        }
         results = self.client.search(
             index=self.index_name,
             body=query
         )
-        return [AffairEntity(**hit["_source"]) for hit in results['hits']['hits']]
+        return self._map_es_results_with_affairs(results=results)
 
     def _add(self, affair: AffairEntity) -> bool:
         return self.client.index(index=self.index_name, id=affair.uuid,
                                  body=json.dumps(affair.to_dict(), cls=EnkiJsonEncoder, ),
-                                 refresh=True,)
+                                 refresh=True, )
 
     def _bulk_add(self, affairs: List[AffairEntity]):
         actions = [
@@ -72,4 +72,21 @@ class ElasticAffairRepository(ElasticRepositoryMixin, AbstractAffairRepository):
             index=self.index_name,
             body={"query": {"match_all": {}}}
         )
+        return self._map_es_results_with_affairs(results=results)
+
+    def _match_uuids(self, uuids: List[str]) -> List[AffairEntity]:
+        results = self.client.search(
+            index=self.index_name,
+            body={
+                "query": {
+                    "ids": {
+                        "values": uuids
+                    }
+                }
+            }
+        )
+        return self._map_es_results_with_affairs(results=results)
+
+    @staticmethod
+    def _map_es_results_with_affairs(results: dict):
         return [AffairEntity(**hit["_source"]) for hit in results['hits']['hits']]

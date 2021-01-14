@@ -20,7 +20,7 @@ class AffairResource(WithAffairRepoResource):
 
     def get(self, uuid):
         return {
-                   "data": AffairService.get_by_uuid(uuid, current_app.context.affair),
+                   "data": AffairService.get_by_uuid(uuid, current_app.context),
                    "message": "success"
                }, 200
 
@@ -60,9 +60,9 @@ class AffairListResource(WithAffairRepoResource):
         if postal_codes or insee_code:
             affairs = AffairService.list_affairs_by_insee_and_postal_codes(insee_code=insee_code,
                                                                            postal_code=postal_codes,
-                                                                           repo=current_app.context.affair)
+                                                                           uow=current_app.context)
         else:
-            affairs = AffairService.list_affairs(repo=current_app.context.affair)
+            affairs = AffairService.list_affairs(uow=current_app.context)
 
         return {
                    "data": affairs,

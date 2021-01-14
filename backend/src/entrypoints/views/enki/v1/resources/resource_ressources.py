@@ -1,11 +1,6 @@
-import os
-from tempfile import NamedTemporaryFile, TemporaryDirectory
-
 from flask import request, current_app
 from flask_restful import Resource
 from werkzeug.datastructures import FileStorage
-from werkzeug.utils import secure_filename
-
 from domain.messages.command import CreateResource, UploadResourceContent
 from domain.messages.services.resource_service import ResourceService
 from entrypoints.extensions import event_bus

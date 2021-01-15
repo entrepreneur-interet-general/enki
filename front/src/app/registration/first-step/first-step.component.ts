@@ -3,9 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { KeycloakService } from 'keycloak-angular';
 import { UserService } from '../../user/user.service'
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-first-step',
@@ -25,7 +24,6 @@ export class FirstStepComponent {
 
   constructor(
     private http: HttpClient,
-    private keycloakService: KeycloakService,
     private router: Router,
     private userService: UserService
   ) {

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Intervention, InterventionsService } from '../interventions.service'
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { ActivatedRoute } from '@angular/router';
+import { EvenementsService } from 'src/app/evenements/evenements.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'fronts-detail-intervention',
@@ -14,10 +15,28 @@ export class DetailInterventionComponent implements OnInit {
   intervention;
   fetchedIntervention;
   uuid;
+  evenementsList;
+  httpOptions;
+  evenementsUrl: string;
+  evenementGroup = new FormGroup({
+    evenement: new FormControl('')
+  });
   constructor(
     private interventionsService: InterventionsService,
-    private route: ActivatedRoute
-    ) { }
+    private route: ActivatedRoute,
+    private evenementsService: EvenementsService,
+    private http: HttpClient
+    ) {
+      this.evenementsService.getEvenements().subscribe((evenements) => {
+        this.evenementsList = evenements
+      })
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json'
+        })
+      }
+      this.evenementsUrl = `http://localhost:5000/api/enki/v1/events`
+    }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -31,11 +50,21 @@ export class DetailInterventionComponent implements OnInit {
           this.fetchedIntervention = true;
         });
       }
+
     });
   }
-
   getIntervention(): Observable<Intervention> {
     return of(this.intervention)
   }
+  attachEvenementToSignalement(): void {
+    this.httpFormSubmit().subscribe(response => {
+      console.log(response)
+    })
+  }
+  httpFormSubmit(): Observable<any> {
+    return this.http.put(`${this.evenementsUrl}/${this.evenementGroup.value.evenement}/affairs/${this.uuid}`, this.httpOptions)
+  }
+
+
 
 }

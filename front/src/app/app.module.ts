@@ -21,11 +21,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
-import { MainCouranteModule } from './main-courante/main-courante.module';
+import { EvenementsModule } from './evenements/evenements.module';
 import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
-import { CreateEvenementComponent } from './evenements/create-evenement/create-evenement.component';
-import { DetailEvenementComponent } from './evenements/detail-evenement/detail-evenement.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -53,8 +51,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PageNotFoundComponent,
     SituationsComponent,
     ListeEvenementsComponent,
-    CreateEvenementComponent,
-    DetailEvenementComponent
   ],
   imports: [
     BrowserModule,
@@ -67,9 +63,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
       InMemoryDataService, { dataEncapsulation: false }
     ) : [],
     KeycloakAngularModule,
-    AppRoutingModule,
     UserDashboardModule,
-    MainCouranteModule
+    EvenementsModule,
+    AppRoutingModule
   ],
   providers: [{
     provide: APP_INITIALIZER,

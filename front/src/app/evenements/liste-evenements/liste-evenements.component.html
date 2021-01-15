@@ -1,6 +1,6 @@
 <div class="evenements list">
   <div class="evenement--element list--element" *ngFor="let evenement of evenementsService.evenements">
-    <a routerLink="/evenements/{{evenement.uuid}}" class="list--wrapper">
+    <a [routerLink]="['/evenements/', evenement.uuid, {foo:'foo'}]" class="list--wrapper">
       <div class="secondInfos">
         <div class="secondInfos--dateTime">
           {{evenement.started_at | date:"dd/MM/yyyy à HH:mm"}}

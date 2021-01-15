@@ -16,19 +16,16 @@ export class MainCouranteComponent implements OnInit {
     private route: ActivatedRoute
     ) {
     this.messages = []
-    /* messagesService.getMessages().subscribe(messages => {
-      this.messages = messages
-    }) */
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => { 
       this.uuid = params['uuid'];
       this.messagesService.getMessages(this.uuid).subscribe(messages => {
         this.messages = messages
         this.fetchedMessages = true
       })
-    })
+    });
   }
 
 }

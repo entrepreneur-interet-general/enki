@@ -15,11 +15,17 @@ class PgSimpleAffairRepository(PgRepositoryMixin, AbstractSimpleAffairRepository
         PgRepositoryMixin.__init__(self, session=session, entity_type=SimpleAffairEntity)
         AbstractAffairRepository.__init__(self)
 
-    def _match_uuid(self, uuid: str) -> SimpleAffairEntity:
+    def _match_uuid(self, uuid: str) -> Union[SimpleAffairEntity, None]:
         matches = self.session.query(SimpleAffairEntity).filter(SimpleAffairEntity.uuid == uuid).all()
-        if not matches:
-            return None
-        return matches[0]
+        if matches:
+            return matches[0]
+        return None
+
+    def _match_by_affair_uuid(self, uuid: str) -> Union[SimpleAffairEntity, None]:
+        matches = self.session.query(SimpleAffairEntity).filter(SimpleAffairEntity.sge_hub_id == uuid).all()
+        if matches:
+            return matches[0]
+        return None
 
     def _add(self, affair: SimpleAffairEntity) -> None:
         if self._match_uuid(affair.uuid):
@@ -43,3 +49,4 @@ class PgSimpleAffairRepository(PgRepositoryMixin, AbstractSimpleAffairRepository
     def get_by_evenement(self, uuid: str) -> List[SimpleAffairEntity]:
         matches = self.session.query(SimpleAffairEntity).filter(SimpleAffairEntity.evenement_id == uuid).all()
         return matches
+

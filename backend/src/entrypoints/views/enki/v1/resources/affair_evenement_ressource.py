@@ -15,19 +15,23 @@ class AffairEvenementResource(WithAffairEvenementRepoResource):
     ---
     put:
       tags:
-        - evenement <> affairs
+        - events <> affairs
     delete:
       tags:
-        - evenement <> affairs
+        - events <> affairs
     """
 
-    def put(self, uuid, affair_id):
-        AffairService.assign_affair_from_evenement(affair_id, uuid, current_app.context)
-        return {"message": f"affair {affair_id} successfully added to evenement {uuid}"}, 201
+    def put(self, uuid, affair_uuid):
+        AffairService.assign_affair_from_evenement(affair_id=affair_uuid,
+                                                   evenement_id=uuid,
+                                                   uow=current_app.context)
+        return {"message": f"affair {affair_uuid} successfully added to evenement {uuid}"}, 201
 
-    def delete(self, uuid, affair_id):
-        AffairService.delete_affair_from_evenement(affair_id, uuid, current_app.context)
-        return {"message": f"affair {uuid} successfully deleted to evenement {uuid}"}, 201
+    def delete(self, uuid, affair_uuid):
+        AffairService.delete_affair_from_evenement(affair_id=affair_uuid,
+                                                   evenement_id=uuid,
+                                                   uow=current_app.context)
+        return {"message": f"affair {affair_uuid} successfully deleted to evenement {uuid}"}, 201
 
 
 class AffairListEvenementResource(WithAffairEvenementRepoResource):
@@ -35,7 +39,7 @@ class AffairListEvenementResource(WithAffairEvenementRepoResource):
     ---
     get:
       tags:
-        - evenement <> affairs
+        - events <> affairs
     """
 
     def get(self, uuid):

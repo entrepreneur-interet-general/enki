@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessagesService } from '../messages.service';
 import { LabelsService } from '../labels.service';
+import { EvenementsService } from '../../evenements.service';
 
 @Component({
   selector: 'app-add-message',
@@ -18,6 +19,7 @@ export class AddMessageComponent implements OnInit {
   constructor(
     private messagesService: MessagesService,
     public labelsService: LabelsService,
+    private evenementsService: EvenementsService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -25,16 +27,17 @@ export class AddMessageComponent implements OnInit {
 
   onSubmit(): void {
     let selectedLabelsUUID = this.labelsService.selectedLabels.map(label => label.uuid)
+    this.uuid = this.evenementsService.selectedEvenement.uuid
     this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content, selectedLabelsUUID, this.uuid).subscribe(response => {
-      this.router.navigate([`maincourante/${this.uuid}`])
+      this.router.navigate([`..`], { relativeTo: this.route })
       this.labelsService.selectedLabels = [];
     })
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+/*     this.route.params.subscribe(params => {
       this.uuid = params.uuid
-    })
+    }) */
   }
 
 }

@@ -12,6 +12,7 @@ import { AddLabelComponent } from './main-courante/add-label/add-label.component
 import { FilterLabelsPipe } from './main-courante/add-label/filter-labels.pipe';
 import { DetailMessageComponent } from './main-courante/detail-message/detail-message.component';
 import { EvenementDetailResolverService } from './evenement-detail-resolver.service';
+import { ListeMainCouranteComponent } from './main-courante/liste-main-courante/liste-main-courante.component';
 
 const routes : Routes = [
   {
@@ -41,6 +42,15 @@ const routes : Routes = [
         component: MainCouranteComponent,
         children: [
           {
+            path: '',
+            redirectTo: 'liste',
+            pathMatch: 'full'
+          },
+          {
+            path: 'liste',
+            component: ListeMainCouranteComponent
+          },
+          {
             path: 'detailmessage/:uuid',
             component: DetailMessageComponent
           },
@@ -68,7 +78,8 @@ const routes : Routes = [
     AddMessageComponent,
     AddLabelComponent,
     FilterLabelsPipe,
-    DetailMessageComponent
+    DetailMessageComponent,
+    ListeMainCouranteComponent
   ],
   imports: [
     CommonModule,

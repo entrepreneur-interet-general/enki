@@ -1,4 +1,3 @@
-<li class="goTo" routerLink="/evenements/{{uuid}}">< Retourner à l'événement</li>
 <div class="title-container">
   <h1 class="h1-title">Dossiers partagés</h1>
   <div class="subtitle">
@@ -37,9 +36,6 @@
           <div class="mainInfos--content">
             {{ message.description }}
           </div>
-          <!-- <div class="mainInfos--icon">
-            <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
-          </div> -->
         </div>
         <div class="list--labels" *ngIf="message.tags.length > 0">
           <div class="badge badge__inverted" *ngFor="let tag of message.tags">{{ tag.title }}</div>

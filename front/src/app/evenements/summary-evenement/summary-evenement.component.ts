@@ -18,15 +18,11 @@ export class SummaryEvenementComponent implements OnInit {
     private evenementsService: EvenementsService,
     private route: ActivatedRoute
   ) {
-    // this.id = this.route.snapshot.paramMap.get('id');
-    // this.evenement = this.evenementsService.evenements[0]
+    this.evenement = this.evenementsService.selectedEvenement
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { event: Evenement }) => {
-      this.evenement = data.event;
-      this.uuid = data.event.uuid;
-    });
+    
   }
   initMap(): void {
     this.icon = L.icon({

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EvenementsService } from '../../evenements.service';
 import { Message, MessagesService } from '../messages.service';
 
 @Component({
@@ -13,19 +14,18 @@ export class MainCouranteComponent implements OnInit {
   fetchedMessages: boolean;
   constructor(
     private messagesService: MessagesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private evenementsService: EvenementsService
     ) {
     this.messages = []
+    this.uuid = this.evenementsService.selectedEvenement.uuid
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => { 
-      this.uuid = params['uuid'];
-      this.messagesService.getMessages(this.uuid).subscribe(messages => {
-        this.messages = messages
-        this.fetchedMessages = true
-      })
-    });
+    this.messagesService.getMessages(this.uuid).subscribe(messages => {
+      this.messages = messages
+      this.fetchedMessages = true
+    })
   }
 
 }

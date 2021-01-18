@@ -18,8 +18,13 @@ export class DetailEvenementComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger;
-    this.uuid = this.route.snapshot.paramMap.get('foo')
+    // debugger;
+    // this.uuid = this.route.snapshot.paramMap.get('foo')
+    this.route.data.subscribe((data: { event: Evenement }) => {
+      this.evenement = data.event;
+      this.uuid = data.event.uuid;
+
+    });
   }
 
 

@@ -20,26 +20,24 @@ const routes : Routes = [
     component: CreateEvenementComponent
   },
   {
-    path: 'evenements',
+    path: 'evenements/:uuid',
     canActivate: [AuthGuard],
     component: DetailEvenementComponent,
-    /* resolve: {
+    resolve: {
       event: EvenementDetailResolverService
-    }, */
+    },
     children: [
       {
-        path: ':uuid',
-        redirectTo: 'summary/:uuid'
+        path: '',
+        redirectTo: 'summary',
+        pathMatch: 'full'
       },
       {
-        path: 'summary/:uuid',
+        path: 'summary',
         component: SummaryEvenementComponent,
-        resolve: {
-          event: EvenementDetailResolverService
-        }
       },
       {
-        path: 'maincourante/:uuid',
+        path: 'maincourante',
         component: MainCouranteComponent,
         children: [
           {

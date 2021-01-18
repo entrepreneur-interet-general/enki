@@ -1,14 +1,15 @@
 
 <div>
   <li class="goTo" routerLink="/situations/evenements">< Retour à la liste des événements</li>
-  {{uuid}} ljshdbfg 
   <router-outlet></router-outlet>
-  <a routerLink="./summary/{{uuid}}" class="dossiers">
-    <svg class="icon-note icon"><use xlink:href="#icon-note"></use></svg>
-    Résumé
-  </a>
-  <a routerLink="./maincourante/{{uuid}}" class="dossiers">
-    <svg class="icon-dossier icon"><use xlink:href="#icon-dossier"></use></svg>
-    Dossiers
-  </a>
+  <div class="tabbar">
+    <a routerLink="./summary" class="tab" routerLinkActive="-active">
+      <svg class="icon-note icon"><use xlink:href="#icon-note"></use></svg>
+      <span class="tab--label">Résumé</span>
+    </a>
+    <a routerLink="./maincourante" class="tab" routerLinkActive="-active">
+      <svg class="icon-dossier icon"><use xlink:href="#icon-dossier"></use></svg>
+      <span class="tab--label">Main courante</span>
+    </a>
+  </div>
 </div>

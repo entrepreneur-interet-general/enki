@@ -20,7 +20,9 @@ export class EvenementDetailResolverService implements Resolve<Evenement> {
       take(1),
       mergeMap(event => {
         if(event) {
+          this.evenementsService.selectEvenement(event)
           return of(event)
+
         } else {
           this.router.navigate(['/dashboard'])
           return EMPTY

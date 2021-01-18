@@ -32,7 +32,7 @@ class EvenementListResource(WithEvenementRepoResource):
     post:
       description: Creating an event
       tags:
-        - evenements
+        - events
       requestBody:
         content:
           application/json:
@@ -73,7 +73,7 @@ class EvenementResource(WithEvenementRepoResource):
           required: true
           description: Event id
       tags:
-        - evenements
+        - events
       responses:
         200:
           description: Return a list of evenements

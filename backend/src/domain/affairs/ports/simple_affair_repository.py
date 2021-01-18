@@ -41,10 +41,15 @@ class AbstractSimpleAffairRepository(abc.ABC):
             raise NotFoundSimpleAffair
         return match
 
+    def get_by_affair_uuid(self, uuid: str) -> SimpleAffairEntity:
+        match = self._match_by_affair_uuid(uuid)
+        if not match:
+            raise NotFoundSimpleAffair
+        return match
+
     @abc.abstractmethod
     def get_by_evenement(self, uuid: str) -> List[SimpleAffairEntity]:
         raise NotImplementedError
-
 
     @abc.abstractmethod
     def _add(self, entity: SimpleAffairEntity):
@@ -66,8 +71,14 @@ class AbstractSimpleAffairRepository(abc.ABC):
     def _match_uuid(self, uuid: str) -> Union[SimpleAffairEntity, None]:
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def _match_by_affair_uuid(self, uuid: str) -> Union[SimpleAffairEntity, None]:
+        raise NotImplementedError
+
 
 class InMemorySimpleAffairRepository(AbstractSimpleAffairRepository):
+
+
     _simple_affairs: simple_affairsList = []
 
     def _add(self, entity: SimpleAffairEntity):
@@ -89,6 +100,15 @@ class InMemorySimpleAffairRepository(AbstractSimpleAffairRepository):
         affair.evenement_id = None
         return affair
 
+    def get_by_evenement(self, uuid: str) -> simple_affairsList:
+        matches = [affair for affair in self.simple_affairs if affair.evenement_id == uuid]
+        return matches
+
+    def _match_by_affair_uuid(self, uuid: str) -> Union[SimpleAffairEntity, None]:
+        matches = [affair for affair in self.simple_affairs if affair.sge_hub_id == uuid]
+        if matches:
+            return matches[0]
+
     # next methods are only for test purposes
     @property
     def simple_affairs(self) -> simple_affairsList:
@@ -97,6 +117,3 @@ class InMemorySimpleAffairRepository(AbstractSimpleAffairRepository):
     def set_simple_affairs(self, simple_affairs: simple_affairsList) -> None:
         self._simple_affairs = simple_affairs
 
-    def get_by_evenement(self, uuid: str) -> simple_affairsList:
-        matches = [affair for affair in self.simple_affairs if affair.evenement_id == uuid]
-        return matches

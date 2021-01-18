@@ -2,6 +2,7 @@ import abc
 from typing import List, Union
 import xml.dom.minidom
 
+from flask import current_app
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.affair_entity import AffairEntity
@@ -42,8 +43,6 @@ class AbstractAffairRepository(abc.ABC):
 
     def get_by_uuids(self, uuids: List[str]) -> List[AffairEntity]:
         matches = self._match_uuids(uuids)
-        if not matches:
-            raise NotFoundAffair
         return matches
 
     @abc.abstractmethod
@@ -101,6 +100,8 @@ class InMemoryAffairRepository(AbstractAffairRepository):
         return polygon.contains(point)
 
     def _match_uuids(self, uuids: List[str]) -> List[AffairEntity]:
+        current_app.logger.info(f"uuids {uuids}")
+        current_app.logger.info(f"uuids {[affair.uuid for affair in self._affairs]}")
         matches = [affair for affair in self._affairs if affair.uuid in uuids]
         return matches
 

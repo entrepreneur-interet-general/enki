@@ -44,8 +44,8 @@ api.add_resource(EvenementListResource, '/events', endpoint="events")
 api.add_resource(EvenementResource, '/events/<uuid>', endpoint="events_by_id")
 
 # Affairs <> Evenement
-api.add_resource(AffairEvenementResource, '/evenements/<uuid>/affairs/<affair_uuid>', endpoint="evenement_affairs_by_id")
-api.add_resource(AffairListEvenementResource, '/evenement/<uuid>/affairs', endpoint="evenement_affairs_list")
+api.add_resource(AffairEvenementResource, '/events/<uuid>/affairs/<affair_uuid>', endpoint="evenement_affairs_by_id")
+api.add_resource(AffairListEvenementResource, '/events/<uuid>/affairs', endpoint="evenement_affairs_list")
 
 
 @enki_blueprint_v1.before_app_first_request

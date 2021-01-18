@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Union
 from uuid import uuid4
 
+from flask import current_app
 from requests import Response
 from cisu.entities.edxl_entity import EdxlEntity
 import xml.dom.minidom
@@ -36,14 +37,14 @@ class AffairService:
     @staticmethod
     def assign_affair_from_evenement(affair_id: str, evenement_id: str, uow: AbstractUnitOfWork):
         with uow:
-            affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
+            affair: SimpleAffairEntity = uow.simple_affair.get_by_affair_uuid(uuid=affair_id)
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
             uow.simple_affair.assign_evenement_to_affair(affair, evenement)
 
     @staticmethod
     def delete_affair_from_evenement(affair_id: str, evenement_id: str, uow: AbstractUnitOfWork):
         with uow:
-            affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
+            affair: SimpleAffairEntity = uow.simple_affair.get_by_affair_uuid(uuid=affair_id)
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
             if affair.evenement_id == evenement.uuid:
                 uow.simple_affair.delete_affair_from_evenement(affair)
@@ -66,7 +67,8 @@ class AffairService:
     def list_affairs_by_evenement(evenement_id: str , uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             simple_affairs: List[SimpleAffairEntity] = uow.simple_affair.get_by_evenement(uuid=evenement_id)
-            simple_affair_uuids: List[str] = [af.uuid for af in simple_affairs]
+            simple_affair_uuids: List[str] = [af.sge_hub_id for af in simple_affairs]
+            current_app.logger.info(f"simple_affair_uuids {simple_affair_uuids}")
             affairs = uow.affair.get_by_uuids(uuids=simple_affair_uuids)
             serialized_affairs = [affair.to_dict() for affair in affairs]
             return serialized_affairs

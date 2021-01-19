@@ -4,18 +4,18 @@ from dataclasses_json import dataclass_json
 
 @dataclass
 @dataclass_json
-class ContactMethods:
-    tel: str
-    email: str
-    address: str
+class Company:
+    name: str
+    description: str
 
 
 @dataclass
 @dataclass_json
-class ContactEntity:
-    first_name: str
-    last_name: str
-    contact_methods: ContactMethods
+class Position:
+    title: str
+    description: str
+    company: Company
+
 
 
 

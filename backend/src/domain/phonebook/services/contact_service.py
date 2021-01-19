@@ -1,29 +1,29 @@
 from typing import Any, Dict, List
-from domain.messages.entities.tag_entity import TagEntity
-from domain.messages.schemas.schema import TagSchema
+from domain.phonebook.entities.contact import ContactEntity
+from domain.messages.schemas.schema import ContactSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
-class TagService:
-    schema = TagSchema
+class ContactService:
+    schema = ContactSchema
 
     @staticmethod
-    def add_tag(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
-        tag: TagEntity = TagService.schema().load(data)
-        return_value = TagService.schema().dump(tag)
+    def add_contact(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
+        contact: ContactEntity = ContactService.schema().load(data)
+        return_value = ContactService.schema().dump(contact)
 
         with uow:
-            uow.tag.add(tag)
+            uow.contact.add(contact)
         return return_value
 
     @staticmethod
-    def list_tags(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+    def list_contacts(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
-            tags: List[TagEntity] = uow.tag.get_all()
-            return TagService.schema(many=True).dump(tags)
+            contacts: List[ContactEntity] = uow.contact.get_all()
+            return ContactService.schema(many=True).dump(contacts)
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
-            tag = uow.tag.get_by_uuid(uuid)
-            return TagService.schema().dump(tag)
+            contact = uow.contact.get_by_uuid(uuid)
+            return ContactService.schema().dump(contact)

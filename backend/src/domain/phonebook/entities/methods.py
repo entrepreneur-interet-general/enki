@@ -3,7 +3,6 @@ from typing import List, Dict
 
 from dataclasses_json import dataclass_json
 
-from domain.core.entity import Entity
 from domain.phonebook.entities.company import CompanyEntity
 
 
@@ -15,14 +14,3 @@ class ContactMethods:
     address: str
     position: str
     company: CompanyEntity
-
-
-@dataclass
-@dataclass_json
-class ContactEntity(Entity):
-    first_name: str
-    last_name: str
-    contact_methods: ContactMethods
-
-
-

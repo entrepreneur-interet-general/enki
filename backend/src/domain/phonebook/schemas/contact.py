@@ -9,12 +9,13 @@ from domain.phonebook.entities.contact import ContactEntity
 class ContactValidationError(HTTPException):
     code = 400
 
-@dataclass
-@dataclass_json
-class ContactMethods:
-    tel: str
-    email: str
-    address: str
+
+class ContactMethodsSchema(Schema):
+    __model__ = ContactEntity
+
+    tel = fields.Dict(keys=fields.Str(), values=fields.Str())
+    email = fields.Str()
+    address = fields.Str()
 
 
 class ContactSchema(Schema):
@@ -23,26 +24,14 @@ class ContactSchema(Schema):
     uuid = fields.Str(missing=lambda: str(uuid4()))
     first_name = fields.Str(required=True)
     last_name = fields.Str(required=True)
+    position = fields.Str(required=True)
+    company = fields.Str(required=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
-
-
-class ContactMethodsSchema(Schema):
-    __model__ = ContactEntity
-
-    uuid = fields.Str(missing=lambda: str(uuid4()))
-    tel = fields.Str(required=True)
-    email = fields.Str(required=True)
-    address = fields.Str(required=True)
-
-
-
-
-    def _build_download_link(self, obj):
-        return f"/api/enki/v1/resources/{obj.uuid}/content"
+    contact_methods = fields.Nested(ContactMethodsSchema)
 
     @post_load
-    def make_resource(self, data: dict, **kwargs):
+    def make_contact(self, data: dict, **kwargs):
         return ContactEntity.from_dict(data)
 
     def handle_error(self, exc, data, **kwargs):

@@ -52,31 +52,3 @@ class AbstractContactRepository(abc.ABC):
     @abc.abstractmethod
     def _match_uuids(self, uuids: List[str]) -> List[ContactEntity]:
         raise NotImplementedError
-
-
-class InMemoryContactRepository(AbstractContactRepository):
-    _contacts: ContactsList = []
-
-    def get_all(self) -> ContactsList:
-        return self._contacts
-
-    def _match_uuid(self, uuid: str) -> Union[ContactEntity, None]:
-        matches = [contact for contact in self._contacts if contact.uuid == uuid]
-        if not matches:
-            return None
-        return matches[0]
-
-    def _add(self, contact: ContactEntity) -> None:
-        self._contacts.append(contact)
-
-    def _match_uuids(self, uuids: List[str]) -> List[ContactEntity]:
-        matches = [contact for contact in self._contacts if contact.uuid in uuids]
-        return matches
-
-    # next methods are only for test purposes
-    @property
-    def contacts(self) -> ContactsList:
-        return self._contacts
-
-    def set_contacts(self, contacts: ContactsList) -> None:
-        self._contacts = contacts

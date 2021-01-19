@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { KeycloakService } from 'keycloak-angular';
 
-import { User, UserService } from '../user/user.service';
+import { UserService } from '../user/user.service';
 
 export interface Intervention {
   id?: string; // used for in memory db
@@ -33,7 +32,6 @@ export class InterventionsService {
 
   constructor(
     private http: HttpClient,
-    private keycloakService: KeycloakService,
     private userService: UserService
     ) { 
       this.interventionsUrl = environment.interventionsUrl;

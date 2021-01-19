@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Intervention, InterventionsService } from '../interventions/interventions.service';
 
 export interface Evenement {
   uuid: string;
@@ -21,7 +22,8 @@ export class EvenementsService {
   httpOptions: object;
   // currentEvenement$;
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private interventionsService: InterventionsService
     ) {
       this.evenements = []
       this.evenementsUrl = `http://localhost:5000/api/enki/v1/events`
@@ -54,7 +56,12 @@ export class EvenementsService {
   selectEvenement(event: Evenement): void {
     this.selectedEvenement = event;
   }
-  getEvenementFromMemory(uuid: string): Evenement {
-    return this.evenements ? this.evenements.filter(event => event.uuid == uuid)[0] : null
+  getSignalementsForEvenement(uuid): Observable<Intervention[]> {
+    return this.http.get<any>(`${this.evenementsUrl}/${uuid}/affairs`, this.httpOptions)
+      .pipe(
+        map(response => {
+          return this.interventionsService.mapHTTPInterventions(response.data)
+        })
+      )
   }
 }

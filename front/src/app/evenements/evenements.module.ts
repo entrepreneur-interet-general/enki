@@ -79,6 +79,7 @@ const routes : Routes = [
     AddLabelComponent,
     FilterLabelsPipe,
     DetailMessageComponent,
+    SummaryEvenementComponent,
     ListeMainCouranteComponent
   ],
   imports: [

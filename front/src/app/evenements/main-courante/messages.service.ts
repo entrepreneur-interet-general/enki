@@ -17,6 +17,7 @@ export interface Message {
 export class MessagesService {
   messagesUrl: string;
   messages: Array<Message>;
+  resourcesUrl: string;
   
   httpHeaders: object;
   constructor(
@@ -24,6 +25,7 @@ export class MessagesService {
   ) {
     this.messages = window.sessionStorage.getItem("messages") ? JSON.parse(window.sessionStorage.getItem("messages")) : [];
     this.messagesUrl = 'http://localhost:5000/api/enki/v1/messages'
+    this.resourcesUrl = 'http://localhost:5000/api/enki/v1/resources'
 
     this.httpHeaders = {
       headers: new HttpHeaders({
@@ -60,6 +62,25 @@ export class MessagesService {
         map(messages => {
           return messages.data
         })
+      )
+  }
+
+  getUrlFileUpload(file: any): Observable<any> {
+    let formBody = {
+      "content_type": file.type,
+      "original_name": file.name
+    }
+    return this.http.post<any>(`${this.resourcesUrl}`, formBody)
+  }
+
+  putFileOnServer(file, url): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+
+
+    return this.http.put<any>(url, formData, this.httpHeaders)
+      .pipe(
+        tap(response => console.log(response))
       )
   }
 

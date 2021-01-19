@@ -31,6 +31,9 @@
     <div class="enkiSpecialform__group">
       <textarea formControlName="content" id="" cols="30" rows="10" placeholder="Appuyer ici pour ajouter une description"></textarea>
     </div>
+    <div class="enkiSpecialform__group">
+      <input type="file" formControlName="files" (change)="uploadFile($event)">
+    </div>
     <div class="enkiSpecialForm__group">
       <input type="submit" class="btn" value="Publier le message">
     </div>

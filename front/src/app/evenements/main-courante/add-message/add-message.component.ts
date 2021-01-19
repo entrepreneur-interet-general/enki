@@ -13,7 +13,8 @@ import { EvenementsService } from '../../evenements.service';
 export class AddMessageComponent implements OnInit {
   messageGroup = new FormGroup({
     title: new FormControl('', Validators.required),
-    content: new FormControl('', Validators.required)
+    content: new FormControl('', Validators.required),
+    files: new FormControl('', Validators.required)
   })
   uuid: string;
   constructor(
@@ -32,6 +33,23 @@ export class AddMessageComponent implements OnInit {
       this.router.navigate([`..`], { relativeTo: this.route })
       this.labelsService.selectedLabels = [];
     })
+  }
+
+  uploadFile(event: any): void {
+    console.log("ouuhh", (event.target as HTMLInputElement).files[0])
+    const file = (event.target as HTMLInputElement).files[0]
+    // this.messageGroup.get('files').setValue(file)
+    // this.messageGroup.get('files').updateValueAndValidity()
+    this.messagesService.getUrlFileUpload((event.target as HTMLInputElement).files[0]).subscribe(response => {
+      console.log(response)
+      // const formData = new FormData();
+      // formData.append('file', this.messageGroup.get('files').value);
+      this.messagesService.putFileOnServer(file, response.data.upload_url).subscribe(response => console.log('test'))
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.labelsService.selectedLabels = []
   }
 
   ngOnInit(): void {

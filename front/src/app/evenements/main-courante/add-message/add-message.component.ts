@@ -17,13 +17,16 @@ export class AddMessageComponent implements OnInit {
     files: new FormControl('', Validators.required)
   })
   uuid: string;
+  listOfMedias: Array<string>;
   constructor(
     private messagesService: MessagesService,
     public labelsService: LabelsService,
     private evenementsService: EvenementsService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {
+    this.listOfMedias = []
+  }
   
 
   onSubmit(): void {
@@ -36,15 +39,15 @@ export class AddMessageComponent implements OnInit {
   }
 
   uploadFile(event: any): void {
-    console.log("ouuhh", (event.target as HTMLInputElement).files[0])
+    // TODO : montrer le loader
     const file = (event.target as HTMLInputElement).files[0]
-    // this.messageGroup.get('files').setValue(file)
-    // this.messageGroup.get('files').updateValueAndValidity()
     this.messagesService.getUrlFileUpload((event.target as HTMLInputElement).files[0]).subscribe(response => {
-      console.log(response)
-      // const formData = new FormData();
-      // formData.append('file', this.messageGroup.get('files').value);
-      this.messagesService.putFileOnServer(file, response.data.upload_url).subscribe(response => console.log('test'))
+      this.messagesService.putFileOnServer(file, response.data.upload_url).subscribe(() => {
+        // console.log('success, show image preview')
+        // TODO : cacher le loader
+        // montrer l'image de preview
+        this.listOfMedias.push(response.data.uuid)
+      })
     })
   }
 

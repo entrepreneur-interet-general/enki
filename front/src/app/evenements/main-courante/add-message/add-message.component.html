@@ -31,8 +31,15 @@
     <div class="enkiSpecialform__group">
       <textarea formControlName="content" id="" cols="30" rows="10" placeholder="Appuyer ici pour ajouter une description"></textarea>
     </div>
-    <div class="enkiSpecialform__group">
-      <input type="file" formControlName="files" (change)="uploadFile($event)">
+    <div class="enkiSpecialform__group addMedia">
+      <label for="mediaFile" class="mediaFile">
+        <svg class="icon-dossier icon"><use xlink:href="#icon-dossier"></use></svg>
+        Ajouter des médias
+      </label>
+      <input id="mediaFile" type="file" formControlName="files" (change)="uploadFile($event)">
+      <div *ngFor="let media of listOfMedias">
+        {{media}}
+      </div>
     </div>
     <div class="enkiSpecialForm__group">
       <input type="submit" class="btn" value="Publier le message">

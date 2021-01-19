@@ -3,80 +3,52 @@ from typing import List, Union
 
 from werkzeug.exceptions import HTTPException
 
-from domain.phonebook.entities.contact import ContactEntity
+from domain.phonebook.entities.company import CompanyEntity
 
-ContactsList = List[ContactEntity]
+CompanysList = List[CompanyEntity]
 
 
-class AlreadyExistingContactUuid(HTTPException):
+class AlreadyExistingCompanyUuid(HTTPException):
     code = 409
-    description = "Contact already exists"
+    description = "Company already exists"
 
 
-class NotFoundContact(HTTPException):
+class NotFoundCompany(HTTPException):
     code = 404
-    description = "Contact not found"
+    description = "Company not found"
 
 
-class AbstractContactRepository(abc.ABC):
-    def add(self, contact: ContactEntity) -> None:
-        if self._match_uuid(contact.uuid):
-            raise AlreadyExistingContactUuid()
-        self._add(contact)
+class AbstractCompanyRepository(abc.ABC):
+    def add(self, company: CompanyEntity) -> None:
+        if self._match_uuid(company.uuid):
+            raise AlreadyExistingCompanyUuid()
+        self._add(company)
         # TODO : test if title already exists
 
-    def get_by_uuid(self, uuid: str) -> ContactEntity:
+    def get_by_uuid(self, uuid: str) -> CompanyEntity:
         matches = self._match_uuid(uuid)
         if not matches:
-            raise NotFoundContact
+            raise NotFoundCompany
         return matches
 
-    def get_by_uuid_list(self, uuids: List[str]) -> List[ContactEntity]:
+    def get_by_uuid_list(self, uuids: List[str]) -> List[CompanyEntity]:
         matches = self._match_uuids(uuids)
         if not matches:
-            raise NotFoundContact
+            raise NotFoundCompany
         return matches
 
     @abc.abstractmethod
-    def get_all(self) -> ContactsList:
+    def get_all(self) -> CompanysList:
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _add(self, contact: ContactEntity) -> None:
+    def _add(self, company: CompanyEntity) -> None:
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _match_uuid(self, uuid: str) -> Union[ContactEntity, None]:
+    def _match_uuid(self, uuid: str) -> Union[CompanyEntity, None]:
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _match_uuids(self, uuids: List[str]) -> List[ContactEntity]:
+    def _match_uuids(self, uuids: List[str]) -> List[CompanyEntity]:
         raise NotImplementedError
-
-
-class InMemoryContactRepository(AbstractContactRepository):
-    _contacts: ContactsList = []
-
-    def get_all(self) -> ContactsList:
-        return self._contacts
-
-    def _match_uuid(self, uuid: str) -> Union[ContactEntity, None]:
-        matches = [contact for contact in self._contacts if contact.uuid == uuid]
-        if not matches:
-            return None
-        return matches[0]
-
-    def _add(self, contact: ContactEntity) -> None:
-        self._contacts.append(contact)
-
-    def _match_uuids(self, uuids: List[str]) -> List[ContactEntity]:
-        matches = [contact for contact in self._contacts if contact.uuid in uuids]
-        return matches
-
-    # next methods are only for test purposes
-    @property
-    def contacts(self) -> ContactsList:
-        return self._contacts
-
-    def set_contacts(self, contacts: ContactsList) -> None:
-        self._contacts = contacts

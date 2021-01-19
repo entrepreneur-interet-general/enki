@@ -14,7 +14,7 @@ class ResourceService:
     schema = ResourceSchema
 
     @staticmethod
-    def add_resource(data: Dict[str, Any], uow: AbstractUnitOfWork) -> str:
+    def add_resource(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
         schema = ResourceService.schema()
         schema.context = {
             "bucket_name_config": uow.config.MINIO_MESSAGE_RESOURCES_BUCKET
@@ -33,7 +33,7 @@ class ResourceService:
         return return_value
 
     @staticmethod
-    def get_resource(uuid: str, uow: AbstractUnitOfWork) -> str:
+    def get_resource(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
             resource: ResourceEntity = uow.resource.get_by_uuid(uuid)
             download_url = uow.resource_content.get_presigned_get_url(bucket=uow.config.MINIO_MESSAGE_RESOURCES_BUCKET,

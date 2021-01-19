@@ -3,7 +3,7 @@ import { KeycloakService } from 'keycloak-angular';
 import { environment } from '../environments/environment';
 import { UserService } from './user/user.service';
 import jwt_decode from 'jwt-decode';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +21,7 @@ export class AppComponent {
   constructor(
     private keycloakService: KeycloakService,
     public userService: UserService,
-    private router: Router
+    private router: Router,
     ) {
       this.environment = environment
       this.keycloakService.getToken().then((res) => {

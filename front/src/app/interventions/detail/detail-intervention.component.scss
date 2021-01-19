@@ -29,6 +29,22 @@
     }
   }
 }
+.evenement {
+  padding: 24px 16px;
+  background: $blueGrey;
+  .icon {
+    fill: $primary;
+  }
+  &--description {
+    margin-bottom: 16px;
+  }
+  &--select {
+    select {
+      width: 100%;
+    }
+  }
+
+}
 
 .map {
   margin-bottom: 16px;

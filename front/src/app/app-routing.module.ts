@@ -8,11 +8,9 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard/user-das
 import { FirstStepComponent } from './registration/first-step/first-step.component';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { MainCouranteModule } from './main-courante/main-courante.module';
 import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
-import { CreateEvenementComponent } from './evenements/create-evenement/create-evenement.component';
-import { DetailEvenementComponent } from './evenements/detail-evenement/detail-evenement.component';
+import { EvenementsModule } from './evenements/evenements.module';
 
 const routes: Routes = [
   {
@@ -48,16 +46,6 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'evenements/create',
-    canActivate: [ AuthGuard ],
-    component: CreateEvenementComponent
-  },
-  {
-    path: 'evenements/:uuid',
-    canActivate: [AuthGuard],
-    component: DetailEvenementComponent
-  },
-  {
     path: 'detail-intervention/:uuid',
     canActivate: [AuthGuard],
     component: DetailInterventionComponent
@@ -72,7 +60,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    MainCouranteModule
+    EvenementsModule
   ],
   exports: [RouterModule],
   providers: [AuthGuard]

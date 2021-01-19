@@ -1,0 +1,54 @@
+<div class="evenement">
+  <div class="evenement--heading">
+    <div class="evenement--title">
+      {{evenement.title}}
+    </div>
+    <div class="evenement--description">
+      {{evenement.description}}
+    </div>
+  </div>
+<!-- </div>
+<div class="map">
+  <div class="map-container">
+    <div class="map-frame">
+      <div id="mapid"></div>
+    </div>
+  </div>
+</div>
+<div class="evenement" *ngIf="fetchedEvenement"> -->
+  <div class="evenement--body">
+    <div class="signalements">
+      <div class="signalements--map">
+        
+      </div>
+      <div class="signalements--list">
+        <h2 class="title-with-icon">
+          <svg class="icon-signalements icon"><use xlink:href="#icon-signalements"></use></svg>
+          (0) Signalements
+        </h2>
+        <ul class="interventions list">
+          <li class="list--element" *ngFor="let intervention of interventions">
+            <a class="list--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
+              <div class="secondInfos">
+                <div class="secondInfos--dateTime">
+                  {{intervention.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
+                </div>
+                <div class="badge">
+                  En cours
+                </div>
+              </div>
+              <div class="mainInfos -hasIcon">
+                <div class="mainInfos--title">
+                  {{intervention.natureDeFait}}
+                </div>
+                <div class="mainInfos--icon">
+                  <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -48,4 +48,24 @@
       <li>Plusieurs victimes</li>
     </ul>
   </div>
+  <div class="info-block evenement">
+    <div class="title-with-icon evenement--title">
+      <svg class="icon icon-alert"><use xlink:href="#icon-alert"></use></svg>
+      <div class="">Événement</div>
+    </div>
+    <div class="evenement--description">
+      Attachez ce signalement à un événement pour activer les dossiers partagés.
+    </div>
+    <form action="" class="userInfoForm" [formGroup]="evenementGroup" (ngSubmit)="attachEvenementToSignalement()">
+      <div class="evenement--select">
+        <select class="enkiform__input" formControlName="evenement">
+          <option value="" disabled selected>Sélectionner ou créer un événement</option>
+          <option *ngFor="let evenement of evenementsList" value="{{evenement.uuid}}">{{evenement.title}}</option>
+        </select>
+      </div>
+      <div class="evenement--button">
+        <button type="submit" class="btn">Attacher le signalement</button>
+      </div>
+    </form>
+  </div>
 </div>

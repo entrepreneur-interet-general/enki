@@ -16,18 +16,22 @@ class ResourceSchema(Schema):
     uuid = fields.Str(missing=lambda: str(uuid4()))
     creator_id = fields.Str(required=False, dump_only=True)
     bucket_name = fields.Str(required=False, dump_only=True)
-    object_path = fields.Str(required=False)
+    object_path = fields.Method("_object_path")
     message_id = fields.Str(required=False, dump_only=True)
     original_name = fields.Str(required=False)
-    content_type = fields.Str(required=False, validate=validate.OneOf(content_types), dump_only=True)
+    content_type = fields.Str(required=False, validate=validate.OneOf(content_types))
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
-    path_to_download = fields.Method("_build_download_link")
 
-    def _build_download_link(self, obj):
-        return f"/api/enki/v1/resources/{obj.uuid}/content"
+    def _object_path(self, obj):
+        return obj.uuid
+
+    def _bucket_name(self, obj):
+        return self.context.bucket_name_config
 
     @post_load
     def make_resource(self, data: dict, **kwargs):
+        data["bucket_name"] = self.context["bucket_name_config"]
+        data["object_path"] = data["uuid"]
         return ResourceEntity.from_dict(data)
 
     def handle_error(self, exc, data, **kwargs):

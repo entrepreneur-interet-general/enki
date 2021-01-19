@@ -57,28 +57,10 @@ class AbstractResourceContentRepository(abc.ABC):
     def _exists(self, bucket: str, object_path: str) -> bool:
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def get_presigned_get_url(self, bucket: str, object_path: str) -> str:
+        raise NotImplementedError
 
-class LocalResourceContentRepository(AbstractResourceContentRepository):
-
-    def _store(self,  local_path: str, bucket: str, object_path: str, content_type: str) -> None:
-        filename = secure_filename(local_path)
-        destination_path = pathlib.Path(current_app.config['UPLOAD_FOLDER']) + filename
-        source_path = pathlib.Path(local_path)
-        with source_path.open('rb') as file:
-            with destination_path.open('wb') as destination_file:
-                destination_file.write(file.read())
-
-    def _retrieve(self, bucket: str, object_path: str):
-        path = pathlib.Path(current_app.config['UPLOAD_FOLDER']) / object_path
-        with path.open('rb') as source_file:
-            return source_file.read()
-
-    def _remove(self, bucket: str, object_path: str):
-        path = pathlib.Path(current_app.config['UPLOAD_FOLDER']) / object_path
-        path.unlink()
-
-    def _exists(self, bucket: str, object_path: str) -> bool:
-        p = pathlib.Path(current_app.config['UPLOAD_FOLDER']) / object_path
-        if p.is_file():
-            return True
-        return False
+    @abc.abstractmethod
+    def get_presigned_put_url(self, bucket: str, object_path: str) -> str:
+        raise NotImplementedError

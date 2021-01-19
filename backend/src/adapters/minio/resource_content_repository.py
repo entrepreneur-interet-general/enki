@@ -1,3 +1,4 @@
+from datetime import timedelta
 from typing import Union
 
 from minio import Minio
@@ -62,7 +63,14 @@ class MinioResourceContentRepository(AbstractResourceContentRepository):
             raise ClientNotInitializedError
 
     def _exists(self, bucket: str, object_path: str) -> bool:
-        return True
+        stats = self.client.stat_object(
+            bucket_name=bucket,
+            object_name=object_path,
+        )
+        if stats:
+            return True
+        else:
+            return False
 
     def _remove(self, bucket: str, object_path: str):
         if self.client:
@@ -76,3 +84,17 @@ class MinioResourceContentRepository(AbstractResourceContentRepository):
             return objects
         else:
             raise ClientNotInitializedError
+
+    def get_presigned_get_url(self, bucket: str, object_path: str) -> str:
+        url = self.client.presigned_get_object(
+            bucket_name=bucket,
+            object_name=object_path,
+        )
+        return url
+
+    def get_presigned_put_url(self, bucket: str, object_path: str) -> str:
+        url = self.client.presigned_put_object(
+            bucket_name=bucket,
+            object_name=object_path,
+        )
+        return url

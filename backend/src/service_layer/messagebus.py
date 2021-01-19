@@ -24,9 +24,6 @@ COMMAND_HANDLERS: Dict[Type[Topic], List[Callable]] = {
     topics.CreateResourceTopic: [
         commands.create_resource,
     ],
-    topics.UploadResourceContentTopic: [
-        commands.upload_resource,
-    ]
 }
 
 HANDLERS: Dict[Type[Topic], List[Callable]] = {**EVENT_HANDLERS, **COMMAND_HANDLERS}

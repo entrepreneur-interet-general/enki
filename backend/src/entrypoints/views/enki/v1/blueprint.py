@@ -11,7 +11,7 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
     EvenementListResource, EvenementResource, \
     ResourceListResource, ResourceResource, \
     MessageResourceResource, MessageResourceListResource, \
-    ResourceContentResource, AffairEvenementResource, AffairListEvenementResource
+    AffairEvenementResource, AffairListEvenementResource
 
 enki_blueprint_v1 = Blueprint(name="enki_blueprint_v1", import_name=__name__, url_prefix="/api/enki/v1")
 
@@ -35,7 +35,6 @@ api.add_resource(MessageTagListResource, '/messages/<uuid>/tags', endpoint="mess
 # Resources
 api.add_resource(ResourceListResource, '/resources', endpoint="resources")
 api.add_resource(ResourceResource, '/resources/<uuid>', endpoint="resource_by_id")
-api.add_resource(ResourceContentResource, '/resources/<uuid>/content', endpoint="resource_by_id_content")
 api.add_resource(MessageResourceResource, '/messages/<uuid>/resource/<tag_uuid>', endpoint="message_by_id_resource_by_id")
 api.add_resource(MessageResourceListResource, '/messages/<uuid>/resources', endpoint="message_by_id_resources")
 
@@ -75,7 +74,6 @@ def register_views():
     # Resources
     api_spec.spec.path(view=ResourceResource, app=current_app)
     api_spec.spec.path(view=ResourceListResource, app=current_app)
-    api_spec.spec.path(view=ResourceContentResource, app=current_app)
 
     # Resource <> Messages
     api_spec.spec.path(view=MessageResourceResource, app=current_app)

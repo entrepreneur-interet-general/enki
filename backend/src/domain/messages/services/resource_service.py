@@ -14,49 +14,32 @@ class ResourceService:
     schema = ResourceSchema
 
     @staticmethod
-    def add_resource(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
-        resource: ResourceEntity = ResourceService.schema().load(data)
-        return_value = ResourceService.schema().dump(resource)
+    def add_resource(data: Dict[str, Any], uow: AbstractUnitOfWork) -> str:
+        schema = ResourceService.schema()
+        schema.context = {
+            "bucket_name_config": uow.config.MINIO_MESSAGE_RESOURCES_BUCKET
+        }
+        resource: ResourceEntity = schema.load(data)
+        return_value = schema.dump(resource)
 
         with uow:
             uow.resource.add(resource)
+            upload_url = uow.resource_content.get_presigned_put_url(
+                bucket=uow.config.MINIO_MESSAGE_RESOURCES_BUCKET,
+                object_path=resource.uuid
+            )
+            return_value["upload_url"] = upload_url
+
         return return_value
 
     @staticmethod
-    def upload_resource(data: dict, file: FileStorage, uow: AbstractUnitOfWork) -> Dict[str, Any]:
-        content_type = data["content_type"]
-        uuid = str(uuid4())
-        bucket_name = uow.config.MINIO_MESSAGE_RESOURCES_BUCKET
-        with NamedTemporaryFile(mode="w") as f:
-            file.save(f.name)
-            with uow:
-                uow.resource_content.store(local_path=f.name,
-                                           bucket=bucket_name,
-                                           object_path=uuid,
-                                           content_type=content_type
-                                           )
-        return {
-            "bucket_name": bucket_name,
-            "object_path": uuid,
-            "content_type": content_type,
-            "original_name": file.filename,
-        }
-
-    @staticmethod
-    def list_resources(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+    def get_resource(uuid: str, uow: AbstractUnitOfWork) -> str:
         with uow:
-            resources: List[ResourceEntity] = uow.resource.get_all()
-            return ResourceService.schema(many=True).dump(resources)
+            resource: ResourceEntity = uow.resource.get_by_uuid(uuid)
+            download_url = uow.resource_content.get_presigned_get_url(bucket=uow.config.MINIO_MESSAGE_RESOURCES_BUCKET,
+                                                                      object_path=resource.object_path)
 
-    @staticmethod
-    def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
-        with uow:
-            resource = uow.resource.get_by_uuid(uuid)
-            return ResourceService.schema().dump(resource)
+            return_value = ResourceService.schema().dump(resource)
+        return_value["url"] = download_url
 
-    @staticmethod
-    def load_content(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
-        with uow:
-            resource = uow.resource_content.retrieve(bucket=uow.config.MINIO_MESSAGE_RESOURCES_BUCKET,
-                                                     object_path=uuid)
-            return resource
+        return return_value

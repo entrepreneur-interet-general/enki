@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MessageComponent } from './message.component';
+import { ListeMainCouranteComponent } from './liste-main-courante.component';
 
-describe('MessageComponent', () => {
-  let component: MessageComponent;
-  let fixture: ComponentFixture<MessageComponent>;
+describe('ListeMainCouranteComponent', () => {
+  let component: ListeMainCouranteComponent;
+  let fixture: ComponentFixture<ListeMainCouranteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MessageComponent ]
+      declarations: [ ListeMainCouranteComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MessageComponent);
+    fixture = TestBed.createComponent(ListeMainCouranteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

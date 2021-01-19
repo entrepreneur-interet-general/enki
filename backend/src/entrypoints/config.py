@@ -1,7 +1,6 @@
 from typing import Optional
 
 from service_layer.unit_of_work import AbstractUnitOfWork, SqlAlchemyUnitOfWork
-from .repositories.repositories import Repositories, InMemoryRepositories, REPOSITORY_TYPES
 from .serializers import EnkiJsonEncoder
 import os
 
@@ -11,7 +10,6 @@ class EnkiConfig(object):
         'indent': 2,
         'cls': EnkiJsonEncoder
     }
-    REPO_INFRA: str = os.environ.get('REPOSITORIES', InMemoryRepositories.name)
     SGE_HUB_BASE_URI: str = os.environ.get('SGE_HUB_BASE_URI',
                                            'http://docker.for.mac.localhost:9090')
     SGE_REF_BASE_URI: str = os.environ.get('SGE_REF_BASE_URI',

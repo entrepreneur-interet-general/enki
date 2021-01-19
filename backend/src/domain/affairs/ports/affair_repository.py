@@ -2,7 +2,7 @@ import abc
 from typing import List, Union
 import xml.dom.minidom
 
-from cisu.entities.edxl_entity import EdxlEntity
+from flask import current_app
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.affair_entity import AffairEntity
@@ -41,6 +41,10 @@ class AbstractAffairRepository(abc.ABC):
             raise NotFoundAffair
         return match
 
+    def get_by_uuids(self, uuids: List[str]) -> List[AffairEntity]:
+        matches = self._match_uuids(uuids)
+        return matches
+
     @abc.abstractmethod
     def _add(self, entity: AffairEntity):
         raise NotImplementedError
@@ -60,17 +64,9 @@ class AbstractAffairRepository(abc.ABC):
     def _match_uuid(self, uuid: str) -> Union[AffairEntity, None]:
         raise NotImplementedError
 
-    @staticmethod
-    def build_affair_from_xml_string(xml_string: str) -> AffairEntity:
-        affair_dom = xml.dom.minidom.parseString(xml_string)
-        edxl_message = EdxlEntity.from_xml(affair_dom)
-        return AffairEntity(**edxl_message.resource.message.choice.to_dict())
-
-    @staticmethod
-    def build_affair_from_xml_file(xml_path: str) -> AffairEntity:
-        affair_dom = xml.dom.minidom.parse(xml_path)
-        edxl_message = EdxlEntity.from_xml(affair_dom)
-        return AffairEntity(**edxl_message.resource.message.choice.to_dict())
+    @abc.abstractmethod
+    def _match_uuids(self, uuids: List[str]) -> List[AffairEntity]:
+        raise NotImplementedError
 
 
 class InMemoryAffairRepository(AbstractAffairRepository):
@@ -87,14 +83,6 @@ class InMemoryAffairRepository(AbstractAffairRepository):
         if matches:
             return matches[0]
 
-    # next methods are only for test purposes
-    @property
-    def affairs(self) -> affairsList:
-        return self._affairs
-
-    def set_affairs(self, affairs: affairsList) -> None:
-        self._affairs = affairs
-
     def _get_from_polygon(self, multipolygon: List) -> affairsList:
         print(len(self.get_all()))
         return [
@@ -107,6 +95,20 @@ class InMemoryAffairRepository(AbstractAffairRepository):
 
     @staticmethod
     def _contain_point(lat: float, lon: float, multipolygon: List) -> bool:
-        point = Point(lon,lat)
+        point = Point(lon, lat)
         polygon = Polygon(multipolygon)
         return polygon.contains(point)
+
+    def _match_uuids(self, uuids: List[str]) -> List[AffairEntity]:
+        current_app.logger.info(f"uuids {uuids}")
+        current_app.logger.info(f"uuids {[affair.uuid for affair in self._affairs]}")
+        matches = [affair for affair in self._affairs if affair.uuid in uuids]
+        return matches
+
+    # next methods are only for test purposes
+    @property
+    def affairs(self) -> affairsList:
+        return self._affairs
+
+    def set_affairs(self, affairs: affairsList) -> None:
+        self._affairs = affairs

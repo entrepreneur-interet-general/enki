@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { Evenement, EvenementsService } from '../evenements.service';
 
 @Component({
@@ -10,20 +11,20 @@ import { Evenement, EvenementsService } from '../evenements.service';
 export class DetailEvenementComponent implements OnInit {
   uuid: string;
   evenement: Evenement;
-  fetchedEvenement: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private evenementsService: EvenementsService
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.uuid = params['uuid'];
-      this.evenementsService.getEvenement(this.uuid).subscribe((evenement) => {
-        this.evenement = evenement
-        this.fetchedEvenement = true;
-      });
-    })
+    // this.uuid = this.route.snapshot.paramMap.get('foo')
+    this.route.data.subscribe((data: { event: Evenement }) => {
+      this.evenement = data.event;
+      this.uuid = data.event.uuid;
+
+    });
   }
+
 
 }

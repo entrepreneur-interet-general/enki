@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Intervention, InterventionsService } from '../interventions/interventions.service';
 
 export interface Evenement {
   uuid: string;
@@ -17,17 +18,26 @@ export class EvenementsService {
 
   evenements: Array<Evenement>
   evenementsUrl: string;
+  selectedEvenement: Evenement;
   httpOptions: object;
+  // currentEvenement$;
   constructor(
-    private http: HttpClient
-  ) {
-    this.evenements = []
-    this.evenementsUrl = `http://localhost:5000/api/enki/v1/events`
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      })
-    }
+    private http: HttpClient,
+    private interventionsService: InterventionsService
+    ) {
+      this.evenements = []
+      this.evenementsUrl = `http://localhost:5000/api/enki/v1/events`
+      this.selectedEvenement = {
+        uuid: '',
+        title: '',
+        description: '',
+        started_at: ''
+      }
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+        })
+      }
   }
 
   getEvenements(): Observable<Evenement[]> {
@@ -41,6 +51,17 @@ export class EvenementsService {
     return this.http.get<any>(`${this.evenementsUrl}/${uuid}`, this.httpOptions)
       .pipe(
         map(response => response.data)
+      )
+  }
+  selectEvenement(event: Evenement): void {
+    this.selectedEvenement = event;
+  }
+  getSignalementsForEvenement(uuid): Observable<Intervention[]> {
+    return this.http.get<any>(`${this.evenementsUrl}/${uuid}/affairs`, this.httpOptions)
+      .pipe(
+        map(response => {
+          return this.interventionsService.mapHTTPInterventions(response.data)
+        })
       )
   }
 }

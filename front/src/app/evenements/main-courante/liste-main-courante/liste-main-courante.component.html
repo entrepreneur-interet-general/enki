@@ -1,12 +1,21 @@
-<li class="goTo" routerLink="/evenements/{{uuid}}">< Retourner à l'événement</li>
 <div class="title-container">
   <h1 class="h1-title">Dossiers partagés</h1>
+  <div class="subtitle">
+    Mis à jour il y a une minute
+  </div>
 </div>
 <div class="mc">
-
+  <div class="head-tab">
+    <div class="head-tab--element -active">
+      Main courante
+    </div>
+    <div class="head-tab--element">
+      Liste des actions
+    </div>
+  </div>
   <div class="mc--empty" *ngIf="!(messages.length > 0) ">
     Le dossier est vide, créez une nouvelle main courante pour démarrer le partage.
-    <button class="btn" routerLink="/addmessage/{{uuid}}">Ajouter un nouveau message</button>
+    <button class="btn" routerLink="../addmessage">Ajouter un nouveau message</button>
   </div>
   
   <ul class="">
@@ -17,7 +26,7 @@
             {{message.created_at | date:"dd/MM/yyyy à HH:mm"}}
           </div>
           <div class="badge">
-            Préfecture
+            Mairie
           </div>
         </div>
         <div class="mainInfos">
@@ -27,9 +36,6 @@
           <div class="mainInfos--content">
             {{ message.description }}
           </div>
-          <!-- <div class="mainInfos--icon">
-            <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
-          </div> -->
         </div>
         <div class="list--labels" *ngIf="message.tags.length > 0">
           <div class="badge badge__inverted" *ngFor="let tag of message.tags">{{ tag.title }}</div>
@@ -38,7 +44,7 @@
     </li>
   </ul>
   
-  <div class="action--add" routerLink="/addmessage/{{uuid}}" *ngIf="messages.length > 0">
+  <div class="action--add" routerLink="../addmessage" *ngIf="messages.length > 0">
     <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
   </div>
 </div>

@@ -1,0 +1,15 @@
+@import "../../../../../design-system/styles/variables";
+
+.evenement {
+  &--heading {
+    background-color: $primary;
+    color: $white;
+    padding: 16px;
+  }
+  .title-with-icon {
+    padding: 16px 16px 0;
+  }
+  &--title {
+    font-size: 24px;
+  }
+}

@@ -1,23 +1,15 @@
 
-<li class="goTo" routerLink="/situations/evenements">< Retour à la liste des événements</li>
-<div class="evenement" *ngIf="fetchedEvenement">
-  <div class="evenement--heading">
-    <div class="evenement--title">
-      {{evenement.title}}
-    </div>
-    <div class="evenement--description">
-      {{evenement.description}}
-    </div>
-  </div>
-  <div class="evenement--body">
-    <div class="signalements">
-      <div class="signalements--map">
-        [TODO] ADD MAP
-      </div>
-      <div class="signalements--list">
-        [TODO] ADD A LIST OF LINKED "SIGNALEMENTS"
-      </div>
-    </div>
-    <a routerLink="/maincourante/{{evenement.uuid}}">Accéder au dossier</a>
+<div>
+  <li class="goTo" routerLink="/situations/evenements">< Retour à la liste des événements</li>
+  <router-outlet></router-outlet>
+  <div class="tabbar">
+    <a routerLink="./summary" class="tab" routerLinkActive="-active">
+      <svg class="icon-note icon"><use xlink:href="#icon-note"></use></svg>
+      <span class="tab--label">Résumé</span>
+    </a>
+    <a routerLink="./maincourante" class="tab" routerLinkActive="-active">
+      <svg class="icon-dossier icon"><use xlink:href="#icon-dossier"></use></svg>
+      <span class="tab--label">Main courante</span>
+    </a>
   </div>
 </div>

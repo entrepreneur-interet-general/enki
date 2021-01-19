@@ -2,20 +2,54 @@
 @import "../../../../../design-system/styles/variables";
 
 .evenement {
-  &--heading {
-    background-color: $primary;
-    color: $white;
-    padding: 16px;
-  }
   &--body {
     padding: 16px;
-  }
-  &--title {
-    font-size: 24px;
   }
 }
 .signalements {
   margin-bottom: 20px;
-  padding: 16px;
+  .icon {
+    fill: $primary;
+  }
+}
+.tabbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   background: $lightestGrey;
+  height: 58px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.tab {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  color: $darkerGrey;
+  svg {
+    fill: $darkerGrey;
+  }
+  &--label {
+    display: block;
+    line-height: 12px;
+  }
+  &.-active {
+    color: $primary;
+    svg {
+      fill: $primary;
+    }
+  }
+}
+.map-container {
+  height: 200px;
+}
+
+.map-frame {
+  height: 100%;
+}
+
+#mapid {
+  height: 100%;
 }

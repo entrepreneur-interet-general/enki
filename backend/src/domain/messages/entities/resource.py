@@ -2,18 +2,19 @@ from datetime import datetime
 
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
-from typing import Optional, Literal
+from typing import Optional, Dict
 
 from domain.core.entity import Entity
 
-content_types = [
-    "application/xml",
-    "application/pdf",
-    "image/png",
-    "image/jpeg",
-    "image/gif",
-    "video/x-msvideo", # AVI
-]
+content_types: Dict[str, str] = {
+    "application/xml": "xml",
+    "application/pdf": "pdf",
+    "image/png": "png",
+    "image/jpeg": "jpeg",
+    "image/gif": "gif",
+    "video/x-msvideo": "avi",  # AVI
+}
+
 
 @dataclass_json
 @dataclass
@@ -22,6 +23,7 @@ class ResourceEntity(Entity):
     object_path: str
     content_type: str
     original_name: str
+    extension: str
     message_id: Optional[str] = field(default_factory=lambda: None)
     creator_id: Optional[str] = field(default_factory=lambda: None)
     created_at: datetime = field(default_factory=lambda: datetime.now())

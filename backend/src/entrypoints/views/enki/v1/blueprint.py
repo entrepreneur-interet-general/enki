@@ -36,7 +36,9 @@ api.add_resource(MessageTagListResource, '/messages/<uuid>/tags', endpoint="mess
 api.add_resource(ResourceListResource, '/resources', endpoint="resources")
 api.add_resource(ResourceResource, '/resources/<uuid>', endpoint="resource_by_id")
 api.add_resource(ResourceContentResource, '/resources/<uuid>/content', endpoint="resource_by_id_content")
-api.add_resource(MessageResourceResource, '/messages/<uuid>/resource/<tag_uuid>', endpoint="message_by_id_resource_by_id")
+api.add_resource(MessageResourceResource, '/messages/<uuid>/resource/<resource_uuid>', endpoint="message_by_id_resource_by_id")
+api.add_resource(MessageResourceResource, '/messages/<uuid>/resource/<resource_uuid>', endpoint="message_by_id_resource_by_id")
+
 api.add_resource(MessageResourceListResource, '/messages/<uuid>/resources', endpoint="message_by_id_resources")
 
 # Evenements

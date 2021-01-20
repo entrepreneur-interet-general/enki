@@ -2,6 +2,7 @@ import logging
 
 from datetime import datetime
 from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Integer, TIMESTAMP, Enum
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy_utils import ChoiceType
 
@@ -10,6 +11,8 @@ from domain.evenements.entity import EvenementType, EvenementEntity
 from domain.messages.entities.message_entity import MessageType, Severity, MessageEntity
 from domain.messages.entities.resource import ResourceEntity
 from domain.messages.entities.tag_entity import TagEntity
+from domain.phonebook.entities.contact import ContactEntity
+from domain.phonebook.entities.group import GroupEntity
 
 logger = logging.getLogger(__name__)
 
@@ -86,6 +89,25 @@ affairsTable = Table(
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
 
+groupTable = Table(
+    'group', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('name', String(255), nullable=False, unique=True),
+    Column('description', String(255)),
+)
+
+contactTable = Table(
+    'contacts', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('first_name', String(255), nullable=False),
+    Column('last_name', String(255), nullable=False),
+    Column('contact_methods', JSONB()),
+    Column('position', String(255), nullable=False),
+    Column('group_id', ForeignKey("messages.uuid")),
+    Column('updated_at', TIMESTAMP(), nullable=True, default=datetime.now, onupdate=datetime.now),
+    Column('created_at', TIMESTAMP(), nullable=True, default=datetime.now)
+)
+
 all_tables = [
     userTable,
     tagMessageTable,
@@ -100,6 +122,11 @@ def start_mappers():
     mapper(EvenementEntity, evenementsTable)
     mapper(ResourceEntity, resourceTable)
     mapper(SimpleAffairEntity, affairsTable)
+    mapper(GroupEntity, groupTable)
+    mapper(ContactEntity, contactTable,
+           properties={
+            'group': relationship(GroupEntity, backref='contacts'),
+        })
     mapper(
         MessageEntity, messagesTable,
         properties={

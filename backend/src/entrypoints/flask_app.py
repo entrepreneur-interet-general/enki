@@ -6,6 +6,7 @@ from sqlalchemy.orm import clear_mappers
 from adapters.postgres.orm import start_mappers
 from entrypoints import views
 from service_layer.messagebus import HANDLERS
+from .commands import create_group
 from .config import EnkiConfig
 from .extensions import event_bus, api_spec
 from .errors import errors
@@ -52,8 +53,13 @@ def create_app(testing=False):
     context.init_app(app=app)
     configure_apispec(app=app)
     register_blueprints(app)
+    register_cli_commands(app=app)
     configure_orm()
     return app
+
+
+def register_cli_commands(app):
+    app.cli.add_command(create_group)
 
 
 def configure_orm():

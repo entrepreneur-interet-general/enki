@@ -21,12 +21,13 @@ class ResourceService:
         }
         resource: ResourceEntity = schema.load(data)
         return_value = schema.dump(resource)
-
+        extension = resource.original_name.split(".")[-1]
+        object_path = f"{resource.uuid}.{extension}"
         with uow:
             uow.resource.add(resource)
             upload_url = uow.resource_content.get_presigned_put_url(
                 bucket=uow.config.MINIO_MESSAGE_RESOURCES_BUCKET,
-                object_path=resource.uuid
+                object_path=object_path
             )
             return_value["upload_url"] = upload_url
 

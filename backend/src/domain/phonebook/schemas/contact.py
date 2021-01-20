@@ -13,9 +13,9 @@ class ContactValidationError(HTTPException):
 class ContactMethodsSchema(Schema):
     __model__ = ContactEntity
 
-    tel = fields.Dict(keys=fields.Str(), values=fields.Str())
-    email = fields.Str()
-    address = fields.Str()
+    tel = fields.Dict(keys=fields.Str(), values=fields.Str(), required=True)
+    email = fields.Str(required=True)
+    address = fields.Str(required=False)
 
 
 class ContactSchema(Schema):
@@ -25,10 +25,10 @@ class ContactSchema(Schema):
     first_name = fields.Str(required=True)
     last_name = fields.Str(required=True)
     position = fields.Str(required=True)
-    company = fields.Str(required=True)
+    group = fields.Str(required=True)
+    contact_methods = fields.Nested(ContactMethodsSchema, required=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
-    contact_methods = fields.Nested(ContactMethodsSchema)
 
     @post_load
     def make_contact(self, data: dict, **kwargs):

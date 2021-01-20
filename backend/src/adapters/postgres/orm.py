@@ -2,6 +2,7 @@ import logging
 
 from datetime import datetime
 from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Integer, TIMESTAMP, Enum
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy_utils import ChoiceType
 
@@ -12,6 +13,7 @@ from domain.messages.entities.resource import ResourceEntity
 from domain.messages.entities.tag_entity import TagEntity
 from domain.users.entities.company import CompanyType, CompanyEntity
 from domain.users.entities.user import UserEntity
+from domain.phonebook.entities.contact import ContactEntity
 
 logger = logging.getLogger(__name__)
 
@@ -103,6 +105,19 @@ companyTable = Table(
 )
 
 
+contactTable = Table(
+    'contacts', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('first_name', String(255), nullable=False),
+    Column('last_name', String(255), nullable=False),
+    Column('contact_methods', JSONB()),
+    Column('position', String(255), nullable=False),
+    Column('group_id', ForeignKey("messages.uuid")),
+    Column('updated_at', TIMESTAMP(), nullable=True, default=datetime.now, onupdate=datetime.now),
+    Column('created_at', TIMESTAMP(), nullable=True, default=datetime.now)
+)
+
+
 def start_mappers():
     mapper(TagEntity, tagTable)
     mapper(EvenementEntity, evenementsTable)
@@ -114,6 +129,11 @@ def start_mappers():
                'company': relationship(CompanyEntity, backref='users'),
            }
            )
+
+    mapper(ContactEntity, contactTable,
+           properties={
+            'company': relationship(GroupEntity, backref='contacts'),
+        })
     mapper(
         MessageEntity, messagesTable,
         properties={

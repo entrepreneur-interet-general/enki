@@ -39,6 +39,7 @@
       <input id="mediaFile" type="file" formControlName="files" (change)="uploadFile($event)">
       <div *ngFor="let media of listOfMedias">
         {{media}}
+        <img [src]="url" alt="">
       </div>
     </div>
     <div class="enkiSpecialForm__group">

@@ -29,7 +29,7 @@ export class MessagesService {
 
     this.httpHeaders = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type':  'multipart/form-data'
       })
     }
   }
@@ -73,6 +73,9 @@ export class MessagesService {
     return this.http.post<any>(`${this.resourcesUrl}`, formBody)
   }
 
+  getUrlFileDownload(uuid: string): Observable<any> {
+    return this.http.get<any>(`${this.resourcesUrl}/${uuid}`)
+  }
   putFileOnServer(file, url): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, file.name);
@@ -97,5 +100,6 @@ export class MessagesService {
         })
       )
   }
+
 
 }

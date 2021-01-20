@@ -18,6 +18,7 @@ export class AddMessageComponent implements OnInit {
   })
   uuid: string;
   listOfMedias: Array<string>;
+  url: string;
   constructor(
     private messagesService: MessagesService,
     public labelsService: LabelsService,
@@ -26,6 +27,7 @@ export class AddMessageComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.listOfMedias = []
+    this.url = ""
   }
   
 
@@ -47,6 +49,10 @@ export class AddMessageComponent implements OnInit {
         // TODO : cacher le loader
         // montrer l'image de preview
         this.listOfMedias.push(response.data.uuid)
+        this.messagesService.getUrlFileDownload(response.data.uuid).subscribe(minioDataObj => {
+          this.url = minioDataObj.data.url
+          // this.messagesService.getFileFromServer(minioDataObj.data.url).subscribe(fileResponse)
+        })
       })
     })
   }

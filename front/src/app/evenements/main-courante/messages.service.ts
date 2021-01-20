@@ -1,4 +1,4 @@
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -7,6 +7,7 @@ export interface Message {
   title: string;
   description: string;
   created_at: string;
+  uuid: string;
 }
 
 
@@ -29,7 +30,7 @@ export class MessagesService {
 
     this.httpHeaders = {
       headers: new HttpHeaders({
-        'Content-Type':  'multipart/form-data'
+        'Content-Type':  'application/json'
       })
     }
   }
@@ -53,6 +54,15 @@ export class MessagesService {
       "evenement_id": event_id
     }
     return this.http.post<any>(this.messagesUrl, message, this.httpHeaders)
+      .pipe(
+        map(message => {
+          return message.data
+        })
+      )
+  }
+
+  addRessourceToMessage(mediaUUID, messageUUID): Observable<any> {
+    return this.http.put<any>(`${this.messagesUrl}/${messageUUID}/resource/${mediaUUID}`, {})
   }
 
   getMessages(uuid): Observable<Message[]> {
@@ -77,11 +87,14 @@ export class MessagesService {
     return this.http.get<any>(`${this.resourcesUrl}/${uuid}`)
   }
   putFileOnServer(file, url): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', file, file.name);
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type':  file.type
+      })
+    }
 
 
-    return this.http.put<any>(url, formData, this.httpHeaders)
+    return this.http.put<any>(url, file, httpHeaders)
       .pipe(
         catchError((error) => {
           if (error.error instanceof ErrorEvent) {

@@ -34,7 +34,8 @@ export class AddMessageComponent implements OnInit {
   onSubmit(): void {
     let selectedLabelsUUID = this.labelsService.selectedLabels.map(label => label.uuid)
     this.uuid = this.evenementsService.selectedEvenement.uuid
-    this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content, selectedLabelsUUID, this.uuid).subscribe(response => {
+    this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content, selectedLabelsUUID, this.uuid).subscribe(message => {
+      this.messagesService.addRessourceToMessage(this.listOfMedias[0], message.uuid).subscribe(response => console.log(response))
       this.router.navigate([`..`], { relativeTo: this.route })
       this.labelsService.selectedLabels = [];
     })

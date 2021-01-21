@@ -58,10 +58,14 @@
     </div>
     <form action="" class="userInfoForm" [formGroup]="evenementGroup" (ngSubmit)="attachEvenementToSignalement()">
       <div class="evenement--select">
-        <select class="enkiform__input" formControlName="evenement">
-          <option value="" disabled selected>Sélectionner ou créer un événement</option>
-          <option *ngFor="let evenement of evenementsList" value="{{evenement.uuid}}">{{evenement.title}}</option>
-        </select>
+        <div class="enkiform__group">
+          <select class="enkiform__input" id="evenement" formControlName="evenement">
+            <option value="" disabled selected>Sélectionner ou créer un événement</option>
+            <option *ngFor="let evenement of evenementsList" value="{{evenement.uuid}}">{{evenement.title}}</option>
+          </select>
+          <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+          <svg class="icon-pen icon" (click)="modifySelectedEvenement()"><use xlink:href="#icon-pen"></use></svg>
+        </div>
       </div>
       <div class="evenement--button">
         <button type="submit" class="btn">Attacher le signalement</button>

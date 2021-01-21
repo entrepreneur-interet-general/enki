@@ -19,7 +19,7 @@ export class DetailInterventionComponent implements OnInit {
   httpOptions;
   evenementsUrl: string;
   evenementGroup = new FormGroup({
-    evenement: new FormControl('')
+    evenement: new FormControl({value:'', disabled: false})
   });
   constructor(
     private interventionsService: InterventionsService,
@@ -57,9 +57,12 @@ export class DetailInterventionComponent implements OnInit {
     return of(this.intervention)
   }
   attachEvenementToSignalement(): void {
-    this.httpFormSubmit().subscribe(response => {
-      console.log(response)
+    this.httpFormSubmit().subscribe(() => {
+      this.evenementGroup.controls.evenement.disable()
     })
+  }
+  modifySelectedEvenement(): void {
+    this.evenementGroup.controls.evenement.enable()
   }
   httpFormSubmit(): Observable<any> {
     return this.http.put(`${this.evenementsUrl}/${this.evenementGroup.value.evenement}/affairs/${this.uuid}`, this.httpOptions)

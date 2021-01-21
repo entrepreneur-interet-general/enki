@@ -20,10 +20,10 @@ class PgResourceRepository(PgRepositoryMixin, AbstractResourceRepository):
             return None
         return matches[0]
 
-    def _add(self, tag: ResourceEntity):
-        if self._match_uuid(tag.uuid):
+    def _add(self, resource: ResourceEntity):
+        if self._match_uuid(resource.uuid):
             raise AlreadyExistingResourceUuid()
-        self.session.add(tag)
+        self.session.add(resource)
         self.commit()
 
     def get_all(self) -> resourcesList:
@@ -32,3 +32,7 @@ class PgResourceRepository(PgRepositoryMixin, AbstractResourceRepository):
     def _match_uuids(self, uuids: List[str]) -> resourcesList:
         matches = self.session.query(self.entity_type).filter(self.entity_type.uuid.in_(uuids)).all()
         return matches
+
+    def _delete(self, resource: ResourceEntity) -> bool:
+        self.session.delete(resource)
+        return True

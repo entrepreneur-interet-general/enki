@@ -14,13 +14,11 @@ from domain.affairs.ports.simple_affair_repository import AbstractSimpleAffairRe
 from domain.evenements.repository import AbstractEvenementRepository, InMemoryEvenementRepository
 from domain.messages.ports import AbstractTagRepository, AbstractMessageRepository, AbstractResourceRepository
 from domain.messages.ports.message_repository import InMemoryMessageRepository
-from domain.messages.ports.resource_content_repository import AbstractResourceContentRepository
 from domain.messages.ports.tag_repository import InMemoryTagRepository
 from entrypoints.repositories import ElasticRepositories
 
 
 class AbstractUnitOfWork(abc.ABC):
-    resource_content: AbstractResourceContentRepository
     resource: AbstractResourceRepository
     tag: AbstractTagRepository
     message: AbstractMessageRepository
@@ -78,7 +76,6 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
             self.affair = self.elastic_repositories.affair
         else:
             self.affair = InMemoryAffairRepository()
-        self.resource_content = MinioResourceContentRepository.from_config(self.config)
 
     def __enter__(self):
         self.session = self.session_factory()

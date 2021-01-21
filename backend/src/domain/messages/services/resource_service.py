@@ -24,11 +24,6 @@ class ResourceService:
 
         with uow:
             uow.resource.add(resource)
-            upload_url = uow.resource_content.get_presigned_put_url(
-                bucket=uow.config.MINIO_MESSAGE_RESOURCES_BUCKET,
-                object_path=resource.uuid
-            )
-            return_value["upload_url"] = upload_url
 
         return return_value
 
@@ -36,10 +31,12 @@ class ResourceService:
     def get_resource(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
             resource: ResourceEntity = uow.resource.get_by_uuid(uuid)
-            download_url = uow.resource_content.get_presigned_get_url(bucket=uow.config.MINIO_MESSAGE_RESOURCES_BUCKET,
-                                                                      object_path=resource.object_path)
-
             return_value = ResourceService.schema().dump(resource)
-        return_value["url"] = download_url
 
         return return_value
+
+    @staticmethod
+    def delete_resource(uuid: str, uow: AbstractUnitOfWork) -> bool:
+        with uow:
+            uow.resource.delete_by_uuid(uuid=uuid)
+        return True

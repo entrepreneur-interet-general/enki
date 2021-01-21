@@ -31,6 +31,12 @@ class AbstractResourceRepository(abc.ABC):
             raise NotFoundResource
         return matches
 
+    def delete_by_uuid(self, uuid: str) -> bool:
+        matches = self._match_uuid(uuid)
+        if not matches:
+            raise NotFoundResource
+        return self._delete(matches)
+
     def get_by_uuid_list(self, uuids: List[str]) -> List[ResourceEntity]:
         matches = self._match_uuids(uuids)
         if not matches:
@@ -43,6 +49,10 @@ class AbstractResourceRepository(abc.ABC):
 
     @abc.abstractmethod
     def _add(self, resource: ResourceEntity) -> None:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _delete(self, resource: ResourceEntity) -> bool:
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -72,6 +82,10 @@ class InMemoryResourceRepository(AbstractResourceRepository):
     def _match_uuids(self, uuids: List[str]) -> List[ResourceEntity]:
         matches = [resource for resource in self._resources if resource.uuid in uuids]
         return matches
+
+    def _delete(self, resource: ResourceEntity) -> bool:
+        self._resources.remove(resource)
+        return True
 
     # next methods are only for test purposes
     @property

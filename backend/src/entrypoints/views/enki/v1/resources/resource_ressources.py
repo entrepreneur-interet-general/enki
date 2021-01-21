@@ -58,10 +58,31 @@ class ResourceResource(WithResourceRepoResource):
               schema: ResourceSchema
         404:
             description: Resource not found
+    delete:
+      tags:
+        - resources
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: Tag id
+      responses:
+        200:
+          description: Successfully deleted
+        404:
+            description: Resource not found
     """
 
     def get(self, uuid: str):
         return {
-                   "data": ResourceService.get_resource(uuid, current_app.context),
+                   "data": ResourceService.get_resource(uuid=uuid, uow=current_app.context),
+                   "message": "success"
+               }, 200
+
+    def delete(self, uuid: str):
+        ResourceService.delete_resource(uuid=uuid, uow=current_app.context),
+        return {
                    "message": "success"
                }, 200

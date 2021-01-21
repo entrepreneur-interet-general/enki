@@ -40,6 +40,11 @@
         <div class="list--labels" *ngIf="message.tags.length > 0">
           <div class="badge badge__inverted" *ngFor="let tag of message.tags">{{ tag.title }}</div>
         </div>
+        <div class="list--resources previewImage">
+          <div class="previewImage--element" *ngFor="let resource of message.resources">
+            <img src="{{resource.url}}" alt="">
+          </div>
+        </div>
       </div>
     </li>
   </ul>

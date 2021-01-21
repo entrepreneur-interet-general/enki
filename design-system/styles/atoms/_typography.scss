@@ -41,8 +41,8 @@
     color: $black;
     line-height: 35px;
     @media #{$mediaMobile} {
-        font-size: rem-calc(28);
-        line-height: 30px;
+        font-size: rem-calc(24);
+        line-height: 28px;
     }
 }
 

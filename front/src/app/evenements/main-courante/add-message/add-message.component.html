@@ -35,8 +35,8 @@
       <div class="previewImage">
         <div class="previewImage--element" *ngFor="let media of listOfMedias">
           <!-- {{media}} -->
-          <img [src]="url" alt="">
-          <svg class="icon-cancel icon"><use xlink:href="#icon-cancel"></use></svg>
+          <img [src]="media.url" alt="">
+          <svg class="icon-cancel icon" (click)="removeMedia(media.uuid)"><use xlink:href="#icon-cancel"></use></svg>
         </div>
       </div>
       <label for="mediaFile" class="mediaFile">

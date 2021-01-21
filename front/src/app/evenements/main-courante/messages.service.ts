@@ -1,7 +1,7 @@
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';import { EvenementsModule } from '../evenements.module';
 
 export interface Message {
   title: string;
@@ -24,7 +24,7 @@ export class MessagesService {
   constructor(
     private http: HttpClient,
   ) {
-    this.messages = window.sessionStorage.getItem("messages") ? JSON.parse(window.sessionStorage.getItem("messages")) : [];
+    this.messages = [];
     this.messagesUrl = 'http://localhost:5000/api/enki/v1/messages'
     this.resourcesUrl = 'http://localhost:5000/api/enki/v1/resources'
 
@@ -61,8 +61,10 @@ export class MessagesService {
       )
   }
 
-  addRessourceToMessage(mediaUUID, messageUUID): Observable<any> {
-    return this.http.put<any>(`${this.messagesUrl}/${messageUUID}/resource/${mediaUUID}`, {})
+  addRessourceToMessage(mediaUUIDs, messageUUID): Observable<any> {
+    return this.http.put<any>(`${this.messagesUrl}/${messageUUID}/resource/add`, {
+        resource_ids: mediaUUIDs
+    })
   }
 
   getMessages(uuid): Observable<Message[]> {
@@ -85,6 +87,9 @@ export class MessagesService {
 
   getUrlFileDownload(uuid: string): Observable<any> {
     return this.http.get<any>(`${this.resourcesUrl}/${uuid}`)
+  }
+  removeFileFromServer(resourceUUID: string): Observable<any> {
+    return this.http.delete<any>(`${this.resourcesUrl}/${resourceUUID}`)
   }
   putFileOnServer(file, url): Observable<any> {
     const httpHeaders = {

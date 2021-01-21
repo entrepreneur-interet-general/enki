@@ -5,6 +5,10 @@ import { MessagesService } from '../messages.service';
 import { LabelsService } from '../labels.service';
 import { EvenementsService } from '../../evenements.service';
 
+interface Media {
+  uuid: string;
+  url: string;
+}
 @Component({
   selector: 'app-add-message',
   templateUrl: './add-message.component.html',
@@ -16,9 +20,8 @@ export class AddMessageComponent implements OnInit {
     content: new FormControl('', Validators.required),
     files: new FormControl('', Validators.required)
   })
-  uuid: string;
-  listOfMedias: Array<string>;
-  url: string;
+  evenementUUID: string;
+  listOfMedias: Array<Media>;
   constructor(
     private messagesService: MessagesService,
     public labelsService: LabelsService,
@@ -27,18 +30,26 @@ export class AddMessageComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.listOfMedias = []
-    this.url = ""
   }
   
 
   onSubmit(): void {
     let selectedLabelsUUID = this.labelsService.selectedLabels.map(label => label.uuid)
-    this.uuid = this.evenementsService.selectedEvenement.uuid
-    this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content, selectedLabelsUUID, this.uuid).subscribe(message => {
-      this.messagesService.addRessourceToMessage(this.listOfMedias[0], message.uuid).subscribe(response => console.log(response))
-      this.router.navigate([`..`], { relativeTo: this.route })
-      this.labelsService.selectedLabels = [];
+    this.evenementUUID = this.evenementsService.selectedEvenement.uuid
+    this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content, selectedLabelsUUID, this.evenementUUID).subscribe(message => {
+      if (this.listOfMedias.length > 0) {
+        this.messagesService.addRessourceToMessage(this.listOfMedias.map(media => media.uuid), message.uuid)
+          .subscribe(() => {
+            this.router.navigate([`..`], { relativeTo: this.route })
+          })
+      } else {
+        this.router.navigate([`..`], { relativeTo: this.route })
+      }
     })
+  }
+
+  afterSubmit(): void {
+
   }
 
   uploadFile(event: any): void {
@@ -49,12 +60,19 @@ export class AddMessageComponent implements OnInit {
         // console.log('success, show image preview')
         // TODO : cacher le loader
         // montrer l'image de preview
-        this.listOfMedias.push(response.data.uuid)
-        this.messagesService.getUrlFileDownload(response.data.uuid).subscribe(minioDataObj => {
-          this.url = minioDataObj.data.url
-          // this.messagesService.getFileFromServer(minioDataObj.data.url).subscribe(fileResponse)
+        let mediaUUID = response.data.uuid
+        this.messagesService.getUrlFileDownload(mediaUUID).subscribe(minioDataObj => {
+          this.listOfMedias.push({uuid: mediaUUID, url: minioDataObj.data.url})
         })
       })
+    })
+  }
+
+  removeMedia(mediaUUID: string): void {
+    this.messagesService.removeFileFromServer(mediaUUID).subscribe(response => {
+      if (response.message === 'success') {
+        this.listOfMedias = this.listOfMedias.filter(media => media.uuid !== mediaUUID)
+      }
     })
   }
 
@@ -63,9 +81,6 @@ export class AddMessageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-/*     this.route.params.subscribe(params => {
-      this.uuid = params.uuid
-    }) */
   }
 
 }

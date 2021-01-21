@@ -4,6 +4,7 @@ from datetime import datetime
 from werkzeug.exceptions import HTTPException
 
 from domain.messages.entities.resource import ResourceEntity, content_types
+from entrypoints.extensions import minio
 
 
 class ResourceValidationError(HTTPException):
@@ -17,6 +18,8 @@ class ResourceSchema(Schema):
     creator_id = fields.Str(required=False, dump_only=True)
     bucket_name = fields.Str(required=False, dump_only=True)
     object_path = fields.Method("_object_path")
+    url = fields.Method("_build_get_presigned_url")
+    upload_url = fields.Method("_build_update_presigned_url")
     message_id = fields.Str(required=False, dump_only=True)
     original_name = fields.Str(required=False)
     content_type = fields.Str(required=False, validate=validate.OneOf(content_types))
@@ -27,6 +30,12 @@ class ResourceSchema(Schema):
 
     def _bucket_name(self, obj):
         return self.context.bucket_name_config
+
+    def _build_get_presigned_url(self, obj):
+        return minio.get_presigned_get_url(bucket=obj.bucket_name, object_path=obj.object_path)
+
+    def _build_update_presigned_url(self, obj):
+        return minio.get_presigned_put_url(bucket=obj.bucket_name, object_path=obj.object_path)
 
     @post_load
     def make_resource(self, data: dict, **kwargs):

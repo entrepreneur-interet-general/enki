@@ -13,6 +13,7 @@ import { FilterLabelsPipe } from './main-courante/add-label/filter-labels.pipe';
 import { DetailMessageComponent } from './main-courante/detail-message/detail-message.component';
 import { EvenementDetailResolverService } from './evenement-detail-resolver.service';
 import { ListeMainCouranteComponent } from './main-courante/liste-main-courante/liste-main-courante.component';
+import { MessagesService } from './main-courante/messages.service';
 
 const routes : Routes = [
   {
@@ -82,6 +83,7 @@ const routes : Routes = [
     SummaryEvenementComponent,
     ListeMainCouranteComponent
   ],
+  providers: [MessagesService],
   imports: [
     CommonModule,
     ReactiveFormsModule,

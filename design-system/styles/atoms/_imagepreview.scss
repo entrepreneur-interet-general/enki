@@ -1,0 +1,25 @@
+.previewImage {
+  display: flex;
+  padding: 0 0 16px 0;
+  &--element {
+    position: relative;
+    width: 82px;
+    height: 82px;
+    display: flex;
+    align-items: flex-end;
+  }
+  img {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    fill: $grey;
+    background: $white;
+    border-radius: 24px;
+  }
+}

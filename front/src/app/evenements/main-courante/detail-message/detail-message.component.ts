@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MessagesService } from '../messages.service';
 
 @Component({
   selector: 'app-detail-message',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailMessageComponent implements OnInit {
 
-  constructor() { }
+  messageUUID: string;
+
+  constructor(
+    private messagesService: MessagesService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.messageUUID = params['uuid']
+    })
+    
   }
 
 }

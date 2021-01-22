@@ -1,3 +1,25 @@
+@import "../../../../../../design-system/styles/variables";
+@import "../../../../../../design-system/styles/mixins";
+
 .detail-message {
-  padding: 0 16px;
+  &--header {
+    margin: 0 0 24px 0;
+    &:after {
+      @include heading-line;
+    }
+  }
+  &--labels {
+    margin: 16px 0 0;
+  }
+  &--body {
+    padding: 16px;
+  }
+  &--description {
+    margin-bottom: 16px;
+  }
+  &--resources {
+    img {
+      max-width: 100%;
+    }
+  }
 }

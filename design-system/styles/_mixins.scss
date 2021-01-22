@@ -1,0 +1,8 @@
+@mixin heading-line {
+  content: "";
+  position: absolute;
+  width: 62px;
+  height: 1px;
+  background: $lightGrey;
+  bottom: 0;
+}

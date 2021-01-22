@@ -1,8 +1,30 @@
-<a class="goTo" routerLink='../../liste'>< Retour aux messages</a>
+<a class="goTo" routerLink='../../liste'>
+  <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
+  Retour aux messages
+</a>
 
 <div class="detail-message">
-  <h1 class="h1-title">
-    <span class="-emphasize">COD —</span> Evacuation de la place et des rues adjacentes
-  </h1>
+  <div class="detail-message--header title-container">
+    <h1 class="h1-title">
+      <span class="-emphasize">COD —</span> {{ message.title }}
+    </h1>
+    <div class="subtitle">
+      Publié le {{message.created_at | date:"dd/MM/yyyy à HH:mm"}}
+    </div>
+    <div class="detail-message--labels labels">
+      <div class="userrole badge">Mairie</div>
+      <div class="badge badge__inverted" *ngFor="let tag of message.tags">{{ tag.title }}</div>
+    </div>
+  </div>
+  <div class="detail-message--body">
+    <div class="detail-message--description">
+      {{message.description}}
+    </div>
+    <div class="detail-message--resources">
+      <div class="detail-message--item" *ngFor="let item of message.resources">
+        <img [src]="item.url" alt="">
+      </div>
+    </div>
+  </div>
   
 </div>

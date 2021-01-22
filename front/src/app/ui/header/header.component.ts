@@ -23,5 +23,8 @@ export class HeaderComponent implements OnInit {
   canSeeEvents(): boolean {
     return this.keycloakService.isUserInRole('watchEvents')
   }
+  logout(): void {
+    this.keycloakService.logout()
+  }
 
 }

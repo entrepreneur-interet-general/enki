@@ -44,11 +44,14 @@
         </div>
       </a>
     </li>
-    <div class="interventions--seeMore">
+    <div class="interventions--seeMore" *ngIf="interventions.length > 0">
       <a routerLink="/situations/interventions">
         <svg class="icon-add title-icon"><use xlink:href="#icon-add"></use></svg>
         <span>Voir plus de signalements</span>
       </a>
+    </div>
+    <div class="interventions--noInterventions" *ngIf="interventions.length === 0">
+      Pas de signalements en cours
     </div>
   </ul>
   <div class="vigicrue dashboard--widget">

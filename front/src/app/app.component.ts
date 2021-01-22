@@ -41,9 +41,6 @@ export class AppComponent {
 
   }
 
-  logout(): void {
-    this.keycloakService.logout()
-  }
   canSeeEvents(): boolean {
     return this.keycloakService.isUserInRole('watchEvents')
   }

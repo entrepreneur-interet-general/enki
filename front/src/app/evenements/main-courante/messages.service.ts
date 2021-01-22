@@ -8,6 +8,8 @@ export interface Message {
   description: string;
   created_at: string;
   uuid: string;
+  tags: [];
+  resources: [];
 }
 
 
@@ -67,12 +69,21 @@ export class MessagesService {
     })
   }
 
-  getMessages(uuid): Observable<Message[]> {
-    // TODO: ajouter la route pour récupérer les messages en fonction du uuid de l'event
-    return this.http.get<any>(`${this.messagesUrl}`, { params: { "evenement_id": uuid }})
+  getMessages(evenementUUID: string): Observable<Message[]> {
+    // TODO: ajouter la route pour récupérer les messages en fonction du evenementUUID de l'event
+    return this.http.get<any>(`${this.messagesUrl}`, { params: { "evenement_id": evenementUUID }})
       .pipe(
         map(messages => {
           return messages.data
+        })
+      )
+  }
+
+  getMessageByUUID(messageUUID: string): Observable<Message> {
+    return this.http.get<any>(`${this.messagesUrl}/${messageUUID}`)
+      .pipe(
+        map(response => {
+          return response.data
         })
       )
   }

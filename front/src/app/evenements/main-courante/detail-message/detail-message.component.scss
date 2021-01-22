@@ -1,3 +1,10 @@
+@import "../../../../../../design-system/styles/variables";
+@import "../../../../../../design-system/styles/mixins";
+
 .detail-message {
-  padding: 0 16px;
+  &--header {
+    &:after {
+      @include heading-line;
+    }
+  }
 }

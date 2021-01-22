@@ -1,11 +1,20 @@
 .title-container {
-    padding: 0 16px;
-    margin: 20px 0;
+    padding: 20px 16px;
+    position: relative;
 }
+
 .goTo {
     margin-bottom: 20px;
     padding: 0 16px;
     color: $darkestGrey;
+    display: flex;
+    align-items: center;
+    font-family: $secondaryFont;
+    letter-spacing: 0.5px;
+    font-size: 17px;
+    svg {
+        margin-right: 8px;
+    }
 }
 .small-heading {
   color: $darkestGrey;
@@ -22,6 +31,7 @@
     }
   }
 }
+
 .login-title {
     text-align: center;
     font-size: 32px;
@@ -37,14 +47,29 @@
 // Balise title
 .h1-title  {
     font-size: rem-calc(32);
+    font-weight: 500;
     position: relative;
-    color: $black;
+    color: $darkestPrimary;
     line-height: 35px;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
     @media #{$mediaMobile} {
         font-size: rem-calc(24);
         line-height: 28px;
     }
 }
+.-emphasize {
+    font-family: $secondaryFont;
+    font-weight: 500;
+    color: $lighterPrimary;
+}
+.subtitle {
+    color: $darkestGrey;
+    font-family: $secondaryFont;
+    font-size: 17px;
+    letter-spacing: 0.5px;
+  }
+
 
 .h2-title  {
     font-weight: 500;

@@ -36,6 +36,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       initOptions: {
         onLoad: 'login-required'
       },
+      bearerExcludedUrls: ['minio:9000'],
     });
 }
 @NgModule({

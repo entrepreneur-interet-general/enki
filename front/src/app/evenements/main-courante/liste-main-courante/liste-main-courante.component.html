@@ -1,3 +1,7 @@
+<a class="goTo" routerLink="/situations/evenements">
+  <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
+  Retour à la liste des événements
+</a>
 <div class="title-container">
   <h1 class="h1-title">Dossiers partagés</h1>
   <div class="subtitle">
@@ -20,27 +24,34 @@
   
   <ul class="">
     <li class="list--element" *ngFor="let message of messages">
-      <div class="list--wrapper">
-        <div class="secondInfos">
-          <div class="secondInfos--dateTime">
-            {{message.created_at | date:"dd/MM/yyyy à HH:mm"}}
+      <a routerLink="../detailmessage/{{message.uuid}}">
+        <div class="list--wrapper">
+          <div class="secondInfos">
+            <div class="secondInfos--dateTime">
+              {{message.created_at | date:"dd/MM/yyyy à HH:mm"}}
+            </div>
+            <div class="badge">
+              Mairie
+            </div>
           </div>
-          <div class="badge">
-            Mairie
+          <div class="mainInfos">
+            <div class="mainInfos--title">
+              ADJOINT —
+            </div>
+            <div class="mainInfos--content">
+              {{ message.title }}
+            </div>
+          </div>
+          <div class="list--labels" *ngIf="message.tags.length > 0">
+            <div class="badge badge__inverted" *ngFor="let tag of message.tags">{{ tag.title }}</div>
+          </div>
+          <div class="list--resources previewImage">
+            <div class="previewImage--element" *ngFor="let resource of message.resources">
+              <img src="{{resource.url}}" alt="">
+            </div>
           </div>
         </div>
-        <div class="mainInfos">
-          <div class="mainInfos--title">
-            {{ message.title }} —
-          </div>
-          <div class="mainInfos--content">
-            {{ message.description }}
-          </div>
-        </div>
-        <div class="list--labels" *ngIf="message.tags.length > 0">
-          <div class="badge badge__inverted" *ngFor="let tag of message.tags">{{ tag.title }}</div>
-        </div>
-      </div>
+      </a>
     </li>
   </ul>
   

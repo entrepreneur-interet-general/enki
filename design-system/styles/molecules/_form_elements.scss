@@ -5,6 +5,12 @@
         width: 100%;
         position: relative;
         text-align: left;
+        .icon {
+            position: absolute;
+            right: 10px;
+            top: 28px;
+            transform: translate(0, -50%);
+        }
     }
     &__checkbox,
     &__radio {
@@ -103,6 +109,9 @@
         height: 56px;
         padding: 0 0 0 16px;
         margin-bottom: 32px;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
         &:focus + label {
             top: -7px;
             font-size: 12px;

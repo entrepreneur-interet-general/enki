@@ -3,7 +3,6 @@
     padding-top: 20px;
     border-bottom: 1px solid $grey;
     background: $white;
-    // border-left: 4px solid $primary;
   }
   &--wrapper {
     margin: 0 16px 20px;
@@ -20,6 +19,7 @@
   align-items: center;
   &.-hasIcon {
     display: flex;
+    justify-content: space-between;
   }
     &--title {
     display: inline;

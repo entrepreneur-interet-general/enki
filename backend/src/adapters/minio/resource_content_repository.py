@@ -1,20 +1,14 @@
 from typing import Union
 
 from minio import Minio
-from minio.api import Object
-from flask import current_app
-from urllib3 import HTTPResponse
 from urllib3.exceptions import MaxRetryError
-
-from domain.messages.entities.resource import ResourceEntity
-from domain.messages.ports.resource_content_repository import AbstractResourceContentRepository
 
 
 class ClientNotInitializedError(Exception):
     pass
 
 
-class MinioResourceContentRepository(AbstractResourceContentRepository):
+class MinioResourceContentRepository:
     """
 
     """
@@ -43,32 +37,15 @@ class MinioResourceContentRepository(AbstractResourceContentRepository):
             if not self.client.bucket_exists(bucket):
                 self.client.make_bucket(bucket)
 
-    def _store(self, local_path: str, bucket: str, object_path: str, content_type: str) -> None:
-        if self.client:
-            self.client.fput_object(bucket_name=bucket,
-                                    object_name=object_path,
-                                    file_path=local_path,
-                                    content_type=content_type)
-        else:
-            raise ClientNotInitializedError
-
-    def _retrieve(self, bucket: str, object_path: str) -> HTTPResponse:
-        if self.client:
-            return self.client.get_object(
-                bucket_name=bucket,
-                object_name=object_path,
-            )
-        else:
-            raise ClientNotInitializedError
-
     def _exists(self, bucket: str, object_path: str) -> bool:
-        return True
-
-    def _remove(self, bucket: str, object_path: str):
-        if self.client:
-            self.client.remove_object(bucket, object_path)
+        stats = self.client.stat_object(
+            bucket_name=bucket,
+            object_name=object_path,
+        )
+        if stats:
+            return True
         else:
-            raise ClientNotInitializedError
+            return False
 
     def list_objects(self, bucket: str, path: str):
         if self.client:
@@ -76,3 +53,25 @@ class MinioResourceContentRepository(AbstractResourceContentRepository):
             return objects
         else:
             raise ClientNotInitializedError
+
+    def get_presigned_get_url(self, bucket: str, object_path: str) -> str:
+        url = self.client.presigned_get_object(
+            bucket_name=bucket,
+            object_name=object_path,
+        )
+        return url
+
+    def get_presigned_put_url(self, bucket: str, object_path: str) -> str:
+        url = self.client.presigned_put_object(
+            bucket_name=bucket,
+            object_name=object_path,
+        )
+        return url
+
+    def get_presigned_delete_url(self, bucket: str, object_path: str) -> str:
+        url = self.client.get_presigned_url(
+            "DELETE",
+            bucket_name=bucket,
+            object_name=object_path,
+        )
+        return url

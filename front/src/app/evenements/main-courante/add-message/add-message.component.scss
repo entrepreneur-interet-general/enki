@@ -1,4 +1,5 @@
 @import "../../../../../../design-system/styles/variables";
+@import "../../../../../../design-system/styles/mixins";
 
 .addMessage {
   padding: 0 16px;
@@ -15,16 +16,30 @@
     }
   }
 }
+.addMedia {
+  padding: 16px 0;
+  input[type="file"] {
+    display: none;
+  }
+  .mediaFile {
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        margin-right: 8px;
+      }
+  }
+}
+
 .labelGroup {
   padding: 12px 0 16px;
   position: relative;
   &:after {
-    content: "";
-    position: absolute;
-    width: 62px;
-    height: 1px;
-    background: $lightGrey;
-    bottom: 0;
+    @include heading-line;
   }
   &--labelList {
     padding: 8px 0;

@@ -41,6 +41,20 @@
   &--select {
     select {
       width: 100%;
+      & ~ .icon-pen {
+        display: none;
+      }
+      &:disabled {
+        background: $white;
+        border-left: $primary 4px solid;
+        & ~ .icon-chevron {
+          display: none;
+        }
+        & ~ .icon-pen {
+          display: block;
+        }
+      }
+      
     }
   }
 

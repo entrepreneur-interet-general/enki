@@ -9,6 +9,9 @@ setup:
 	sleep 5
 	docker-compose -f docker-compose.yml up -d keycloak
 	sleep 10
+	docker-compose -f docker-compose.provision.yml run keycloak-provision --rm
+	docker-compose -f docker-compose.yml up -d keycloak-fwd
+
 
 provision:
 	docker-compose -f docker-compose.provision.yml run keycloak-provision

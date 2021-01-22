@@ -20,6 +20,7 @@ userTable = Table(
     Column('uuid', String(60), primary_key=True),
 )
 
+
 tagMessageTable = Table(
     'tags_messages', metadata,
     Column('messages_uuid', String(60), ForeignKey("messages.uuid")),
@@ -31,7 +32,7 @@ messagesTable = Table(
     'messages', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False),
-    Column('description', String(255)),
+    Column('description', String(1000)),
     Column('type', Enum(MessageType)),
     Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
     Column('executor_id', String(60), ForeignKey("users.uuid")),
@@ -68,7 +69,7 @@ evenementsTable = Table(
     'evenements', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False),
-    Column('description', String(255)),
+    Column('description', String(1000)),
     Column('type', Enum(EvenementType)),
     Column('creator_id', String(255)),  # ForeignKey("users.uuid")),
     Column('started_at', TIMESTAMP(), nullable=False, default=datetime.now),

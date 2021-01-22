@@ -22,7 +22,7 @@ class TagSchema(Schema):
     __model__ = TagEntity
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
-    title = fields.Str(required=True, validate=validate.Length(min=5))
+    title = fields.Str(required=True, validate=validate.Length(min=5, max=255))
     creator_id = fields.Str(required=False, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
@@ -39,8 +39,8 @@ class MessageSchema(Schema):
     __model__ = MessageEntity
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
-    title = fields.Str(required=True, validate=validate.Length(min=5))
-    description = fields.Str(required=True, validate=validate.Length(min=5))
+    title = fields.Str(required=True, validate=validate.Length(min=5, max=255))
+    description = fields.Str(required=True, validate=validate.Length(min=5, max=1000))
     evenement_id = fields.Str(required=True)
     severity = EnumField(Severity, validate=validate.OneOf([e.value for e in Severity]))
     type = EnumField(MessageType, validate=validate.OneOf([e.value for e in MessageType]))

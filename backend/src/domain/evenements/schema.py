@@ -1,10 +1,9 @@
 from uuid import uuid4
 
 from flask import current_app
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, validate
 from marshmallow_enum import EnumField
 from datetime import datetime
-from marshmallow.exceptions import ValidationError
 
 from werkzeug.exceptions import HTTPException
 
@@ -19,8 +18,8 @@ class EvenementSchema(Schema):
     __model__ = EvenementEntity
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
-    title = fields.Str(required=True)
-    description = fields.Str(required=True)
+    title = fields.Str(required=True, validate=validate.Length(min=5, max=255))
+    description = fields.Str(required=True, validate=validate.Length(min=5, max=1000))
     type = EnumField(EvenementType, required=True, by_value=True)
     started_at = fields.DateTime(required=True)
     creator_id = fields.Str(required=False)

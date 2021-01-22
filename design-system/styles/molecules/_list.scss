@@ -19,6 +19,7 @@
   align-items: center;
   &.-hasIcon {
     display: flex;
+    justify-content: space-between;
   }
     &--title {
     display: inline;

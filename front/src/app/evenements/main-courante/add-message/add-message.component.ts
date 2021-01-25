@@ -36,7 +36,8 @@ export class AddMessageComponent implements OnInit {
   onSubmit(): void {
     let selectedLabelsUUID = this.labelsService.selectedLabels.map(label => label.uuid)
     this.evenementUUID = this.evenementsService.selectedEvenement.uuid
-    this.messagesService.addMessage(this.messageGroup.value.title, this.messageGroup.value.content, selectedLabelsUUID, this.evenementUUID).subscribe(message => {
+    this.messagesService.httpSubmitMessage(this.messageGroup.value.title, this.messageGroup.value.content, selectedLabelsUUID, this.evenementUUID).subscribe(message => {
+
       if (this.listOfMedias.length > 0) {
         this.messagesService.addRessourceToMessage(this.listOfMedias.map(media => media.uuid), message.uuid)
           .subscribe(() => {

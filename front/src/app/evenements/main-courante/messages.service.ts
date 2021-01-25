@@ -1,7 +1,7 @@
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';import { EvenementsModule } from '../evenements.module';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';import { EvenementsModule } from '../evenements.module';
 
 export interface Message {
   title: string;
@@ -10,6 +10,7 @@ export interface Message {
   uuid: string;
   tags: [];
   resources: [];
+  evenement_id: string;
 }
 
 
@@ -19,14 +20,14 @@ export interface Message {
 
 export class MessagesService {
   messagesUrl: string;
-  messages: Array<Message>;
   resourcesUrl: string;
-  
+  private readonly _messagesSource = new BehaviorSubject<Message[]>([]);
+  readonly messages$ = this._messagesSource.asObservable();
+
   httpHeaders: object;
   constructor(
     private http: HttpClient,
   ) {
-    this.messages = [];
     this.messagesUrl = 'http://localhost:5000/api/enki/v1/messages'
     this.resourcesUrl = 'http://localhost:5000/api/enki/v1/resources'
 
@@ -37,16 +38,55 @@ export class MessagesService {
     }
   }
 
-  uuidv4(): string {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
+  getMessages(): Message[] {
+    return this._messagesSource.getValue();
   }
 
+  private _setMessages(messages: Message[]): void {
+    this._messagesSource.next(messages)
+  }
 
+  private addMessages(messages: Message[]): void {
+    const messagesConcat = [...this.getMessages(), ...messages]
+    this._setMessages(messagesConcat)
+  }
 
-  addMessage(title, description, selectedLabels, event_id) : Observable<Message> {
+  private containsEvenementMessages(evenementUUID: string): boolean {
+    return this.getMessages().some(message => message.evenement_id === evenementUUID)
+  }
+
+  getMessagesByEvenementID(evenementUUID: string): Observable<Message[]> {
+    const messages = this.getMessages().filter(message => message.evenement_id === evenementUUID)
+    return this.containsEvenementMessages(evenementUUID) ? of(messages) : this.httpGetMessages(evenementUUID)
+  }
+
+  httpGetMessages(evenementUUID: string): Observable<Message[]> {
+    return this.http.get<any>(`${this.messagesUrl}`, { params: { "evenement_id": evenementUUID }})
+      .pipe(
+        map(messages => {
+          if (!this.containsEvenementMessages(evenementUUID)) {
+            this.addMessages(messages.data)
+          }
+          return messages.data
+        })
+      )
+  }
+
+  getMessageByID(messageUUID: string): Observable<Message> {
+    const message = this.getMessages().filter(message => message.uuid === messageUUID)
+    return message.length > 0 ? of(message[0]) : this.httpGetMessageByID(messageUUID)
+  }
+
+  httpGetMessageByID(messageUUID: string): Observable<Message> {
+    return this.http.get<any>(`${this.messagesUrl}/${messageUUID}`)
+      .pipe(
+        map(response => {
+          return response.data
+        })
+      )
+  }
+
+  httpSubmitMessage(title, description, selectedLabels, event_id) : Observable<Message> {
     let uuid = this.uuidv4()
     let message = {
       "title":title,
@@ -58,34 +98,23 @@ export class MessagesService {
     return this.http.post<any>(this.messagesUrl, message, this.httpHeaders)
       .pipe(
         map(message => {
+          this.addMessages([message.data])
           return message.data
         })
       )
+  }
+
+  uuidv4(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
   }
 
   addRessourceToMessage(mediaUUIDs, messageUUID): Observable<any> {
     return this.http.put<any>(`${this.messagesUrl}/${messageUUID}/resource/add`, {
         resource_ids: mediaUUIDs
     })
-  }
-
-  getMessages(evenementUUID: string): Observable<Message[]> {
-    // TODO: ajouter la route pour récupérer les messages en fonction du evenementUUID de l'event
-    return this.http.get<any>(`${this.messagesUrl}`, { params: { "evenement_id": evenementUUID }})
-      .pipe(
-        map(messages => {
-          return messages.data
-        })
-      )
-  }
-
-  getMessageByUUID(messageUUID: string): Observable<Message> {
-    return this.http.get<any>(`${this.messagesUrl}/${messageUUID}`)
-      .pipe(
-        map(response => {
-          return response.data
-        })
-      )
   }
 
   getUrlFileUpload(file: any): Observable<any> {
@@ -108,8 +137,6 @@ export class MessagesService {
         'Content-Type':  file.type
       })
     }
-
-
     return this.http.put<any>(url, file, httpHeaders)
       .pipe(
         catchError((error) => {

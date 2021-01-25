@@ -22,7 +22,7 @@ export class ListeMainCouranteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.messagesService.getMessages(this.uuid).subscribe(messages => {
+    this.messagesService.getMessagesByEvenementID(this.uuid).subscribe(messages => {
       this.messages = messages.sort((a, b) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       })

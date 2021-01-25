@@ -6,9 +6,9 @@ build-provision:
 
 setup:
 	docker-compose -f docker-compose.yml up -d kong-db
-	sleep 5
-	docker-compose -f docker-compose.yml run --rm kong kong migrations up
-	sleep 5
+	sleep 10
+	docker-compose -f docker-compose.yml run --rm kong kong migrations bootstrap
+	sleep 15
 	docker-compose -f docker-compose.yml up -d kong
 
 provision:

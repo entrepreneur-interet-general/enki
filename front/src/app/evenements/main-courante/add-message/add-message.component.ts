@@ -49,10 +49,6 @@ export class AddMessageComponent implements OnInit {
     })
   }
 
-  afterSubmit(): void {
-
-  }
-
   uploadFile(event: any): void {
     // TODO : montrer le loader
     const file = (event.target as HTMLInputElement).files[0]

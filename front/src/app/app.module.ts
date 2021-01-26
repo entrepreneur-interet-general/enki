@@ -22,6 +22,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
 import { EvenementsModule } from './evenements/evenements.module';
+import { AnnuaireModule } from './annuaire/annuaire.module';
 import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
 
@@ -51,7 +52,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     SecondStepComponent,
     PageNotFoundComponent,
     SituationsComponent,
-    ListeEvenementsComponent,
+    ListeEvenementsComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +67,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     UserDashboardModule,
     EvenementsModule,
+    AnnuaireModule,
     AppRoutingModule
   ],
   providers: [{

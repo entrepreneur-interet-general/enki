@@ -1,10 +1,11 @@
-from flask import request, current_app
+from flask import request, current_app, g
 from flask_restful import Resource
 
 from domain.messages.command import CreateTag
 from domain.messages.ports.tag_repository import AbstractTagRepository
 from domain.messages.services.tag_service import TagService
 from entrypoints.extensions import event_bus
+from entrypoints.middleware import user_info_middleware
 
 
 class WithTagRepoResource(Resource):
@@ -41,6 +42,8 @@ class TagListResource(WithTagRepoResource):
           description: bad request, bad parameters
     """
 
+    method_decorators = [user_info_middleware]
+
     def get(self):
         return {
                    "data": TagService.list_tags(current_app.context),
@@ -49,6 +52,7 @@ class TagListResource(WithTagRepoResource):
 
     def post(self):
         body = request.get_json()
+        body["creator_id"] = g.user_info["id"]
         command = CreateTag(data=body)
         result = event_bus.publish(command, current_app.context)
         return {

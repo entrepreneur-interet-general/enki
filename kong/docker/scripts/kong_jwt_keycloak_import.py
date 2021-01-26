@@ -42,7 +42,7 @@ _ = requests.post(f'http://{KONG_HOST_IP}:{KONG_PORT}/services/{ENKI_API_SERVICE
 
 data = {
   'name': 'jwt-keycloak',
-  'config.allowed_iss': 'http://keycloak:8080/auth/realms/master'
+  'config.allowed_iss': 'http://keycloak:8080/auth/realms/enki'
 }
 
 _ = requests.post(f'http://{KONG_HOST_IP}:{KONG_PORT}/services/{created_service_id}/plugins', data=data)

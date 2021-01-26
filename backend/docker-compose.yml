@@ -18,7 +18,6 @@ services:
       - ./jdd/xml_cisu:/jdd/xml_cisu
     depends_on:
       - postgres
-      - mailhog
     networks:
       - default
       - enki_default
@@ -35,13 +34,13 @@ services:
     networks:
       - default
 
-  mailhog:
-    image: mailhog/mailhog
-    ports:
-      - "1025:1025"
-      - "8025:8025"
-    networks:
-      - default
+#  mailhog:
+#    image: mailhog/mailhog
+#    ports:
+#      - "1025:1025"
+#      - "8025:8025"
+#    networks:
+#      - default
   minio:
     image: minio/minio
     volumes:

@@ -14,5 +14,7 @@ RUN yarn
 # add app
 COPY . /app
 
+EXPOSE 1337
+
 # start app
 CMD ng serve --host 0.0.0.0

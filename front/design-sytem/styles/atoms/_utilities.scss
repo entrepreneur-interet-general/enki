@@ -1,0 +1,124 @@
+.u-display-b {
+  display: block;
+}
+.u-display-ib {
+  display: inline-block;
+}
+.u-display-fl {
+  display: flex;
+}
+.u-justify-content-sb {
+  justify-content: space-between;
+}
+.u-position-a {
+  position: absolute;
+}
+.u-bottom-0 {
+  bottom: 0;
+}
+.u-position-r {
+  position: relative;
+}
+.u-float-l {
+  float: left;
+}
+.u-border-radius-50 {
+  border-radius: 50%;
+}
+.u-float-r {
+  float: right;
+}
+.u-align-c {
+  text-align: center;
+}
+.u-align-l {
+  text-align: left;
+}
+.u-align-r {
+  text-align: right;
+}
+.u-vert-align-m {
+  vertical-align: middle;
+}
+.u-align-items-c {
+  align-items: center;
+}
+.u-center-abs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.u-width-100 {
+  width: 100%;
+}
+.u-text-transf-upp {
+  text-transform: uppercase;
+}
+.u-text-transf-ini {
+  text-transform: initial;
+}
+.u-weight-bold {
+  font-weight: 700!important;
+}
+.u-emphasize {
+  color: $primary;
+}
+.u-pointer {
+  cursor: pointer;
+}
+/* HIDE UTILITIES */
+.hidden,
+.u-hidden {
+  display: none;
+}
+/* Hide when the device has a mouse & mouse */
+.u-hidden-pointer {
+  @media (hover: hover) and (pointer: fine) {
+    display: none;
+  }
+}
+.u-hidden-mobile {
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}
+.u-hidden-large-mobile {
+  @media screen and (max-width: 1023px) {
+    display: none!important;
+  }
+}
+.u-hidden-desktop {
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+}
+.u-hidden-large-desktop {
+  @media screen and (min-width: 1024px) {
+    display: none!important;
+  }
+}
+.u-hidden-small-mobile-down {
+  @media screen and (max-width: 320px) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+ .u-position-r {
+    .msgOutOfStock{
+         
+               display: none;
+        }
+    }
+    
+    .u-align-c-m {
+      text-align: center;
+    }
+ }
+
+ @for $i from 1 through 12 {
+  .mt-#{$i} {
+      margin-top: $i + px;
+  }
+}

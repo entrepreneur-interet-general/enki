@@ -36,8 +36,6 @@ export class InterventionsService {
     ) { 
       this.interventionsUrl = `${environment.backendUrl}/affairs`;
       this.httpOptions = {
-/*         headers: new HttpHeaders({ 'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.keycloakService.getToken() }) */
       };
     }
 

@@ -42,7 +42,7 @@ export class EvenementsService {
   }
 
   getEvenements(): Observable<Evenement[]> {
-    return this.http.get<any>('http://localhost:8000/enki/v1/events')
+    return this.http.get<any>(this.evenementsUrl)
       .pipe(
         map(response => response.data)
       )

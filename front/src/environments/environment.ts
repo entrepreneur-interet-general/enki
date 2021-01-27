@@ -5,8 +5,6 @@
 export const environment = {
   production: false,
   backendUrl: `http://localhost:8000/enki/v1`,
-  interventionUrl: 'http://localhost:5000/api/enki/v1/affair/random',
-  interventionsUrl: 'http://localhost:5000/api/enki/v1/affairs',
   HTTPClientInMemory: false
 };
 

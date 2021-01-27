@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -26,7 +27,7 @@ export class EvenementsService {
     private interventionsService: InterventionsService
     ) {
       this.evenements = []
-      this.evenementsUrl = `http://localhost:5000/api/enki/v1/events`
+      this.evenementsUrl = `${environment.backendUrl}/events`
       this.selectedEvenement = {
         uuid: '',
         title: '',
@@ -35,13 +36,13 @@ export class EvenementsService {
       }
       this.httpOptions = {
         headers: new HttpHeaders({
-          'Content-Type':  'application/json',
+          'Content-Type':  'application/json'
         })
       }
   }
 
   getEvenements(): Observable<Evenement[]> {
-    return this.http.get<any>(this.evenementsUrl, this.httpOptions)
+    return this.http.get<any>('http://localhost:8000/enki/v1/events')
       .pipe(
         map(response => response.data)
       )

@@ -1,8 +1,8 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../environments/environment';
 
 import { UserService } from '../user/user.service';
 
@@ -34,7 +34,7 @@ export class InterventionsService {
     private http: HttpClient,
     private userService: UserService
     ) { 
-      this.interventionsUrl = environment.interventionsUrl;
+      this.interventionsUrl = `${environment.backendUrl}/affairs`;
       this.httpOptions = {
 /*         headers: new HttpHeaders({ 'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.keycloakService.getToken() }) */

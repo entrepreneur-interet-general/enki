@@ -21,7 +21,6 @@ export class AppComponent {
   constructor(
     private keycloakService: KeycloakService,
     public userService: UserService,
-    private router: Router,
     ) {
       this.environment = environment
       this.keycloakService.getToken().then((res) => {

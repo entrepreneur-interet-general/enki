@@ -1,4 +1,4 @@
-from flask import request, current_app
+from flask import request, current_app, g
 from flask_restful import Resource, reqparse
 from typing import Dict, Any, Union, List
 from domain.messages.services.message_service import MessageService
@@ -76,6 +76,7 @@ class MessageListResource(WithMessageRepoResource):
     def post(self):
         body = request.get_json()
         current_app.logger.info(f"body {body}")
+        body["creator_id"] = g.user_info["id"]
         command = CreateMessage(data=body)
         result = event_bus.publish(command, current_app.context)
         return {

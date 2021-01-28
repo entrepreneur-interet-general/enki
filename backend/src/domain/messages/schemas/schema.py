@@ -23,7 +23,7 @@ class TagSchema(Schema):
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
     title = fields.Str(required=True, validate=validate.Length(min=5))
-    creator_id = fields.Str(required=False, dump_only=True)
+    creator_id = fields.Str(required=False)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
 

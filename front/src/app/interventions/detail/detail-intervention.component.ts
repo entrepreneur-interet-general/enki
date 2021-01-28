@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EvenementsService } from 'src/app/evenements/evenements.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'fronts-detail-intervention',
@@ -35,7 +36,7 @@ export class DetailInterventionComponent implements OnInit {
           'Content-Type':  'application/json'
         })
       }
-      this.evenementsUrl = `http://localhost:5000/api/enki/v1/events`
+      this.evenementsUrl = `${environment.backendUrl}/events`
     }
 
   ngOnInit(): void {

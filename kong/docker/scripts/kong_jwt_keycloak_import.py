@@ -1,6 +1,5 @@
 import requests
 import os
-
 # from dotenv import load_dotenv
 # load_dotenv("../../.env")
 
@@ -12,11 +11,8 @@ KEYCLOAK_PORT = os.environ.get("KEYCLOAK_PORT")
 BACKEND_URI = os.environ.get("BACKEND_URI")
 CLIENT_ID = os.environ.get("CLIENT_ID")
 CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
-REALM_NAME = "enki"
 
-print(CLIENT_SECRET)
-
-ENKI_API_SERVICE_ID = os.environ.get("ENKI_API_SERVICE_ID")
+ENKI_API_SERVICE_ID = os.environ.get("ENKI_API_SERVICE_ID_JWT")
 
 # Add Service for enki URL
 data = {
@@ -37,21 +33,16 @@ created_service_id = response.json()["id"]
 
 data = {
     'service.id': f'{created_service_id}',
-    'paths[]': '/enki',
+    'paths[]': '/enki-jwt',
 }
 
 _ = requests.post(f'http://{KONG_HOST_IP}:{KONG_PORT}/services/{ENKI_API_SERVICE_ID}/routes', data=data)
 
-# # Configure OIDC Plugin
-
+# # Configure Jwt Kong Keycloak
 
 data = {
-    'name': 'oidc',
-    'config.client_id': f'{CLIENT_ID}',
-    'config.client_secret': f'{CLIENT_SECRET}',
-    'config.realm': f'{REALM_NAME}',
-    'config.introspection_endpoint': f'http://{KEYCLOAK_HOST_IP}:{KEYCLOAK_PORT}/auth/realms/{REALM_NAME}/protocol/openid-connect/token/introspect',
-    'config.discovery': f'http://{KEYCLOAK_HOST_IP}:{KEYCLOAK_PORT}/auth/realms/{REALM_NAME}/.well-known/openid-configuration'
+  'name': 'jwt-keycloak',
+  'config.allowed_iss': 'http://keycloak:8080/auth/realms/enki'
 }
 
 _ = requests.post(f'http://{KONG_HOST_IP}:{KONG_PORT}/services/{created_service_id}/plugins', data=data)

@@ -16,3 +16,4 @@ shapely
 faker
 marshmallow_enum
 minio
+Flask-OIDC==1.4.0

@@ -1,7 +1,9 @@
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';import { EvenementsModule } from '../evenements.module';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { EvenementsModule } from '../evenements.module';
+import { environment } from 'src/environments/environment';
 
 export interface Message {
   title: string;
@@ -28,8 +30,8 @@ export class MessagesService {
   constructor(
     private http: HttpClient,
   ) {
-    this.messagesUrl = 'http://localhost:5000/api/enki/v1/messages'
-    this.resourcesUrl = 'http://localhost:5000/api/enki/v1/resources'
+    this.resourcesUrl = `${environment.backendUrl}/resources`
+    this.messagesUrl = `${environment.backendUrl}/messages`
 
     this.httpHeaders = {
       headers: new HttpHeaders({

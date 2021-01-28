@@ -1,16 +1,27 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { AnnuaireService } from './annuaire.service';
-import { CONTACTS } from '../mocks/contacts-mocks';
+import { AnnuaireService, Contact } from './annuaire.service';
+import { CONTACTS, ANNUAIRE } from '../mocks/contacts-mocks';
+import { HttpClientTestingModule,  HttpTestingController } from '@angular/common/http/testing';
 
 describe('AnnuaireService', () => {
   let annuaireService: AnnuaireService;
+  let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AnnuaireService]
+      providers: [AnnuaireService],
+      imports: [HttpClientTestingModule]
     });
     annuaireService = TestBed.inject(AnnuaireService);
+    httpTestingController = TestBed.inject(HttpTestingController);
+
+    
+
+  });
+
+  afterEach(() => {
+    httpTestingController.verify();
   });
 
   it('should be created', () => {
@@ -18,6 +29,8 @@ describe('AnnuaireService', () => {
   });
 
   describe('all user favs contacts', () => {
+
+
     it('should return favorite contacts of user', () => {
       const contactResponse = CONTACTS;
       let response;
@@ -30,19 +43,21 @@ describe('AnnuaireService', () => {
       expect(response).toEqual(contactResponse)
     })
   })
-  /* describe('add contact to favorite', () => {
+  
+  describe('add contact to favorite', () => {
     it('should add contact to user favs', () => {
-      const newContact = {
-        uuid: '3',
-        name: 'Benjamin',
-        group: 'Préfecture du 77',
-        function: 'Préfet',
-        phone: '0606060606',
-        address: '55 avenue de saint ouen'
-      }
-      spyOn(annuaireService, 'addContactToUserFavs').and.
+      const newContact : Contact = ANNUAIRE[2]
+      const contactResponse: Contact[] = (CONTACTS as Contact[]).concat(newContact)
+      let response;
+      spyOn(annuaireService, 'addContactToUserFavs').and.returnValue(of(contactResponse));
+
+      annuaireService.addContactToUserFavs(newContact.uuid).subscribe(res => {
+        response = res
+      })
+
+      expect(response).toEqual(contactResponse)
     })
-  }) */
+  })
 
   describe('contact detail', () => {
     it('should return a contact detail', () => {
@@ -57,5 +72,7 @@ describe('AnnuaireService', () => {
       expect(response).toEqual(contactResponse)
     })
   })
+
+  
 
 });

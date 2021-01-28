@@ -1,1 +1,9 @@
-<p>contact-detail works!</p>
+<div class="contact-detail">
+  <a class="goTo" routerLink="/annuaire/contactlist">
+    <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
+    Retour à la liste
+  </a>
+  <div class="contact-detail--body">
+    {{contact.name}}
+  </div>
+</div>

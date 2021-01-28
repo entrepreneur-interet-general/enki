@@ -3,7 +3,7 @@
   <input type="text" [formControl]="contactSearch">
   <div *ngFor="let contact of contactList">
     <div>
-      {{contact.name}} <span *ngIf="isUserFav(contact.uuid)">isFav</span>
+      <a routerLink="/annuaire/contactdetail/{{contact.uuid}}">{{contact.name}}</a> <span *ngIf="isUserFav(contact.uuid)">isFav</span>
     </div>
     <a (click)="addToUserFavs(contact.uuid)">Ajouter aux favoris</a>
   </div>

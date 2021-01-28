@@ -1,6 +1,18 @@
 
-<div *ngFor="let contact of contacts">
-  {{contact.name}}
+<div class="contact-list">
+  <div class="contact-list--search enkiform__group">
+    <input class="enkiform__input" routerLink="/annuaire/searchcontact" placeholder="Rechercher dans l'annuaire partagé"/>
+    <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
+  </div>
+  <div *ngFor="let contact of contacts">
+    <a routerLink="/annuaire/contactdetail/{{contact.uuid}}">{{contact.name}}</a>
+  </div>
+  
+  <div>
+    <a routerLink="/contactadd">Ajouter un contact dans l'annuaire partagé</a>
+  </div>
 </div>
 
-<a routerLink="/annuaire/searchcontact">Rechercher dans l'annuaire</a>
+<div class="action--add" routerLink="/contactadd">
+  <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
+</div>

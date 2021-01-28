@@ -34,7 +34,6 @@ export class DetailMessageComponent implements OnInit {
         this.message = message
       })
     })
-    
   }
 
 }

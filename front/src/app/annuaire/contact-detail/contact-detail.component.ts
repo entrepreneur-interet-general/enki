@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AnnuaireService } from '../annuaire.service';
 
 @Component({
   selector: 'app-contact-detail',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactDetailComponent implements OnInit {
 
-  constructor() { }
+  contactUUID;
+  contact;
+
+  constructor(
+    private route: ActivatedRoute,
+    private annuaireService: AnnuaireService
+  ) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.contactUUID = params['uuid']
+      this.annuaireService.getContactDetails(this.contactUUID).subscribe(contact => {
+        this.contact = contact
+      })
+    })
   }
 
 }

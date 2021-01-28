@@ -1,5 +1,5 @@
 .title-container {
-    padding: 20px 16px;
+    padding: 0 16px 20px 16px;
     position: relative;
 }
 
@@ -51,10 +51,10 @@
     position: relative;
     color: $darkestPrimary;
     line-height: 35px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     margin-bottom: 8px;
     @media #{$mediaMobile} {
-        font-size: rem-calc(24);
+        font-size: rem-calc(30);
         line-height: 28px;
     }
 }
@@ -76,10 +76,11 @@
     font-size: rem-calc(26);
     color: $black;
     line-height: 45px;
+    letter-spacing: 0.5px;
 
     @media #{$mediaMobile} {
-        font-size: rem-calc(22);
-        line-height: 30px;
+        font-size: rem-calc(24);
+        line-height: 28px;
     }
 }
 

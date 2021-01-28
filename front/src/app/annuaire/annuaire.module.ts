@@ -28,7 +28,7 @@ const routes : Routes = [
         component: SearchContactComponent
       },
       {
-        path: 'contactdetail',
+        path: 'contactdetail/:uuid',
         component: ContactDetailComponent
       }
     ]

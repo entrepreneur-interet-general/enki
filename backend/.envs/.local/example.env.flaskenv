@@ -14,3 +14,8 @@ CELERY_RESULT_BACKEND_URL=redis://redis
 
 SIG_API_URL=http://docker.for.mac.localhost:8083
 SIG_API_KEY=ffef5b1a-d4bd-4b08-9b75-c7ab4f9aa14b
+
+KEYCLOAK_BASE_URL=http://keycloak:8080/auth/
+KEYCLOAK_REALM=enki
+KEYCLOAK_USERNAME=admin
+KEYCLOAK_PASSWORD=Pa55w0rd

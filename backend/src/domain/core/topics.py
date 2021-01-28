@@ -40,3 +40,8 @@ class AddTagToMessageTopic(Topic):
 @dataclass
 class CreateResourceTopic(Topic):
     name: str = "CreateResource"
+
+
+@dataclass
+class CreateUserTopic(Topic):
+    name: str = "CreateUser"

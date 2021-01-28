@@ -17,7 +17,10 @@ class UserSchema(Schema):
     __model__ = UserEntity
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
-    username = fields.Str(required=True)
+    first_name = fields.Str(required=True)
+    last_name = fields.Str(required=True)
+    position = fields.Str(required=False)
+    company = fields.Str(required=False)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow())
 

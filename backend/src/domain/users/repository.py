@@ -44,23 +44,23 @@ class AbstractUserRepository(abc.ABC):
 
 
 class InMemoryUserRepository(AbstractUserRepository):
-    _Users: UsersList = []
+    _users: UsersList = []
 
     def _add(self, entity: UserEntity):
-        self._Users.append(entity)
+        self._users.append(entity)
 
     def get_all(self) -> UsersList:
-        return self._Users
+        return self._users
 
     def _match_uuid(self, uuid: str) -> Union[UserEntity, None]:
-        matches = [user for user in self._Users if user.uuid == uuid]
+        matches = [user for user in self._users if user.uuid == uuid]
         if matches:
             return matches[0]
 
     # next methods are only for test purposes
     @property
-    def Users(self) -> UsersList:
-        return self._Users
+    def users(self) -> UsersList:
+        return self._users
 
-    def set_Users(self, Users: UsersList) -> None:
-        self._Users = Users
+    def set_Users(self, users: UsersList) -> None:
+        self._users = users

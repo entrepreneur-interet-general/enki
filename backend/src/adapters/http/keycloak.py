@@ -1,43 +1,55 @@
-from uuid import uuid4
-import requests
-from flask import current_app
-from requests import Response
-
-from cisu.entities.edxl_entity import EdxlEntity
-from cisu.entities.cisu_entity import AddressType
-from cisu.entities.commons.common_alerts import AnyURI
-from cisu.factories.edxl_factory import EdxlMessageFactory
-from entrypoints.config import EnkiConfig
-from domain.core import events
+from keycloak import KeycloakAdmin
+from typing import Union
 
 
-class SgeHelper:
-    base_url: str = EnkiConfig.KEYCLOAK_BASE_URL
-    realm: str = EnkiConfig.KEYCLOAK_REALM
+class KeycloakHelper:
+    def __init__(self, base_url: str, realm: str, username: str, password: str):
+        self.base_url: str = base_url
+        self.realm: str = realm
+        self.username: str = username
+        self.password: str = password
+        self.keycloak_admin: Union[KeycloakAdmin, None] = None
+        self._authentificate()
+        self.user_endpoint = f"{self.base_url}/admin/realms/{self.realm}/users"
+        self.group_endpoint = f"{self.base_url}/admin/realms/{self.realm}/groups"
 
-    def __init__(self):
-        self.KEYCLOAK_USERS_ENDPOINT = f"{self.base_url}/admin/realms/{self.realm}/users"
+    def _authentificate(self):
+        self.keycloak_admin = KeycloakAdmin(server_url=self.base_url,
+                                            username=self.username,
+                                            password=self.password,
+                                            verify=True)
 
-    KEYCLOAK_GROUPS_ENDPOINT = `${KEYCLOAK_URL} / admin / realms /${KEYCLOAK_REALM} / groups
-    `;
-
-    @staticmethod
-    def update_user(xml_ack_message: str) -> requests.Response:
-        response = requests.post(SgeHelper.base_url + "/messages",
-                                 data=xml_ack_message,
-                                 headers={
-                                     'Content-Type': "text/xml",
-                                 })
-
-        return response
-
-    @staticmethod
-    def send_ack_to_sge(event: events.AffairCreatedEvent) -> Response:
-        edxl_message: EdxlEntity = event.data
-        ack_message = EdxlMessageFactory.build_ack_from_another_message(
-            sender_address=AddressType(current_app.config['ENKI_SGE_ID'],
-                                       AnyURI(current_app.config['ENKI_SGE_ADDRESS'])),
-            other_message=edxl_message,
+    @classmethod
+    def from_config(cls, config):
+        return cls(
+            base_url=config.KEYCLOAK_BASE_URL,
+            realm=config.KEYCLOAK_REALM,
+            username=config.KEYCLOAK_USERNAME,
+            password=config.KEYCLOAK_PASSWORD
         )
 
-        return SgeHelper.send_ack_message(ack_message.to_xml())
+    def update_user_at_creation(self, user_id: str, first_name: str, last_name: str, attributes: dict) -> bool:
+        self._authentificate()
+        body = {
+            "firstName": first_name,
+            "lastName": last_name,
+            "attributes": attributes
+        }
+        self.keycloak_admin.update_user(user_id=user_id, payload=body)
+
+        return True
+
+    def update_user_attributes(self, user_id: str, attributes: dict) -> bool:
+        self._authentificate()
+        body = {
+            "attributes": attributes
+        }
+        self.keycloak_admin.update_user(user_id=user_id, payload=body)
+
+        return True
+
+    def assign_to_group(self, user_id: str, group_name: str) -> bool:
+        self._authentificate()
+        group_id = self.keycloak_admin.get_group_by_path(f"/{group_name}")["id"]
+        self.keycloak_admin.group_user_add(user_id=user_id, group_id=group_id)
+        return True

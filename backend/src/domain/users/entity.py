@@ -10,6 +10,9 @@ class UserEntity(Entity):
     """
 
     """
-    username: str
+    first_name: str
+    last_name: str
+    position: str
+    company: str
     created_at: datetime = field(default_factory=lambda: datetime.utcnow())
     updated_at: datetime = field(default_factory=lambda: datetime.utcnow())

@@ -1,1 +1,13 @@
-<p>search-contact works!</p>
+<div class="search-contact">
+  <a routerLink="/annuaire/contactlist">Retour à la liste des favoris</a>
+  <input type="text" [formControl]="contactSearch">
+  <div *ngFor="let contact of contactList">
+    <div>
+      {{contact.name}} <span *ngIf="isUserFav(contact.uuid)">isFav</span>
+    </div>
+    <a (click)="addToUserFavs(contact.uuid)">Ajouter aux favoris</a>
+  </div>
+<!--   <div *ngFor="let userFavs of userService.getUserFavoriteContacts()">
+    {{userFavs.name}}
+  </div> -->
+</div>

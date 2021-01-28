@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ContactAddComponent } from './contact-add/contact-add.component';
 import { AnnuaireComponent } from './annuaire.component';
 import { AnnuaireService } from './annuaire.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes : Routes = [
   {
@@ -21,12 +22,10 @@ const routes : Routes = [
       {
         path: 'contactlist',
         component: ContactListComponent,
-        children: [
-          {
-            path: 'searchcontact',
-            component: SearchContactComponent
-          }
-        ]
+      },
+      {
+        path: 'searchcontact',
+        component: SearchContactComponent
       },
       {
         path: 'contactdetail',
@@ -50,6 +49,7 @@ const routes : Routes = [
   providers: [AnnuaireService],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes)
   ]
 })

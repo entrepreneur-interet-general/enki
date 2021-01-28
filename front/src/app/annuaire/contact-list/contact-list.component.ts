@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/user/user.service';
 import { AnnuaireService } from '../annuaire.service';
 
 @Component({
@@ -9,13 +10,13 @@ import { AnnuaireService } from '../annuaire.service';
 export class ContactListComponent implements OnInit {
   contacts;
   constructor(
-    private annuaireService: AnnuaireService
+    private userService: UserService
   ) {
     this.contacts = [];
   }
 
   ngOnInit(): void {
-    this.annuaireService.getUserFavoriteContacts().subscribe((res) => {
+    this.userService.getUserFavoriteContacts().subscribe((res) => {
       this.contacts = res;
     })
   }

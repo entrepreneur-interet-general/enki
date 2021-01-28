@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { CONTACTS, ANNUAIRE } from '../mocks/contacts-mocks';
+import { Contact } from '../interfaces/Contact';
 
-export interface Contact {
-  uuid: string;
-  name: string;
-  group: string;
-  function: string;
-  phone: string;
-  address: string;
-} 
 @Injectable({
   providedIn: 'root'
 })
@@ -19,20 +12,25 @@ export class AnnuaireService {
 
   constructor() { }
 
-  getUserFavoriteContacts(): Observable<Contact[]> {
-    return of(this.contacts);
+  // GET /annuaire/search?q=queryString
+  searchInAnnuaire(queryString: string): Observable<Contact[]> {
+    return of(this.annuaire)
   }
-
-
-  getContactDetail(uuid: string): Observable<Contact> {
-    return of(this.contacts.filter(contact => contact.uuid === uuid)[0]);
+  // POST /annuaire/add
+  addContactToAnnuaire(contact: Contact): Observable<Contact> {
+    return of(contact)
   }
-
-  // PUT /user/{uuid}/favoriteContacts/{uuid}
-  addContactToUserFavs(contactId: string): Observable<Contact[]> {
-    return of(this.contacts.concat(this.annuaire[contactId]))
+  // GET /annuaire/{uuid}
+  getContactDetails(contactId: string): Observable<Contact> {
+    return of(this.annuaire.filter(contact => contact.uuid === contactId)[0]);
   }
-
-  // DELETE /user/{uuid}/favoriteContacts/{uuid}
+  // PUT /annuaire/{uuid}
+  updateContactDetails(contact: Contact): Observable<Contact> {
+    return of(contact)
+  }
+  // DELETE /annuaire/{uuid}
+  removeContactFromAnnuaire(contactId: string): Observable<string> {
+    return of(contactId)
+  }
 
 }

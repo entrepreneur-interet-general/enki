@@ -11,6 +11,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
 import { EvenementsModule } from './evenements/evenements.module';
+import { AnnuaireModule } from './annuaire/annuaire.module';
 
 const routes: Routes = [
   {
@@ -60,7 +61,8 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    EvenementsModule
+    EvenementsModule,
+    AnnuaireModule
   ],
   exports: [RouterModule],
   providers: [AuthGuard]

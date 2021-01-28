@@ -1,0 +1,13 @@
+USER
+
+GET /user/{uuid}/favoriteContacts // récupère tous les contacts favoris du user
+PUT /user/{uuid}/favoriteContacts/{uuid} // ajoute un contact favoris au user
+DELETE /user/{uuid}/favoriteContacts/{uuid} // retire un contact des favoris du user
+
+Annuaire
+
+GET /annuaire/search?q=queryString // renvoie les résultats de recherche dans l'annuaire à partir d'une queryString
+POST /annuaire/add // ajoute un contact dans l'annuaire
+GET /annuaire/{uuid} // récupère les infos d'un contact de l'annuaire
+PUT /annuaire/{uuid} // met à jour les infos d'un contact de l'annuaire
+DELETE /annuaire/{uuid} // retire un contact de l'annuaire

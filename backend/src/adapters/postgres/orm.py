@@ -10,15 +10,12 @@ from domain.evenements.entity import EvenementType, EvenementEntity
 from domain.messages.entities.message_entity import MessageType, Severity, MessageEntity
 from domain.messages.entities.resource import ResourceEntity
 from domain.messages.entities.tag_entity import TagEntity
+from domain.users.entity import UserEntity
 
 logger = logging.getLogger(__name__)
 
 metadata = MetaData()
 
-userTable = Table(
-    'users', metadata,
-    Column('uuid', String(60), primary_key=True),
-)
 
 tagMessageTable = Table(
     'tags_messages', metadata,
@@ -34,7 +31,7 @@ messagesTable = Table(
     Column('description', String(255)),
     Column('type', Enum(MessageType)),
     Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
-    Column('executor_id', String(60), ForeignKey("users.uuid")),
+    Column('executor_id', String(60), ForeignKey("users.uuid"), nullable=True),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
     Column('done_at', TIMESTAMP()),
     Column('started_at', TIMESTAMP()),
@@ -47,7 +44,7 @@ tagTable = Table(
     'tags', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False, unique=True),
-    Column('creator_id', String(255)),  # ForeignKey("users.uuid")),
+    Column('creator_id', String(255),  ForeignKey("users.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
@@ -58,7 +55,7 @@ resourceTable = Table(
     Column('bucket_name', String(255), nullable=False, unique=False),
     Column('object_path', String(255), nullable=False, unique=False),
     Column('content_type', String(60), nullable=False, unique=False),
-    Column('creator_id', String(255)),  # ForeignKey("users.uuid")),
+    Column('creator_id', String(255),  ForeignKey("users.uuid")),
     Column('original_name', String(255)),  # ForeignKey("users.uuid")),
     Column('message_id', String(255), ForeignKey("messages.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
@@ -70,7 +67,7 @@ evenementsTable = Table(
     Column('title', String(255), nullable=False),
     Column('description', String(255)),
     Column('type', Enum(EvenementType)),
-    Column('creator_id', String(255)),  # ForeignKey("users.uuid")),
+    Column('creator_id', String(255), ForeignKey("users.uuid")),
     Column('started_at', TIMESTAMP(), nullable=False, default=datetime.now),
     Column('ended_at', TIMESTAMP(), nullable=True, default=None),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
@@ -86,12 +83,24 @@ affairsTable = Table(
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
 
+usersTable = Table(
+    'users', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('first_name', String(255), nullable=False),
+    Column('last_name', String(255), nullable=False),
+    Column('position', String(255), nullable=False),
+    Column('company', String(255), nullable=False),
+    Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
+    Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
+)
+
 all_tables = [
-    userTable,
     tagMessageTable,
     tagTable,
     evenementsTable,
-    messagesTable
+    messagesTable,
+    usersTable
 ]
 
 
@@ -100,6 +109,7 @@ def start_mappers():
     mapper(EvenementEntity, evenementsTable)
     mapper(ResourceEntity, resourceTable)
     mapper(SimpleAffairEntity, affairsTable)
+    mapper(UserEntity, usersTable)
     mapper(
         MessageEntity, messagesTable,
         properties={

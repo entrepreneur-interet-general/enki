@@ -36,6 +36,12 @@ class XmlCisuRepository(AbstractAffairRepository):
         if _matches:
             return _matches[0]
 
+    def build_affair_from_xml_file(self, xml_path: str) -> AffairEntity:
+        affair_dom = xml.dom.minidom.parse(xml_path)
+        edxl_message = EdxlEntity.from_xml(affair_dom)
+        return AffairEntity(**edxl_message.resource.message.choice.to_dict())
+
+
     def _list_xml_files(self):
         for xml_file in self.xml_path.glob("*.xml"):
             logging.info(f"self.all_affairs {self.all_affairs}")

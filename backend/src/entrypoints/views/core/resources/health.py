@@ -1,3 +1,4 @@
+from flask import g
 from flask_restful import Resource
 
 
@@ -10,5 +11,9 @@ class HealthResource(Resource):
         - core
     """
 
+
     def get(self):
-        return {"ok": "ok"}
+
+        return {
+            "ok": "ok",
+        }

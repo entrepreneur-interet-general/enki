@@ -10,12 +10,12 @@ from domain.evenements.entity import EvenementType, EvenementEntity
 from domain.messages.entities.message_entity import MessageType, Severity, MessageEntity
 from domain.messages.entities.resource import ResourceEntity
 from domain.messages.entities.tag_entity import TagEntity
-from domain.users.entity import UserEntity
+from domain.users.entities.company import CompanyType, CompanyEntity
+from domain.users.entities.user import UserEntity
 
 logger = logging.getLogger(__name__)
 
 metadata = MetaData()
-
 
 tagMessageTable = Table(
     'tags_messages', metadata,
@@ -44,7 +44,7 @@ tagTable = Table(
     'tags', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False, unique=True),
-    Column('creator_id', String(255),  ForeignKey("users.uuid")),
+    Column('creator_id', String(255), ForeignKey("users.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
@@ -55,7 +55,7 @@ resourceTable = Table(
     Column('bucket_name', String(255), nullable=False, unique=False),
     Column('object_path', String(255), nullable=False, unique=False),
     Column('content_type', String(60), nullable=False, unique=False),
-    Column('creator_id', String(255),  ForeignKey("users.uuid")),
+    Column('creator_id', String(255), ForeignKey("users.uuid")),
     Column('original_name', String(255)),  # ForeignKey("users.uuid")),
     Column('message_id', String(255), ForeignKey("messages.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
@@ -94,14 +94,13 @@ usersTable = Table(
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
-
-all_tables = [
-    tagMessageTable,
-    tagTable,
-    evenementsTable,
-    messagesTable,
-    usersTable
-]
+companyTable = Table(
+    'campanies', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('name', String(255), nullable=False),
+    Column('type', Enum(CompanyType), nullable=False),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
+)
 
 
 def start_mappers():
@@ -109,7 +108,12 @@ def start_mappers():
     mapper(EvenementEntity, evenementsTable)
     mapper(ResourceEntity, resourceTable)
     mapper(SimpleAffairEntity, affairsTable)
-    mapper(UserEntity, usersTable)
+    mapper(CompanyEntity, companyTable)
+    mapper(UserEntity, usersTable,
+           properties={
+               'company': relationship(CompanyEntity, backref='users'),
+           }
+           )
     mapper(
         MessageEntity, messagesTable,
         properties={

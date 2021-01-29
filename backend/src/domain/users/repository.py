@@ -2,7 +2,7 @@ import abc
 from typing import List, Union
 from werkzeug.exceptions import HTTPException
 
-from domain.users.entity import UserEntity
+from domain.users.entities.user import UserEntity
 
 UsersList = List[UserEntity]
 

@@ -6,7 +6,7 @@ from datetime import datetime
 
 from werkzeug.exceptions import HTTPException
 
-from domain.users.entity import UserEntity
+from domain.users.entities.user import UserEntity
 
 
 class UserValidationError(HTTPException):

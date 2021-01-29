@@ -6,6 +6,8 @@ from domain.messages.command import CreateTag, CreateMessage, CreateResource
 from domain.messages.services.resource_service import ResourceService
 from domain.messages.services.tag_service import TagService
 from domain.messages.services.message_service import MessageService
+from domain.users.command import CreateUser
+from domain.users.service import UserService
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
@@ -24,7 +26,14 @@ def create_tag(command: CreateTag, uow: AbstractUnitOfWork):
         data=command.data,
         uow=uow)
 
+
 def create_resource(command: CreateResource, uow: AbstractUnitOfWork):
     return ResourceService.add_resource(
+        data=command.data,
+        uow=uow)
+
+
+def create_user(command: CreateUser, uow: AbstractUnitOfWork):
+    return UserService.add_user(
         data=command.data,
         uow=uow)

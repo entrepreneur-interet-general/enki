@@ -6,8 +6,6 @@ from .handlers import events, commands
 EVENT_HANDLERS: Dict[Type[Topic], List[Callable]] = {
     topics.AffairCreatedTopic: [
         events.send_affair_created_email_notification,
-        # handlers.send_ack_message_to_sge_on_affair_received
-        # handlers.send_affair_created_sms_notification],
     ],
 }
 
@@ -23,6 +21,9 @@ COMMAND_HANDLERS: Dict[Type[Topic], List[Callable]] = {
     ],
     topics.CreateResourceTopic: [
         commands.create_resource,
+    ],
+    topics.CreateUserTopic: [
+        commands.create_user,
     ],
 }
 

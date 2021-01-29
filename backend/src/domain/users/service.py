@@ -1,8 +1,10 @@
 from typing import Any, Dict, List
 from marshmallow import ValidationError
 
-from domain.users.entity import UserEntity
-from domain.users.schema import UserSchema
+from adapters.http.keycloak import KeycloakHelper
+from domain.users.entities.user import UserEntity
+from domain.users.schemas.user import UserSchema
+from entrypoints.config import EnkiConfig
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
@@ -12,6 +14,8 @@ class UserService:
     @staticmethod
     def add_user(data: dict,
                  uow: AbstractUnitOfWork):
+
+        code_insee = data.pop("code_insee")
         try:
             user: UserEntity = UserService.schema().load(data)
             return_value = UserService.schema().dump(user)
@@ -19,7 +23,19 @@ class UserService:
             raise ve
 
         with uow:
+            kh = KeycloakHelper.from_config(EnkiConfig())
             _ = uow.user.add(user)
+            kh.update_user_at_creation(
+                user_id=user.uuid,
+                first_name=user.first_name,
+                last_name=user.last_name,
+                attributes={
+                    "fonction": user.position,
+                    "code_insee": code_insee,
+                }
+            )
+            kh.assign_to_group(user_id=user.uuid, group_name=str(user.position).lower())
+
         return return_value
 
     @staticmethod

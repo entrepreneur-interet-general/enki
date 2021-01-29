@@ -5,4 +5,13 @@
   .h1-title svg {
     fill: $starYellow;
   }
+  &--empty {
+    margin-bottom: 20px;
+    p {
+      margin-bottom: 16px;
+    }
+    svg {
+      vertical-align: text-bottom;
+    }
+  }
 }

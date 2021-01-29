@@ -1,6 +1,6 @@
-<div class="addLabel">
-  <div class="addLabel--heading">
-    <a class="addLabel--cancel" (click)="goBack()">
+<div class="addLabel fullscreen-form">
+  <div class="fullscreen-form--heading">
+    <a class="fullscreen-form--cancel" (click)="goBack()">
       <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
     </a>
     <div class="addLabel--selectedLabels" *ngIf="labelsService.selectedLabels.length > 0">
@@ -9,18 +9,18 @@
         <svg class="icon-close icon" (click)="unselectLabel(label)"><use xlink:href="#icon-close"></use></svg>
       </div>
     </div>
-    <input type="text" class="addLabel--searchInput" [formControl]="labelSearch" placeholder="Ajouter un label">
+    <input type="text" class="fullscreen-form--searchInput" [formControl]="labelSearch" placeholder="Ajouter un label">
   </div>
-  <div class="addLabel--searchResults">
+  <div class="addLabel--searchResults fullscreen-for--searchResults">
     <div class="searchResults--title">
       Sélectionner ou créer un label
     </div>
-    <ul class="labelList">
-      <li class="labelList--element" *ngIf="labelSearch.value" (click)="addLabel()">
+    <ul class="searchList">
+      <li class="searchList--element" *ngIf="labelSearch.value" (click)="addLabel()">
         <div class="badge badge__inverted badge__green">{{labelSearch.value}}</div>
         <svg class="icon-add icon"><use xlink:href="#icon-add"></use></svg>
       </li>
-      <li class="labelList--element" *ngFor="let label of (sort(labelsService.labels) | filterLabels:labelSearch.value:labelsService.selectedLabels)" (click)="selectLabel(label)">
+      <li class="searchList--element" *ngFor="let label of (sort(labelsService.labels) | filterLabels:labelSearch.value:labelsService.selectedLabels)" (click)="selectLabel(label)">
         <div class="badge badge__inverted">{{label.title}}</div>
       </li>
     </ul>

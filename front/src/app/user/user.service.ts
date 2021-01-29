@@ -14,7 +14,7 @@ export class UserService {
   user: User;
 
   constructor(
-    private keycloakService: KeycloakService,
+    // private keycloakService: KeycloakService,
     private annuaireService: AnnuaireService
   ) {
     this.user = {
@@ -43,23 +43,29 @@ export class UserService {
       )
   }
   // DELETE /user/{uuid}/favoriteContacts/{uuid}
-  removeContactFromUserFavs(contactId: string): Observable<string> {
-    return of(contactId)
+  removeContactFromUserFavs(contactId: string): Observable<Contact[]> {
+    return of(this.user.contacts.filter(contact => contact.uuid !== contactId))
+      .pipe(
+        tap(response => {
+          this.user.contacts = response
+        })
+      )
   }
 
   userIsValid(): boolean {
     return Object.keys(this.user).length > 0 && this.user.attributes.code_insee !== '' && this.user.attributes.fonction !== ''
   }
 
-  loadUserProfile(): void {
+/*   loadUserProfile(): void {
     this.keycloakService.loadUserProfile().then((response: any) => {
       this.user = {
         attributes: {
           code_insee: response.attributes.code_insee[0] ? response.attributes.code_insee[0] : '',
           fonction: response.attributes.fonction[0] ? response.attributes.fonction[0] : ''
         },
+        contacts: response.contacts,
         fullname: response.lastName && response.firstName ? `${response.firstName} ${response.lastName}` : ''
       }
     })
-  }
+  } */
 }

@@ -1,11 +1,20 @@
-<div class="search-contact">
-  <a routerLink="/annuaire/contactlist">Retour à la liste des favoris</a>
-  <input type="text" [formControl]="contactSearch">
+<div class="search-contact fullscreen-form">
+  <div class="fullscreen-form--heading">
+    <a class="fullscreen-form--cancel" routerLink="/annuaire/contactlist">
+      <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
+    </a>
+    <input type="text" [formControl]="contactSearch" class="fullscreen-form--searchInput" placeholder="Saisir un nom ou numéro">
+  </div>
+  <div class="searchResults--title">
+    Résultats de votre recherche
+  </div>
   <div *ngFor="let contact of contactList">
-    <div>
-      <a routerLink="/annuaire/contactdetail/{{contact.uuid}}">{{contact.name}}</a> <span *ngIf="isUserFav(contact.uuid)">isFav</span>
+    <div class="searchList--element">
+      <a routerLink="/annuaire/contactdetail/{{contact.uuid}}" class="searchList--link">{{contact.name}}</a>
+      <a (click)="addRemoveToUserFavs(contact.uuid)" class="searchList--action" [class.isFavorite]="isUserFav(contact.uuid)">
+        <svg class="icon-star icon"><use xlink:href="#icon-star"></use></svg>
+      </a>
     </div>
-    <a (click)="addToUserFavs(contact.uuid)">Ajouter aux favoris</a>
   </div>
 <!--   <div *ngFor="let userFavs of userService.getUserFavoriteContacts()">
     {{userFavs.name}}

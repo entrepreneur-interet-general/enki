@@ -1,11 +1,13 @@
-@import "../../../../../design-system/styles/variables";
+@import "../../../../design-system/styles/variables";
 
-.search-contact {
-  position: fixed;
-  background: $white;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 6000;
+
+.searchList--action {
+  svg {
+    fill: $lightGrey;
+  }
+  &.isFavorite {
+    svg {
+      fill: #F6CF5D;
+    }
+  }
 }

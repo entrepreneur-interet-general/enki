@@ -32,11 +32,12 @@ export class SearchContactComponent implements OnInit {
     }
   }
 
-  addToUserFavs(contactId: string): void {
-    this.userService.addContactToUserFavs(contactId).subscribe(response => {
-      console.log(response)
-
-    })
+  addRemoveToUserFavs(contactId: string): void {
+    if (this.userService.user.contacts.filter(contact => contact.uuid === contactId).length > 0) {
+      this.userService.removeContactFromUserFavs(contactId).subscribe()
+    } else {
+      this.userService.addContactToUserFavs(contactId).subscribe()
+    }
   }
 
   isUserFav(contactId: string): boolean {

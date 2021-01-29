@@ -41,5 +41,13 @@ export const ANNUAIRE = [
     function: 'Préfet',
     phone: '0606060606',
     address: '55 avenue de saint ouen'
+  },
+  {
+    uuid: '4',
+    name: 'Benoît',
+    group: 'SDIS de la Marne',
+    function: 'Agent d\'entretien',
+    phone: '0606060606',
+    address: 'Reims'
   }
 ]

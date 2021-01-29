@@ -2,7 +2,7 @@ from typing import List, Union
 
 from sqlalchemy.orm import Session
 
-from domain.users.repository  import AbstractUserRepository, AlreadyExistingUserUuid
+from domain.users.ports.user_repository import AbstractUserRepository, AlreadyExistingUserUuid
 from domain.users.entities.user import UserEntity
 from .repository import PgRepositoryMixin
 

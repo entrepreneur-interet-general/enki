@@ -1,6 +1,6 @@
 from typing import Any, Dict, List
-from domain.phonebook.entities.contact import ContactEntity
-from domain.messages.schemas.schema import ContactSchema
+from domain.users.entities.contact import ContactEntity
+from domain.users.schemas.contact import ContactSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 

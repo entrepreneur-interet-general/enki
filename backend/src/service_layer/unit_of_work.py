@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 from adapters.postgres import PgMessageRepository, PgTagRepository, PgEvenementRepository
 from adapters.postgres.orm import metadata
-from adapters.minio.resource_content_repository import MinioResourceContentRepository
+from adapters.postgres.pg_contact_repository import PgContactRepository
 from adapters.postgres.pg_resource_repository import PgResourceRepository
 from adapters.postgres.pg_simple_affair_repository import PgSimpleAffairRepository
 from adapters.postgres.pg_user_repository import PgUserRepository
@@ -16,7 +16,8 @@ from domain.evenements.repository import AbstractEvenementRepository, InMemoryEv
 from domain.messages.ports import AbstractTagRepository, AbstractMessageRepository, AbstractResourceRepository
 from domain.messages.ports.message_repository import InMemoryMessageRepository
 from domain.messages.ports.tag_repository import InMemoryTagRepository
-from domain.users.repository import AbstractUserRepository
+from domain.users.ports.contact_repository import AbstractContactRepository
+from domain.users.ports.user_repository import AbstractUserRepository
 from entrypoints.repositories import ElasticRepositories
 
 
@@ -28,6 +29,7 @@ class AbstractUnitOfWork(abc.ABC):
     affair: AbstractAffairRepository
     simple_affair: AbstractSimpleAffairRepository
     user: AbstractUserRepository
+    contact: AbstractContactRepository
 
     def __init__(self, config):
         self.config = config
@@ -88,6 +90,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.resource = PgResourceRepository(self.session)
         self.simple_affair = PgSimpleAffairRepository(self.session)
         self.user = PgUserRepository(self.session)
+        self.contact = PgContactRepository(self.session)
         return super().__enter__()
 
     def __exit__(self, *args):

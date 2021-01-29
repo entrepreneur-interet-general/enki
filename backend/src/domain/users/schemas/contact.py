@@ -1,9 +1,9 @@
 from uuid import uuid4
-from marshmallow import Schema, fields, post_load, validate
+from marshmallow import Schema, fields, post_load
 from datetime import datetime
 from werkzeug.exceptions import HTTPException
 
-from domain.phonebook.entities.contact import ContactEntity
+from domain.users.entities.contact import ContactEntity
 
 
 class ContactValidationError(HTTPException):

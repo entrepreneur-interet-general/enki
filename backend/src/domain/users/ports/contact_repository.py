@@ -3,7 +3,7 @@ from typing import List, Union
 
 from werkzeug.exceptions import HTTPException
 
-from domain.phonebook.entities.contact import ContactEntity
+from domain.users.entities.contact import ContactEntity
 
 ContactsList = List[ContactEntity]
 

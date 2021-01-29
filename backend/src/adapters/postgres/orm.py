@@ -14,6 +14,7 @@ from domain.messages.entities.tag_entity import TagEntity
 from domain.users.entities.company import CompanyType, CompanyEntity
 from domain.users.entities.user import UserEntity
 from domain.phonebook.entities.contact import ContactEntity
+from domain.users.entities.contact import ContactEntity
 
 logger = logging.getLogger(__name__)
 
@@ -132,7 +133,7 @@ def start_mappers():
 
     mapper(ContactEntity, contactTable,
            properties={
-            'company': relationship(GroupEntity, backref='contacts'),
+            'company': relationship(CompanyEntity, backref='contacts'),
         })
     mapper(
         MessageEntity, messagesTable,

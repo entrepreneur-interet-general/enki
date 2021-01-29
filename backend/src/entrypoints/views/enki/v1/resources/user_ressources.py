@@ -2,7 +2,7 @@ from flask import request, current_app, g
 from flask_restful import Resource
 
 from domain.users.command import CreateUser
-from domain.users.service import UserService
+from domain.users.services.user_service import UserService
 from entrypoints.extensions import event_bus
 
 

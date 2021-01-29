@@ -5,7 +5,8 @@ export const CONTACTS = [
     group: 'Préfecture des Hauts-de-Seine',
     function: 'Chef site PC',
     phone: '0606060606',
-    address: '55 avenue de saint ouen'
+    address: '55 avenue de saint ouen',
+    email: 'test@test.fr'
   },
   {
     uuid: '2',
@@ -13,7 +14,8 @@ export const CONTACTS = [
     group: 'SDIS Val d\'Oise',
     function: 'Pompière',
     phone: '0707070707',
-    address: ''
+    address: '',
+    email: 'test@test.fr'
   }
 ]
 
@@ -24,7 +26,8 @@ export const ANNUAIRE = [
     group: 'Préfecture des Hauts-de-Seine',
     function: 'Chef site PC',
     phone: '0606060606',
-    address: '55 avenue de saint ouen'
+    address: '55 avenue de saint ouen',
+    email: 'test@test.fr'
   },
   {
     uuid: '2',
@@ -32,7 +35,8 @@ export const ANNUAIRE = [
     group: 'SDIS Val d\'Oise',
     function: 'Pompière',
     phone: '0707070707',
-    address: ''
+    address: '',
+    email: 'test@test.fr'
   },
   {
     uuid: '3',
@@ -40,7 +44,8 @@ export const ANNUAIRE = [
     group: 'Préfecture du 77',
     function: 'Préfet',
     phone: '0606060606',
-    address: '55 avenue de saint ouen'
+    address: '55 avenue de saint ouen',
+    email: 'test@test.fr'
   },
   {
     uuid: '4',
@@ -48,6 +53,7 @@ export const ANNUAIRE = [
     group: 'SDIS de la Marne',
     function: 'Agent d\'entretien',
     phone: '0606060606',
-    address: 'Reims'
+    address: 'Reims',
+    email: 'test@test.fr'
   }
 ]

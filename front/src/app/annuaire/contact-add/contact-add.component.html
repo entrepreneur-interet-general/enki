@@ -8,3 +8,40 @@
     <svg class="icon-close title-icon"><use xlink:href="#icon-close"></use></svg>
   </div>
 </div>
+<div class="contact-add">
+  <div class="title-container">
+    <h1 class="h2-title">Créer un nouveau contact</h1>
+    <div class="subtitle">
+      Tous les contacts ajoutés dans ENKI sont disponibles dans l’annuaire partagé.
+    </div>
+  </div>
+  <form action="" class="contactAddForm" [formGroup]="contactGroup" (ngSubmit)="onSubmit()">
+    <div class="enkiform__group">
+      <input type="text" class="enkiform__input" id="name" formControlName="name" required>
+      <label for="name" class="enkiform__label">Nom</label>
+    </div>
+    <div class="enkiform__group">
+      <input type="text" class="enkiform__input" id="group" formControlName="group" required>
+      <label for="group" class="enkiform__label">Groupe</label>
+    </div>
+    <div class="enkiform__group">
+      <input type="text" class="enkiform__input" id="function" formControlName="function" required>
+      <label for="function" class="enkiform__label">Fonction</label>
+    </div>
+    <div class="enkiform__group">
+      <input type="text" class="enkiform__input" id="phone" formControlName="phone" required>
+      <label for="phone" class="enkiform__label">Téléphone</label>
+    </div>
+    <div class="enkiform__group">
+      <input type="text" class="enkiform__input" id="email" formControlName="email" required>
+      <label for="email" class="enkiform__label">Email</label>
+    </div>
+    <div class="enkiform__group">
+      <input type="text" class="enkiform__input" id="address" formControlName="address" required>
+      <label for="address" class="enkiform__label">Adresse</label>
+    </div>
+    <div class="enkiSpecialForm__group">
+      <input type="submit" class="btn" value="Enregistrer">
+    </div>
+  </form>
+</div>

@@ -4,11 +4,11 @@
     <input class="enkiform__input" routerLink="/annuaire/searchcontact" placeholder="Rechercher dans l'annuaire partagé"/>
     <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
   </div>
-  <h1 class="h1-title">Contacts favoris</h1>
+  <h1 class="h1-title">
+    Contacts favoris
+    <svg class="icon-star icon"><use xlink:href="#icon-star"></use></svg>
+  </h1>
   <div *ngFor="let contact of contacts; let i = index;">
-    <!-- if (contacts[i - 1].name[0] !== contact.name[0]) {
-
-    } -->
     <div *ngIf="compareIfFirstLetterIsDifferent(contacts[i - 1], contact)">
       {{contact.name[0].toUpperCase()}}
     </div>

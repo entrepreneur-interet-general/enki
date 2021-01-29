@@ -4,5 +4,6 @@ export interface Contact {
   group: string;
   function: string;
   phone: string;
+  email: string;
   address: string;
 } 

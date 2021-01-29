@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { CONTACTS, ANNUAIRE } from '../mocks/contacts-mocks';
 import { Contact } from '../interfaces/Contact';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,12 @@ export class AnnuaireService {
   // POST /annuaire/add
   addContactToAnnuaire(contact: Contact): Observable<Contact> {
     return of(contact)
+      .pipe(
+        tap(contact => {
+          this.annuaire = this.annuaire.concat(contact)
+          
+        })
+      )
   }
   // GET /annuaire/{uuid}
   getContactDetails(contactId: string): Observable<Contact> {

@@ -1,3 +1,8 @@
+@import "../../../../design-system/styles/variables";
+
 .contact-list {
   padding: 0 16px;
+  .h1-title svg {
+    fill: $starYellow;
+  }
 }

@@ -46,6 +46,8 @@
 }
 // Balise title
 .h1-title  {
+    display: flex;
+    align-items: flex-end;
     font-size: rem-calc(32);
     font-weight: 500;
     position: relative;
@@ -56,6 +58,9 @@
     @media #{$mediaMobile} {
         font-size: rem-calc(30);
         line-height: 28px;
+    }
+    svg {
+        margin: 0 12px;
     }
 }
 .-emphasize {

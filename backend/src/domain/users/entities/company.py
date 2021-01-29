@@ -10,6 +10,8 @@ class CompanyType(str, Enum):
     MAIRIE = "mairie"
     PREFECTURE = "prefecture"
     PARTENAIRE = "partenaire"
+    SDIS = "SDIS"
+    COZ = "COZ"
 
 
 @dataclass_json

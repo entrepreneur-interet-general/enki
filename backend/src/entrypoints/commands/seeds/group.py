@@ -3,31 +3,28 @@ from flask import current_app
 import click
 from flask.cli import with_appcontext
 
-from domain.phonebook.entities.group import GroupEntity
+from domain.users.entities.company import CompanyEntity, CompanyType
 
 
 @click.command()
 @with_appcontext
 def create_group():
     uow = current_app.context
-    groups = [
-        GroupEntity(uuid="mairie_uuid",
-                    name="Mairie",
-                    description="Mairie",
+
+    companies = [
+        CompanyEntity(uuid="mairie_uuid",
+                    name="Mairie Chelles",
+                  type=CompanyType.MAIRIE
                     ),
-        GroupEntity(uuid="prefecture_uuid",
+        CompanyEntity(uuid="prefecture_uuid",
                     name="Prefecture",
-                    description="Prefecture",
+                      type=CompanyType.MAIRIE
                     ),
-        GroupEntity(uuid="sdis_uuid",
+        CompanyEntity(uuid="sdis_uuid",
                     name="SDIS",
-                    description="Service d'incendie et de secours",
-                    ),
-        GroupEntity(uuid="coz_uuid",
-                    name="COZ",
-                    description="Centre opérationel zonal",
+                      type=CompanyType.SDIS
                     ),
     ]
     with uow:
-        for group in groups:
-            uow.session.add(group)
+        for company in companies:
+            uow.session.add(company)

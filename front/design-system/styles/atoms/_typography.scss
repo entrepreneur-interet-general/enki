@@ -1,6 +1,15 @@
 .title-container {
     padding: 0 16px 20px 16px;
     position: relative;
+    &.-reversed {
+        background: $primary;
+        padding: 16px;
+        color: $white;
+        .subtitle {
+            color: $white;
+            font-family: $primaryFont;
+        }
+    }
 }
 
 .goTo {
@@ -51,7 +60,6 @@
     font-size: rem-calc(32);
     font-weight: 500;
     position: relative;
-    color: $darkestPrimary;
     line-height: 35px;
     letter-spacing: 1px;
     margin-bottom: 8px;
@@ -73,13 +81,12 @@
     font-family: $secondaryFont;
     font-size: 17px;
     letter-spacing: 0.5px;
-  }
+}
 
 
 .h2-title  {
     font-weight: 500;
     font-size: rem-calc(26);
-    color: $black;
     line-height: 45px;
     letter-spacing: 0.5px;
 

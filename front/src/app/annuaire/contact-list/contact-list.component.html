@@ -1,8 +1,10 @@
 
 <div class="contact-list">
-  <div class="contact-list--search enkiform__group">
-    <input class="enkiform__input" routerLink="/annuaire/searchcontact" placeholder="Rechercher dans l'annuaire partagé"/>
-    <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
+  <div class="contact-list--search">
+    <div class="enkiform__group">
+      <input class="enkiform__input" routerLink="/annuaire/searchcontact" placeholder="Rechercher dans l'annuaire partagé"/>
+      <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
+    </div>
   </div>
   <div class="title-container">
     <h1 class="h1-title">
@@ -17,7 +19,7 @@
       pour créer un nouveau contact.</p>
     <p><img src="assets/empty-contact-list.jpg" alt=""></p>
   </div>
-  <div *ngFor="let contact of contacts; let i = index;">
+  <div class="contact-list--list" *ngFor="let contact of contacts; let i = index;">
     <div *ngIf="compareIfFirstLetterIsDifferent(contacts[i - 1], contact)">
       {{contact.name[0].toUpperCase()}}
     </div>

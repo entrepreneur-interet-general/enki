@@ -13,7 +13,6 @@ from domain.messages.entities.resource import ResourceEntity
 from domain.messages.entities.tag_entity import TagEntity
 from domain.users.entities.company import CompanyType, CompanyEntity
 from domain.users.entities.user import UserEntity
-from domain.phonebook.entities.contact import ContactEntity
 from domain.users.entities.contact import ContactEntity
 
 logger = logging.getLogger(__name__)

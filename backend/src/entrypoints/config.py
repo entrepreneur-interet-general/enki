@@ -47,3 +47,8 @@ class EnkiConfig(object):
     MINIO_MESSAGE_RESOURCES_BUCKET = os.environ.get("MINIO_MESSAGE_RESOURCES_BUCKET", "messages")
     MINIO_ACCESS_KEY = os.environ.get("MINIO_ACCESS_KEY", "MINIOACCESSKEY")
     MINIO_SECRET_KEY = os.environ.get("MINIO_SECRET_KEY", "MINIO_SECRET_KEY")
+
+    KEYCLOAK_BASE_URL = os.environ.get("KEYCLOAK_BASE_URL")
+    KEYCLOAK_REALM = os.environ.get("KEYCLOAK_REALM")
+    KEYCLOAK_USERNAME = os.environ.get("KEYCLOAK_USERNAME")
+    KEYCLOAK_PASSWORD = os.environ.get("KEYCLOAK_PASSWORD")

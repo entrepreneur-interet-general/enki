@@ -3,12 +3,8 @@ from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 
 from domain.core.entity import Entity
-<<<<<<< HEAD:backend/src/domain/phonebook/entities/contact.py
-from domain.phonebook.entities.methods import ContactMethods
-=======
 from domain.users.entities.methods import ContactMethods
 from domain.users.entities.company import CompanyEntity
->>>>>>> update backend:backend/src/domain/users/entities/contact.py
 
 
 @dataclass

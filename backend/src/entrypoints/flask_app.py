@@ -8,7 +8,7 @@ from entrypoints import views
 from service_layer.messagebus import HANDLERS
 from .commands.seeds.group import create_group
 from .config import EnkiConfig
-from .extensions import event_bus, api_spec, oidc
+from .extensions import event_bus, api_spec
 from .errors import errors
 import logging
 

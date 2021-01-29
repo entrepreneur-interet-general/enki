@@ -7,6 +7,7 @@ from datetime import datetime
 from werkzeug.exceptions import HTTPException
 
 from domain.users.entities.user import UserEntity
+from domain.users.schemas.company import CompanySchema
 
 
 class UserValidationError(HTTPException):
@@ -20,7 +21,7 @@ class UserSchema(Schema):
     first_name = fields.Str(required=True)
     last_name = fields.Str(required=True)
     position = fields.Str(required=False)
-    company = fields.Str(required=False)
+    company = fields.Nested(CompanySchema, required=False, many=True, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow())
 

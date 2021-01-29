@@ -26,6 +26,21 @@ tagMessageTable = Table(
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
 )
 
+usersCompanyTable = Table(
+    'users_companies', metadata,
+    Column('user_uuid', String(60), ForeignKey("users.uuid")),
+    Column('company_uuid', String(60), ForeignKey("companies.uuid")),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
+)
+
+contactsCompanyTable = Table(
+    'contacts_companies', metadata,
+    Column('contact_uuid', String(60), ForeignKey("contacts.uuid")),
+    Column('company_uuid', String(60), ForeignKey("companies.uuid")),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
+)
+
+
 messagesTable = Table(
     'messages', metadata,
     Column('uuid', String(60), primary_key=True),
@@ -91,13 +106,12 @@ usersTable = Table(
     Column('first_name', String(255), nullable=False),
     Column('last_name', String(255), nullable=False),
     Column('position', String(255), nullable=False),
-    Column('company', String(255), nullable=False),
     Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
 companyTable = Table(
-    'campanies', metadata,
+    'companies', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('name', String(255), nullable=False),
     Column('type', Enum(CompanyType), nullable=False),
@@ -126,13 +140,13 @@ def start_mappers():
     mapper(CompanyEntity, companyTable)
     mapper(UserEntity, usersTable,
            properties={
-               'company': relationship(CompanyEntity, backref='users'),
+               'company': relationship(CompanyEntity, backref='users', secondary=usersCompanyTable),
            }
            )
 
     mapper(ContactEntity, contactTable,
            properties={
-            'company': relationship(CompanyEntity, backref='contacts'),
+            'company': relationship(CompanyEntity, backref='contacts',  secondary=contactsCompanyTable),
         })
     mapper(
         MessageEntity, messagesTable,

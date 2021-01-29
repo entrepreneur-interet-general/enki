@@ -4,6 +4,7 @@ from flask_restful import Resource
 from domain.users.command import CreateUser
 from domain.users.services.user_service import UserService
 from entrypoints.extensions import event_bus
+from entrypoints.middleware import user_info_middleware
 
 
 class WithUserRepoResource(Resource):
@@ -39,6 +40,8 @@ class UserListResource(WithUserRepoResource):
         400:
           description: bad request, bad parameters
     """
+
+    method_decorators = [user_info_middleware]
 
     def get(self):
         return {

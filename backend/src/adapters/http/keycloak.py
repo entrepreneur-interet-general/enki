@@ -1,3 +1,4 @@
+from flask import current_app
 from keycloak import KeycloakAdmin
 from typing import Union
 
@@ -19,6 +20,8 @@ class KeycloakHelper:
                                             password=self.password,
                                             verify=True)
 
+        self.keycloak_admin.realm_name = self.realm
+
     @classmethod
     def from_config(cls, config):
         return cls(
@@ -35,6 +38,7 @@ class KeycloakHelper:
             "lastName": last_name,
             "attributes": attributes
         }
+        current_app.logger.info(f"User id : {user_id}")
         self.keycloak_admin.update_user(user_id=user_id, payload=body)
 
         return True

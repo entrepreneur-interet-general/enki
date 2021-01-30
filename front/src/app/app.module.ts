@@ -5,6 +5,7 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { UiModule } from './ui/ui.module';
 import { MapComponent } from './map/map.component';
 import { environment } from '../environments/environment';
 import { ListeInterventionsComponent } from './interventions/liste-interventions/liste-interventions.component';
@@ -43,11 +44,12 @@ function initializeKeycloak(keycloak: KeycloakService) {
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
     MapComponent,
     ListeInterventionsComponent,
     DetailInterventionComponent,
-    SvgDefinitionsComponent,
-    HeaderComponent,
+    // SvgDefinitionsComponent,
+    // HeaderComponent,
     FirstStepComponent,
     SecondStepComponent,
     PageNotFoundComponent,
@@ -65,6 +67,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       InMemoryDataService, { dataEncapsulation: false }
     ) : [],
     KeycloakAngularModule,
+    UiModule,
     UserDashboardModule,
     EvenementsModule,
     AnnuaireModule,

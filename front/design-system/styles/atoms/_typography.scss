@@ -1,6 +1,15 @@
 .title-container {
-    padding: 20px 16px;
+    padding: 0 16px 20px 16px;
     position: relative;
+    &.-reversed {
+        background: $primary;
+        padding: 16px;
+        color: $white;
+        .subtitle {
+            color: $white;
+            font-family: $primaryFont;
+        }
+    }
 }
 
 .goTo {
@@ -46,16 +55,20 @@
 }
 // Balise title
 .h1-title  {
+    display: flex;
+    align-items: flex-end;
     font-size: rem-calc(32);
     font-weight: 500;
     position: relative;
-    color: $darkestPrimary;
     line-height: 35px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     margin-bottom: 8px;
     @media #{$mediaMobile} {
-        font-size: rem-calc(24);
+        font-size: rem-calc(30);
         line-height: 28px;
+    }
+    svg {
+        margin: 0 12px;
     }
 }
 .-emphasize {
@@ -68,18 +81,18 @@
     font-family: $secondaryFont;
     font-size: 17px;
     letter-spacing: 0.5px;
-  }
+}
 
 
 .h2-title  {
     font-weight: 500;
     font-size: rem-calc(26);
-    color: $black;
     line-height: 45px;
+    letter-spacing: 0.5px;
 
     @media #{$mediaMobile} {
-        font-size: rem-calc(22);
-        line-height: 30px;
+        font-size: rem-calc(24);
+        line-height: 28px;
     }
 }
 

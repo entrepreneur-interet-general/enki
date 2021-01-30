@@ -1,0 +1,13 @@
+@import "../../../../design-system/styles/variables";
+
+
+.searchList--action {
+  svg {
+    fill: $lightGrey;
+  }
+  &.isFavorite {
+    svg {
+      fill: $starYellow;
+    }
+  }
+}

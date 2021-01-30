@@ -1,0 +1,21 @@
+<div class="contact-detail">
+  <a class="goTo" routerLink="/annuaire/contactlist">
+    <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
+    Retour à la liste
+  </a>
+  <div class="contact-detail--heading title-container -reversed">
+    <h1 class="contact-detail--title h2-title">
+      {{contact.name}}
+    </h1>
+    <div class="contact-detail--description subtitle">
+      {{contact.group}} - {{contact.function}}
+    </div>
+    <div class="contact-detail--addToFav" (click)="addContactToFavorite(contact)" [class.-userInFav]="userService.isUserFav(contact.uuid)">
+      <svg class="icon-star icon"><use xlink:href="#icon-star"></use></svg>
+      Ajouter à mes favoris
+    </div>
+  </div>
+  <div class="contact-detail--body">
+
+  </div>
+</div>

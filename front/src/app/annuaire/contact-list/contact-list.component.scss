@@ -1,0 +1,25 @@
+@import "../../../../design-system/styles/variables";
+
+.contact-list {
+  &--search {
+    padding: 0 16px;
+  }
+  &--empty {
+    padding: 0 16px;
+  }
+  .h1-title svg {
+    fill: $starYellow;
+  }
+  &--list {
+    padding: 0 16px;
+  }
+  &--empty {
+    margin-bottom: 20px;
+    p {
+      margin-bottom: 16px;
+    }
+    svg {
+      vertical-align: text-bottom;
+    }
+  }
+}

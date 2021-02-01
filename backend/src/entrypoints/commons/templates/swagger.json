@@ -1,0 +1,1436 @@
+{
+  "components": {
+    "schemas": {
+      "Contact": {
+        "properties": {
+          "contact_methods": {
+            "$ref": "#/components/schemas/ContactMethods"
+          }, 
+          "created_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "creator_id": {
+            "type": "string"
+          }, 
+          "first_name": {
+            "type": "string"
+          }, 
+          "group_name": {
+            "type": "string"
+          }, 
+          "groups": {
+            "items": {
+              "$ref": "#/components/schemas/Group"
+            }, 
+            "readOnly": true, 
+            "type": "array"
+          }, 
+          "last_name": {
+            "type": "string"
+          }, 
+          "position": {
+            "type": "string"
+          }, 
+          "updated_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "uuid": {
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "contact_methods", 
+          "first_name", 
+          "group_name", 
+          "last_name", 
+          "position"
+        ], 
+        "type": "object"
+      }, 
+      "ContactMethods": {
+        "properties": {
+          "address": {
+            "type": "string"
+          }, 
+          "email": {
+            "type": "string"
+          }, 
+          "tel": {
+            "additionalProperties": {
+              "type": "string"
+            }, 
+            "type": "object"
+          }
+        }, 
+        "required": [
+          "email", 
+          "tel"
+        ], 
+        "type": "object"
+      }, 
+      "ContactSchema": {
+        "properties": {
+          "created_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "description": {
+            "minLength": 5, 
+            "type": "string"
+          }, 
+          "done_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "evenement_id": {
+            "type": "string"
+          }, 
+          "event_type": {
+            "default": "task", 
+            "type": "string"
+          }, 
+          "executor_id": {
+            "type": "string"
+          }, 
+          "resource_ids": {
+            "items": {
+              "type": "string"
+            }, 
+            "type": "array", 
+            "writeOnly": true
+          }, 
+          "resources": {
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            }, 
+            "readOnly": true, 
+            "type": "array"
+          }, 
+          "severity": {
+            "enum": [
+              1, 
+              2, 
+              3, 
+              4, 
+              5
+            ]
+          }, 
+          "tag_ids": {
+            "items": {
+              "type": "string"
+            }, 
+            "type": "array", 
+            "writeOnly": true
+          }, 
+          "tags": {
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }, 
+            "readOnly": true, 
+            "type": "array"
+          }, 
+          "title": {
+            "minLength": 5, 
+            "type": "string"
+          }, 
+          "type": {
+            "enum": [
+              "info", 
+              "ask", 
+              "do", 
+              "need_info", 
+              "unknown"
+            ]
+          }, 
+          "updated_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "uuid": {
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "description", 
+          "evenement_id", 
+          "title"
+        ], 
+        "type": "object"
+      }, 
+      "EvenementSchema": {
+        "properties": {
+          "created_at": {
+            "format": "date-time", 
+            "type": "string"
+          }, 
+          "creator_id": {
+            "type": "string"
+          }, 
+          "description": {
+            "type": "string"
+          }, 
+          "ended_at": {
+            "format": "date-time", 
+            "type": "string"
+          }, 
+          "started_at": {
+            "format": "date-time", 
+            "type": "string"
+          }, 
+          "title": {
+            "type": "string"
+          }, 
+          "type": {}, 
+          "updated_at": {
+            "format": "date-time", 
+            "type": "string"
+          }, 
+          "uuid": {
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "description", 
+          "started_at", 
+          "title", 
+          "type"
+        ], 
+        "type": "object"
+      }, 
+      "Group": {
+        "properties": {
+          "created_at": {
+            "format": "date-time", 
+            "type": "string"
+          }, 
+          "name": {
+            "type": "string"
+          }, 
+          "type": {
+            "enum": [
+              "mairie", 
+              "prefecture", 
+              "partenaire", 
+              "SDIS", 
+              "COZ"
+            ]
+          }, 
+          "uuid": {
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "name"
+        ], 
+        "type": "object"
+      }, 
+      "MessageSchema": {
+        "properties": {
+          "created_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "description": {
+            "minLength": 5, 
+            "type": "string"
+          }, 
+          "done_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "evenement_id": {
+            "type": "string"
+          }, 
+          "event_type": {
+            "default": "task", 
+            "type": "string"
+          }, 
+          "executor_id": {
+            "type": "string"
+          }, 
+          "resource_ids": {
+            "items": {
+              "type": "string"
+            }, 
+            "type": "array", 
+            "writeOnly": true
+          }, 
+          "resources": {
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            }, 
+            "readOnly": true, 
+            "type": "array"
+          }, 
+          "severity": {
+            "enum": [
+              1, 
+              2, 
+              3, 
+              4, 
+              5
+            ]
+          }, 
+          "tag_ids": {
+            "items": {
+              "type": "string"
+            }, 
+            "type": "array", 
+            "writeOnly": true
+          }, 
+          "tags": {
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }, 
+            "readOnly": true, 
+            "type": "array"
+          }, 
+          "title": {
+            "minLength": 5, 
+            "type": "string"
+          }, 
+          "type": {
+            "enum": [
+              "info", 
+              "ask", 
+              "do", 
+              "need_info", 
+              "unknown"
+            ]
+          }, 
+          "updated_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "uuid": {
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "description", 
+          "evenement_id", 
+          "title"
+        ], 
+        "type": "object"
+      }, 
+      "Resource": {
+        "properties": {
+          "bucket_name": {
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "content_type": {
+            "enum": [
+              "application/xml", 
+              "application/pdf", 
+              "image/png", 
+              "image/jpeg", 
+              "image/gif", 
+              "video/x-msvideo"
+            ], 
+            "type": "string"
+          }, 
+          "created_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "creator_id": {
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "message_id": {
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "object_path": {
+            "readOnly": true
+          }, 
+          "original_name": {
+            "type": "string"
+          }, 
+          "upload_url": {
+            "readOnly": true
+          }, 
+          "url": {
+            "readOnly": true
+          }, 
+          "uuid": {
+            "type": "string"
+          }
+        }, 
+        "type": "object"
+      }, 
+      "Tag": {
+        "properties": {
+          "created_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "creator_id": {
+            "type": "string"
+          }, 
+          "title": {
+            "minLength": 5, 
+            "type": "string"
+          }, 
+          "updated_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "uuid": {
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "title"
+        ], 
+        "type": "object"
+      }, 
+      "User": {
+        "properties": {
+          "created_at": {
+            "format": "date-time", 
+            "type": "string"
+          }, 
+          "first_name": {
+            "type": "string"
+          }, 
+          "groups": {
+            "items": {
+              "$ref": "#/components/schemas/Group"
+            }, 
+            "readOnly": true, 
+            "type": "array"
+          }, 
+          "last_name": {
+            "type": "string"
+          }, 
+          "position": {
+            "type": "string"
+          }, 
+          "updated_at": {
+            "format": "date-time", 
+            "type": "string"
+          }, 
+          "uuid": {
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "first_name", 
+          "last_name"
+        ], 
+        "type": "object"
+      }, 
+      "UserSchema": {
+        "properties": {
+          "created_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "description": {
+            "minLength": 5, 
+            "type": "string"
+          }, 
+          "done_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "evenement_id": {
+            "type": "string"
+          }, 
+          "event_type": {
+            "default": "task", 
+            "type": "string"
+          }, 
+          "executor_id": {
+            "type": "string"
+          }, 
+          "resource_ids": {
+            "items": {
+              "type": "string"
+            }, 
+            "type": "array", 
+            "writeOnly": true
+          }, 
+          "resources": {
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            }, 
+            "readOnly": true, 
+            "type": "array"
+          }, 
+          "severity": {
+            "enum": [
+              1, 
+              2, 
+              3, 
+              4, 
+              5
+            ]
+          }, 
+          "tag_ids": {
+            "items": {
+              "type": "string"
+            }, 
+            "type": "array", 
+            "writeOnly": true
+          }, 
+          "tags": {
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }, 
+            "readOnly": true, 
+            "type": "array"
+          }, 
+          "title": {
+            "minLength": 5, 
+            "type": "string"
+          }, 
+          "type": {
+            "enum": [
+              "info", 
+              "ask", 
+              "do", 
+              "need_info", 
+              "unknown"
+            ]
+          }, 
+          "updated_at": {
+            "format": "date-time", 
+            "readOnly": true, 
+            "type": "string"
+          }, 
+          "uuid": {
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "description", 
+          "evenement_id", 
+          "title"
+        ], 
+        "type": "object"
+      }
+    }
+  }, 
+  "info": {
+    "title": "enki_api", 
+    "version": "4.0.0"
+  }, 
+  "openapi": "3.0.3", 
+  "paths": {
+    "/api/enki/v1/affair/random": {
+      "get": {
+        "tags": [
+          "affairs"
+        ]
+      }
+    }, 
+    "/api/enki/v1/affairs": {
+      "get": {
+        "description": "Getting all current french mayors", 
+        "parameters": [
+          {
+            "description": "City code", 
+            "in": "query", 
+            "name": "insee_code", 
+            "required": false, 
+            "schema": {
+              "type": "string"
+            }
+          }, 
+          {
+            "description": "Postal code", 
+            "in": "query", 
+            "name": "postal_code", 
+            "required": false, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "tags": [
+          "affairs"
+        ]
+      }
+    }, 
+    "/api/enki/v1/affairs/random": {
+      "get": {
+        "tags": [
+          "affairs"
+        ]
+      }
+    }, 
+    "/api/enki/v1/contacts": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Contact"
+                  }, 
+                  "type": "array"
+                }
+              }
+            }, 
+            "description": "Return a list of contacts"
+          }
+        }, 
+        "tags": [
+          "contacts"
+        ]
+      }, 
+      "post": {
+        "description": "Creating a contact", 
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contact"
+              }
+            }
+          }
+        }, 
+        "responses": {
+          "201": {
+            "description": "Successfully created"
+          }, 
+          "400": {
+            "description": "bad request, bad parameters"
+          }
+        }, 
+        "tags": [
+          "contacts"
+        ]
+      }
+    }, 
+    "/api/enki/v1/contacts/{uuid}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Contact id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }, 
+            "description": "Return specific contact"
+          }, 
+          "404": {
+            "description": "Contact not found"
+          }
+        }, 
+        "tags": [
+          "contacts"
+        ]
+      }
+    }, 
+    "/api/enki/v1/events": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/EvenementSchema"
+                  }, 
+                  "type": "array"
+                }
+              }
+            }, 
+            "description": "Return a list of evenements"
+          }
+        }, 
+        "tags": [
+          "evenements"
+        ]
+      }, 
+      "post": {
+        "description": "Creating an event", 
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvenementSchema"
+              }
+            }
+          }
+        }, 
+        "responses": {
+          "201": {
+            "description": "Successfully created"
+          }, 
+          "400": {
+            "description": "bad request, bad parameters"
+          }
+        }, 
+        "tags": [
+          "events"
+        ]
+      }
+    }, 
+    "/api/enki/v1/events/{uuid}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Event id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvenementSchema"
+                }
+              }
+            }, 
+            "description": "Return a list of evenements"
+          }
+        }, 
+        "tags": [
+          "events"
+        ]
+      }
+    }, 
+    "/api/enki/v1/events/{uuid}/affairs": {
+      "get": {
+        "tags": [
+          "events <> affairs"
+        ]
+      }
+    }, 
+    "/api/enki/v1/events/{uuid}/affairs/{affair_uuid}": {
+      "delete": {
+        "tags": [
+          "events <> affairs"
+        ]
+      }, 
+      "put": {
+        "tags": [
+          "events <> affairs"
+        ]
+      }
+    }, 
+    "/api/enki/v1/messages": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Tag id or list of tag ids", 
+            "in": "query", 
+            "name": "tags", 
+            "schema": {
+              "items": {
+                "type": "string"
+              }, 
+              "type": "array"
+            }
+          }, 
+          {
+            "description": "Evenement ID", 
+            "in": "query", 
+            "name": "evenement_id", 
+            "schema": {
+              "type": "str"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ContactSchema"
+                  }, 
+                  "type": "array"
+                }
+              }
+            }, 
+            "description": "Return a list of messages"
+          }
+        }, 
+        "tags": [
+          "message"
+        ]
+      }, 
+      "post": {
+        "description": "Creating a message", 
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactSchema"
+              }
+            }
+          }
+        }, 
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactSchema"
+                }
+              }
+            }, 
+            "description": "Successfully created"
+          }, 
+          "400": {
+            "description": "bad request, bad parameters"
+          }
+        }, 
+        "tags": [
+          "message"
+        ]
+      }
+    }, 
+    "/api/enki/v1/messages/{uuid}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Message id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactSchema"
+                }
+              }
+            }, 
+            "description": "Return a list of messages"
+          }
+        }, 
+        "tags": [
+          "message"
+        ]
+      }
+    }, 
+    "/api/enki/v1/messages/{uuid}/resource/add": {
+      "delete": {
+        "description": "Deleting a relation between a resource and a message", 
+        "parameters": [
+          {
+            "description": "Message id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }, 
+          {
+            "description": "Resource Ids", 
+            "in": "query", 
+            "name": "resource_ids", 
+            "required": true, 
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/string"
+              }, 
+              "type": "array"
+            }
+          }
+        ], 
+        "responses": {
+          "202": {
+            "description": "Successfully deleted relation"
+          }, 
+          "404": {
+            "description": "relation not found"
+          }
+        }, 
+        "tags": [
+          "messages <> resources"
+        ]
+      }, 
+      "put": {
+        "description": "Building a relation between a resource and a message", 
+        "parameters": [
+          {
+            "description": "Message id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }, 
+          {
+            "description": "Resource Ids", 
+            "in": "query", 
+            "name": "resource_ids", 
+            "required": true, 
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/string"
+              }, 
+              "type": "array"
+            }
+          }
+        ], 
+        "responses": {
+          "201": {
+            "description": "Successfully added relation"
+          }, 
+          "404": {
+            "description": "relation not found"
+          }
+        }, 
+        "tags": [
+          "messages <> resources"
+        ]
+      }
+    }, 
+    "/api/enki/v1/messages/{uuid}/resource/{resource_uuid}": {
+      "delete": {
+        "description": "Deleting a relation between a resource and a message", 
+        "parameters": [
+          {
+            "description": "Message id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }, 
+          {
+            "description": "Resource id", 
+            "in": "path", 
+            "name": "resource_uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "202": {
+            "description": "Successfully deleted relation"
+          }, 
+          "404": {
+            "description": "relation not found"
+          }
+        }, 
+        "tags": [
+          "messages <> resources"
+        ]
+      }, 
+      "get": {
+        "description": "Building a relation between a tag and a message", 
+        "parameters": [
+          {
+            "description": "Message id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }, 
+          {
+            "description": "Resource id", 
+            "in": "path", 
+            "name": "resource_uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Return relation"
+          }, 
+          "404": {
+            "description": "relation not found"
+          }
+        }, 
+        "tags": [
+          "messages <> resources"
+        ]
+      }, 
+      "put": {
+        "description": "Building a relation between a resource and a message", 
+        "parameters": [
+          {
+            "description": "Message id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }, 
+          {
+            "description": "Resource id", 
+            "in": "path", 
+            "name": "resource_uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "201": {
+            "description": "Successfully added relation"
+          }, 
+          "404": {
+            "description": "relation not found"
+          }
+        }, 
+        "tags": [
+          "messages <> resources"
+        ]
+      }
+    }, 
+    "/api/enki/v1/messages/{uuid}/resources": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Resource"
+                  }, 
+                  "type": "array"
+                }
+              }
+            }, 
+            "description": "Return a list of resources"
+          }
+        }, 
+        "tags": [
+          "messages <> resources"
+        ]
+      }
+    }, 
+    "/api/enki/v1/messages/{uuid}/tags": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Tag"
+                  }, 
+                  "type": "array"
+                }
+              }
+            }, 
+            "description": "Return a list of tags"
+          }
+        }, 
+        "tags": [
+          "messages <> tags"
+        ]
+      }
+    }, 
+    "/api/enki/v1/messages/{uuid}/tags/{tag_uuid}": {
+      "delete": {
+        "description": "Deleting a relation between a tag and a message", 
+        "parameters": [
+          {
+            "description": "Message id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }, 
+          {
+            "description": "Tag id", 
+            "in": "path", 
+            "name": "tag_uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "202": {
+            "description": "Successfully deleted relation"
+          }, 
+          "404": {
+            "description": "relation not found"
+          }
+        }, 
+        "tags": [
+          "messages <> tags"
+        ]
+      }, 
+      "get": {
+        "description": "Building a relation between a tag and a message", 
+        "parameters": [
+          {
+            "description": "Message id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }, 
+          {
+            "description": "Tag id", 
+            "in": "path", 
+            "name": "tag_uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Return relation"
+          }, 
+          "404": {
+            "description": "relation not found"
+          }
+        }, 
+        "tags": [
+          "messages <> tags"
+        ]
+      }, 
+      "put": {
+        "description": "Building a relation between a tag and a message", 
+        "parameters": [
+          {
+            "description": "Message id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }, 
+          {
+            "description": "Tag id", 
+            "in": "path", 
+            "name": "tag_uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "201": {
+            "description": "Successfully added relation"
+          }, 
+          "404": {
+            "description": "relation not found"
+          }
+        }, 
+        "tags": [
+          "messages <> tags"
+        ]
+      }
+    }, 
+    "/api/enki/v1/resources": {
+      "post": {
+        "description": "Creating a resource", 
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Resource"
+              }
+            }
+          }
+        }, 
+        "responses": {
+          "201": {
+            "description": "Successfully created"
+          }, 
+          "400": {
+            "description": "bad request, bad parameters"
+          }
+        }, 
+        "tags": [
+          "resources"
+        ]
+      }
+    }, 
+    "/api/enki/v1/resources/{uuid}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "Tag id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Successfully deleted"
+          }, 
+          "404": {
+            "description": "Resource not found"
+          }
+        }, 
+        "tags": [
+          "resources"
+        ]
+      }, 
+      "get": {
+        "parameters": [
+          {
+            "description": "Tag id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource"
+                }
+              }
+            }, 
+            "description": "Return specific resource"
+          }, 
+          "404": {
+            "description": "Resource not found"
+          }
+        }, 
+        "tags": [
+          "resources"
+        ]
+      }
+    }, 
+    "/api/enki/v1/tags": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Tag"
+                  }, 
+                  "type": "array"
+                }
+              }
+            }, 
+            "description": "Return a list of tags"
+          }
+        }, 
+        "tags": [
+          "tags"
+        ]
+      }, 
+      "post": {
+        "description": "Creating a tag", 
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tag"
+              }
+            }
+          }
+        }, 
+        "responses": {
+          "201": {
+            "description": "Successfully created"
+          }, 
+          "400": {
+            "description": "bad request, bad parameters"
+          }
+        }, 
+        "tags": [
+          "tags"
+        ]
+      }
+    }, 
+    "/api/enki/v1/tags/{uuid}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Tag id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              }
+            }, 
+            "description": "Return specific tag"
+          }, 
+          "404": {
+            "description": "Tag not found"
+          }
+        }, 
+        "tags": [
+          "tags"
+        ]
+      }
+    }, 
+    "/api/enki/v1/users": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }, 
+                  "type": "array"
+                }
+              }
+            }, 
+            "description": "Return a list of users"
+          }
+        }, 
+        "tags": [
+          "users"
+        ]
+      }, 
+      "post": {
+        "description": "Creating a user", 
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }, 
+        "responses": {
+          "201": {
+            "description": "Successfully created"
+          }, 
+          "400": {
+            "description": "bad request, bad parameters"
+          }
+        }, 
+        "tags": [
+          "users"
+        ]
+      }
+    }, 
+    "/api/enki/v1/users/{uuid}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "User id", 
+            "in": "path", 
+            "name": "uuid", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }, 
+            "description": "Return specific user"
+          }, 
+          "404": {
+            "description": "User not found"
+          }
+        }, 
+        "tags": [
+          "users"
+        ]
+      }
+    }, 
+    "/api/health": {
+      "get": {
+        "tags": [
+          "core"
+        ]
+      }
+    }, 
+    "/api/v1/echanges/messages": {
+      "post": {
+        "tags": [
+          "echanges"
+        ]
+      }
+    }
+  }
+}

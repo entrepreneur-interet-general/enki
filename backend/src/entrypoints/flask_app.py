@@ -6,8 +6,9 @@ from sqlalchemy.orm import clear_mappers
 from adapters.postgres.orm import start_mappers
 from entrypoints import views
 from service_layer.messagebus import HANDLERS
+from .commands.seeds.group import create_group
 from .config import EnkiConfig
-from .extensions import event_bus, api_spec, oidc
+from .extensions import event_bus, api_spec
 from .errors import errors
 import logging
 
@@ -49,28 +50,28 @@ def create_app(testing=False):
     api = Api(app, errors=errors)
     context = app.config["CONTEXT_FACTORY"](config=EnkiConfig())
     configure_event_bus(context=context)
-    configure_oidc(app=app)
     context.init_app(app=app)
     configure_apispec(app=app)
     register_blueprints(app)
+    register_cli_commands(app=app)
     configure_orm()
     return app
 
+def register_cli_commands(app):
+    app.cli.add_command(create_group)
 
-def configure_oidc(app):
-    app.config.update({
-        'OIDC_TOKEN_TYPE_HINT': 'access_token',
-        'SECRET_KEY': 'b33f4be6-73fc-4d17-85e5-3d8be7835720',
-        'OIDC_CLIENT_SECRETS': '/code/src/keycloak.json',
-        'OIDC_ID_TOKEN_COOKIE_SECURE': False,
-        'OIDC_REQUIRE_VERIFIED_EMAIL': False,
-        'OIDC_USER_INFO_ENABLED': True,
-        'OIDC_OPENID_REALM': 'enki',
-        'OIDC_SCOPES': ['openid', 'email'],
-        'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post'
-    })
-    oidc.init_app(app=app)
-
+def configure_redoc(app):
+    app.config['REDOC'] = {
+        'endpoint': 'docs',
+        'spec_route': '/docs',
+        'static_url_path': '/redoc_static',
+        'title': 'ReDoc',
+        'version': '1.0.0',
+        'openapi_version': '3.0.2',
+        'info': dict(),
+        'marshmallow_schemas': list()
+    }
+    redoc = Redoc(app)
 
 def configure_orm():
     clear_mappers()

@@ -103,11 +103,20 @@ class UserContactResource(WithUserRepoResource):
         UserService.add_contact_to_user(uuid,
                                         contact_uuid=contact_uuid,
                                         uow=current_app.context)
-        return {"user": f"contact {contact_uuid} successfully added from user {uuid}"}, 201
+        contacts = UserService.list_contacts(uuid, uow=current_app.context)
+        uuids = [contact["uuid"] for contact in contacts]
+        return {
+                   "message": f"contact {contact_uuid} successfully added from user {uuid}",
+                   "data": uuids
+
+               }, 201
 
     def delete(self, contact_uuid: str):
         uuid = g.user_info["id"]
         UserService.remove_contact_to_user(uuid,
                                            contact_uuid=contact_uuid,
                                            uow=current_app.context)
-        return {"user": f"contact {contact_uuid} successfully deleted from user {uuid}"}, 202
+        contacts = UserService.list_contacts(uuid, uow=current_app.context)
+        uuids = [contact["uuid"] for contact in contacts]
+        return {"message": f"contact {contact_uuid} successfully deleted from user {uuid}",
+                "data": uuids}, 202

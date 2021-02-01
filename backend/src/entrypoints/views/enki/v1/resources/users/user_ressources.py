@@ -18,6 +18,8 @@ class UserListResource(WithUserRepoResource):
     get:
       tags:
         - users
+      security:
+        - jwt
       responses:
         200:
           description: Return a list of users
@@ -28,6 +30,8 @@ class UserListResource(WithUserRepoResource):
                 items: UserSchema
     post:
       description: Creating a user
+      security:
+        - jwt
       tags:
         - users
       requestBody:

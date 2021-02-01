@@ -31,7 +31,6 @@ class ResourceListResource(WithResourceRepoResource):
     """
     method_decorators = [user_info_middleware]
 
-
     def post(self):
         body = request.get_json()
         body["creator_id"] = g.user_info["id"]

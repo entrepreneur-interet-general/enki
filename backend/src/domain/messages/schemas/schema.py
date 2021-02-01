@@ -44,7 +44,7 @@ class MessageSchema(Schema):
     evenement_id = fields.Str(required=True)
     severity = EnumField(Severity, validate=validate.OneOf([e.value for e in Severity]))
     type = EnumField(MessageType, validate=validate.OneOf([e.value for e in MessageType]))
-    creator_id: fields.Str(required=False, dump_only=True)
+    creator_id: fields.Str(required=False)
     started_at: fields.DateTime()
     tags = fields.Nested(TagSchema, required=False, many=True, dump_only=True)
     tag_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)

@@ -21,6 +21,7 @@ class ResourceSchema(Schema):
     url = fields.Method("_build_get_presigned_url")
     upload_url = fields.Method("_build_update_presigned_url")
     message_id = fields.Str(required=False, dump_only=True)
+    creator_id = fields.Str()
     original_name = fields.Str(required=False)
     content_type = fields.Str(required=False, validate=validate.OneOf(content_types))
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)

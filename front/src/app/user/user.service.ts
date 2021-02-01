@@ -47,21 +47,19 @@ export class UserService {
   addContactToUserFavs(contactId: string): Observable<Contact[]> {
     return this.http.put<any>(`${environment.backendUrl}/users/me/contact/favorites/${contactId}`, '')
       .pipe(
-        map(
-          response => {
-            return response.data
-          }
-        )
-      )
-    return of(this.user.contacts.concat(this.annuaireService.annuaire.filter(contact => contact.uuid === contactId)[0]))
-      .pipe(
         tap(response => {
-          this.user.contacts = response
+            this.user.contacts = response.data
         })
       )
   }
   // DELETE /user/{uuid}/favoriteContacts/{uuid}
   removeContactFromUserFavs(contactId: string): Observable<Contact[]> {
+    return this.http.delete<any>(`${environment.backendUrl}/users/me/contact/favorites/${contactId}`)
+      .pipe(
+        tap(response => {
+          this.user.contacts = response.data
+        })
+      )
     return of(this.user.contacts.filter(contact => contact.uuid !== contactId))
       .pipe(
         tap(response => {

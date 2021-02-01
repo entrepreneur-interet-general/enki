@@ -110,6 +110,7 @@ affairsTable = Table(
 usersTable = Table(
     'users', metadata,
     Column('uuid', String(60), primary_key=True),
+    Column('creator_id', String(255), ForeignKey("users.uuid")),
     Column('first_name', String(255), nullable=False),
     Column('last_name', String(255), nullable=False),
     Column('position', String(255), nullable=False),

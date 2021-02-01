@@ -31,7 +31,7 @@ export class UserService {
 
   // GET /user/{uuid}/favoriteContacts
   getUserFavoriteContacts(): Observable<Contact[]> {
-    return this.http.get<any>(`${environment.backendUrl}/user/me/contacts/favorites`)
+    return this.http.get<any>(`${environment.backendUrl}/users/me/contact/favorites`)
       .pipe(
         map(contacts => {
           this.user.contacts = contacts.data
@@ -45,7 +45,7 @@ export class UserService {
   }
   // PUT /user/me/favoriteContacts/{uuid}
   addContactToUserFavs(contactId: string): Observable<Contact[]> {
-    return this.http.put<any>(`${environment.backendUrl}/user/me/contacts/favorites/${contactId}`, '')
+    return this.http.put<any>(`${environment.backendUrl}/users/me/contact/favorites/${contactId}`, '')
       .pipe(
         map(
           response => {

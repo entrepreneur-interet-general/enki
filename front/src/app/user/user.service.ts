@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { AnnuaireService } from '../annuaire/annuaire.service';
 import { Contact } from '../interfaces/Contact';
 import { User } from '../interfaces/User';
@@ -15,7 +17,8 @@ export class UserService {
 
   constructor(
     // private keycloakService: KeycloakService,
-    private annuaireService: AnnuaireService
+    private annuaireService: AnnuaireService,
+    private http: HttpClient
   ) {
     this.user = {
       attributes: {
@@ -28,22 +31,35 @@ export class UserService {
 
   // GET /user/{uuid}/favoriteContacts
   getUserFavoriteContacts(): Observable<Contact[]> {
-    return of(this.user.contacts);
+    return this.http.get<any>(`${environment.backendUrl}/users/me/contact/favorites`)
+      .pipe(
+        map(contacts => {
+          this.user.contacts = contacts.data
+          return contacts.data
+        })
+      )
+    // return of(this.user.contacts);
   }
   isUserFav(contactId: string): boolean {
     return this.user.contacts.some(contact => contact.uuid === contactId)
   }
-  // PUT /user/{uuid}/favoriteContacts/{uuid}
+  // PUT /user/me/favoriteContacts/{uuid}
   addContactToUserFavs(contactId: string): Observable<Contact[]> {
-    return of(this.user.contacts.concat(this.annuaireService.annuaire.filter(contact => contact.uuid === contactId)[0]))
+    return this.http.put<any>(`${environment.backendUrl}/users/me/contact/favorites/${contactId}`, '')
       .pipe(
         tap(response => {
-          this.user.contacts = response
+            this.user.contacts = response.data
         })
       )
   }
   // DELETE /user/{uuid}/favoriteContacts/{uuid}
   removeContactFromUserFavs(contactId: string): Observable<Contact[]> {
+    return this.http.delete<any>(`${environment.backendUrl}/users/me/contact/favorites/${contactId}`)
+      .pipe(
+        tap(response => {
+          this.user.contacts = response.data
+        })
+      )
     return of(this.user.contacts.filter(contact => contact.uuid !== contactId))
       .pipe(
         tap(response => {

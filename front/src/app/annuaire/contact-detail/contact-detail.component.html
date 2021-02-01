@@ -5,10 +5,10 @@
   </a>
   <div class="contact-detail--heading title-container -reversed">
     <h1 class="contact-detail--title h2-title">
-      {{contact.name}}
+      {{contact.first_name}}
     </h1>
     <div class="contact-detail--description subtitle">
-      {{contact.group}} - {{contact.function}}
+      {{contact.group}} - {{contact.position}}
     </div>
     <div class="contact-detail--addToFav" (click)="addContactToFavorite(contact)" [class.-userInFav]="userService.isUserFav(contact.uuid)">
       <svg class="icon-star icon"><use xlink:href="#icon-star"></use></svg>

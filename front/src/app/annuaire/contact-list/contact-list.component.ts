@@ -26,17 +26,17 @@ export class ContactListComponent implements OnInit {
     return contacts.sort(this.compare)
   }
   compare(a, b): any {
-    if (a.name.toLowerCase() < b.name.toLowerCase()) {
+    if (a.first_name.toLowerCase() < b.first_name.toLowerCase()) {
       return -1;
     }
-    if (a.name.toLowerCase() > b.name.toLowerCase()) {
+    if (a.first_name.toLowerCase() > b.first_name.toLowerCase()) {
       return 1;
     }
     return 0;
   }
 
   compareIfFirstLetterIsDifferent(contactA, contactB): boolean {
-    if (contactA && contactB && contactA.name[0] !== contactB.name[0]) {
+    if (contactA && contactB && contactA.first_name[0] !== contactB.first_name[0]) {
       return true;
     }
     return contactA === undefined;

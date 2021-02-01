@@ -18,7 +18,9 @@ export class ContactDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private annuaireService: AnnuaireService,
     public userService: UserService
-  ) { }
+  ) {
+    this.contact = {}
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {

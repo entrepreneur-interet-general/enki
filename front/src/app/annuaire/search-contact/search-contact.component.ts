@@ -18,18 +18,25 @@ export class SearchContactComponent implements OnInit {
   constructor(
     private annuaireService: AnnuaireService,
     public userService: UserService
-  ) { }
+  ) {
+    this.contactList = []
+  }
 
   ngOnInit(): void {
-    this.contactSearch.valueChanges.subscribe(value => this.onSearchInputChange(value));
+    // this.contactSearch.valueChanges.subscribe(value => this.onSearchInputChange(value));
+    this.annuaireService.searchInAnnuaire().subscribe((res) => {
+      this.contactList = res
+    })
   }
 
   onSearchInputChange(query: string): void {
-    if (query.length >= 3) {
+
+    /* TODO: search in backend */
+/*     if (query.length >= 3) {
       this.annuaireService.searchInAnnuaire(query).subscribe((res) => {
         this.contactList = res
       })
-    }
+    } */
   }
 
   addRemoveToUserFavs(contactId: string): void {

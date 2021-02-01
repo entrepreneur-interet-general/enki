@@ -21,9 +21,9 @@
   </div>
   <div class="contact-list--list" *ngFor="let contact of contacts; let i = index;">
     <div *ngIf="compareIfFirstLetterIsDifferent(contacts[i - 1], contact)">
-      {{contact.name[0].toUpperCase()}}
+      {{contact.first_name[0].toUpperCase()}}
     </div>
-    <a routerLink="/annuaire/contactdetail/{{contact.uuid}}">{{contact.name}}</a>
+    <a routerLink="/annuaire/contactdetail/{{contact.uuid}}">{{contact.first_name}}</a>
   </div>
   
 </div>

@@ -28,6 +28,8 @@ class ResourceListResource(WithResourceRepoResource):
           description: bad request, bad parameters
 
     """
+    method_decorators = [user_info_middleware]
+
 
     def post(self):
         body = request.get_json()

@@ -1,4 +1,4 @@
-from flask import request, current_app
+from flask import request, current_app, g
 from flask_restful import Resource
 from domain.messages.command import CreateResource
 from domain.messages.services.resource_service import ResourceService
@@ -31,6 +31,7 @@ class ResourceListResource(WithResourceRepoResource):
 
     def post(self):
         body = request.get_json()
+        body["creator_id"] = g.user_info["id"]
         create_command = CreateResource(data=body)
         result = event_bus.publish(create_command, current_app.context)
         return {"message": "success",

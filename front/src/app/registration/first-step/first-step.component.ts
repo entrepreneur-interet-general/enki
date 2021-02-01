@@ -27,7 +27,7 @@ export class FirstStepComponent {
     private router: Router,
     private userService: UserService
   ) {
-    this.updateUserUrl = `http://localhost:4201/api/user`;
+    this.updateUserUrl = `http://localhost:8000/enki/v1/users`;
     
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -42,13 +42,10 @@ export class FirstStepComponent {
 
   onSubmit(): void {
     let bodyForm = {
-      attributes: {
-        "communes": this.userGroup.value.codeCommune,
-        "fonction": this.userGroup.value.fonction
-      },
-      firstName: this.userGroup.value.firstName,
-      lastName: this.userGroup.value.lastName,
-      user_fonction: this.userGroup.value.fonction
+        code_insee: this.userGroup.value.codeCommune, 
+        first_name: this.userGroup.value.firstName,
+        last_name: this.userGroup.value.lastName,
+        position: this.userGroup.value.fonction
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
       this.userService.user.attributes = {
@@ -65,7 +62,7 @@ export class FirstStepComponent {
   }
 
   httpSubmitForm(bodyForm): Observable<object> {
-    return this.http.put<any>(this.updateUserUrl, bodyForm, this.httpOptions)
+    return this.http.post<any>(this.updateUserUrl, bodyForm, this.httpOptions)
   }
 
 }

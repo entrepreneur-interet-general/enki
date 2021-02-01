@@ -44,6 +44,10 @@ class APISpecExt:
             app.config["SWAGGER_UI_URL"], "swagger_ui", self.swagger_ui
         )
 
+        blueprint.add_url_rule(
+            "/redoc", "redoc_ui", self.redoc_ui
+        )
+
         app.register_blueprint(blueprint)
 
     def swagger_json(self):
@@ -52,6 +56,8 @@ class APISpecExt:
     def swagger_ui(self):
         return render_template("swagger.j2")
 
+    def redoc_ui(self):
+        return render_template("redoc.html")
 
 class DisableOptionsOperationPlugin(BasePlugin):
 

@@ -1,42 +1,39 @@
-from datetime import datetime
-
-from flask import request, current_app
+from flask import request, current_app, g
 from flask_restful import Resource
-from typing import Dict, Any
 
-from domain.evenements import command
-from domain.evenements.command import CreateEvenement
+from domain.users.command import CreateContact
+from domain.users.services.contact_service import ContactService
 from entrypoints.extensions import event_bus
-from domain.evenements.service import EvenementService
+from entrypoints.middleware import user_info_middleware
 
 
-class WithEvenementRepoResource(Resource):
+class WithContactRepoResource(Resource):
     def __init__(self):
         pass
 
 
-class EvenementListResource(WithEvenementRepoResource):
-    """Get all evenements
+class ContactListResource(WithContactRepoResource):
+    """Get all contacts
     ---
     get:
       tags:
-        - evenements
+        - contacts
       responses:
         200:
-          description: Return a list of evenements
+          description: Return a list of contacts
           content:
             application/json:
               schema:
                 type: array
-                items: EvenementSchema
+                items: ContactSchema
     post:
-      description: Creating an event
+      description: Creating a contact
       tags:
-        - events
+        - contacts
       requestBody:
         content:
           application/json:
-            schema:  EvenementSchema
+            schema:  ContactSchema
       responses:
         201:
           description: Successfully created
@@ -44,26 +41,27 @@ class EvenementListResource(WithEvenementRepoResource):
           description: bad request, bad parameters
     """
 
+    method_decorators = [user_info_middleware]
+
     def get(self):
         return {
-                   "data": EvenementService.list_evenements(current_app.context),
+                   "data": ContactService.list_contacts(current_app.context),
                    "message": "success",
                }, 200
 
     def post(self):
         body = request.get_json()
         body["creator_id"] = g.user_info["id"]
-        command = CreateEvenement(data=body)
+        command = CreateContact(data=body)
         result = event_bus.publish(command, current_app.context)
-
         return {
                    "message": "success",
-                   "data": result[0],
+                   "data": result[0]
                }, 201
 
 
-class EvenementResource(WithEvenementRepoResource):
-    """Get specific evenement
+class ContactResource(WithContactRepoResource):
+    """Get specific contact
     ---
     get:
       parameters:
@@ -72,19 +70,21 @@ class EvenementResource(WithEvenementRepoResource):
           schema:
             type: string
           required: true
-          description: Event id
+          description: Contact id
       tags:
-        - events
+        - contacts
       responses:
         200:
-          description: Return a list of evenements
+          description: Return specific contact
           content:
             application/json:
-              schema: EvenementSchema
+              schema: ContactSchema
+        404:
+            description: Contact not found
     """
 
     def get(self, uuid: str):
         return {
-                   "data": EvenementService.get_by_uuid(uuid, current_app.context),
-                   "message": "success",
+                   "data": ContactService.get_by_uuid(uuid, current_app.context),
+                   "message": "success"
                }, 200

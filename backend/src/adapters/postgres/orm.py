@@ -4,26 +4,34 @@ from datetime import datetime
 from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Integer, TIMESTAMP, Enum
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import mapper, relationship
-from sqlalchemy_utils import ChoiceType
+from sqlalchemy_utils import ChoiceType, TSVectorType
+from sqlalchemy_searchable import make_searchable
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entity import EvenementType, EvenementEntity
 from domain.messages.entities.message_entity import MessageType, Severity, MessageEntity
 from domain.messages.entities.resource import ResourceEntity
 from domain.messages.entities.tag_entity import TagEntity
-from domain.users.entities.group import GroupType, GroupEntity
+from domain.users.entities.group import GroupType, GroupEntity, LocationEntity, LocationType
 from domain.users.entities.user import UserEntity
 from domain.users.entities.contact import ContactEntity
 
 logger = logging.getLogger(__name__)
 
 metadata = MetaData()
+make_searchable(metadata=metadata)
 
 tagMessageTable = Table(
     'tags_messages', metadata,
     Column('messages_uuid', String(60), ForeignKey("messages.uuid")),
     Column('tag_uuid', String(60), ForeignKey("tags.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
+)
+
+group_location_table = Table(
+    'group_location', metadata,
+    Column('group_uuid', String(60), ForeignKey("groups.uuid")),
+    Column('location_uuid', String(60), ForeignKey("locations.uuid")),
 )
 
 usersCompanyTable = Table(
@@ -113,20 +121,26 @@ usersTable = Table(
     Column('first_name', String(255), nullable=False),
     Column('last_name', String(255), nullable=False),
     Column('position', String(255), nullable=False),
-    Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
-
-
 groupTable = Table(
     'groups', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('name', String(255), nullable=False),
     Column('type', Enum(GroupType), nullable=False),
-    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
+    Column('location_id', ForeignKey("locations.uuid"))
 )
 
+locationTable = Table(
+    'locations', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('name', String(255), nullable=False),
+    Column('type', Enum(LocationType), nullable=False),
+    Column('external_id', String(60), nullable=False),
+    Column('search_vector', TSVectorType('name', 'external_id'), nullable=False),
+
+)
 
 contactTable = Table(
     'contacts', metadata,
@@ -138,6 +152,7 @@ contactTable = Table(
     Column('tel', JSONB()),
     Column('position', String(255), nullable=False),
     Column('group_name', String(255), nullable=False),
+    Column('creator_id', String(255), ForeignKey("users.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=True, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=True, default=datetime.now)
 )
@@ -148,7 +163,12 @@ def start_mappers():
     mapper(EvenementEntity, evenementsTable)
     mapper(ResourceEntity, resourceTable)
     mapper(SimpleAffairEntity, affairsTable)
-    mapper(GroupEntity, groupTable)
+    mapper(LocationEntity, locationTable)
+    mapper(GroupEntity, groupTable,
+           properties={
+               'location': relationship(LocationEntity)
+           }
+   )
     mapper(UserEntity, usersTable,
            properties={
                'groups': relationship(GroupEntity, backref='users', secondary=usersCompanyTable),

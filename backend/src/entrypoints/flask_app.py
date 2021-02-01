@@ -6,7 +6,7 @@ from sqlalchemy.orm import clear_mappers
 from adapters.postgres.orm import start_mappers
 from entrypoints import views
 from service_layer.messagebus import HANDLERS
-from .commands.seeds.group import create_group
+from .commands.seeds.group import create_group_and_locations
 from .config import EnkiConfig
 from .extensions import event_bus, api_spec
 from .errors import errors
@@ -36,14 +36,15 @@ def configure_apispec(app):
     api_spec.spec.components.security_scheme("jwt", {
         "type": "openIdConnect",
         "flows": {
-            "implicit":{
-                "authorizationUrl":"http://keycloak:8080/auth/realms/enki/protocol/openid-connect/auth",
-                "clientId":"angular_frontend"
+            "implicit": {
+                "authorizationUrl": "http://keycloak:8080/auth/realms/enki/protocol/openid-connect/auth",
+                "clientId": "angular_frontend"
             }
         },
         "bearerFormat": "bearer",
         "openIdConnectUrl": "http://keycloak:8080/auth/realms/enki/.well-known/openid-configuration",
     })
+
 
 def create_app(testing=False):
     """
@@ -67,8 +68,10 @@ def create_app(testing=False):
     configure_orm()
     return app
 
+
 def register_cli_commands(app):
-    app.cli.add_command(create_group)
+    app.cli.add_command(create_group_and_locations)
+
 
 def configure_redoc(app):
     app.config['REDOC'] = {
@@ -82,6 +85,7 @@ def configure_redoc(app):
         'marshmallow_schemas': list()
     }
     redoc = Redoc(app)
+
 
 def configure_orm():
     clear_mappers()

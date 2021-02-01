@@ -18,3 +18,4 @@ marshmallow_enum
 minio
 python-keycloak
 flask-redoc
+SQLAlchemy-Searchable

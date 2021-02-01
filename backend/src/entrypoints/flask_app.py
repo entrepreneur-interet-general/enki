@@ -33,7 +33,11 @@ def configure_apispec(app):
     """Configure APISpec for swagger support
     """
     api_spec.init_app(app)
-
+    api_spec.spec.components.security_scheme("jwt", {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+    })
 
 def create_app(testing=False):
     """

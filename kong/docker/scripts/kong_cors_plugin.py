@@ -35,4 +35,12 @@ data = [
   ('config.max_age', '3600')
 ]
 
-response = requests.post(f'http://{KONG_HOST_IP}:{KONG_PORT}/services/%3Cservice%3E/plugins', data=data)
+
+def get_enki_service_id():
+  response = requests.get(f'http://{KONG_HOST_IP}:{KONG_PORT}/services')
+  enki_api_id = [elt["id"] for elt in response.json()["data"] if elt["host"] == ENKI_API_SERVICE_ID][0]
+  return enki_api_id
+
+enki_service_id = get_enki_service_id()
+
+response = requests.post(f'http://{KONG_HOST_IP}:{KONG_PORT}/services/{enki_service_id}/plugins', data=data)

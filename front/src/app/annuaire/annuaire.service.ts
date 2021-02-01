@@ -3,6 +3,8 @@ import { Observable, of } from 'rxjs';
 import { CONTACTS, ANNUAIRE } from '../mocks/contacts-mocks';
 import { Contact } from '../interfaces/Contact';
 import { map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +13,23 @@ export class AnnuaireService {
   contacts: Contact[] = CONTACTS;
   annuaire: Contact[] = ANNUAIRE;
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   // GET /annuaire/search?q=queryString
-  searchInAnnuaire(queryString: string): Observable<Contact[]> {
-    return of(this.annuaire)
+  searchInAnnuaire(/* queryString: string */): Observable<Contact[]> {
+    return this.http.get<any>(`${environment.backendUrl}/contacts`)
+      .pipe(
+        map(contacts => {
+          this.annuaire = contacts.data
+          return contacts.data
+        })
+      )
   }
   // POST /annuaire/add
   addContactToAnnuaire(contact: Contact): Observable<Contact> {
-    return of(contact)
+    return this.http.post<any>(`${environment.backendUrl}/contacts`, contact)
       .pipe(
         tap(contact => {
           this.annuaire = this.annuaire.concat(contact)
@@ -29,7 +39,12 @@ export class AnnuaireService {
   }
   // GET /annuaire/{uuid}
   getContactDetails(contactId: string): Observable<Contact> {
-    return of(this.annuaire.filter(contact => contact.uuid === contactId)[0]);
+    return this.http.get<any>(`${environment.backendUrl}/contacts/${contactId}`)
+      .pipe(
+        map(contact => {
+          return contact.data
+        })
+      )
   }
   // PUT /annuaire/{uuid}
   updateContactDetails(contact: Contact): Observable<Contact> {

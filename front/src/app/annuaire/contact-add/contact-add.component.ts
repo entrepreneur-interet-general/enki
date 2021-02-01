@@ -27,12 +27,20 @@ export class ContactAddComponent implements OnInit {
   ngOnInit(): void {
   }
   onSubmit(): void {
+/*     {
+      
+      "last_name": "",
+      "position": ""
+    } */
     const contact: Contact = {
-      uuid: uuidv4(),
-      name: this.contactGroup.value.name,
-      group: this.contactGroup.value.group,
-      function: this.contactGroup.value.function,
-      phone: this.contactGroup.value.phone,
+      // uuid: uuidv4(),
+      first_name: this.contactGroup.value.name,
+      last_name: '',
+      group_name: this.contactGroup.value.group,
+      position: this.contactGroup.value.function,
+      tel: {
+        mobile: this.contactGroup.value.phone
+      },
       email: this.contactGroup.value.email,
       address: this.contactGroup.value.address,
     }

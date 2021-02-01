@@ -8,9 +8,9 @@
   <div class="searchResults--title">
     Résultats de votre recherche
   </div>
-  <div *ngFor="let contact of contactList">
+  <div *ngFor="let contact of contactList | searchContact:contactSearch.value">
     <div class="searchList--element">
-      <a routerLink="/annuaire/contactdetail/{{contact.uuid}}" class="searchList--link">{{contact.name}}</a>
+      <a routerLink="/annuaire/contactdetail/{{contact.uuid}}" class="searchList--link">{{contact.first_name}}</a>
       <a (click)="addRemoveToUserFavs(contact.uuid)" class="searchList--action" [class.isFavorite]="isUserFav(contact.uuid)">
         <svg class="icon-star icon"><use xlink:href="#icon-star"></use></svg>
       </a>

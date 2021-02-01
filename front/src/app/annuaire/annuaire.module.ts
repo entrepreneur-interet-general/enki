@@ -8,6 +8,7 @@ import { ContactAddComponent } from './contact-add/contact-add.component';
 import { AnnuaireComponent } from './annuaire.component';
 import { AnnuaireService } from './annuaire.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SearchContactPipe } from './search-contact/search-contact.pipe';
 
 const routes : Routes = [
   {
@@ -44,7 +45,8 @@ const routes : Routes = [
     ContactDetailComponent,
     SearchContactComponent,
     ContactAddComponent,
-    AnnuaireComponent
+    AnnuaireComponent,
+    SearchContactPipe
   ],
   providers: [AnnuaireService],
   imports: [

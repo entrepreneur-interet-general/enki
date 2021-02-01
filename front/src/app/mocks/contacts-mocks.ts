@@ -1,19 +1,25 @@
 export const CONTACTS = [
   {
     uuid: '1',
-    name: 'Roger',
-    group: 'Préfecture des Hauts-de-Seine',
-    function: 'Chef site PC',
-    phone: '0606060606',
+    first_name: 'Roger',
+    last_name: '',
+    group_name: 'Préfecture des Hauts-de-Seine',
+    position: 'Chef site PC',
+    tel: {
+      mobile: '0606060606'
+    },
     address: '55 avenue de saint ouen',
     email: 'test@test.fr'
   },
   {
     uuid: '2',
-    name: 'Michelle',
-    group: 'SDIS Val d\'Oise',
-    function: 'Pompière',
-    phone: '0707070707',
+    first_name: 'Michelle',
+    last_name: '',
+    group_name: 'SDIS Val d\'Oise',
+    position: 'Pompière',
+    tel: {
+      mobile: '0707070707'
+    },
     address: '',
     email: 'test@test.fr'
   }
@@ -22,37 +28,49 @@ export const CONTACTS = [
 export const ANNUAIRE = [
   {
     uuid: '1',
-    name: 'Roger',
-    group: 'Préfecture des Hauts-de-Seine',
-    function: 'Chef site PC',
-    phone: '0606060606',
+    first_name: 'Roger',
+    last_name: '',
+    group_name: 'Préfecture des Hauts-de-Seine',
+    position: 'Chef site PC',
+    tel: {
+      mobile: '0606060606'
+    },
     address: '55 avenue de saint ouen',
     email: 'test@test.fr'
   },
   {
     uuid: '2',
-    name: 'Michelle',
-    group: 'SDIS Val d\'Oise',
-    function: 'Pompière',
-    phone: '0707070707',
+    first_name: 'Michelle',
+    last_name: '',
+    group_name: 'SDIS Val d\'Oise',
+    position: 'Pompière',
+    tel: {
+      mobile: '0707070707'
+    },
     address: '',
     email: 'test@test.fr'
   },
   {
     uuid: '3',
-    name: 'Benjamin',
-    group: 'Préfecture du 77',
-    function: 'Préfet',
-    phone: '0606060606',
+    first_name: 'Benjamin',
+    last_name: '',
+    group_name: 'Préfecture du 77',
+    position: 'Préfet',
+    tel: {
+      mobile: '0606060606'
+    },
     address: '55 avenue de saint ouen',
     email: 'test@test.fr'
   },
   {
     uuid: '4',
-    name: 'Benoît',
-    group: 'SDIS de la Marne',
-    function: 'Agent d\'entretien',
-    phone: '0606060606',
+    last_name: '',
+    first_name: 'Benoît',
+    group_name: 'SDIS de la Marne',
+    position: 'Agent d\'entretien',
+    tel: {
+      mobile: '0606060606'
+    },
     address: 'Reims',
     email: 'test@test.fr'
   }

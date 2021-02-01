@@ -75,7 +75,6 @@ def register_views():
     api_spec.spec.components.schema("EvenementSchema", schema=EvenementSchema)
     api_spec.spec.components.schema("MessageSchema", schema=MessageSchema)
     api_spec.spec.components.schema("UserSchema", schema=MessageSchema)
-    api_spec.spec.components.schema("ContactSchema", schema=MessageSchema)
     # api_spec.spec.components.schema("TagSchema", schema=TagSchema)
 
     # Affairs

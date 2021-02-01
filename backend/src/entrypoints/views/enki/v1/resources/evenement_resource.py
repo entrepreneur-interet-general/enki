@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import request, current_app
+from flask import request, current_app, g
 from flask_restful import Resource
 from typing import Dict, Any
 

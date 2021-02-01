@@ -3,6 +3,7 @@ from flask_restful import Resource
 from domain.messages.command import CreateResource
 from domain.messages.services.resource_service import ResourceService
 from entrypoints.extensions import event_bus
+from entrypoints.middleware import user_info_middleware
 
 
 class WithResourceRepoResource(Resource):

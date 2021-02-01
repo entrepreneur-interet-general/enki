@@ -48,3 +48,27 @@ class UserService:
         with uow:
             users: List[UserEntity] = uow.user.get_all()
             return UserService.schema(many=True).dump(users)
+
+    @staticmethod
+    def list_contacts(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            users: List[UserEntity] = uow.user.get_user_contacts(uuid=uuid)
+            return UserService.schema(many=True).dump(users)
+
+    @staticmethod
+    def get_user_contact(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
+        with uow:
+            contact = uow.contact.get_by_uuid(uuid=contact_uuid)
+            uow.user.get_user_contact(uuid=uuid, contact=contact)
+
+    @staticmethod
+    def add_contact_to_user(uuid: str, contact_uuid: str,uow: AbstractUnitOfWork):
+        with uow:
+            contact = uow.contact.get_by_uuid(uuid=contact_uuid)
+            uow.user.add_user_contact(uuid=uuid, contact=contact)
+
+    @staticmethod
+    def remove_contact_to_user(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
+        with uow:
+            contact = uow.contact.get_by_uuid(uuid=contact_uuid)
+            uow.user.remove_user_contact(uuid=uuid, contact=contact)

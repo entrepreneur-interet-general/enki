@@ -8,6 +8,7 @@ from domain.evenements import command
 from domain.evenements.command import CreateEvenement
 from entrypoints.extensions import event_bus
 from domain.evenements.service import EvenementService
+from entrypoints.middleware import user_info_middleware
 
 
 class WithEvenementRepoResource(Resource):
@@ -43,6 +44,7 @@ class EvenementListResource(WithEvenementRepoResource):
         400:
           description: bad request, bad parameters
     """
+    method_decorators = [user_info_middleware]
 
     def get(self):
         return {

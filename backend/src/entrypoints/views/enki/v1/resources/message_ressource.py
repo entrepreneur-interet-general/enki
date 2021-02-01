@@ -4,6 +4,7 @@ from typing import Dict, Any, Union, List
 from domain.messages.services.message_service import MessageService
 from domain.messages.command import CreateMessage
 from entrypoints.extensions import event_bus
+from entrypoints.middleware import user_info_middleware
 
 
 class WithMessageRepoResource(Resource):
@@ -55,6 +56,7 @@ class MessageListResource(WithMessageRepoResource):
         400:
           description: bad request, bad parameters
     """
+    method_decorators = [user_info_middleware]
 
     def get(self):
         parser = reqparse.RequestParser()

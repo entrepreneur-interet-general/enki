@@ -50,6 +50,7 @@ data = {
     'config.client_id': f'{CLIENT_ID}',
     'config.client_secret': f'{CLIENT_SECRET}',
     'config.realm': f'{REALM_NAME}',
+    'config.bearer_only': 'true',
     'config.introspection_endpoint': f'http://{KEYCLOAK_HOST_IP}:{KEYCLOAK_PORT}/auth/realms/{REALM_NAME}/protocol/openid-connect/token/introspect',
     'config.discovery': f'http://{KEYCLOAK_HOST_IP}:{KEYCLOAK_PORT}/auth/realms/{REALM_NAME}/.well-known/openid-configuration'
 }

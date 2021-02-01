@@ -13,8 +13,9 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
     MessageResourceResource, MessageResourceListResource, \
     AffairEvenementResource, AffairListEvenementResource
 from .resources.contact_ressources import ContactListResource, ContactResource
-from .resources.user_ressources import UserResource, UserListResource
+from entrypoints.views.enki.v1.resources.users.user_ressources import UserResource, UserListResource
 from .resources.message_resource_resource import MessageMultipleResourceResource
+from .resources.users.user_favorite_ressources import UserContactListResource, UserContactResource
 
 enki_blueprint_v1 = Blueprint(name="enki_blueprint_v1", import_name=__name__, url_prefix="/api/enki/v1")
 
@@ -62,6 +63,10 @@ api.add_resource(UserResource, '/users/<uuid>', endpoint="users_by_id")
 # User
 api.add_resource(ContactListResource, '/contacts', endpoint="contacts")
 api.add_resource(ContactResource, '/contacts/<uuid>', endpoint="contacts_by_id")
+
+# User
+api.add_resource(UserContactListResource, '/users/me/contact/favorites', endpoint="user_contacts")
+api.add_resource(UserContactResource, '/users/me/contact/favorites/<contact_uuid>', endpoint="user_contacts_by_id")
 
 
 @enki_blueprint_v1.before_app_first_request
@@ -114,3 +119,8 @@ def register_views():
     # Contacts
     api_spec.spec.path(view=ContactListResource, app=current_app)
     api_spec.spec.path(view=ContactResource, app=current_app)
+
+
+    # Users <> Contacts
+    api_spec.spec.path(view=UserContactListResource, app=current_app)
+    api_spec.spec.path(view=UserContactResource, app=current_app)

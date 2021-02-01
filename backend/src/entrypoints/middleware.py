@@ -9,7 +9,7 @@ def user_info_middleware(func):
     def decorated_function(*args, **kwargs):
         user_info = request.headers.get("X-Userinfo")
         if user_info:
-            user_info = json.loads(user_info)
+            user_info = json.loads(base64.b64decode(user_info))
             current_app.logger.info(f"User info provided : {user_info}")
             g.user_info = user_info
         else:

@@ -34,9 +34,15 @@ def configure_apispec(app):
     """
     api_spec.init_app(app)
     api_spec.spec.components.security_scheme("jwt", {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT",
+        "type": "openIdConnect",
+        "flows": {
+            "implicit":{
+                "authorizationUrl":"http://keycloak:8080/auth/realms/enki/protocol/openid-connect/auth",
+                "clientId":"angular_frontend"
+            }
+        },
+        "bearerFormat": "bearer",
+        "openIdConnectUrl": "http://keycloak:8080/auth/realms/enki/.well-known/openid-configuration",
     })
 
 def create_app(testing=False):

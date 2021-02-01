@@ -40,6 +40,13 @@ contactsCompanyTable = Table(
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
 )
 
+users_favorites_contact_table = Table(
+    'users_favorites_contact', metadata,
+    Column('user_uuid', String(60), ForeignKey("users.uuid")),
+    Column('contact_uuid', String(60), ForeignKey("contacts.uuid")),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
+)
+
 
 messagesTable = Table(
     'messages', metadata,
@@ -145,8 +152,9 @@ def start_mappers():
     mapper(UserEntity, usersTable,
            properties={
                'groups': relationship(GroupEntity, backref='users', secondary=usersCompanyTable),
+               'contacts': relationship(ContactEntity, backref='users', secondary=users_favorites_contact_table),
            }
-           )
+   )
 
     mapper(ContactEntity, contactTable,
            properties={

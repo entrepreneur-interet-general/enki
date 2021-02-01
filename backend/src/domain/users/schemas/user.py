@@ -7,6 +7,7 @@ from datetime import datetime
 from werkzeug.exceptions import HTTPException
 
 from domain.users.entities.user import UserEntity
+from domain.users.schemas.contact import ContactSchema
 from domain.users.schemas.group import GroupSchema
 
 
@@ -21,6 +22,7 @@ class UserSchema(Schema):
     first_name = fields.Str(required=True)
     last_name = fields.Str(required=True)
     position = fields.Str(required=False)
+    contacts = fields.Nested(ContactSchema, required=False, many=True, dump_only=True)
     groups = fields.Nested(GroupSchema, required=False, many=True, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow())

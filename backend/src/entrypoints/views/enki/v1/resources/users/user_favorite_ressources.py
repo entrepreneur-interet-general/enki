@@ -104,7 +104,7 @@ class UserContactResource(WithUserRepoResource):
                                         contact_uuid=contact_uuid,
                                         uow=current_app.context)
         contacts = UserService.list_contacts(uuid, uow=current_app.context)
-        uuids = [contact.uuid for contact in contacts]
+        uuids = [contact["uuid"] for contact in contacts]
         return {
                    "message": f"contact {contact_uuid} successfully added from user {uuid}",
                    "data": uuids
@@ -117,6 +117,6 @@ class UserContactResource(WithUserRepoResource):
                                            contact_uuid=contact_uuid,
                                            uow=current_app.context)
         contacts = UserService.list_contacts(uuid, uow=current_app.context)
-        uuids = [contact.uuid for contact in contacts]
+        uuids = [contact["uuid"] for contact in contacts]
         return {"message": f"contact {contact_uuid} successfully deleted from user {uuid}",
                 "data": uuids}, 202

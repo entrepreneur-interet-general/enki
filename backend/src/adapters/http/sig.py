@@ -25,10 +25,15 @@ class SigApiAdapter:
         return response
 
     @staticmethod
-    def code_territory_search(postal_code: Union[str, List[str]], insee_code: Union[str, List[str]]) -> Response:
+    def code_territory_search(postal_code: Union[str, List[str]],
+                              insee_code: Union[str, List[str]],
+                              code_dept: Union[str, List[str]]) -> Response:
         url = f"{SIG_API_URL}/decoupage-administratif/territoire/codes"
 
-        querystring = {"codesInsee": insee_code, "codesPostaux": postal_code}
+        querystring = {"codesInsee": insee_code,
+                       "codesPostaux": postal_code,
+                       "codesDept":code_dept
+                       }
 
         headers = {
             'x-api-key': SIG_API_KEY

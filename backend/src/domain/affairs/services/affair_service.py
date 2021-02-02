@@ -76,9 +76,12 @@ class AffairService:
     @staticmethod
     def list_affairs_by_insee_and_postal_codes(insee_code: Union[str, List[str], None],
                                                postal_code: Union[str, List[str], None],
+                                               dept_code: Union[str, List[str], None],
                                                uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
-            response: Response = SigApiAdapter.code_territory_search(insee_code=insee_code, postal_code=postal_code)
+            response: Response = SigApiAdapter.code_territory_search(insee_code=insee_code,
+                                                                     postal_code=postal_code,
+                                                                     dept_code=dept_code)
             result: dict = response.json()
             if result["geometrie"]:
                 affairs: List[AffairEntity] = uow.affair.get_from_polygon(

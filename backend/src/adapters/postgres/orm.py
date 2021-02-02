@@ -129,7 +129,8 @@ groupTable = Table(
     Column('uuid', String(60), primary_key=True),
     Column('name', String(255), nullable=False),
     Column('type', Enum(GroupType), nullable=False),
-    Column('location_id', ForeignKey("locations.uuid"))
+    Column('location_id', ForeignKey("locations.uuid")),
+    Column('search_vector', TSVectorType('name', 'external_id'), nullable=False),
 )
 
 locationTable = Table(

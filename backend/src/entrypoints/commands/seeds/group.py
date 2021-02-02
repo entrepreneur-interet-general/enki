@@ -30,17 +30,17 @@ def create_group_and_locations():
                     name="Prefecture de Seine et Marne",
                     type=GroupType.PREFECTURE,
                     location_id="dept_77",
-                    ),
+        ),
         GroupEntity(uuid="sdis_uuid",
                     name="SDIS",
                     type=GroupType.SDIS,
                     location_id="dept_77",
-                    ),
+        ),
         GroupEntity(uuid="mairie_uuid",
                     name="Mairie Chelles",
                     type=GroupType.MAIRIE,
                     location_id="ville_77108",
-                    )
+        )
     ]
 
     with uow:
@@ -52,3 +52,5 @@ def create_group_and_locations():
         #         uow.session.commit()
         uow.session.add_all(locations)
         uow.session.add_all(groups)
+        for group in groups:
+            group.location = locations[0]

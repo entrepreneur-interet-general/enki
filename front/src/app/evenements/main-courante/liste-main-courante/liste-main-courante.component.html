@@ -27,7 +27,8 @@
       <a routerLink="../detailmessage/{{message.uuid}}">
         <div class="list--wrapper">
           <div class="secondInfos">
-            <div class="badge">
+            <div class="badge" [ngClass]="(message.creator_position === 'prefet') ? 'badge__blueFill' :'badge__greenFill'">
+            <!-- <div class="badge" [ngClass]="{'badge__greenFill': message.creator_position === 'maire', 'badge__greenFill': message.creator_position === 'préfet' }"> -->
               {{message.creator_group}}
             </div>
             <div class="secondInfos--dateTime">
@@ -35,7 +36,7 @@
             </div>
           </div>
           <div class="mainInfos">
-            <div class="mainInfos--title">
+            <div class="mainInfos--title" [ngClass]="(message.creator_position === 'prefet' ? '-blue' : '-green')">
               {{message.creator_position}} —
             </div>
             <div class="mainInfos--content">

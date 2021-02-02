@@ -16,7 +16,7 @@ class SigApiAdapter:
 
         querystring = {"codesInsee": insee_code,
                        "codesPostaux": postal_code,
-                       "codesDept":code_dept
+                       "codesDept": code_dept
                        }
 
         headers = {

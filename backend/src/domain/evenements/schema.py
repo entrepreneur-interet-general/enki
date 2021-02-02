@@ -9,6 +9,7 @@ from marshmallow.exceptions import ValidationError
 from werkzeug.exceptions import HTTPException
 
 from domain.evenements.entity import EvenementType, EvenementEntity
+from domain.users.schemas.user import UserSchema
 
 
 class EvenementValidationError(HTTPException):
@@ -23,7 +24,8 @@ class EvenementSchema(Schema):
     description = fields.Str(required=True)
     type = EnumField(EvenementType, required=True, by_value=True)
     started_at = fields.DateTime(required=True)
-    creator_id = fields.Str(required=False)
+    creator_id = fields.Str(required=False, dump_only=True)
+    creator = fields.Nested(UserSchema, required=False, dump_only=True)
     ended_at = fields.DateTime(required=False)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow())

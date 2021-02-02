@@ -28,7 +28,7 @@ class ContactSchema(Schema):
     tel = fields.Dict(keys=fields.Str(), values=fields.Str(), required=True)
     email = fields.Str(required=False)
     address = fields.Str(required=False)
-    groups = fields.Nested(GroupSchema, required=False, many=True, dump_only=True)
+    group = fields.Nested(GroupSchema, required=False, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
 

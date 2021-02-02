@@ -5,6 +5,7 @@ from typing import Optional, List
 
 from domain.core.entity import Entity
 from domain.users.entities.contact import ContactEntity
+from domain.users.entities.group import GroupEntity
 
 
 @dataclass_json
@@ -17,6 +18,6 @@ class UserEntity(Entity):
     last_name: str
     position: str
     contacts: List[ContactEntity] = field(default_factory=lambda: [])
-    groups: List = field(default_factory=lambda: [])
+    group: List[GroupEntity] = field(default_factory=lambda: None)
     created_at: datetime = field(default_factory=lambda: datetime.utcnow())
     updated_at: datetime = field(default_factory=lambda: datetime.utcnow())

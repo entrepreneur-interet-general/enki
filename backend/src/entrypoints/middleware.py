@@ -17,6 +17,19 @@ def user_info_middleware(func):
             g.user_info = {
                 "id": "my-test-user-id"
             }
+
+        current_app.logger.info(func)
+        return func(*args, **kwargs)
+
+    return decorated_function
+
+
+def user_object_middleware(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        uow = current_app.context
+        with uow:
+            g.user = uow.user.get_by_uuid(g.user_info["id"])
         return func(*args, **kwargs)
 
     return decorated_function

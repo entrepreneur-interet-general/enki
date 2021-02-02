@@ -55,7 +55,6 @@ users_favorites_contact_table = Table(
     Column('contact_uuid', String(60), ForeignKey("contacts.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
 )
-
 messagesTable = Table(
     'messages', metadata,
     Column('uuid', String(60), primary_key=True),
@@ -121,6 +120,7 @@ usersTable = Table(
     Column('first_name', String(255), nullable=False),
     Column('last_name', String(255), nullable=False),
     Column('position', String(255), nullable=False),
+    Column('group_id', String(60),  ForeignKey("groups.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
@@ -130,7 +130,7 @@ groupTable = Table(
     Column('name', String(255), nullable=False),
     Column('type', Enum(GroupType), nullable=False),
     Column('location_id', ForeignKey("locations.uuid")),
-    Column('search_vector', TSVectorType('name', 'external_id'), nullable=False),
+    Column('search_vector', TSVectorType('name'), nullable=False),
 )
 
 locationTable = Table(
@@ -153,8 +153,8 @@ contactTable = Table(
     Column('address', String(255), nullable=False),
     Column('tel', JSONB()),
     Column('position', String(255), nullable=False),
-    Column('group_name', String(255), nullable=False),
-    Column('creator_id', String(255), ForeignKey("users.uuid")),
+    Column('group_id', String(60), ForeignKey("groups.uuid"), nullable=False),
+    Column('creator_id', String(60), ForeignKey("users.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=True, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=True, default=datetime.now)
 )
@@ -162,7 +162,11 @@ contactTable = Table(
 
 def start_mappers():
     mapper(TagEntity, tagTable)
-    mapper(EvenementEntity, evenementsTable)
+    mapper(EvenementEntity, evenementsTable,
+           properties={
+               'creator': relationship(UserEntity, backref='evenements',  foreign_keys=evenementsTable.c.creator_id)
+           }
+   )
     mapper(ResourceEntity, resourceTable)
     mapper(SimpleAffairEntity, affairsTable)
     mapper(LocationEntity, locationTable)
@@ -173,19 +177,20 @@ def start_mappers():
            )
     mapper(UserEntity, usersTable,
            properties={
-               'groups': relationship(GroupEntity, backref='users', secondary=users_group_table),
-               'contacts': relationship(ContactEntity, backref='users', secondary=users_favorites_contact_table),
+               'group': relationship(GroupEntity, backref='users'),
+               'contacts': relationship(ContactEntity, backref='users', secondary=users_favorites_contact_table,  lazy='noload'),
            }
            )
 
     mapper(ContactEntity, contactTable,
            properties={
-               'groups': relationship(GroupEntity, backref='contacts', secondary=contacts_groups_table),
+               'group': relationship(GroupEntity, backref='contacts'),
            })
     mapper(
         MessageEntity, messagesTable,
         properties={
             'tags': relationship(TagEntity, backref='messages', secondary=tagMessageTable),
-            'resources': relationship(ResourceEntity, backref='messages')
+            'resources': relationship(ResourceEntity, backref='messages'),
+            'creator': relationship(UserEntity, backref='messages', foreign_keys=messagesTable.c.creator_id)
         }
     )

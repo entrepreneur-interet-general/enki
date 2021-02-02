@@ -56,6 +56,7 @@ class UserListResource(WithUserRepoResource):
     def post(self):
         body = request.get_json()
         body["uuid"] = g.user_info["id"]
+        current_app.logger.info("start creating user")
         command = CreateUser(data=body)
         result = event_bus.publish(command, current_app.context)
         return {

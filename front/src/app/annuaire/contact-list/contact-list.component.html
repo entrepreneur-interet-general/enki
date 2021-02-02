@@ -20,7 +20,7 @@
     <p><img src="assets/empty-contact-list.jpg" alt=""></p>
   </div>
   <div class="contact-list--list" *ngFor="let contact of contacts; let i = index;">
-    <div *ngIf="compareIfFirstLetterIsDifferent(contacts[i - 1], contact)">
+    <div class="contact-list--letter" *ngIf="compareIfFirstLetterIsDifferent(contacts[i - 1], contact)">
       {{contact.first_name[0].toUpperCase()}}
     </div>
     <a routerLink="/annuaire/contactdetail/{{contact.uuid}}">{{contact.first_name}}</a>

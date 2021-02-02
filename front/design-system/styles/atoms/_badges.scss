@@ -9,6 +9,7 @@
   font-size: 13px;
   height: 20px;
   margin-right: 8px;
+  letter-spacing: 0.5px;
   &__inverted {
     background: transparent;
     border: 1px solid $primary;
@@ -17,6 +18,14 @@
   &__green {
     border-color: $lightGreen;
     color: $lightGreen;
+  }
+  &__greenFill {
+    border-color: $lightGreen;
+    background-color: $lightGreen;
+  }
+  &__blueFill {
+    border-color: $lightPrimary;
+    background-color: $lightPrimary;
   }
 }
 

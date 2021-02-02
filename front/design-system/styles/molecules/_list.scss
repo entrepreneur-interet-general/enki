@@ -29,6 +29,12 @@
     letter-spacing: .5px;
     font-weight: 700;
     text-transform: uppercase;
+    &.-green {
+      color: $lightGreen;
+    }
+    &.-blue {
+      color: $lightPrimary;
+    }
   }
   &--content {
     display: inline;

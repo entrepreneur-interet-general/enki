@@ -79,7 +79,13 @@ class MessageListResource(WithMessageRepoResource):
         body = request.get_json()
         current_app.logger.info(f"body {body}")
         body["creator_id"] = g.user_info["id"]
-        body["creator_name"] = f'{g.user_info["fonction"]} {g.user_info["code_insee"]}'
+        if g.user_info["fonction"] == "prefet":
+            body["creator_position"] = f'{g.user_info["fonction"]}'
+            body["creator_group"] = f'Prefecture {g.user_info["code_insee"]}'
+        else:
+            body["creator_position"] = f'{g.user_info["fonction"]}'
+            body["creator_group"] = f'Mairie {g.user_info["code_insee"]}'
+
         command = CreateMessage(data=body)
         result = event_bus.publish(command, current_app.context)
         return {

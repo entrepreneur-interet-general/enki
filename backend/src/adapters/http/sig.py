@@ -11,7 +11,6 @@ class SigApiAdapter:
 
     @staticmethod
     def textual_search(query: str, limit: int = 5) -> Response:
-
         url = f"{SIG_API_URL}/recherche-localisation/textuelle"
 
         querystring = {"q": query, "type": "municipality", "limit": str(limit)}

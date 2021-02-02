@@ -15,6 +15,9 @@
       <svg class="icon-sun icon"><use xlink:href="#icon-sun"></use></svg>
       Météo
     </h2>
+    <div class="meteo--image">
+      <img src="assets/meteo-chelles.png" alt="">
+    </div>
   </div>
   <ul class="interventions dashboard--widget">
     <!-- <div class="sub-title">
@@ -47,11 +50,11 @@
     <div class="interventions--seeMore" *ngIf="interventions.length > 0">
       <a routerLink="/situations/interventions">
         <svg class="icon-add title-icon"><use xlink:href="#icon-add"></use></svg>
-        <span>Voir plus de signalements</span>
+        <span>Voir plus d'appels de secours</span>
       </a>
     </div>
     <div class="interventions--noInterventions" *ngIf="interventions.length === 0">
-      Pas de signalements en cours
+      Pas d'appels de secours en cours
     </div>
   </ul>
   <div class="vigicrue dashboard--widget">
@@ -59,6 +62,9 @@
       <svg class="icon-water icon"><use xlink:href="#icon-water"></use></svg>
       Vigicrue
     </h2>
+    <div class="vigicrue--image">
+      <img src="assets/vigicrue.png" alt="">
+    </div>
   </div>
   <div class="annuaire dashboard--widget">
     <h2 class="title-with-icon">
@@ -67,13 +73,16 @@
     </h2>
   </div>
   <div class="stats dashboard--widget">
-    <div class="sub-title">
-      Ivry-sur-Seine
+<!--     <div class="sub-title">
+      Chelles
     </div>
     <h2 class="title-with-icon">
       <svg class="icon-stats icon"><use xlink:href="#icon-stats"></use></svg>
       En chiffres
-    </h2>
+    </h2> -->
+    <div class="stats--image">
+      <img src="assets/chiffres.png" alt="">
+    </div>
   </div>
   <div class="reseaux-sociaux dashboard--widget">
     <div class="sub-title">
@@ -83,6 +92,9 @@
       <svg class="icon-twitter icon"><use xlink:href="#icon-twitter"></use></svg>
       Twitter
     </h2>
+    <div class="reseaux-sociaux--image">
+      <img src="assets/twitter.png" alt="">
+    </div>
   </div>
   <div class="stats dashboard--widget">
     <div class="sub-title">
@@ -92,5 +104,8 @@
       <svg class="icon-news icon"><use xlink:href="#icon-news"></use></svg>
       Actualités
     </h2>
+    <div class="stats--image">
+      <img src="assets/actus.png" alt="">
+    </div>
   </div>
 </div>

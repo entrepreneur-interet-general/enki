@@ -17,12 +17,12 @@
     </h2>
   </div>
   <ul class="interventions dashboard--widget">
-    <div class="sub-title">
+    <!-- <div class="sub-title">
       Chelles
-    </div>
+    </div> -->
     <h2 class="interventions--title title-with-icon">
       <svg class="icon-post-it icon"><use xlink:href="#icon-post-it"></use></svg>
-      Derniers signalements
+      Derniers appels de secours
     </h2>
     <li class="intervention list--element" *ngFor="let intervention of interventions | slice:0:3">
       <a class="intervention--wrapper list--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">

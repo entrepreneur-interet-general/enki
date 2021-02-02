@@ -27,16 +27,16 @@
       <a routerLink="../detailmessage/{{message.uuid}}">
         <div class="list--wrapper">
           <div class="secondInfos">
-            <div class="secondInfos--dateTime">
-              {{message.created_at | date:"dd/MM/yyyy à HH:mm"}}
-            </div>
             <div class="badge">
-              Mairie
+              {{message.creator_group}}
+            </div>
+            <div class="secondInfos--dateTime">
+              {{message.created_at | date:"HH:mm"}}
             </div>
           </div>
           <div class="mainInfos">
             <div class="mainInfos--title">
-              ADJOINT —
+              {{message.creator_position}} —
             </div>
             <div class="mainInfos--content">
               {{ message.title }}
@@ -54,7 +54,9 @@
       </a>
     </li>
   </ul>
-  
+  <div class="action--filter">
+    <svg class="icon-filter icon"><use xlink:href="#icon-filter"></use></svg>
+  </div>
   <div class="action--add" routerLink="../addmessage" *ngIf="messages.length > 0">
     <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
   </div>

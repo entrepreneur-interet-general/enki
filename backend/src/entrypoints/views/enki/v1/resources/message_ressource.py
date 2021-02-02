@@ -81,7 +81,7 @@ class MessageListResource(WithMessageRepoResource):
         body["creator_id"] = g.user_info["id"]
         if g.user_info["fonction"] == "prefet":
             body["creator_position"] = f'{g.user_info["fonction"]}'
-            body["creator_group"] = f'Prefecture {g.user_info["code_insee"]}'
+            body["creator_group"] = f'Préfecture {g.user_info["code_insee"]}'
         else:
             body["creator_position"] = f'{g.user_info["fonction"]}'
             body["creator_group"] = f'Mairie {g.user_info["code_insee"]}'

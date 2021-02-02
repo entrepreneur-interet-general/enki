@@ -16,9 +16,11 @@ export class FirstStepComponent {
   userGroup = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
+    // group: new FormControl('', Validators.required),
     fonction: new FormControl('', Validators.required),
     codeCommune: new FormControl('', Validators.required)
   })
+  fonctions: object;
   updateUserUrl: string;
   httpOptions: object;
 
@@ -28,7 +30,30 @@ export class FirstStepComponent {
     private userService: UserService
   ) {
     this.updateUserUrl = `http://localhost:8000/enki/v1/users`;
-    
+    this.fonctions = {
+      mairie: [
+        {
+          id: "maire",
+          label: "Maire"
+        },
+        {
+          id: "securite",
+          label: "Service sécurité"
+        }
+      ],
+      prefecture: [
+        {
+          id: "cod",
+          label: "COD"
+        },
+        {
+          id: "prefet",
+          label: "Préfèt"
+        }
+      ]
+    };
+
+
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -38,14 +63,24 @@ export class FirstStepComponent {
   }
 
   ngOnInit(): void {
+    // this.userGroup.controls.group.valueChanges.subscribe(value => this.onGroupChange(value));
   }
+
+/*   onGroupChange(value: any): void {
+    console.log(value)
+
+  } */
 
   onSubmit(): void {
     let bodyForm = {
-        code_insee: this.userGroup.value.codeCommune, 
+        code_insee: this.userGroup.value.codeCommune,
+        // code_departement: 
         first_name: this.userGroup.value.firstName,
         last_name: this.userGroup.value.lastName,
-        position: this.userGroup.value.fonction
+        // group: this.userGroup.value.group, // SDIS, prefecture, mairie
+        position: this.userGroup.value.fonction, // maire, COD, chef de salle
+        // locationID: this.userGroup.value.locationID // ID commune, ID département
+
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
       this.userService.user.attributes = {

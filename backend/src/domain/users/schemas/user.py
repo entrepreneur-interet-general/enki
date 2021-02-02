@@ -23,7 +23,7 @@ class UserSchema(Schema):
     last_name = fields.Str(required=True)
     position = fields.Str(required=False)
     contacts = fields.Nested(ContactSchema, required=False, many=True, dump_only=True)
-    groups = fields.Nested(GroupSchema, required=False, many=True, dump_only=True)
+    group = fields.Nested(GroupSchema, required=False, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow())
 

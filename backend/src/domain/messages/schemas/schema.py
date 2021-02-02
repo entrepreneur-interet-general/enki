@@ -8,6 +8,7 @@ from werkzeug.exceptions import HTTPException
 from domain.messages.entities.tag_entity import TagEntity
 from domain.messages.entities.message_entity import MessageEntity, MessageType, Severity
 from domain.messages.schemas.resource_schema import ResourceSchema
+from domain.users.schemas.user import UserSchema
 
 
 class MessageValidationError(HTTPException):

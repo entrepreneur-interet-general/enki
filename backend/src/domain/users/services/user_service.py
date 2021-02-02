@@ -1,4 +1,6 @@
 from typing import Any, Dict, List
+
+from flask import current_app
 from marshmallow import ValidationError
 
 from adapters.http.keycloak import KeycloakHelper
@@ -17,9 +19,13 @@ class UserService:
 
         code_insee = data.pop("code_insee", None)
         code_dept = data.pop("code_dept", None)
+        current_app.logger.info(f"code_dept {code_dept}")
+        current_app.logger.info(f"code_insee {code_insee}")
         try:
             user: UserEntity = UserService.schema().load(data)
             return_value = UserService.schema().dump(user)
+            current_app.logger.info(f"return_value {return_value}")
+
         except ValidationError as ve:
             raise ve
 
@@ -36,6 +42,7 @@ class UserService:
                     "code_dept": code_dept,
                 }
             )
+            current_app.logger.info("after updating in keycloak")
             kh.assign_to_group(user_id=user.uuid, group_name=str(user.position).lower())
 
         return return_value

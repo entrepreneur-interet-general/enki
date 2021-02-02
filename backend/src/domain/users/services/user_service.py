@@ -15,7 +15,8 @@ class UserService:
     def add_user(data: dict,
                  uow: AbstractUnitOfWork):
 
-        code_insee = data.pop("code_insee")
+        code_insee = data.pop("code_insee", None)
+        code_dept = data.pop("code_dept", None)
         try:
             user: UserEntity = UserService.schema().load(data)
             return_value = UserService.schema().dump(user)
@@ -32,6 +33,7 @@ class UserService:
                 attributes={
                     "fonction": user.position,
                     "code_insee": code_insee,
+                    "code_dept": code_dept,
                 }
             )
             kh.assign_to_group(user_id=user.uuid, group_name=str(user.position).lower())

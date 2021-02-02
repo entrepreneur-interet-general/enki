@@ -10,20 +10,3 @@ from domain.users.entities.group import GroupEntity, GroupType
 def create_group():
     uow = current_app.context
 
-    companies = [
-        GroupEntity(uuid="mairie_uuid",
-                    name="Mairie Chelles",
-                    type=GroupType.MAIRIE
-                    ),
-        GroupEntity(uuid="prefecture_uuid",
-                    name="Prefecture",
-                    type=GroupType.MAIRIE
-                    ),
-        GroupEntity(uuid="sdis_uuid",
-                    name="SDIS",
-                    type=GroupType.SDIS
-                    ),
-    ]
-    with uow:
-        for group in companies:
-            uow.session.add(group)

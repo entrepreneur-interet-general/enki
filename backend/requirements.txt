@@ -19,3 +19,4 @@ minio
 python-keycloak
 flask-redoc
 SQLAlchemy-Searchable
+geoalchemy2

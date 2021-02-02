@@ -6,6 +6,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy_utils import ChoiceType, TSVectorType
 from sqlalchemy_searchable import make_searchable
+from geoalchemy2 import Geometry
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entity import EvenementType, EvenementEntity
@@ -34,15 +35,15 @@ group_location_table = Table(
     Column('location_uuid', String(60), ForeignKey("locations.uuid")),
 )
 
-usersCompanyTable = Table(
+users_group_table = Table(
     'users_group', metadata,
     Column('user_uuid', String(60), ForeignKey("users.uuid")),
     Column('group_uuid', String(60), ForeignKey("groups.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
 )
 
-contactsCompanyTable = Table(
-    'contacts_companies', metadata,
+contacts_groups_table = Table(
+    'contacts_groups', metadata,
     Column('contact_uuid', String(60), ForeignKey("contacts.uuid")),
     Column('group_uuid', String(60), ForeignKey("groups.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
@@ -54,7 +55,6 @@ users_favorites_contact_table = Table(
     Column('contact_uuid', String(60), ForeignKey("contacts.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
 )
-
 
 messagesTable = Table(
     'messages', metadata,
@@ -139,6 +139,7 @@ locationTable = Table(
     Column('name', String(255), nullable=False),
     Column('type', Enum(LocationType), nullable=False),
     Column('external_id', String(60), nullable=False),
+    # Column('geometry', Geometry('POLYGON')),
     Column('search_vector', TSVectorType('name', 'external_id'), nullable=False),
 
 )
@@ -169,18 +170,18 @@ def start_mappers():
            properties={
                'location': relationship(LocationEntity)
            }
-   )
+           )
     mapper(UserEntity, usersTable,
            properties={
-               'groups': relationship(GroupEntity, backref='users', secondary=usersCompanyTable),
+               'groups': relationship(GroupEntity, backref='users', secondary=users_group_table),
                'contacts': relationship(ContactEntity, backref='users', secondary=users_favorites_contact_table),
            }
-   )
+           )
 
     mapper(ContactEntity, contactTable,
            properties={
-            'groups': relationship(GroupEntity, backref='contacts', secondary=contactsCompanyTable),
-        })
+               'groups': relationship(GroupEntity, backref='contacts', secondary=contacts_groups_table),
+           })
     mapper(
         MessageEntity, messagesTable,
         properties={

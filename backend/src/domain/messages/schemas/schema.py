@@ -45,6 +45,7 @@ class MessageSchema(Schema):
     severity = EnumField(Severity, validate=validate.OneOf([e.value for e in Severity]))
     type = EnumField(MessageType, validate=validate.OneOf([e.value for e in MessageType]))
     creator_id = fields.Str(required=False)
+    creator_name = fields.Str(required=False)
     started_at = fields.DateTime(required=False)
     tags = fields.Nested(TagSchema, required=False, many=True, dump_only=True)
     tag_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)

@@ -57,6 +57,7 @@ messagesTable = Table(
     Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
     Column('executor_id', String(60), ForeignKey("users.uuid"), nullable=True),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
+    Column('creator_name', String(255)),
     Column('done_at', TIMESTAMP()),
     Column('started_at', TIMESTAMP()),
     Column('severity', ChoiceType(Severity, impl=Integer()), nullable=False),

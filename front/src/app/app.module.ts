@@ -14,7 +14,6 @@ import { HeaderComponent } from './ui/header/header.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
-import { FirstStepComponent } from './registration/first-step/first-step.component';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -48,7 +47,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DetailInterventionComponent,
     SvgDefinitionsComponent,
     HeaderComponent,
-    FirstStepComponent,
     SecondStepComponent,
     PageNotFoundComponent,
     SituationsComponent,

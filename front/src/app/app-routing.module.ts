@@ -5,20 +5,15 @@ import { GuardRegisterGuard } from './guards/guard-register.guard';
 import { ListeInterventionsComponent } from './interventions/liste-interventions/liste-interventions.component';
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard/user-dashboard.component';
-import { FirstStepComponent } from './registration/first-step/first-step.component';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
+import { RegistrationModule } from './registration/registration.module';
 
 const routes: Routes = [
-  {
-    path: 'register/step1',
-    component: FirstStepComponent,
-    canActivate: [ GuardRegisterGuard ]
-  },
   {
     path: 'register/step2',
     component: SecondStepComponent,
@@ -62,7 +57,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes),
     EvenementsModule,
-    AnnuaireModule
+    AnnuaireModule,
+    RegistrationModule
   ],
   exports: [RouterModule],
   providers: [AuthGuard]

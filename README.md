@@ -84,7 +84,7 @@ You can access affairs from:
 ```
 http://localhost:5000/api/enki/v1/affairs?code_insee=77108
 ```
-You also have to start SIG in nexsis/sig/api
+You also have to start SIG in the NexSIS repository: nexsis/sig/api
 ```
 make install
 npm run seed

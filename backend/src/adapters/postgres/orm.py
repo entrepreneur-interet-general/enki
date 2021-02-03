@@ -133,7 +133,7 @@ groupTable = Table(
     Column('name', String(255), nullable=False),
     Column('type', Enum(GroupType), nullable=False),
     Column('location_id', ForeignKey("locations.uuid")),
-    Column('search_vector', TSVectorType('name'), nullable=False),
+    Column('search_vector', TSVectorType('name'), nullable=True),
 )
 
 locationTable = Table(
@@ -143,7 +143,7 @@ locationTable = Table(
     Column('type', Enum(LocationType), nullable=False),
     Column('external_id', String(60), nullable=False),
     # Column('geometry', Geometry('POLYGON')),
-    Column('search_vector', TSVectorType('name', 'external_id'), nullable=False),
+    Column('search_vector', TSVectorType('name', 'external_id'), nullable=True),
 
 )
 

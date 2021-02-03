@@ -22,28 +22,28 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: UserDashboardComponent,
-    canActivate: [ AuthGuard ]
+    // canActivate: [ AuthGuard ]
   },
   {
     path: 'situations',
-    canActivate: [ AuthGuard ],
+    // canActivate: [ AuthGuard ],
     component: SituationsComponent,
     children: [
       {
         path: 'interventions',
-        canActivate: [ AuthGuard ],
+        // canActivate: [ AuthGuard ],
         component: ListeInterventionsComponent
       },
       {
         path: 'evenements',
-        canActivate: [ AuthGuard ],
+        // canActivate: [ AuthGuard ],
         component: ListeEvenementsComponent
       }
     ]
   },
   {
     path: 'detail-intervention/:uuid',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     component: DetailInterventionComponent
   },
   {

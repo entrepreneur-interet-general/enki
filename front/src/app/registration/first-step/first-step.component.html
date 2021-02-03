@@ -12,15 +12,22 @@
     <label for="firstName" class="enkiform__label">Prénom</label>
   </div>
   <div class="enkiform__group">
-    <select class="enkiform__input" id="fonction" formControlName="fonction" required>
-      <option value="maire">Maire</option>
+    <select class="enkiform__input" id="structure" formControlName="structure" required>
+      <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option>
     </select>
-    <label for="fonction" class="enkiform__label">Fonction</label>
+    <label for="structure" class="enkiform__label">Structure</label>
+    <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+  </div>
+  <div class="enkiform__group" *ngIf="userGroup.value.structure !== ''">
+    <select class="enkiform__input" id="position" formControlName="position" required>
+      <option *ngFor="let userPosition of userPositions" value="{{userPosition.name}}">{{userPosition.label}}</option>
+    </select>
+    <label for="position" class="enkiform__label">Fonction</label>
     <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
   </div>
   <div class="enkiform__group">
-    <input type="text" class="enkiform__input" id="codeCommune" formControlName="codeCommune" required>
-    <label for="codeCommune" class="enkiform__label">Commune</label>
+    <input type="text" class="enkiform__input" id="location" formControlName="location" required>
+    <label for="location" class="enkiform__label">Commune ou département</label>
     <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
   </div>
   <div class="searchCommune">

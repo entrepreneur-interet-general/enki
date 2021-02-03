@@ -29,7 +29,7 @@ export class AppComponent {
         let decodedJWT: any = jwt_decode(res)
 
         this.userService.user.attributes.fonction = decodedJWT.fonction ? decodedJWT.fonction : ""
-        this.userService.user.attributes.code_insee = decodedJWT.code_insee ? decodedJWT.code_insee : ""
+        this.userService.user.location = decodedJWT.code_insee ? decodedJWT.code_insee : ""
         if (this.userService.userIsValid()) {
           // this.router.navigate(['dashboard'])
         }

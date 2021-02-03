@@ -14,6 +14,8 @@ import { DetailMessageComponent } from './main-courante/detail-message/detail-me
 import { EvenementDetailResolverService } from './evenement-detail-resolver.service';
 import { ListeMainCouranteComponent } from './main-courante/liste-main-courante/liste-main-courante.component';
 import { MessagesService } from './main-courante/messages.service';
+import { UiModule } from '../ui/ui.module';
+
 
 const routes : Routes = [
   {
@@ -85,6 +87,7 @@ const routes : Routes = [
   ],
   providers: [MessagesService],
   imports: [
+    UiModule,
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes)

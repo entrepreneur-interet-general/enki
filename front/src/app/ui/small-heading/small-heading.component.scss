@@ -1,0 +1,17 @@
+@import "../../../../design-system/styles/variables";
+
+.small-heading {
+  color: $darkestGrey;
+  padding: 0 16px;
+  position: relative;
+  &--close {
+    position: absolute;
+    right: 16px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    svg {
+      font-size: 12px;
+    }
+  }
+}

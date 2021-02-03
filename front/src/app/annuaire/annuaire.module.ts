@@ -9,6 +9,7 @@ import { AnnuaireComponent } from './annuaire.component';
 import { AnnuaireService } from './annuaire.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchContactPipe } from './search-contact/search-contact.pipe';
+import { UiModule } from '../ui/ui.module';
 
 const routes : Routes = [
   {
@@ -52,6 +53,7 @@ const routes : Routes = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    UiModule,
     RouterModule.forChild(routes)
   ]
 })

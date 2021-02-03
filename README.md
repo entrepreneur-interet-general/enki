@@ -36,15 +36,6 @@ or with make
 make upd && sleep 5 && make provision 
 ```
 
-````
-cd user_api
-````
-Run the user api
-```
-npm start
-````
-It is now accessible on http://localhost:4201/api
-
 
 Get kong client secret from Keycloak admin in Client section and change it in .env file
 ### Kong Api Gateway
@@ -58,19 +49,12 @@ cp example.env .env
 ``` 
 Change CLIENT_SECRET with keycloak kong client
 
-``` 
-docker-compose -f docker-compose.yml setup 
+With make 
 ```
-wait kong startup 
-```
-docker-compose -f docker-compose.provision.yml run --rm kong-provision
-```
-
-or with make 
-```
-make setup && sleep 5 && make provision 
+make setup && sleep 5 && make build-provision && sleep 5 && make provision
 ```
 # Elasticsearch and Kibana
+(not mandatory to run)
 ```
 cd elk
 ```

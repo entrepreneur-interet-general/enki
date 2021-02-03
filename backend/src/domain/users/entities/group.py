@@ -21,7 +21,7 @@ class LocationType(str, Enum):
     DEPARTEMENT = "departement"
     REGION = "region"
     ZONE = "zone"
-    OTHER = "other"
+    OTHER = "other" 
 
 
 @dataclass_json

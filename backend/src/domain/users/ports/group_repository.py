@@ -2,52 +2,44 @@ import abc
 from typing import List, Union
 from werkzeug.exceptions import HTTPException
 
-from domain.users.entities.contact import ContactEntity
-from domain.users.entities.user import UserEntity
+from domain.users.entities.group import GroupEntity
 
-UsersList = List[UserEntity]
+GroupsList = List[GroupEntity]
 
 
-class AlreadyExistingUserUuid(HTTPException):
+class AlreadyExistingGroupUuid(HTTPException):
     code = 409
-    description = "Cet user existe déjà"
+    description = "Cet group existe déjà"
 
 
-class NotFoundUser(HTTPException):
+class NotFoundGroup(HTTPException):
     code = 404
-    description = "Cet user n'existe pas"
+    description = "Cet group n'existe pas"
 
 
-class AbstractUserRepository(abc.ABC):
-    def get_by_uuid(self, uuid: str) -> UserEntity:
+class AbstractGroupRepository(abc.ABC):
+    def get_by_uuid(self, uuid: str) -> GroupEntity:
         matches = self._match_uuid(uuid)
         if not matches:
-            raise NotFoundUser
+            raise NotFoundGroup
         return matches
 
     @abc.abstractmethod
-    def get_all(self) -> UsersList:
+    def get_all(self) -> GroupsList:
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _match_uuid(self, uuid: str) -> Union[UserEntity, None]:
+    def _match_uuid(self, uuid: str) -> Union[GroupEntity, None]:
         raise NotImplementedError
 
-class InMemoryUserRepository(AbstractUserRepository):
-    _users: UsersList = []
 
-    def get_all(self) -> UsersList:
-        return self._users
+class InMemoryGroupRepository(AbstractGroupRepository):
+    _groups: GroupsList = []
 
-    def _match_uuid(self, uuid: str) -> Union[UserEntity, None]:
-        matches = [user for user in self._users if user.uuid == uuid]
+    def get_all(self) -> GroupsList:
+        return self._groups
+
+    def _match_uuid(self, uuid: str) -> Union[GroupEntity, None]:
+        matches = [group for group in self._groups if group.uuid == uuid]
         if matches:
             return matches[0]
-
-    # next methods are only for test purposes
-    @property
-    def users(self) -> UsersList:
-        return self._users
-
-    def set_Users(self, users: UsersList) -> None:
-        self._users = users

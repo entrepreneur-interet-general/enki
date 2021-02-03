@@ -1,5 +1,5 @@
 import abc
-
+import sqlalchemy as sa
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from adapters.postgres import PgMessageRepository, PgTagRepository, PgEvenementRepository
 from adapters.postgres.orm import metadata
 from adapters.postgres.pg_contact_repository import PgContactRepository
+from adapters.postgres.pg_group_repository import PgGroupRepository
 from adapters.postgres.pg_resource_repository import PgResourceRepository
 from adapters.postgres.pg_simple_affair_repository import PgSimpleAffairRepository
 from adapters.postgres.pg_user_repository import PgUserRepository
@@ -17,6 +18,7 @@ from domain.messages.ports import AbstractTagRepository, AbstractMessageReposito
 from domain.messages.ports.message_repository import InMemoryMessageRepository
 from domain.messages.ports.tag_repository import InMemoryTagRepository
 from domain.users.ports.contact_repository import AbstractContactRepository
+from domain.users.ports.group_repository import AbstractGroupRepository
 from domain.users.ports.user_repository import AbstractUserRepository
 from entrypoints.repositories import ElasticRepositories
 
@@ -30,6 +32,7 @@ class AbstractUnitOfWork(abc.ABC):
     simple_affair: AbstractSimpleAffairRepository
     user: AbstractUserRepository
     contact: AbstractContactRepository
+    group: AbstractGroupRepository
 
     def __init__(self, config):
         self.config = config
@@ -74,6 +77,8 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         super().__init__(config)
         self.engine = build_engine(sql_engine_uri=self.config.DATABASE_URI)
         self.session_factory = sessionmaker(bind=self.engine)
+        sa.orm.configure_mappers()  # IMPORTANT!
+
         metadata.create_all(self.engine)
 
         if config.AFFAIR_REPOSITORY == "ELASTIC":
@@ -91,6 +96,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.simple_affair = PgSimpleAffairRepository(self.session)
         self.user = PgUserRepository(self.session)
         self.contact = PgContactRepository(self.session)
+        self.group = PgGroupRepository(self.session)
         return super().__enter__()
 
     def __exit__(self, *args):

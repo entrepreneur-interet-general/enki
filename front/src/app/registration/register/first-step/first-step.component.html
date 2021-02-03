@@ -34,19 +34,9 @@
     <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
   </div>
   <div class="enkiform__group">
-    <input type="text" class="enkiform__input" id="location" formControlName="location" required>
+    <input type="text" class="enkiform__input" id="location" formControlName="location" required routerLink="../searchlocation">
     <label for="location" class="enkiform__label">Localisation</label>
     <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
-  </div>
-  <div class="searchCommune">
-    <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
-    <input type="text" class="searchCommune__input" placeholder="Département, commune ou code postal">
-    <div class="seachCommune__suggestions">
-      Résultats de votre recherche
-    </div>
-    <div class="searchCommune__overlay">
-      
-    </div>
   </div>
   <div class="enkiform__group">
     <input type="submit" class="btn" value="Valider l'inscription" [disabled]="!userGroup.valid">

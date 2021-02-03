@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserService } from '../../user/user.service'
+import { UserService } from '../../../user/user.service';
 import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+import { RegisterService } from '../../register.service';
 
 @Component({
   selector: 'app-first-step',
@@ -28,49 +28,36 @@ export class FirstStepComponent {
   httpOptions: object;
   userTypes: [];
   userPositions: object[];
+  selectedLocation: object;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private userService: UserService,
     private keycloakService: KeycloakService
+    private registerService: RegisterService
   ) {
-    this.updateUserUrl = `http://localhost:8000/enki/v1/users`;
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         Authorization: `Bearer ${window.localStorage.getItem('token')}`
       })
     }
-  }
-
-  ngOnInit(): void {
-    this.getUserTypes().subscribe(response => {
+    this.userGroup.get('location').setValue(this.registerService.selectedLocation.label)
+    
+    this.registerService.getUserTypes().subscribe(response => {
       this.userTypes = response
     })
 
+  
     this.userGroup.get('structure').valueChanges.subscribe(typeName => {
-      this.getUserPositions(typeName).subscribe(positions => {
+      this.registerService.getUserPositions(typeName).subscribe(positions => {
         this.userPositions = positions
       })
     })
   }
 
-  getUserTypes(): Observable<[]> {
-    return this.http.get<any>(`${environment.backendUrl}/groups/types`)
-      .pipe(
-        map(res => res.data)
-      )
-  }
-
-  getUserPositions(groupeTypeName: string): Observable<object[]> {
-    return of([
-      {
-        name: 'prefet',
-        label: 'Préfet'
-      }
-    ])
-    // return this.http.get<any>(`${environment.backendUrl}/positions/${groupeTypeName}`)
+  ngOnInit(): void {
   }
 
 /*   onGroupChange(value: any): void {
@@ -109,7 +96,7 @@ export class FirstStepComponent {
   }
 
   httpSubmitForm(bodyForm): Observable<object> {
-    return this.http.post<any>(this.updateUserUrl, bodyForm, this.httpOptions)
+    return this.http.post<any>(`${environment.backendUrl}/enki/v1/users`, bodyForm, this.httpOptions)
   }
 
 }

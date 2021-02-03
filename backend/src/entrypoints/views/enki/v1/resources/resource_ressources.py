@@ -1,8 +1,9 @@
-from flask import request, current_app
+from flask import request, current_app, g
 from flask_restful import Resource
 from domain.messages.command import CreateResource
 from domain.messages.services.resource_service import ResourceService
 from entrypoints.extensions import event_bus
+from entrypoints.middleware import user_info_middleware
 
 
 class WithResourceRepoResource(Resource):
@@ -28,9 +29,11 @@ class ResourceListResource(WithResourceRepoResource):
           description: bad request, bad parameters
 
     """
+    method_decorators = [user_info_middleware]
 
     def post(self):
         body = request.get_json()
+        body["creator_id"] = g.user_info["id"]
         create_command = CreateResource(data=body)
         result = event_bus.publish(create_command, current_app.context)
         return {"message": "success",

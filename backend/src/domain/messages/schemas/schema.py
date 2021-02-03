@@ -23,7 +23,7 @@ class TagSchema(Schema):
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
     title = fields.Str(required=True, validate=validate.Length(min=5))
-    creator_id = fields.Str(required=False, dump_only=True)
+    creator_id = fields.Str(required=False)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
 
@@ -44,8 +44,10 @@ class MessageSchema(Schema):
     evenement_id = fields.Str(required=True)
     severity = EnumField(Severity, validate=validate.OneOf([e.value for e in Severity]))
     type = EnumField(MessageType, validate=validate.OneOf([e.value for e in MessageType]))
-    creator_id: fields.Str(required=False, dump_only=True)
-    started_at: fields.DateTime()
+    creator_id = fields.Str(required=False)
+    creator_position = fields.Str(required=False)
+    creator_group = fields.Str(required=False)
+    started_at = fields.DateTime(required=False)
     tags = fields.Nested(TagSchema, required=False, many=True, dump_only=True)
     tag_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)
     resources = fields.Nested(ResourceSchema, required=False, many=True, dump_only=True)

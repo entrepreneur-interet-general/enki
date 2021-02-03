@@ -1,8 +1,8 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../environments/environment';
 
 import { UserService } from '../user/user.service';
 
@@ -34,10 +34,8 @@ export class InterventionsService {
     private http: HttpClient,
     private userService: UserService
     ) { 
-      this.interventionsUrl = environment.interventionsUrl;
+      this.interventionsUrl = `${environment.backendUrl}/affairs`;
       this.httpOptions = {
-/*         headers: new HttpHeaders({ 'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.keycloakService.getToken() }) */
       };
     }
 
@@ -67,7 +65,7 @@ export class InterventionsService {
     if (!this.userService.user.attributes) {
       return of([]);
     }
-    return this.http.get<any>(`${this.interventionsUrl}?insee_code=${this.userService.user.attributes.code_insee}`, this.httpOptions)
+    return this.http.get<any>(`${this.interventionsUrl}?insee_code=77108`, this.httpOptions)
       .pipe(
         map(interventions => {
           interventions = environment.HTTPClientInMemory ? interventions : interventions.data

@@ -1,4 +1,4 @@
-@import "../../../../../design-system/styles/variables";
+@import "../../../../design-system/styles/variables";
 
 .dashboard {
   padding: 16px 0;
@@ -11,6 +11,9 @@
 }
 .meteo {
   background: $white;
+}
+img {
+  max-width: 100%;
 }
 .vigicrue {
   background: $white;

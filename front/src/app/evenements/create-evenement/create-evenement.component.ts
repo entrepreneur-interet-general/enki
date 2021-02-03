@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EvenementsService } from '../evenements.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create-evenement',
@@ -33,7 +34,7 @@ export class CreateEvenementComponent implements OnInit {
       "title": "This is a event title ",
       "type":"natural"
     }
-    this.evenementUrl = `http://localhost:5000/api/enki/v1/events`
+    this.evenementUrl = `${environment.backendUrl}/events`
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',

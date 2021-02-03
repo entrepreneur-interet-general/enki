@@ -1,14 +1,6 @@
-<div class="small-heading">
-  <div class="small-heading--title">
-    Créer un événement
-  </div>
-  <div class="small-heading--close" routerLink="/situations/evenements">
-    Fermer
-    <svg class="icon-close title-icon"><use xlink:href="#icon-close"></use></svg>
-  </div>
-</div>
+<app-small-heading title="Créer un événement" backLink="/situations/evenements"></app-small-heading>
 <div class="title-container">
-  <h1 class="h1-title">Nouvel événement</h1>
+  <h1 class="h2-title">Nouvel événement</h1>
 </div>
 <form action="createEvenement" class="createEvenement--form" [formGroup]="evenementGroup" (ngSubmit)="onSubmit()">
   <div class="enkiform__group">

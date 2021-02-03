@@ -1,0 +1,141 @@
+.btn {
+    width: 100%;
+    height: 42px;
+    margin-bottom: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: $primary;
+    color: #FFF;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: $secondaryFont;
+    &:disabled {
+        opacity: .5;
+    }
+    @media screen and (min-width: 768px) {
+        max-width: 300px;
+    }
+
+    &.-center {
+        margin: 0 auto;
+    }
+
+    &.-noflex {
+        display: inline-block;
+    }
+
+    &.-auto {
+        @media screen and (min-width: 768px) {
+            width: auto;
+            max-width: none;
+        }
+       
+    }
+    &.-small {
+        font-size: 11px;
+    }
+
+    &-primary {
+        color: $white;
+        background: $black;
+
+        &:hover, &.-hover {
+            background: $grey;
+            text-decoration: none;
+        }
+
+        &:disabled {
+            background: $grey;
+        }
+    }
+
+    &-secondary {
+        color: $black;
+        background: none;
+        border: 1px solid $black;
+
+        &:hover, &.-hover {
+            background: $black;
+            color: $white;
+            text-decoration: none;
+        }
+
+        &:disabled {
+            background: none;
+            color: $grey;
+            border-color: $grey;
+        }
+    }
+
+    &-icon {
+
+        .icon {
+            margin-right: 12px;
+        }
+    }
+}
+
+// btn group
+.btn-group {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 0;
+    @media screen and (min-width: 768px) {
+        flex-wrap: nowrap;
+        .btn:not(:first-child)  {
+            margin-left: 15px;
+        }
+    }
+    &.-center {
+        justify-content: center;
+    }
+    &.-spacebetween {
+        justify-content: space-between;
+    }
+
+
+    .btn {
+        margin-top: 15px;
+    }
+    
+}
+
+.action {
+    padding: 16px;
+    &--add {
+        width: 56px;
+        height: 56px;
+        border-radius: 56px;
+        background-color: $primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        right: 16px;
+        bottom: 80px;
+        cursor: pointer;
+        .icon {
+        fill: white;
+        }
+    }
+    &--filter {
+        width: 56px;
+        height: 56px;
+        border-radius: 56px;
+        background-color: $primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        right: 85px;
+        bottom: 80px;
+        cursor: pointer;
+        .icon {
+        fill: white;
+        }
+    }
+}

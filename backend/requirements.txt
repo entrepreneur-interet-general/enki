@@ -16,3 +16,5 @@ shapely
 faker
 marshmallow_enum
 minio
+python-keycloak
+flask-redoc

@@ -1,0 +1,33 @@
+
+<div class="contact-list">
+  <div class="contact-list--search">
+    <div class="enkiform__group">
+      <input class="enkiform__input" routerLink="/annuaire/searchcontact" placeholder="Rechercher dans l'annuaire partagé"/>
+      <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
+    </div>
+  </div>
+  <div class="title-container">
+    <h1 class="h1-title">
+      Contacts favoris
+      <svg class="icon-star icon"><use xlink:href="#icon-star"></use></svg>
+    </h1>
+  </div>
+  <div class="contact-list--empty" *ngIf="contacts.length === 0">
+    <p>Votre annuaire personnel est vide</p>
+    <p>Ajoutez des contacts en favoris depuis l’annuaire partagé <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
+      ou le bouton <svg class="icon-add icon"><use xlink:href="#icon-add"></use></svg>
+      pour créer un nouveau contact.</p>
+    <p><img src="assets/empty-contact-list.jpg" alt=""></p>
+  </div>
+  <div class="contact-list--list" *ngFor="let contact of contacts; let i = index;">
+    <div class="contact-list--letter" *ngIf="compareIfFirstLetterIsDifferent(contacts[i - 1], contact)">
+      {{contact.first_name[0].toUpperCase()}}
+    </div>
+    <a routerLink="/annuaire/contactdetail/{{contact.uuid}}">{{contact.first_name}}</a>
+  </div>
+  
+</div>
+
+<div class="action--add" routerLink="/contactadd">
+  <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
+</div>

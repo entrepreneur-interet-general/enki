@@ -22,18 +22,18 @@ export class DetailMessageComponent implements OnInit {
       created_at: '',
       uuid: '',
       tags: [],
-      resources: []
+      resources: [],
+      evenement_id: ''
     }
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.messageUUID = params['uuid']
-      this.messagesService.getMessageByUUID(this.messageUUID).subscribe(message => {
+      this.messagesService.getMessageByID(this.messageUUID).subscribe(message => {
         this.message = message
       })
     })
-    
   }
 
 }

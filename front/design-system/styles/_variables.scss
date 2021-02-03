@@ -1,0 +1,55 @@
+// Colors
+$black: #000000;
+$white: #ffffff;
+
+$primary: #034EA2;
+$grey: #B3BDC7;
+$red: #E1000F;
+$green: #11836D;
+
+$lightestPrimary: #2289FB;
+$lighterPrimary: #0474F0;
+$lightPrimary: #0460C8;
+$darkPrimary: #023A78;
+$darkerPrimary: #012750;
+$darkestPrimary: #011428;
+
+$blueGrey: #E5EDF5;
+
+$lightestGrey: #F9FAFB;
+$lighterGrey: #E2E6E9;
+$lightGrey: #CAD1D8;
+$darkGrey: #9BA8B5;
+$darkerGrey: #8494A4;
+$darkestGrey: #6C8093;
+
+$lightestRed: #FF5C67;
+$lighterRed: #FF3341;
+$lightRed: #FF0A1B;
+$darkRed: #B8000C;
+$darkerRed: #8F000A;
+$darkestRed: #660007;
+
+$lightestGreen: #1BCBA9;
+$lighterGreen: #1BCBA9;
+$lightGreen: #16A78B;
+$darkGreen: #0C5F4F;
+$darkerGreen: #073B31;
+$darkestGreen: #031713;
+
+$starYellow: #F6CF5D;
+
+
+/**********************************************************
+ **************Name of variables fonts*********************  
+ **********************************************************/
+
+ $primaryFont : 'Overpass';
+ $secondaryFont: 'Barlow Semi Condensed';
+ $mediaMobile: "all and (max-width:1023px)";
+
+
+ @function rem-calc($size) {
+    $remSize: $size / 16;
+    @return #{$remSize}rem;
+  }

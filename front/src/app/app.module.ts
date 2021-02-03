@@ -5,6 +5,7 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { UiModule } from './ui/ui.module';
 import { MapComponent } from './map/map.component';
 import { environment } from '../environments/environment';
 import { ListeInterventionsComponent } from './interventions/liste-interventions/liste-interventions.component';
@@ -22,6 +23,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
 import { EvenementsModule } from './evenements/evenements.module';
+import { AnnuaireModule } from './annuaire/annuaire.module';
 import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
 
@@ -30,7 +32,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     keycloak.init({
       config: {
         "realm": "enki",
-        "url": "http://localhost:8084/auth/",
+        "url": "http://keycloak:8080/auth/",
         "clientId": "angular_frontend",
       },
       initOptions: {
@@ -42,16 +44,17 @@ function initializeKeycloak(keycloak: KeycloakService) {
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
     MapComponent,
     ListeInterventionsComponent,
     DetailInterventionComponent,
-    SvgDefinitionsComponent,
-    HeaderComponent,
+    // SvgDefinitionsComponent,
+    // HeaderComponent,
     FirstStepComponent,
     SecondStepComponent,
     PageNotFoundComponent,
     SituationsComponent,
-    ListeEvenementsComponent,
+    ListeEvenementsComponent
   ],
   imports: [
     BrowserModule,
@@ -64,8 +67,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
       InMemoryDataService, { dataEncapsulation: false }
     ) : [],
     KeycloakAngularModule,
+    UiModule,
     UserDashboardModule,
     EvenementsModule,
+    AnnuaireModule,
     AppRoutingModule
   ],
   providers: [{

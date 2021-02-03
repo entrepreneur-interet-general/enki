@@ -1,34 +1,7 @@
-@import "../../../../../../design-system/styles/variables";
+@import "../../../../../design-system/styles/variables";
 
 
 .addLabel {
-  position: fixed;
-  background: $white;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 6000;
-  &--heading {
-    display: flex;
-    height: 56px;
-  }
-  &--cancel {
-    display: flex;
-    align-items: center;
-    width: 48px;
-    svg {
-      padding: 12px;
-    }
-  }
-  &--searchInput {
-    border: 0;
-    width: 100%;
-    font-size: 17px;
-    &::placeholder {
-      color: $darkerGrey;
-    }
-  }
   &--selectedLabels {
     display: flex;
     align-items: center;
@@ -45,21 +18,8 @@
     }
   }
 }
-.searchResults {
-  &--title {
-    font-family: $secondaryFont;
-    border-bottom: 1px solid $lightGrey;
-    padding: 12px 16px;
-    font-size: 17px;
-    color: $darkestGrey;
-  }
-}
-.labelList {
+.searchList {
   &--element {
-    padding: 12px 16px;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid $lightGrey;
     svg {
       fill: $lightGreen;
     }

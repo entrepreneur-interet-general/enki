@@ -1,13 +1,4 @@
-<div class="small-heading">
-  <div class="small-heading--title">
-    Nouveau message
-  </div>
-  <!-- TODO : rendre générique l'id de retour de création du message -->
-  <div class="small-heading--close" routerLink="../liste">
-    Fermer
-    <svg class="icon-close title-icon"><use xlink:href="#icon-close"></use></svg>
-  </div>
-</div>
+<app-small-heading title="Nouveau message" backLink="../liste"></app-small-heading>
 <div class="addMessage">
   <form action="" class="addMessageForm" [formGroup]="messageGroup" (ngSubmit)="onSubmit()">
     <div class="enkiSpecialform__group">
@@ -41,7 +32,7 @@
       </div>
       <label for="mediaFile" class="mediaFile">
         <svg class="icon-dossier icon"><use xlink:href="#icon-dossier"></use></svg>
-        Ajouter des médias
+        Ajouter des pièces jointes
       </label>
       <input id="mediaFile" type="file" formControlName="files" (change)="uploadFile($event)">
     </div>

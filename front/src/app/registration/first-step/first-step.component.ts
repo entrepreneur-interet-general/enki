@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from '../../user/user.service'
 import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-first-step',
@@ -17,13 +19,15 @@ export class FirstStepComponent {
   userGroup = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
-    // group: new FormControl('', Validators.required),
-    fonction: new FormControl('', Validators.required),
-    codeCommune: new FormControl('', Validators.required)
+    position: new FormControl('', Validators.required),
+    structure: new FormControl('', Validators.required),
+    location: new FormControl('', Validators.required)
   })
   fonctions: object;
   updateUserUrl: string;
   httpOptions: object;
+  userTypes: [];
+  userPositions: object[];
 
   constructor(
     private http: HttpClient,
@@ -32,30 +36,6 @@ export class FirstStepComponent {
     private keycloakService: KeycloakService
   ) {
     this.updateUserUrl = `http://localhost:8000/enki/v1/users`;
-    this.fonctions = {
-      mairie: [
-        {
-          id: "maire",
-          label: "Maire"
-        },
-        {
-          id: "securite",
-          label: "Service sécurité"
-        }
-      ],
-      prefecture: [
-        {
-          id: "cod",
-          label: "COD"
-        },
-        {
-          id: "prefet",
-          label: "Préfèt"
-        }
-      ]
-    };
-
-
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -65,7 +45,32 @@ export class FirstStepComponent {
   }
 
   ngOnInit(): void {
-    // this.userGroup.controls.group.valueChanges.subscribe(value => this.onGroupChange(value));
+    this.getUserTypes().subscribe(response => {
+      this.userTypes = response
+    })
+
+    this.userGroup.get('structure').valueChanges.subscribe(typeName => {
+      this.getUserPositions(typeName).subscribe(positions => {
+        this.userPositions = positions
+      })
+    })
+  }
+
+  getUserTypes(): Observable<[]> {
+    return this.http.get<any>(`${environment.backendUrl}/groups/types`)
+      .pipe(
+        map(res => res.data)
+      )
+  }
+
+  getUserPositions(groupeTypeName: string): Observable<object[]> {
+    return of([
+      {
+        name: 'prefet',
+        label: 'Préfet'
+      }
+    ])
+    // return this.http.get<any>(`${environment.backendUrl}/positions/${groupeTypeName}`)
   }
 
 /*   onGroupChange(value: any): void {
@@ -75,20 +80,16 @@ export class FirstStepComponent {
 
   onSubmit(): void {
     let bodyForm = {
-        code_insee: this.userGroup.value.codeCommune,
-        // code_departement: 
+        position: this.userGroup.value.position,
         first_name: this.userGroup.value.firstName,
         last_name: this.userGroup.value.lastName,
-        // group: this.userGroup.value.group, // SDIS, prefecture, mairie
-        position: this.userGroup.value.fonction, // maire, COD, chef de salle
-        // locationID: this.userGroup.value.locationID // ID commune, ID département
-
+        location: this.userGroup.value.location
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
       this.userService.user.attributes = {
-        code_insee: this.userGroup.value.codeCommune,
         fonction: this.userGroup.value.fonction
       }
+      this.userService.user.location = this.userGroup.value.location
       this.userService.user.fullname = `${this.userGroup.value.firstName} ${this.userGroup.value.lastName}`
       /* this.keycloakService.updateToken(3600).then(() => {
         if(this.keycloakService.getUserRoles().includes('watchEvents')) { */

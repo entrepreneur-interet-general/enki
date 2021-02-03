@@ -22,9 +22,9 @@ export class UserService {
   ) {
     this.user = {
       attributes: {
-        code_insee: "",
         fonction: ""
       },
+      location: '',
       contacts: []
     };
   }
@@ -69,7 +69,7 @@ export class UserService {
   }
 
   userIsValid(): boolean {
-    return Object.keys(this.user).length > 0 && this.user.attributes.code_insee !== '' && this.user.attributes.fonction !== ''
+    return Object.keys(this.user).length > 0 && this.user.location !== '' && this.user.attributes.fonction !== ''
   }
 
 /*   loadUserProfile(): void {

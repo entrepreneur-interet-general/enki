@@ -4,7 +4,7 @@
 > Return the list of group types (name and label)
 
 Example
-```json
+```
 group_types: [
   {
     name: 'prefecture',
@@ -18,7 +18,7 @@ group_types: [
 > return the list of existing positions in group types
   
 Example: /positions/prefecture
-```json
+```
 positions: [
   {
     name: 'prefet',
@@ -32,7 +32,7 @@ positions: [
 > return all possible location for this type
 
 Example: /location/prefecture
-```json
+```
 locations: [
   {
     name: 'seine-et-marne',
@@ -46,8 +46,8 @@ locations: [
 > create user and return the user newly created
 
 Example:
-```json
-body = {
+```
+body: {
   location: 'seine-et-marne', 
   first_name: 'Benjamin',
   last_name: 'PERNEY',
@@ -55,7 +55,7 @@ body = {
 }
 
 Return:
-user = {
+user: {
   location: 'seine-et-marne', 
   first_name: 'Benjamin',
   last_name: 'PERNEY',

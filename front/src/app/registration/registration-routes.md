@@ -30,6 +30,7 @@ positions: [
 
 ## GET /locations/{group_type}
 > return all possible location for this type
+
 Example: /location/prefecture
 ```json
 locations: [
@@ -43,6 +44,7 @@ locations: [
 
 ## POST /users
 > create user and return the user newly created
+
 Example:
 ```json
 body = {

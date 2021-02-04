@@ -3,10 +3,10 @@ from flask_restful import Api
 from flask_cors import CORS
 from sqlalchemy.orm import clear_mappers
 
-from adapters.postgres.orm import start_mappers
+from adapters.postgres.base_orm import start_mappers
 from entrypoints import views
 from service_layer.messagebus import HANDLERS
-from .commands.seeds.group import create_group_and_locations
+from .commands.seeds import create_group_and_locations, create_position_group
 from .config import EnkiConfig
 from .extensions import event_bus, api_spec
 from .errors import errors
@@ -71,6 +71,7 @@ def create_app(testing=False):
 
 def register_cli_commands(app):
     app.cli.add_command(create_group_and_locations)
+    app.cli.add_command(create_position_group)
 
 
 def configure_redoc(app):

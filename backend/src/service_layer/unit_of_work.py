@@ -5,7 +5,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
 
 from adapters.postgres import PgMessageRepository, PgTagRepository, PgEvenementRepository
-from adapters.postgres.orm import metadata
+from adapters.postgres.base_orm import metadata
 from adapters.postgres.pg_contact_repository import PgContactRepository
 from adapters.postgres.pg_group_repository import PgGroupRepository
 from adapters.postgres.pg_resource_repository import PgResourceRepository

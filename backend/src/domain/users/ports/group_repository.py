@@ -2,7 +2,7 @@ import abc
 from typing import List, Union
 from werkzeug.exceptions import HTTPException
 
-from domain.users.entities.group import GroupEntity
+from domain.users.entities.group import GroupEntity, GroupType, PositionGroupTypeEntity, LocationEntity
 
 GroupsList = List[GroupEntity]
 
@@ -26,6 +26,14 @@ class AbstractGroupRepository(abc.ABC):
 
     @abc.abstractmethod
     def get_all(self) -> GroupsList:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_position_by_group_type(self, group_type: GroupType) -> List[PositionGroupTypeEntity]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_location_by_query(self, query: str) -> List[LocationEntity]:
         raise NotImplementedError
 
     @abc.abstractmethod

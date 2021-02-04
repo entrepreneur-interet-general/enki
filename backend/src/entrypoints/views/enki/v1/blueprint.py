@@ -15,7 +15,8 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
 from .resources.contact_ressources import ContactListResource, ContactResource
 from entrypoints.views.enki.v1.resources.users.user_ressources import UserResource, UserListResource
 from .resources.message_resource_resource import MessageMultipleResourceResource
-from .resources.users.group_ressources import GroupListResource, GroupTypeListResource
+from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, LocationListResource, \
+    PositionGroupTypeListResource
 from .resources.users.user_favorite_ressources import UserContactListResource, UserContactResource
 
 enki_blueprint_v1 = Blueprint(name="enki_blueprint_v1", import_name=__name__, url_prefix="/api/enki/v1")
@@ -68,7 +69,8 @@ api.add_resource(ContactResource, '/contacts/<uuid>', endpoint="contacts_by_id")
 # Groups
 api.add_resource(GroupListResource, '/groups', endpoint="groups")
 api.add_resource(GroupTypeListResource, '/groups/types', endpoint="groups_types")
-
+api.add_resource(PositionGroupTypeListResource, '/groups/positions', endpoint="groups_type_positions")
+api.add_resource(LocationListResource, '/groups/locations', endpoint="groups_locations")
 
 # User
 api.add_resource(UserContactListResource, '/users/me/contact/favorites', endpoint="user_contacts")
@@ -124,6 +126,9 @@ def register_views():
     # Groups
     api_spec.spec.path(view=GroupListResource, app=current_app)
     api_spec.spec.path(view=GroupTypeListResource, app=current_app)
+    # Groups Locations & positions
+    api_spec.spec.path(view=PositionGroupTypeListResource, app=current_app)
+    api_spec.spec.path(view=LocationListResource, app=current_app)
 
     # Contacts
     api_spec.spec.path(view=ContactListResource, app=current_app)

@@ -7,7 +7,7 @@ from datetime import datetime
 from marshmallow_enum import EnumField
 from werkzeug.exceptions import HTTPException
 
-from domain.users.entities.group import GroupEntity, GroupType
+from domain.users.entities.group import GroupEntity, GroupType, PositionGroupTypeEntity, LocationEntity, LocationType
 
 
 class GroupValidationError(HTTPException):
@@ -18,7 +18,8 @@ class GroupSchema(Schema):
     __model__ = GroupEntity
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
-    name = fields.Str(required=True)
+    label = fields.Str(required=True)
+    slug = fields.Str(dump_only=True)
     type = EnumField(GroupType, validate=validate.OneOf([e.value for e in GroupType]))
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
 
@@ -31,3 +32,31 @@ class GroupSchema(Schema):
         raise GroupValidationError(description=exc.normalized_messages())
 
 
+class PositionGroupTypeEntitySchema(Schema):
+    __model__ = PositionGroupTypeEntity
+
+    uuid = fields.Str(missing=lambda: str(uuid4()))
+    label = fields.Str(required=True)
+    slug = fields.Str(dump_only=True)
+    group_type = EnumField(GroupType, validate=validate.OneOf([e.value for e in GroupType]))
+
+    @post_load
+    def make_position(self, data: dict, **kwargs):
+        current_app.logger.info(f"data {data}")
+        return PositionGroupTypeEntity.from_dict(data)
+
+
+class LocationSchema(Schema):
+    __model__ = LocationEntity
+
+    uuid = fields.Str(missing=lambda: str(uuid4()))
+    label = fields.Str(required=True)
+    slug = fields.Str(dump_only=True)
+    external_id = fields.Str(dump_only=True)
+    search_label = fields.Str(dump_only=True)
+    type = EnumField(LocationType, validate=validate.OneOf([e.value for e in LocationType]))
+
+    @post_load
+    def make_location(self, data: dict, **kwargs):
+        current_app.logger.info(f"data {data}")
+        return LocationEntity.from_dict(data)

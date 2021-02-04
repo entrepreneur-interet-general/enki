@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
-import { RegisterService } from '../../register.service';
+import { RegisterService } from '../../../register.service';
 
 @Component({
   selector: 'app-search-location',

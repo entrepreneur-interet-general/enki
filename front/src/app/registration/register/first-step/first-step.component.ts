@@ -70,7 +70,7 @@ export class FirstStepComponent {
         position: this.userGroup.value.position,
         first_name: this.userGroup.value.firstName,
         last_name: this.userGroup.value.lastName,
-        location: this.userGroup.value.location
+        location: this.registerService.selectedLocation.name
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
       this.userService.user.attributes = {

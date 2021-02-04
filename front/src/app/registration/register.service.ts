@@ -12,6 +12,21 @@ export class RegisterService {
 
   selectedLocation;
 
+  mockLocations: object[] = [
+    {
+      name: '77108',
+      label: 'Chelles'
+    },
+    {
+      name: '51571',
+      label: 'Val de Vesle'
+    },
+    {
+      name: '77',
+      label: 'Seine et Marne'
+    }
+  ];
+
   constructor(
     private http: HttpClient,
   ) {
@@ -22,20 +37,7 @@ export class RegisterService {
   }
 
   searchLocation(query): Observable<object[]> {
-    return of([
-      {
-        name: '77108',
-        label: 'Chelles'
-      },
-      {
-        name: '51571',
-        label: 'Val de Vesle'
-      },
-      {
-        name: '77',
-        label: 'Seine et Marne'
-      }
-    ])
+    return of(this.mockLocations)
   }
 
 

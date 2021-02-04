@@ -34,7 +34,7 @@
     <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
   </div>
   <div class="enkiform__group">
-    <input type="text" class="enkiform__input" id="location" formControlName="location" required routerLink="../searchlocation">
+    <input type="text" class="enkiform__input" id="location" formControlName="location" required routerLink="./searchlocation">
     <label for="location" class="enkiform__label">Localisation</label>
     <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
   </div>
@@ -42,6 +42,7 @@
     <input type="submit" class="btn" value="Valider l'inscription" [disabled]="!userGroup.valid">
   </div>
 </form>
+<router-outlet></router-outlet>
 <!-- <p>
   Form values: {{userGroup.value | json}}
 </p>

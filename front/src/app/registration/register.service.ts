@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Location } from '../interfaces/Location';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
@@ -9,20 +10,22 @@ import { environment } from 'src/environments/environment';
 })
 export class RegisterService {
 
+  selectedLocation = new BehaviorSubject<Location>({
+    slug: '',
+    label: ''
+  });
 
-  selectedLocation;
-
-  mockLocations: object[] = [
+  mockLocations: Location[] = [
     {
-      name: '77108',
+      slug: '77108',
       label: 'Chelles'
     },
     {
-      name: '51571',
+      slug: '51571',
       label: 'Val de Vesle'
     },
     {
-      name: '77',
+      slug: '77',
       label: 'Seine et Marne'
     }
   ];
@@ -30,14 +33,15 @@ export class RegisterService {
   constructor(
     private http: HttpClient,
   ) {
-    this.selectedLocation = {
-      name: '',
-      label: ''
-    }
+    
   }
 
-  searchLocation(query): Observable<object[]> {
-    return of(this.mockLocations)
+  setSelectedLocation(location: Location): void {
+    this.selectedLocation.next(location)
+  }
+
+  searchLocation(query): Observable<Location[]> {
+    return of(this.mockLocations as Location[])
   }
 
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, Routes } from '@angular/router';
+import { Router } from '@angular/router';
+import { Location } from '../../../../interfaces/Location';
 import { RegisterService } from '../../../register.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { RegisterService } from '../../../register.service';
 export class SearchLocationComponent implements OnInit {
 
   locationSearch = new FormControl('', Validators.required)
-  locationResults: object[]
+  locationResults: Location[]
 
   constructor(
     private registerService: RegisterService,
@@ -19,9 +20,8 @@ export class SearchLocationComponent implements OnInit {
     this.locationResults = []
     this.locationSearch.valueChanges.subscribe(value => {
       if (value.length > 1) {
-        this.registerService.searchLocation(value).subscribe(res => {
-
-          this.locationResults = res
+        this.registerService.searchLocation(value).subscribe(locationResults => {
+          this.locationResults = locationResults
         })
       }
     })
@@ -31,11 +31,8 @@ export class SearchLocationComponent implements OnInit {
     
   }
 
-  selectLocation(name, label) {
-    this.registerService.selectedLocation = {
-      name: name,
-      label: label
-    }
+  selectLocation(location: Location) {
+    this.registerService.setSelectedLocation(location)
     this.router.navigate(['register/step1'])
   }
 

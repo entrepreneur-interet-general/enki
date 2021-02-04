@@ -31,5 +31,5 @@ class PgGroupRepository(PgRepositoryMixin, AbstractGroupRepository):
 
     def get_location_by_query(self, query: str) -> List[LocationEntity]:
         matches = self.session.query(LocationEntity).filter(
-            LocationEntity.match(query)).all()
+            LocationEntity.search_label.match(query)).all()
         return matches

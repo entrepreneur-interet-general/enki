@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchLocationComponent } from './register/search-location/search-location.component';
+import { SearchLocationComponent } from './register/first-step/search-location/search-location.component';
 import { FirstStepComponent } from './register/first-step/first-step.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -19,12 +19,14 @@ const routes : Routes = [
       },
       {
         path: 'step1',
-        component: FirstStepComponent
+        component: FirstStepComponent,
+        children: [
+          {
+            path: 'searchlocation',
+            component: SearchLocationComponent
+          }
+        ]
       },
-      {
-        path: 'searchlocation',
-        component: SearchLocationComponent
-      }
     ]
   }
 ]

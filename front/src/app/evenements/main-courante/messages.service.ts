@@ -24,7 +24,6 @@ export class MessagesService {
   messagesUrl: string;
   resourcesUrl: string;
   private readonly _messagesSource = new BehaviorSubject<Message[]>([]);
-  readonly messages$ = this._messagesSource.asObservable();
 
   httpHeaders: object;
   constructor(

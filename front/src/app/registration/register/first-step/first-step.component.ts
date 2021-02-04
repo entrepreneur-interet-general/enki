@@ -28,7 +28,6 @@ export class FirstStepComponent {
   httpOptions: object;
   userTypes: [];
   userPositions: object[];
-  selectedLocation: object;
 
   constructor(
     private http: HttpClient,
@@ -43,7 +42,10 @@ export class FirstStepComponent {
         Authorization: `Bearer ${window.localStorage.getItem('token')}`
       })
     }
-    this.userGroup.get('location').setValue(this.registerService.selectedLocation.label)
+
+    this.registerService.selectedLocation.subscribe((location) => {
+      this.userGroup.get('location').setValue(location.label)
+    })
     
     this.registerService.getUserTypes().subscribe(response => {
       this.userTypes = response
@@ -70,7 +72,7 @@ export class FirstStepComponent {
         position: this.userGroup.value.position,
         first_name: this.userGroup.value.firstName,
         last_name: this.userGroup.value.lastName,
-        location: this.registerService.selectedLocation.name
+        location: this.registerService.selectedLocation.getValue()
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
       this.userService.user.attributes = {

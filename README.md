@@ -1,5 +1,3 @@
-.. image:: backend/notebook/enki.png
-
 # Installation
 
 This is a little trick to redirect to keycloak from localhost 

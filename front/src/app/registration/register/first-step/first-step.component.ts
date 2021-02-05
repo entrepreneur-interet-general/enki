@@ -47,12 +47,12 @@ export class FirstStepComponent {
       this.userGroup.get('location').setValue(location.label)
       console.log(this.userGroup.status)
     })
-    
+
     this.registerService.getUserTypes().subscribe(response => {
       this.userTypes = response
     })
 
-  
+
     this.userGroup.get('structure').valueChanges.subscribe(typeName => {
       this.registerService.getUserPositions(typeName).subscribe(positions => {
         console.log(positions)
@@ -64,10 +64,6 @@ export class FirstStepComponent {
   ngOnInit(): void {
   }
 
-/*   onGroupChange(value: any): void {
-    console.log(value)
-
-  } */
 
   onSubmit(): void {
     let bodyForm = {
@@ -77,7 +73,7 @@ export class FirstStepComponent {
         group_type: this.userGroup.value.structure,
         location_id: this.registerService.selectedLocation.getValue().uuid
     }
-    console.log(bodyForm)
+    console.log(bodyForm);
     this.httpSubmitForm(bodyForm).subscribe((response) => {
       this.userService.user.attributes = {
         fonction: this.userGroup.value.fonction
@@ -102,7 +98,7 @@ export class FirstStepComponent {
   }
 
   httpSubmitForm(bodyForm): Observable<object> {
-    return this.http.post<any>(`${environment.backendUrl}/enki/v1/users`, bodyForm, this.httpOptions)
+    return this.http.post<any>(`${environment.backendUrl}/users`, bodyForm, this.httpOptions)
   }
 
 }

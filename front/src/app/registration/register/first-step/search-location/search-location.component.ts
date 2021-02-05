@@ -19,7 +19,7 @@ export class SearchLocationComponent implements OnInit {
   ) {
     this.locationResults = []
     this.locationSearch.valueChanges.subscribe(value => {
-      if (value.length > 1) {
+      if (value.length > 2) {
         this.registerService.searchLocation(value).subscribe(locationResults => {
           this.locationResults = locationResults
         })

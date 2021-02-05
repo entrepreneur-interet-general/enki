@@ -12,17 +12,17 @@
     <label for="firstName" class="enkiform__label">Prénom</label>
   </div>
   <div class="enkiform__group">
-    <select class="enkiform__input" id="structure" formControlName="structure" required>
-      <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option>
-    </select>
-    <label for="structure" class="enkiform__label">Structure</label>
-    <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
-  </div>
-  <div class="enkiform__group" *ngIf="userGroup.value.structure !== ''">
     <select class="enkiform__input" id="position" formControlName="position" required>
       <option *ngFor="let userPosition of userPositions" value="{{userPosition.name}}">{{userPosition.label}}</option>
     </select>
     <label for="position" class="enkiform__label">Fonction</label>
+    <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+  </div>
+  <div class="enkiform__group">
+    <select class="enkiform__input" id="structure" formControlName="structure" required>
+      <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option>
+    </select>
+    <label for="structure" class="enkiform__label">Structure</label>
     <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
   </div>
   <div class="enkiform__group">

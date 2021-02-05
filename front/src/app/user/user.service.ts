@@ -19,7 +19,7 @@ export class UserService {
   ) {
     this.user = {
       attributes: {
-        fonction: ""
+        fonction: ''
       },
       location: '',
       contacts: []
@@ -31,29 +31,29 @@ export class UserService {
     return of(this.user.contacts);
   }
   isUserFav(contactId: string): boolean {
-    return this.user.contacts.some(contact => contact.uuid === contactId)
+    return this.user.contacts.some(contact => contact.uuid === contactId);
   }
   // PUT /user/{uuid}/favoriteContacts/{uuid}
   addContactToUserFavs(contactId: string): Observable<Contact[]> {
     return of(this.user.contacts.concat(this.annuaireService.annuaire.filter(contact => contact.uuid === contactId)[0]))
       .pipe(
         tap(response => {
-          this.user.contacts = response
+          this.user.contacts = response;
         })
-      )
+      );
   }
   // DELETE /user/{uuid}/favoriteContacts/{uuid}
   removeContactFromUserFavs(contactId: string): Observable<Contact[]> {
     return of(this.user.contacts.filter(contact => contact.uuid !== contactId))
       .pipe(
         tap(response => {
-          this.user.contacts = response
+          this.user.contacts = response;
         })
-      )
+      );
   }
 
   userIsValid(): boolean {
-    return Object.keys(this.user).length > 0 && this.user.location !== '' && this.user.attributes.fonction !== ''
+    return Object.keys(this.user).length > 0 && this.user.location !== '' && this.user.attributes.fonction !== '';
   }
 
 /*   loadUserProfile(): void {

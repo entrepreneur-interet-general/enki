@@ -71,7 +71,11 @@ cd backend
 ```
 
 ```
-make build && make upd 
+docker-compose -f docker-compose.yml up
+```
+or with make 
+```
+make build && make upd && make seed
 ```
 
 It's now possible to post new "affaires" in postman with this endpoint:

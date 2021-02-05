@@ -55,6 +55,7 @@ export class FirstStepComponent {
   
     this.userGroup.get('structure').valueChanges.subscribe(typeName => {
       this.registerService.getUserPositions(typeName).subscribe(positions => {
+        console.log(positions)
         this.userPositions = positions
       })
     })
@@ -70,11 +71,13 @@ export class FirstStepComponent {
 
   onSubmit(): void {
     let bodyForm = {
-        position: this.userGroup.value.position,
+        position_id: this.userGroup.value.position,
         first_name: this.userGroup.value.firstName,
         last_name: this.userGroup.value.lastName,
-        location: this.registerService.selectedLocation.getValue()
+        group_type: this.userGroup.value.structure,
+        location_id: this.registerService.selectedLocation.getValue().uuid
     }
+    console.log(bodyForm)
     this.httpSubmitForm(bodyForm).subscribe((response) => {
       this.userService.user.attributes = {
         fonction: this.userGroup.value.fonction

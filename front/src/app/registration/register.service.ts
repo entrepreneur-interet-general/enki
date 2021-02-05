@@ -12,21 +12,25 @@ export class RegisterService {
 
   selectedLocation = new BehaviorSubject<Location>({
     slug: '',
-    label: ''
+    label: '',
+    uuid: ''
   });
 
   mockLocations: Location[] = [
     {
       slug: '77108',
-      label: 'Chelles'
+      label: 'Chelles',
+      uuid: ''
     },
     {
       slug: '51571',
-      label: 'Val de Vesle'
+      label: 'Val de Vesle',
+      uuid: ''
     },
     {
       slug: '77',
-      label: 'Seine et Marne'
+      label: 'Seine et Marne',
+      uuid: ''
     }
   ];
 

@@ -2,7 +2,8 @@ import abc
 from typing import List, Union
 from werkzeug.exceptions import HTTPException
 
-from domain.users.entities.group import GroupEntity, GroupType, PositionGroupTypeEntity, LocationEntity
+from domain.users.entities.group import GroupEntity, GroupType, PositionGroupTypeEntity, LocationEntity, \
+    UserPositionEntity
 
 GroupsList = List[GroupEntity]
 
@@ -38,6 +39,18 @@ class AbstractGroupRepository(abc.ABC):
 
     @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> Union[GroupEntity, None]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_from_group_type_and_location_id(self, group_type: GroupType, location_id: str) -> GroupEntity:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def add_position(self, position: UserPositionEntity):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_position(self, position_id: str):
         raise NotImplementedError
 
 

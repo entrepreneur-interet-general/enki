@@ -101,7 +101,7 @@ position_group_type_table = Table(
 user_position_table = Table(
     'users_positions', metadata,
     Column('uuid', String(60), primary_key=True),
-    Column('position_name', String(255), nullable=False),
+    Column('position_id', String(60), ForeignKey("positions_groups.uuid")),
     Column('group_id', String(60), ForeignKey("groups.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=True, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=True, default=datetime.now)
@@ -113,7 +113,8 @@ def start_mappers():
     mapper(PositionGroupTypeEntity, position_group_type_table)
     mapper(UserPositionEntity, user_position_table,
            properties={
-               'group': relationship(GroupEntity)
+               'group': relationship(GroupEntity,  foreign_keys=user_position_table.c.group_id),
+               'position': relationship(PositionGroupTypeEntity,  foreign_keys=user_position_table.c.position_id)
            }
    )
 

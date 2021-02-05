@@ -1,6 +1,7 @@
 from typing import List, Union
 
 from sqlalchemy.orm import Session
+from werkzeug.exceptions import HTTPException
 
 from domain.users.ports.group_repository import AbstractGroupRepository, AlreadyExistingGroupUuid, GroupsList
 from domain.users.entities.group import GroupEntity, GroupType, PositionGroupTypeEntity, LocationEntity, \
@@ -8,6 +9,16 @@ from domain.users.entities.group import GroupEntity, GroupType, PositionGroupTyp
 from .repository import PgRepositoryMixin
 
 tagsList = List[GroupEntity]
+
+
+class NotFoundGroup(HTTPException):
+    code = 404
+    description = "Aucun groupe correspondant à ces critères n'a été trouvé"
+
+
+class NotFoundPosition(HTTPException):
+    code = 404
+    description = "Cette fonction n'existe pas"
 
 
 class PgGroupRepository(PgRepositoryMixin, AbstractGroupRepository):
@@ -39,7 +50,7 @@ class PgGroupRepository(PgRepositoryMixin, AbstractGroupRepository):
         matches = self.session.query(GroupEntity).filter(GroupEntity.location_id == location_id). \
             filter(GroupEntity.type == group_type).all()
         if not matches:
-            return None
+            raise NotFoundGroup
         return matches[0]
 
     def add_position(self, position: UserPositionEntity):
@@ -49,5 +60,5 @@ class PgGroupRepository(PgRepositoryMixin, AbstractGroupRepository):
     def get_position(self, position_id: str) -> Union[PositionGroupTypeEntity, None]:
         matches = self.session.query(PositionGroupTypeEntity).filter(PositionGroupTypeEntity.uuid == position_id).all()
         if not matches:
-            return None
+            raise NotFoundPosition
         return matches[0]

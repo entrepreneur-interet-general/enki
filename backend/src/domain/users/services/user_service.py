@@ -1,9 +1,11 @@
 from typing import Any, Dict, List
+from uuid import uuid4
 
 from flask import current_app
 from marshmallow import ValidationError
 
 from adapters.http.keycloak import KeycloakHelper
+from domain.users.entities.group import UserPositionEntity
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.user import UserSchema
 from entrypoints.config import EnkiConfig
@@ -17,10 +19,10 @@ class UserService:
     def add_user(data: dict,
                  uow: AbstractUnitOfWork):
 
-        code_insee = data.pop("code_insee", None)
-        code_dept = data.pop("code_dept", None)
-        current_app.logger.info(f"code_dept {code_dept}")
-        current_app.logger.info(f"code_insee {code_insee}")
+        position_id = data.pop("position_id", None)
+        location_id = data.pop("location_id", None)
+        group_type = data.pop("group_type", None)
+
         try:
             user: UserEntity = UserService.schema().load(data)
             return_value = UserService.schema().dump(user)
@@ -32,18 +34,26 @@ class UserService:
         with uow:
             kh = KeycloakHelper.from_config(EnkiConfig())
             _ = uow.user.add(user)
+            group = uow.group.get_from_group_type_and_location_id(group_type=group_type, location_id=location_id)
+
+            position = uow.group.get_position(position_id=position_id)
+            user_position = UserPositionEntity(uuid=str(uuid4()))
+            user_position.group = group
+            user_position.position = position
+            uow.group.add_position(user_position)
+            user.position = user_position
+
             kh.update_user_at_creation(
                 user_id=user.uuid,
                 first_name=user.first_name,
                 last_name=user.last_name,
                 attributes={
-                    "fonction": user.position,
-                    "code_insee": code_insee,
-                    "code_dept": code_dept,
+                    "fonction": user.position.position.label,
+                    "group_type": group_type,
                 }
             )
-            current_app.logger.info("after updating in keycloak")
-            kh.assign_to_group(user_id=user.uuid, group_name=str(user.position).lower())
+            current_app.logger.info(f"after updating in keycloak {str(user.position.position.label).lower()}")
+            kh.assign_to_group(user_id=user.uuid, group_name=str(user.position.position.label).lower())
 
         return return_value
 

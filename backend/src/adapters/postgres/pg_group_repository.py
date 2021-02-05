@@ -3,7 +3,8 @@ from typing import List, Union
 from sqlalchemy.orm import Session
 
 from domain.users.ports.group_repository import AbstractGroupRepository, AlreadyExistingGroupUuid, GroupsList
-from domain.users.entities.group import GroupEntity, GroupType, PositionGroupTypeEntity, LocationEntity
+from domain.users.entities.group import GroupEntity, GroupType, PositionGroupTypeEntity, LocationEntity, \
+    UserPositionEntity
 from .repository import PgRepositoryMixin
 
 tagsList = List[GroupEntity]
@@ -33,3 +34,20 @@ class PgGroupRepository(PgRepositoryMixin, AbstractGroupRepository):
         matches = self.session.query(LocationEntity).filter(
             LocationEntity.search_label.match(query)).all()
         return matches
+
+    def get_from_group_type_and_location_id(self, group_type: GroupType, location_id: str) -> Union[GroupEntity, None]:
+        matches = self.session.query(GroupEntity).filter(GroupEntity.location_id == location_id). \
+            filter(GroupEntity.type == group_type).all()
+        if not matches:
+            return None
+        return matches[0]
+
+    def add_position(self, position: UserPositionEntity):
+        self.session.add(position)
+        self.commit()
+
+    def get_position(self, position_id: str) -> Union[PositionGroupTypeEntity, None]:
+        matches = self.session.query(PositionGroupTypeEntity).filter(PositionGroupTypeEntity.uuid == position_id).all()
+        if not matches:
+            return None
+        return matches[0]

@@ -6,13 +6,23 @@ from datetime import datetime
 
 from werkzeug.exceptions import HTTPException
 
+from domain.users.entities.group import UserPositionEntity
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.contact import ContactSchema
-from domain.users.schemas.group import GroupSchema
+from domain.users.schemas.group import GroupSchema, PositionGroupTypeEntitySchema
 
 
 class UserValidationError(HTTPException):
     code = 400
+
+
+class UserPositionSchema(Schema):
+    __model__ = UserPositionEntity
+    uuid = fields.Str(missing=lambda: str(uuid4()))
+    position_id = fields.Str(required=True, dump_only=True)
+    position = fields.Nested(PositionGroupTypeEntitySchema, dump_only=True)
+    group_id = fields.Str(required=True, dump_only=True)
+    group = fields.Nested(GroupSchema, dump_only=True)
 
 
 class UserSchema(Schema):
@@ -21,9 +31,8 @@ class UserSchema(Schema):
     uuid = fields.Str(missing=lambda: str(uuid4()))
     first_name = fields.Str(required=True)
     last_name = fields.Str(required=True)
-    position = fields.Str(required=False)
-    contacts = fields.Nested(ContactSchema, required=False, many=True, dump_only=True)
-    group = fields.Nested(GroupSchema, required=False, dump_only=True)
+    position = fields.Nested(UserPositionSchema,  dump_only=True)
+    contacts = fields.Nested(ContactSchema, many=True, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow())
 

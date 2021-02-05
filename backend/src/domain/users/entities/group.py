@@ -67,6 +67,7 @@ class PositionGroupTypeEntity(Entity):
 @dataclass_json
 @dataclass
 class UserPositionEntity(Entity):
-    position_name: str
-    group_id: str
-    group: GroupEntity
+    position_id: str = field(init=False)
+    position: PositionGroupTypeEntity = field(init=False)
+    group_id: str = field(init=False)
+    group: GroupEntity = field(init=False)

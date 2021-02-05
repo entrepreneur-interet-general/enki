@@ -41,7 +41,11 @@ export class RegisterService {
   }
 
   searchLocation(query): Observable<Location[]> {
-    return of(this.mockLocations as Location[])
+    // return of(this.mockLocations as Location[])
+    return this.http.get<any>(`${environment.backendUrl}/groups/locations?query=${query}`)
+      .pipe(
+        map(res => res.data)
+      )
   }
 
 
@@ -53,13 +57,16 @@ export class RegisterService {
   }
 
   getUserPositions(groupeTypeName: string): Observable<object[]> {
-    return of([
-      {
-        name: 'prefet',
-        label: 'Préfet'
-      }
-    ])
-    // return this.http.get<any>(`${environment.backendUrl}/positions/${groupeTypeName}`)
+    // return of([
+    //   {
+    //     name: 'prefet',
+    //     label: 'Préfet'
+    //   }
+    // ])
+    return this.http.get<any>(`${environment.backendUrl}/groups/positions?groupType=${groupeTypeName}`)
+      .pipe(
+        map(res => res.data)
+      )
   }
 
 }

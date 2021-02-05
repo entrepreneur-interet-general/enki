@@ -55,7 +55,6 @@ export class FirstStepComponent {
 
     this.userGroup.get('structure').valueChanges.subscribe(typeName => {
       this.registerService.getUserPositions(typeName).subscribe(positions => {
-        console.log(positions)
         this.userPositions = positions
       })
     })
@@ -75,6 +74,7 @@ export class FirstStepComponent {
     }
     console.log(bodyForm);
     this.httpSubmitForm(bodyForm).subscribe((response) => {
+
       this.userService.user.attributes = {
         fonction: this.userGroup.value.fonction
       }
@@ -101,4 +101,7 @@ export class FirstStepComponent {
     return this.http.post<any>(`${environment.backendUrl}/users`, bodyForm, this.httpOptions)
   }
 
+  goToSearchLocation() {
+    this.router.navigate(["register/step1/searchlocation"])
+  }
 }

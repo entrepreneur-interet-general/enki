@@ -26,15 +26,15 @@
     <label for="structure" class="enkiform__label">Structure</label>
     <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
   </div>
-  <div class="enkiform__group">
+  <div class="enkiform__group" *ngIf="userGroup.value.structure !== ''">
     <select class="enkiform__input" id="position" formControlName="position" required>
-      <option *ngFor="let userPosition of userPositions" [value]="userPosition.slug">{{userPosition.label}}</option>
+      <option *ngFor="let userPosition of userPositions" [value]="userPosition.uuid">{{userPosition.label}}</option>
     </select>
     <label for="position" class="enkiform__label">Fonction</label>
     <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
   </div>
   <div class="enkiform__group">
-    <input type="text" class="enkiform__input" id="location" formControlName="location" required routerLink="./searchlocation">
+    <input type="text" class="enkiform__input" id="location" formControlName="location" required (focus)="goToSearchLocation()">
     <label for="location" class="enkiform__label">Localisation</label>
     <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
   </div>
@@ -43,7 +43,7 @@
   </div>
 </form>
 <router-outlet></router-outlet>
-<p *ngFor="let userPosition of userPositions" slug="{{userPosition.slug}}">
+<!--<p *ngFor="let userPosition of userPositions" slug="{{userPosition.slug}}">
   User pos : {{userPosition | json}}
   {{ userPosition.slug}}
 </p>
@@ -52,4 +52,4 @@
 </p>
 <p>
   Form Status: {{ userGroup.status }}
-</p>
+</p>-->

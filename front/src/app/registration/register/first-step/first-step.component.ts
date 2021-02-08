@@ -72,32 +72,35 @@ export class FirstStepComponent {
         group_type: this.userGroup.value.structure,
         location_id: this.registerService.selectedLocation.getValue().uuid
     }
-    console.log(bodyForm);
     this.httpSubmitForm(bodyForm).subscribe((response) => {
 
       this.userService.user.attributes = {
         fonction: this.userGroup.value.fonction
       }
+      console.log(response.data)
       this.userService.user.location = this.userGroup.value.location
       this.userService.user.fullname = `${this.userGroup.value.firstName} ${this.userGroup.value.lastName}`
+
+      console.log(this.userService.user)
+      this.router.navigate(['dashboard'])
+
       /* this.keycloakService.updateToken(3600).then(() => {
         if(this.keycloakService.getUserRoles().includes('watchEvents')) { */
-          this.keycloakService.clearToken()
+/*           this.keycloakService.clearToken()
           this.keycloakService.getToken().then((res) => {
             console.log(res)
             window.localStorage.setItem('token', res)
-            // let decodedJWT: any = jwt_decode(res)
+            let decodedJWT: any = jwt_decode(res)
 
-            // this.userService.user.attributes.fonction = decodedJWT.fonction ? decodedJWT.fonction : ""
-            // this.userService.user.attributes.code_insee = decodedJWT.code_insee ? decodedJWT.code_insee : ""
-          })
-          this.router.navigate(['dashboard'])
+            this.userService.user.attributes.fonction = decodedJWT.fonction ? decodedJWT.fonction : ""
+            this.userService.user.attributes.code_insee = decodedJWT.code_insee ? decodedJWT.code_insee : ""
+          }) */
 /*         }
       }) */
     })
   }
 
-  httpSubmitForm(bodyForm): Observable<object> {
+  httpSubmitForm(bodyForm): Observable<any> {
     return this.http.post<any>(`${environment.backendUrl}/users`, bodyForm, this.httpOptions)
   }
 

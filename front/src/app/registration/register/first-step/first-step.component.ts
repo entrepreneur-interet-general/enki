@@ -33,7 +33,7 @@ export class FirstStepComponent {
     private http: HttpClient,
     private router: Router,
     private userService: UserService,
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService,
     private registerService: RegisterService
   ) {
     this.httpOptions = {

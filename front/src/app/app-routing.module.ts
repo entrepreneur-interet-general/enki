@@ -12,6 +12,8 @@ import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-ev
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
 import { RegistrationModule } from './registration/registration.module';
+import {EvenementDetailResolverService} from "./evenements/evenement-detail-resolver.service";
+import {AppComponent} from "./app.component";
 
 const routes: Routes = [
   {

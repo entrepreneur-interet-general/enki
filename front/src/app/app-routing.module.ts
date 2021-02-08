@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: UserDashboardComponent,
-    canActivate: [ AuthGuard ]
+    // canActivate: [ AuthGuard ]
   },
   {
     path: 'situations',
@@ -53,14 +53,14 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/register/step1', pathMatch: 'full'
+    redirectTo: '/dashboard', pathMatch: 'full'
   },
   { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
     EvenementsModule,
     AnnuaireModule
   ],

@@ -9,7 +9,6 @@ import xml.dom.minidom
 from adapters.http.sig import SigApiAdapter
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
-from domain.affairs.ports.affair_repository import AbstractAffairRepository
 from domain.affairs.ports.simple_affair_repository import ThisAffairNotAssignToThisEvent
 from domain.evenements.entity import EvenementEntity
 from service_layer.unit_of_work import AbstractUnitOfWork

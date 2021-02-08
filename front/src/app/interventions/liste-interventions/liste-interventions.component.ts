@@ -20,8 +20,8 @@ export class ListeInterventionsComponent implements OnInit {
         }) : interventions
     });
   }
-
   ngOnInit(): void {
+
   }
 
 }

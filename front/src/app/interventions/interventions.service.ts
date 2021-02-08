@@ -16,7 +16,6 @@ export interface Intervention {
   victims: number;
   address: string;
 }
-
 interface Coordinates {
   lat: number;
   long: number;
@@ -66,7 +65,7 @@ export class InterventionsService {
       return of([]);
     }
     // if(this.userService.user.)
-    return this.http.get<any>(`${this.interventionsUrl}?insee_code=${this.userService.user.location}`, this.httpOptions)
+    return this.http.get<any>(`${this.interventionsUrl}?insee_code=77108`, this.httpOptions)
       .pipe(
         map(interventions => {
           interventions = environment.HTTPClientInMemory ? interventions : interventions.data;

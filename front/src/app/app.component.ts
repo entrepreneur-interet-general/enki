@@ -16,32 +16,32 @@ export class AppComponent {
   fetchedAffaire: boolean;
   token;
   environment;
-  
 
   constructor(
     private keycloakService: KeycloakService,
     public userService: UserService,
     ) {
-      this.environment = environment
+      this.environment = environment;
       this.keycloakService.getToken().then((res) => {
-        this.token = res
-        window.localStorage.setItem('token', res)
-        let decodedJWT: any = jwt_decode(res)
+        this.token = res;
+        window.localStorage.setItem('token', res);
+        let decodedJWT: any = jwt_decode(res);
 
-        this.userService.user.attributes.fonction = decodedJWT.fonction ? decodedJWT.fonction : ""
-        this.userService.user.location = decodedJWT.code_insee ? decodedJWT.code_insee : ""
+        this.userService.user.attributes.fonction = decodedJWT.fonction ? decodedJWT.fonction : '';
+        this.userService.user.location = decodedJWT.code_insee ? decodedJWT.code_insee : '';
         if (this.userService.userIsValid()) {
           // this.router.navigate(['dashboard'])
         }
       });
       this.fetchedAffaire = false;
   }
+  // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit(): void {
 
   }
 
   canSeeEvents(): boolean {
-    return this.keycloakService.isUserInRole('watchEvents')
+    return this.keycloakService.isUserInRole('watchEvents');
   }
 
 }

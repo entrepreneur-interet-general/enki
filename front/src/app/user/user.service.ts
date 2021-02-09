@@ -81,13 +81,30 @@ export class UserService {
     return Object.keys(this.user).length > 0 && this.user.location !== '' && this.user.attributes.fonction !== '';
   }
 
-  userIsAuth(): Observable<boolean | UrlTree> {
+  userIsAuth(routerSnapshot): Observable<boolean | UrlTree> {
+    
     return this.getUserInfo().pipe(
       map(res => {
         if (res.answer === 'yes') {
           this.userExist = true
         }
-        return this.userExist ? true : this.router.parseUrl('/register/step1')
+        // let urlTreeToSend = this.userExist && routerSnapshot ? this.router.parseUrl('/dashboard'): this.router.parseUrl('/register/step1')
+        // return this.userExist ? true : urlTreeToSend
+        const routerSnapshotIsRegister = routerSnapshot.url.length > 0 && routerSnapshot.url[0].path === 'register' ? true : false
+
+        if (this.userExist) {
+          if (routerSnapshotIsRegister) {
+            return this.router.parseUrl('/dashboard')
+          } else {
+            return true
+          }
+        } else {
+          if (routerSnapshotIsRegister){
+            return true
+          } else {
+            return this.router.parseUrl('/register/step1')
+          }  
+        }
         // return res.answer === 'yes'
       })
     )

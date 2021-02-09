@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from '../user/user.service';
 
@@ -16,7 +16,8 @@ export class UserInfoGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      return this.userService.userIsAuth();
+      console.log(route)
+      return this.userService.userIsAuth(route);
   }
   
 }

@@ -6,16 +6,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { RegisterService } from './register.service';
+import { UserInfoGuard } from '../guards/user-info.guard';
 
 const routes : Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+    canActivate: [ UserInfoGuard ],
     children: [
       {
         path: '',
         redirectTo: 'step1',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'step1',

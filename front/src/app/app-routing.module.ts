@@ -20,45 +20,37 @@ const routes: Routes = [
     path: '',
     canActivate: [ UserInfoGuard ],
     children: [
-      {
+/*       {
         path: `${REGISTER}/step2`,
         component: SecondStepComponent,
         canActivate: [ GuardRegisterGuard ]
-      },
+      }, */
       {
         path: 'dashboard',
         component: UserDashboardComponent,
-        // canActivate: [ AuthGuard ]
       },
       {
         path: 'situations',
-        // canActivate: [ AuthGuard ],
         component: SituationsComponent,
         children: [
           {
             path: 'interventions',
-            // canActivate: [ AuthGuard ],
             component: ListeInterventionsComponent
           },
           {
             path: 'evenements',
-            // canActivate: [ AuthGuard ],
             component: ListeEvenementsComponent
           }
         ]
       },
       {
         path: 'detail-intervention/:uuid',
-        // canActivate: [AuthGuard],
         component: DetailInterventionComponent
-      },
-      {
-        path: '',
-        redirectTo: 'dashboard', pathMatch: 'full'
-      },
-      { path: '**', component: PageNotFoundComponent }
+      }
     ]
   },
+  { path: '**', component: PageNotFoundComponent }
+
 ];
 
 @NgModule({

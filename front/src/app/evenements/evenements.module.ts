@@ -24,6 +24,11 @@ const routes : Routes = [
     canActivate: [ UserInfoGuard ],
     children: [
       {
+        path: '',
+        redirectTo: '/dashboard',
+        pathMatch: 'full'
+      },
+      {
         path: 'evenements/create',
         canActivate: [ AuthGuard ],
         component: CreateEvenementComponent

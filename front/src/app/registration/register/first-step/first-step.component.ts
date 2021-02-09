@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { environment } from 'src/environments/environment';
 import { RegisterService } from '../../register.service';
+import { REGISTER } from 'src/app/constants';
 
 @Component({
   selector: 'app-first-step',
@@ -105,6 +106,6 @@ export class FirstStepComponent {
   }
 
   goToSearchLocation() {
-    this.router.navigate(["register/step1/searchlocation"])
+    this.router.navigate([`${REGISTER}/step1/searchlocation`])
   }
 }

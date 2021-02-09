@@ -13,6 +13,7 @@ import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-ev
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
 import { RegistrationModule } from './registration/registration.module';
+import { REGISTER } from './constants';
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
     canActivate: [ UserInfoGuard ],
     children: [
       {
-        path: 'register/step2',
+        path: `${REGISTER}/step2`,
         component: SecondStepComponent,
         canActivate: [ GuardRegisterGuard ]
       },
@@ -53,7 +54,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/register/step1', pathMatch: 'full'
+        redirectTo: 'dashboard', pathMatch: 'full'
       },
       { path: '**', component: PageNotFoundComponent }
     ]

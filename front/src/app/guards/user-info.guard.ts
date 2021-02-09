@@ -19,7 +19,6 @@ export class UserInfoGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       // send the first segment of requested route
-      console.log(this.router.parseUrl(state.url).root.children)
       const firstSegmentRouterSnapshot = this.router.parseUrl(state.url).root.children[PRIMARY_OUTLET] ? this.router.parseUrl(state.url).root.children[PRIMARY_OUTLET].segments[0].path : ''
       return this.userIsAuth(firstSegmentRouterSnapshot);
   }

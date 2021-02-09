@@ -9,4 +9,4 @@ export interface Contact {
   };
   email: string;
   address: string;
-} 
+}

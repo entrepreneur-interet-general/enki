@@ -21,7 +21,6 @@ export class EvenementsService {
   evenementsUrl: string;
   selectedEvenement: Evenement;
   httpOptions: object;
-  // currentEvenement$;
   constructor(
     private http: HttpClient,
     private interventionsService: InterventionsService

@@ -6,6 +6,7 @@ from enum import Enum
 from typing import Union, List
 
 from domain.core.entity import Entity
+from domain.users.entities.user import UserEntity
 
 
 class Severity(Enum):
@@ -30,6 +31,7 @@ class MessageEntity(Entity):
     title: str
     description: str
     evenement_id: str
+    creator_id: str = field(default_factory=lambda: None)
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
     creator_id: Union[str, None] = field(default_factory=lambda: None)
     creator_position: Union[str, None] = field(default_factory=lambda: None)

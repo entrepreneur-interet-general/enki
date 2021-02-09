@@ -17,6 +17,7 @@ class ContactEntity(DataClassJsonMixin, Entity):
     email: str
     address: str
     tel: Dict[str, str]
-    groups: List = field(default_factory=lambda: [])
+    group_id: List = field(default_factory=lambda: [])
+    group: List = field(default_factory=lambda: [])
     created_at: datetime = field(default_factory=lambda: datetime.utcnow())
     updated_at: datetime = field(default_factory=lambda: datetime.utcnow())

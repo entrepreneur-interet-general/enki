@@ -7,7 +7,6 @@ from domain.messages.entities.resource import ResourceEntity
 from domain.messages.ports.message_repository import AbstractMessageRepository, AlreadyExistingMessageUuid, NotFoundMessage, MessagesList
 from domain.messages.entities.message_entity import MessageEntity
 from domain.messages.entities.tag_entity import TagEntity
-from .orm import tagMessageTable
 from .repository import PgRepositoryMixin
 
 

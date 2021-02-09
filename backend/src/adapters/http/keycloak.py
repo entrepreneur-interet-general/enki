@@ -54,6 +54,7 @@ class KeycloakHelper:
 
     def assign_to_group(self, user_id: str, group_name: str) -> bool:
         self._authentificate()
+        current_app.logger.info(f"group_name {group_name}")
         group_id = self.keycloak_admin.get_group_by_path(f"/{group_name}")["id"]
         self.keycloak_admin.group_user_add(user_id=user_id, group_id=group_id)
         return True

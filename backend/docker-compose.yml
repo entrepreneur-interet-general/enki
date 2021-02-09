@@ -23,7 +23,7 @@ services:
       - enki_default
 
   postgres:
-    image: postgres
+    image: mdillon/postgis
     restart: unless-stopped
     ports:
       - "5432:5432"

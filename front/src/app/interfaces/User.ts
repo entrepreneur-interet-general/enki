@@ -1,10 +1,13 @@
-import { Contact } from './Contact'
+import { Contact } from './Contact';
 
 export interface User {
+  first_name?: string;
+  last_name?: string;
+  position?: string;
   attributes?: {
-    code_insee?: string,
     fonction?: string
-  },
+  };
+  location: string;
   fullname?: string;
-  contacts: Contact[]
+  contacts: Contact[];
 }

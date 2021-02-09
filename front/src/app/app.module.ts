@@ -37,7 +37,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       initOptions: {
         onLoad: 'login-required'
       },
-      bearerExcludedUrls: ['minio:9000'],
+      bearerExcludedUrls: ['minio:9000', 'https://yesno.wtf/'],
     });
 }
 @NgModule({
@@ -47,9 +47,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MapComponent,
     ListeInterventionsComponent,
     DetailInterventionComponent,
-    // SvgDefinitionsComponent,
-    // HeaderComponent,
-    // FirstStepComponent,
     SecondStepComponent,
     PageNotFoundComponent,
     SituationsComponent,

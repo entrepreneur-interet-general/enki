@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router, UrlTree } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -14,11 +15,13 @@ import { User } from '../interfaces/User';
 export class UserService {
 
   user: User;
+  userExist: boolean;
 
   constructor(
     // private keycloakService: KeycloakService,
     private annuaireService: AnnuaireService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
     this.user = {
       attributes: {
@@ -27,6 +30,12 @@ export class UserService {
       location: '',
       contacts: []
     };
+
+    this.userExist = false;
+  }
+
+  getUserInfo(): Observable<any> {
+    return this.http.get<any>(`https://yesno.wtf/api`)
   }
 
   // GET /user/{uuid}/favoriteContacts
@@ -70,6 +79,18 @@ export class UserService {
 
   userIsValid(): boolean {
     return Object.keys(this.user).length > 0 && this.user.location !== '' && this.user.attributes.fonction !== '';
+  }
+
+  userIsAuth(): Observable<boolean | UrlTree> {
+    return this.getUserInfo().pipe(
+      map(res => {
+        if (res.answer === 'yes') {
+          this.userExist = true
+        }
+        return this.userExist ? true : this.router.parseUrl('/register/step1')
+        // return res.answer === 'yes'
+      })
+    )
   }
 
 /*   loadUserProfile(): void {

@@ -31,11 +31,12 @@ export class UserService {
       contacts: []
     };
 
-    this.userExist = false;
   }
 
   getUserInfo(): Observable<any> {
-    return this.http.get<any>(`https://yesno.wtf/api`)
+    // return this.http.get<any>(`https://run.mocky.io/v3/50538c73-1413-4066-9a0c-3ae98d63c20c`) // yes
+    return this.http.get<any>(`https://run.mocky.io/v3/9a2b30a7-e02d-4132-9943-0a972f7a4cf5`) // no
+    return of({answer: 'no'})
   }
 
   // GET /user/{uuid}/favoriteContacts
@@ -82,32 +83,39 @@ export class UserService {
   }
 
   userIsAuth(routerSnapshot): Observable<boolean | UrlTree> {
-    
-    return this.getUserInfo().pipe(
-      map(res => {
-        if (res.answer === 'yes') {
-          this.userExist = true
-        }
-        // let urlTreeToSend = this.userExist && routerSnapshot ? this.router.parseUrl('/dashboard'): this.router.parseUrl('/register/step1')
-        // return this.userExist ? true : urlTreeToSend
-        const routerSnapshotIsRegister = routerSnapshot.url.length > 0 && routerSnapshot.url[0].path === 'register' ? true : false
-
-        if (this.userExist) {
-          if (routerSnapshotIsRegister) {
-            return this.router.parseUrl('/dashboard')
-          } else {
-            return true
+    if (this.userExist) {
+      this.getUrlTreeFromCurrentSnapshot(routerSnapshot)
+    } else {
+      return this.getUserInfo().pipe(
+        map(res => {
+          if (res.answer === 'yes') {
+            this.userExist = true
           }
-        } else {
-          if (routerSnapshotIsRegister){
-            return true
-          } else {
-            return this.router.parseUrl('/register/step1')
-          }  
+          // let urlTreeToSend = this.userExist && routerSnapshot ? this.router.parseUrl('/dashboard'): this.router.parseUrl('/register/step1')
+          // return this.userExist ? true : urlTreeToSend
+          return this.getUrlTreeFromCurrentSnapshot(routerSnapshot)
         }
         // return res.answer === 'yes'
-      })
-    )
+        )
+      )
+    }
+  }
+    
+  getUrlTreeFromCurrentSnapshot(routerSnapshot) {
+    const routerSnapshotIsRegister = routerSnapshot.url.length > 0 && routerSnapshot.url[0].path === 'register' ? true : false
+    if (this.userExist) {
+      if (routerSnapshotIsRegister) {
+        return this.router.parseUrl('/dashboard')
+      } else {
+        return true
+      }
+    } else {
+      if (routerSnapshotIsRegister){
+        return true
+      } else {
+        return this.router.parseUrl('/register/step1')
+      }
+    }
   }
 
 /*   loadUserProfile(): void {

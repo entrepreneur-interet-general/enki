@@ -19,4 +19,4 @@ See more at https://jira.nexsis18-112.fr/confluence/display/ENKI/Installation+de
 Work on keycloak design CSS
 ---------------------------
 
-* Run the command `sass --watch scss/main.scss css/main.css` dans le dossier enki-theme/login/resources
+* Run the command `sass --watch scss/main.scss css/main.css` in the folder enki-theme/login/resources

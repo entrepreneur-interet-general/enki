@@ -45,8 +45,8 @@
 }
 
 .right-menu {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 56px;
   left: 0;
   background: $white;
   transform: translate(0, 0);

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, ActivatedRoute, Router } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
+import { REGISTER } from '../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -17,22 +18,21 @@ export class UserInfoGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      console.log(route)
-      return this.userIsAuth(route);
+      // send the first segment of requested route
+      const firstSegmentRouterSnapshot = this.router.parseUrl(state.url).root.children[PRIMARY_OUTLET] ? this.router.parseUrl(state.url).root.children[PRIMARY_OUTLET].segments[0].path : ''
+      return this.userIsAuth(firstSegmentRouterSnapshot);
   }
 
-  userIsAuth(routerSnapshot): Observable<boolean | UrlTree> {
+  userIsAuth(firstSegmentRouterSnapshot): Observable<boolean | UrlTree> {
     if (this.userService.userExist) {
-      return of(this.getUrlTreeFromCurrentSnapshot(routerSnapshot))
+      return of(this.getUrlTreeFromCurrentSnapshot(firstSegmentRouterSnapshot))
     } else {
       return this.userService.getUserInfo().pipe(
         map(res => {
           if (res.answer === 'yes') {
             this.userService.userExist = true
           }
-          // let urlTreeToSend = this.userExist && routerSnapshot ? this.router.parseUrl('/dashboard'): this.router.parseUrl('/register/step1')
-          // return this.userExist ? true : urlTreeToSend
-          return this.getUrlTreeFromCurrentSnapshot(routerSnapshot)
+          return this.getUrlTreeFromCurrentSnapshot(firstSegmentRouterSnapshot)
         }
         // return res.answer === 'yes'
         )
@@ -40,19 +40,18 @@ export class UserInfoGuard implements CanActivate {
     }
   }
     
-  getUrlTreeFromCurrentSnapshot(routerSnapshot) {
-    const routerSnapshotIsRegister = routerSnapshot.url.length > 0 && routerSnapshot.url[0].path === 'register' ? true : false
+  getUrlTreeFromCurrentSnapshot(firstSegmentRouterSnapshot) {
     if (this.userService.userExist) {
-      if (routerSnapshotIsRegister) {
+      if (firstSegmentRouterSnapshot === 'register') {
         return this.router.parseUrl('/dashboard')
       } else {
         return true
       }
     } else {
-      if (routerSnapshotIsRegister){
+      if (firstSegmentRouterSnapshot === REGISTER){
         return true
       } else {
-        return this.router.parseUrl('/register/step1')
+        return this.router.parseUrl(`/${REGISTER}/step1`)
       }
     }
   }

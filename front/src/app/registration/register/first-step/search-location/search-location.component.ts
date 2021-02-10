@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { REGISTER } from 'src/app/constants';
 import { Location } from '../../../../interfaces/Location';
 import { RegisterService } from '../../../register.service';
 
@@ -33,7 +34,7 @@ export class SearchLocationComponent implements OnInit {
 
   selectLocation(location: Location) {
     this.registerService.setSelectedLocation(location)
-    this.router.navigate(['register/step1'])
+    this.router.navigate([`${REGISTER}/step1`])
   }
 
 }

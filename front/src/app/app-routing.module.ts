@@ -13,51 +13,44 @@ import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-ev
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
 import { RegistrationModule } from './registration/registration.module';
+import { REGISTER } from './constants';
 
 const routes: Routes = [
   {
     path: '',
     canActivate: [ UserInfoGuard ],
     children: [
-      {
-        path: 'register/step2',
+/*       {
+        path: `${REGISTER}/step2`,
         component: SecondStepComponent,
         canActivate: [ GuardRegisterGuard ]
-      },
+      }, */
       {
         path: 'dashboard',
         component: UserDashboardComponent,
-        // canActivate: [ AuthGuard ]
       },
       {
         path: 'situations',
-        // canActivate: [ AuthGuard ],
         component: SituationsComponent,
         children: [
           {
             path: 'interventions',
-            // canActivate: [ AuthGuard ],
             component: ListeInterventionsComponent
           },
           {
             path: 'evenements',
-            // canActivate: [ AuthGuard ],
             component: ListeEvenementsComponent
           }
         ]
       },
       {
         path: 'detail-intervention/:uuid',
-        // canActivate: [AuthGuard],
         component: DetailInterventionComponent
-      },
-      {
-        path: '',
-        redirectTo: '/register/step1', pathMatch: 'full'
-      },
-      { path: '**', component: PageNotFoundComponent }
+      }
     ]
   },
+  { path: '**', component: PageNotFoundComponent }
+
 ];
 
 @NgModule({

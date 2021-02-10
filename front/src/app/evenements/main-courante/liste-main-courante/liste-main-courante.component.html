@@ -23,7 +23,7 @@
   </div>
   
   <ul class="">
-    <li class="list--element" *ngFor="let message of messages">
+    <li class="list--element" *ngFor="let message of messages" [ngClass]="message.creator_position === user.attributes.fonction ? '-right': ''">
       <a routerLink="../detailmessage/{{message.uuid}}">
         <div class="list--wrapper">
           <div class="secondInfos">
@@ -35,20 +35,22 @@
               {{message.created_at | date:"HH:mm"}}
             </div>
           </div>
-          <div class="mainInfos">
-            <div class="mainInfos--title" [ngClass]="(message.creator_position === 'prefet' ? '-blue' : '-green')">
-              {{message.creator.position.position.label}} —
+          <div class="contentInfos">
+            <div class="mainInfos">
+              <div class="mainInfos--title" [ngClass]="(message.creator_position === 'prefet' ? '-blue' : '-green')">
+                {{message.creator.position.position.label}} —
+              </div>
+              <div class="mainInfos--content">
+                {{ message.title }}
+              </div>
             </div>
-            <div class="mainInfos--content">
-              {{ message.title }}
+            <div class="list--labels" *ngIf="message.tags.length > 0">
+              <div class="badge badge__inverted" *ngFor="let tag of message.tags">{{ tag.title }}</div>
             </div>
-          </div>
-          <div class="list--labels" *ngIf="message.tags.length > 0">
-            <div class="badge badge__inverted" *ngFor="let tag of message.tags">{{ tag.title }}</div>
-          </div>
-          <div class="list--resources previewImage">
-            <div class="previewImage--element" *ngFor="let resource of message.resources">
-              <img src="{{resource.url}}" alt="">
+            <div class="list--resources previewImage" *ngIf="message.resources.length > 0">
+              <div class="previewImage--element" *ngFor="let resource of message.resources">
+                <img src="{{resource.url}}" alt="">
+              </div>
             </div>
           </div>
         </div>

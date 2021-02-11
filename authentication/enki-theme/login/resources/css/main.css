@@ -689,12 +689,41 @@ body {
   margin: 0;
 }
 
+a {
+  color: #011428;
+  text-decoration: none;
+}
+
 .title-container {
-  padding: 0 16px 16px;
-  margin: 20px 0;
+  padding: 0 16px 20px 16px;
+  position: relative;
+}
+.title-container.-reversed {
+  background: #034EA2;
+  padding: 16px;
+  color: #ffffff;
+}
+.title-container.-reversed .subtitle {
+  color: #ffffff;
+  font-family: "Overpass";
+}
+
+.goTo {
+  margin-bottom: 20px;
+  padding: 0 16px;
+  color: #6C8093;
+  display: flex;
+  align-items: center;
+  font-family: "Barlow Semi Condensed";
+  letter-spacing: 0.5px;
+  font-size: 17px;
+}
+.goTo svg {
+  margin-right: 8px;
 }
 
 .login-title {
+  text-align: center;
   font-size: 32px;
   line-height: 32px;
   font-weight: 300;
@@ -703,42 +732,53 @@ body {
 }
 
 .login-subtitle {
+  text-align: center;
   margin-top: 12px;
 }
 
 .h1-title {
-  padding-bottom: 24px;
+  display: flex;
+  align-items: flex-end;
   font-size: 2rem;
+  font-weight: 500;
   position: relative;
-  color: #000000;
   line-height: 35px;
-}
-.h1-title:after {
-  content: "";
-  width: 62px;
-  background-color: #B3BDC7;
-  height: 1px;
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
 }
 @media all and (max-width:1023px) {
   .h1-title {
-    font-size: 1.75rem;
-    line-height: 30px;
+    font-size: 1.875rem;
+    line-height: 28px;
   }
+}
+.h1-title svg {
+  margin: 0 12px;
+}
+
+.-emphasize {
+  font-family: "Barlow Semi Condensed";
+  font-weight: 500;
+  color: #0474F0;
+}
+
+.subtitle {
+  color: #6C8093;
+  font-family: "Barlow Semi Condensed";
+  font-size: 17px;
+  letter-spacing: 0.5px;
 }
 
 .h2-title {
   font-weight: 500;
   font-size: 1.625rem;
-  color: #000000;
   line-height: 45px;
+  letter-spacing: 0.5px;
 }
 @media all and (max-width:1023px) {
   .h2-title {
-    font-size: 1.375rem;
-    line-height: 30px;
+    font-size: 1.5rem;
+    line-height: 28px;
   }
 }
 
@@ -806,24 +846,22 @@ body {
 }
 
 .btn {
+  width: 100%;
+  height: 42px;
+  margin-bottom: 16px;
   border: none;
   border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 400;
-  height: 40px;
-  max-width: 100%;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  box-sizing: border-box;
   background-color: #034EA2;
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 16px;
+  color: #FFF;
+  font-size: 16px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: "Barlow Semi Condensed";
+}
+.btn:disabled {
+  opacity: 0.5;
 }
 @media screen and (min-width: 768px) {
   .btn {
@@ -897,6 +935,42 @@ body {
 }
 .btn-group .btn {
   margin-top: 15px;
+}
+
+.action {
+  padding: 16px;
+}
+.action--add {
+  width: 56px;
+  height: 56px;
+  border-radius: 56px;
+  background-color: #034EA2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  right: 16px;
+  bottom: 80px;
+  cursor: pointer;
+}
+.action--add .icon {
+  fill: white;
+}
+.action--filter {
+  width: 56px;
+  height: 56px;
+  border-radius: 56px;
+  background-color: #034EA2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  right: 85px;
+  bottom: 80px;
+  cursor: pointer;
+}
+.action--filter .icon {
+  fill: white;
 }
 
 .u-display-b {
@@ -1090,10 +1164,73 @@ body {
   margin-top: 12px;
 }
 
+.badge {
+  padding: 0 8px;
+  background: #034EA2;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-size: 13px;
+  height: 20px;
+  margin-right: 8px;
+  letter-spacing: 0.5px;
+}
+.badge__inverted {
+  background: transparent;
+  border: 1px solid #034EA2;
+  color: #034EA2;
+}
+.badge__green {
+  border-color: #16A78B;
+  color: #16A78B;
+}
+.badge__greenFill {
+  border-color: #16A78B;
+  background-color: #16A78B;
+}
+.badge__blueFill {
+  border-color: #0460C8;
+  background-color: #0460C8;
+}
+
+.previewImage {
+  display: flex;
+  padding: 0 0 16px 0;
+}
+.previewImage--element {
+  position: relative;
+  width: 82px;
+  height: 82px;
+  display: flex;
+  align-items: flex-end;
+}
+.previewImage img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.previewImage svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  fill: #B3BDC7;
+  background: #ffffff;
+  border-radius: 24px;
+}
+
 .enkiform__group {
   width: 100%;
   position: relative;
   text-align: left;
+}
+.enkiform__group .icon {
+  position: absolute;
+  right: 10px;
+  top: 28px;
+  transform: translate(0, -50%);
 }
 .enkiform__checkbox, .enkiform__radio {
   display: block;
@@ -1174,7 +1311,10 @@ body {
   border: 1px solid #B3BDC7;
   height: 56px;
   padding: 0 0 0 16px;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 .enkiform__input:focus + label {
   top: -7px;
@@ -1193,22 +1333,6 @@ body {
 }
 .enkiform__input::placeholder {
   color: #999;
-}
-.enkiform__submit {
-  width: 100%;
-  height: 42px;
-  margin-bottom: 16px;
-  border: none;
-  border-radius: 4px;
-  background-color: #034EA2;
-  color: #FFF;
-  font-size: 18px;
-  font-weight: 600;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.enkiform__submit:disabled {
-  opacity: 0.5;
 }
 .enkiform__valid {
   color: #11836D;
@@ -1461,6 +1585,153 @@ body {
   grid-row: 1/-1;
 }
 
+.list--element {
+  padding-top: 20px;
+  border-bottom: 1px solid #B3BDC7;
+  background: #ffffff;
+}
+.list--element.-right {
+  text-align: right;
+  padding-left: 40px;
+}
+.list--element.-right .badge {
+  margin-right: 0;
+  margin-left: 8px;
+  order: 2;
+}
+.list--wrapper {
+  margin: 0 16px 20px;
+  display: block;
+  text-decoration: initial;
+}
+.list--labels {
+  padding-top: 8px;
+}
+
+.mainInfos {
+  display: block;
+  align-items: center;
+}
+.mainInfos.-hasIcon {
+  display: flex;
+  justify-content: space-between;
+}
+.mainInfos--title {
+  display: inline;
+  font-size: 17px;
+  line-height: 25px;
+  color: #034EA2;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.mainInfos--title.-green {
+  color: #16A78B;
+}
+.mainInfos--title.-blue {
+  color: #0460C8;
+}
+.mainInfos--content {
+  display: inline;
+}
+.mainInfos .more-info {
+  color: #011428;
+  text-transform: initial;
+}
+
+.secondInfos {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.secondInfos--dateTime {
+  display: block;
+  font-size: 17px;
+  font-family: "Barlow Semi Condensed";
+  color: #6C8093;
+}
+.-right .secondInfos {
+  justify-content: flex-end;
+}
+.-right .secondInfos .secondInfos--dateTime {
+  order: 1;
+}
+
+.head-tab {
+  margin-bottom: 20px;
+  height: 56px;
+  background-color: #034EA2;
+  display: flex;
+  align-items: center;
+}
+.head-tab--element {
+  color: #ffffff;
+  margin: 0 16px;
+  padding: 6px 16px;
+  border-radius: 26px;
+}
+.head-tab--element.-active {
+  background-color: #0474F0;
+}
+
+.fullscreen-form {
+  position: fixed;
+  background: #ffffff;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 6000;
+}
+.fullscreen-form--heading {
+  display: flex;
+  height: 56px;
+  border-bottom: 1px #CAD1D8 solid;
+}
+.fullscreen-form--cancel {
+  display: flex;
+  align-items: center;
+  width: 48px;
+}
+.fullscreen-form--cancel svg {
+  padding: 12px;
+  fill: #8494A4;
+}
+.fullscreen-form--searchInput {
+  border: 0;
+  width: 100%;
+  font-size: 17px;
+}
+.fullscreen-form--searchInput::placeholder {
+  color: #8494A4;
+}
+.fullscreen-form .searchList--element {
+  padding: 0 12px 0 16px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #CAD1D8;
+}
+.fullscreen-form .searchList--action {
+  display: flex;
+  padding: 4px;
+  align-items: center;
+}
+.fullscreen-form .searchList--link {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
+.fullscreen-form .searchResults--title {
+  font-family: "Barlow Semi Condensed";
+  border-bottom: 1px solid #CAD1D8;
+  padding: 12px 16px;
+  font-size: 17px;
+  color: #6C8093;
+}
+
 html,
 body {
   height: 100%;
@@ -1512,6 +1783,7 @@ a {
 
 .form-header__imgRepu {
   position: absolute;
+  width: 140px;
   top: 0;
   left: 0;
 }
@@ -1603,7 +1875,7 @@ input[type=submit]:disabled {
 
 .alert {
   width: 100%;
-  margin: 30px 0;
+  margin: 4px 0;
   text-align: left;
 }
 

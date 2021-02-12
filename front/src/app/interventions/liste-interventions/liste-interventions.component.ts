@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { InterventionsService } from '../interventions.service'
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-liste-interventions',
   templateUrl: './liste-interventions.component.html',
-  // styleUrls: ['./liste-interventions.component.scss']
+  styleUrls: ['./liste-interventions.component.scss']
 })
 export class ListeInterventionsComponent implements OnInit {
   interventions;

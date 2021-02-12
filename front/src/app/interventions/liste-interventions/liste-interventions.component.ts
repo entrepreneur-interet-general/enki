@@ -12,6 +12,7 @@ export class ListeInterventionsComponent implements OnInit {
   constructor(
     private interventionsService: InterventionsService,
   ) {
+    this.interventions = [];
     this.interventionsService.httpGetAllInterventions().subscribe((interventions) => {
         this.interventions = environment.HTTPClientInMemory ? interventions.map((intervention, index) => {
           intervention.uuid = (index + 1).toString()

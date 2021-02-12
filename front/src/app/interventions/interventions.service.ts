@@ -15,6 +15,7 @@ export interface Intervention {
   coord: Coordinates;
   victims: number;
   address: string;
+  evenementID: string;
 }
 interface Coordinates {
   lat: number;
@@ -33,6 +34,7 @@ export class InterventionsService {
     private http: HttpClient,
     private userService: UserService
     ) {
+      this.interventions = []
       this.interventionsUrl = `${environment.backendUrl}/affairs`;
       this.httpOptions = {
       };

@@ -15,6 +15,7 @@ export interface Intervention {
   coord: Coordinates;
   victims: number;
   address: string;
+  evenementID: string;
 }
 
 interface Coordinates {
@@ -33,7 +34,8 @@ export class InterventionsService {
   constructor(
     private http: HttpClient,
     private userService: UserService
-    ) { 
+    ) {
+      this.interventions = []
       this.interventionsUrl = `${environment.backendUrl}/affairs`;
       this.httpOptions = {
       };

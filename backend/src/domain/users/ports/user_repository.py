@@ -39,8 +39,6 @@ class AbstractUserRepository(abc.ABC):
             raise NotFoundUser(uuid=uuid)
         return matches
 
-
-
     def get_user_contacts(self, uuid: str):
         user: UserEntity = self.get_by_uuid(uuid=uuid)
         return self._get_user_contacts(user)
@@ -84,6 +82,7 @@ class AbstractUserRepository(abc.ABC):
     @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> Union[UserEntity, None]:
         raise NotImplementedError
+
 
 class InMemoryUserRepository(AbstractUserRepository):
     _users: UsersList = []

@@ -10,11 +10,9 @@ class TagService:
     @staticmethod
     def add_tag(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
         tag: TagEntity = TagService.schema().load(data)
-        return_value = TagService.schema().dump(tag)
-
         with uow:
             uow.tag.add(tag)
-        return return_value
+            return TagService.schema().dump(uow.tag.get_by_uuid(uuid=tag.uuid))
 
     @staticmethod
     def list_tags(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:

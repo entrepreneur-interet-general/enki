@@ -6,8 +6,9 @@ from marshmallow import ValidationError
 
 from adapters.http.keycloak import KeycloakHelper
 from domain.affairs.services.affair_service import AffairService
-from domain.users.entities.group import GroupType
+from domain.users.entities.group import GroupType, UserPositionEntity
 from domain.users.entities.user import UserEntity
+from domain.users.schemas.contact import ContactSchema
 from domain.users.schemas.user import UserSchema
 from entrypoints.config import EnkiConfig
 from service_layer.unit_of_work import AbstractUnitOfWork
@@ -26,8 +27,6 @@ class UserService:
 
         try:
             user: UserEntity = UserService.schema().load(data)
-            return_value = UserService.schema().dump(user)
-            current_app.logger.info(f"return_value {return_value}")
 
         except ValidationError as ve:
             raise ve
@@ -53,10 +52,9 @@ class UserService:
                     "group_type": group_type,
                 }
             )
-            current_app.logger.info(f"after updating in keycloak {str(user.position.position.label).lower()}")
             kh.assign_to_group(user_id=user.uuid, group_name=str(user.position.position.label).lower())
 
-        return return_value
+        return UserService.schema().dump(uow.user.get_by_uuid(uuid=user.uuid))
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
@@ -73,25 +71,28 @@ class UserService:
     def list_contacts(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             users: List[UserEntity] = uow.user.get_user_contacts(uuid=uuid)
-            return UserService.schema(many=True).dump(users)
+            return ContactSchema()(many=True).dump(users)
 
     @staticmethod
     def get_user_contact(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
         with uow:
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
             uow.user.get_user_contact(uuid=uuid, contact=contact)
+            return ContactSchema().dump(contact)
 
     @staticmethod
     def add_contact_to_user(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
         with uow:
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
             uow.user.add_user_contact(uuid=uuid, contact=contact)
+            return ContactSchema().dump(contact)
 
     @staticmethod
     def remove_contact_to_user(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
         with uow:
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
             uow.user.remove_user_contact(uuid=uuid, contact=contact)
+            return ContactSchema().dump(contact)
 
     @staticmethod
     def get_affairs_by_user_uuid(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:

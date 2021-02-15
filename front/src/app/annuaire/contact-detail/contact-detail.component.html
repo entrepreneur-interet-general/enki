@@ -16,6 +16,7 @@
     </div>
   </div>
   <div class="contact-detail--body">
-
+    <p>Tel. : {{contact.tel.mobile}}</p>
+    <p *ngIf="contact.address != ''">Adresse : {{contact.address}}</p>
   </div>
 </div>

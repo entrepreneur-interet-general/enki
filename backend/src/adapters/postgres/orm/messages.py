@@ -88,7 +88,11 @@ affairsTable = Table(
 
 
 def start_mappers():
-    mapper(TagEntity, tagTable)
+    mapper(TagEntity, tagTable,
+           properties={
+               'creator': relationship(UserEntity, backref='evenements', foreign_keys=tagTable.c.creator_id, lazy='noload')
+           }
+   )
     mapper(EvenementEntity, evenementsTable,
            properties={
                'creator': relationship(UserEntity, backref='evenements',  foreign_keys=evenementsTable.c.creator_id)

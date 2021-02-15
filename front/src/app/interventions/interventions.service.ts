@@ -65,7 +65,7 @@ export class InterventionsService {
       return of([]);
     }
     // if(this.userService.user.)
-    return this.http.get<any>(`${this.interventionsUrl}?insee_code=77108`, this.httpOptions)
+    return this.http.get<any>(`${environment.backendUrl}/users/me/affairs`, this.httpOptions)
       .pipe(
         map(interventions => {
           interventions = environment.HTTPClientInMemory ? interventions : interventions.data;

@@ -29,7 +29,7 @@
           <div class="secondInfos">
             <div class="badge" [ngClass]="(message.creator_position === 'prefet') ? 'badge__blueFill' :'badge__greenFill'">
             <!-- <div class="badge" [ngClass]="{'badge__greenFill': message.creator_position === 'maire', 'badge__greenFill': message.creator_position === 'préfet' }"> -->
-              {{message.creator_group}}
+              {{message.creator.position.group.label}}
             </div>
             <div class="secondInfos--dateTime">
               {{message.created_at | date:"HH:mm"}}
@@ -37,7 +37,7 @@
           </div>
           <div class="mainInfos">
             <div class="mainInfos--title" [ngClass]="(message.creator_position === 'prefet' ? '-blue' : '-green')">
-              {{message.creator_position}} —
+              {{message.creator.position.position.label}} —
             </div>
             <div class="mainInfos--content">
               {{ message.title }}

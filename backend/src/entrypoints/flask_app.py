@@ -13,7 +13,7 @@ from .errors import errors
 import logging
 
 logging.basicConfig()
-logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+logging.getLogger('sqlalchemy.engine').setLevel(logging.ERROR)
 
 
 def register_blueprints(app: Flask):

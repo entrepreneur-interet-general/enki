@@ -18,7 +18,7 @@ def user_info_middleware(func):
                 "id": "my-test-user-id"
             }
 
-        current_app.logger.info(func)
+        current_app.logger.info(f"Middleware called from {func}")
         return func(*args, **kwargs)
 
     return decorated_function

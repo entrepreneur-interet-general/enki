@@ -44,7 +44,7 @@ class GroupEntity(Entity):
     label: str
     slug: str = field(init=False)
     type: GroupType
-    label_search: str = field(init=False)
+    label_search: Optional[str] = None
     location_id: Optional[str] = None
     location: LocationEntity = None
 

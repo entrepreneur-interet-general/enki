@@ -21,10 +21,13 @@ class MessageService:
         tag_ids = data.pop("tags", [])
         resource_ids = data.pop("resources", [])
         creator_id = data.pop("creator_id")
+
+        current_app.logger.info(f"data {data}")
         message: MessageEntity = MessageService.schema().load(data)
         with uow:
             user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
             uow.message.add(message)
+            current_app.logger.info("test 2")
             message.creator = user
             if tag_ids:
                 tags = uow.tag.get_by_uuid_list(tag_ids)
@@ -34,8 +37,9 @@ class MessageService:
                 resources = uow.resource.get_by_uuid_list(resource_ids)
                 for resource in resources:
                     uow.message.add_resource_to_message(message=message, resource=resource)
-
+            current_app.logger.info("test 3")
             new_message = uow.message.get_by_uuid(message.uuid)
+            current_app.logger.info(f"new message {new_message}")
             return MessageService.schema().dump(new_message)
 
     @staticmethod

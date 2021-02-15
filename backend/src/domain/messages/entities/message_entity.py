@@ -24,6 +24,8 @@ class MessageType(str, Enum):
     NEED_INFO = "need_info"
     UNKNOWN = "unknown"
 
+    def __str__(self):
+        return self.value
 
 @dataclass_json
 @dataclass
@@ -34,8 +36,6 @@ class MessageEntity(Entity):
     creator_id: str = field(default_factory=lambda: None)
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
     creator_id: Union[str, None] = field(default_factory=lambda: None)
-    creator_position: Union[str, None] = field(default_factory=lambda: None)
-    creator_group: Union[str, None] = field(default_factory=lambda: None)
     started_at: Union[datetime, None] = field(default_factory=lambda: None)
     tags: List = field(default_factory=lambda: [])
     created_at: datetime = field(default_factory=lambda: datetime.now())

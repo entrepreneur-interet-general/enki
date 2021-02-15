@@ -17,6 +17,8 @@ from entrypoints.views.enki.v1.resources.users.user_ressources import UserResour
 from .resources.message_resource_resource import MessageMultipleResourceResource
 from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, LocationListResource, \
     PositionGroupTypeListResource
+from .resources.users.me.me_affairs_ressources import UserMeAffairsResource
+from .resources.users.me.me_ressources import UserMeResource
 from .resources.users.user_favorite_ressources import UserContactListResource, UserContactResource
 
 enki_blueprint_v1 = Blueprint(name="enki_blueprint_v1", import_name=__name__, url_prefix="/api/enki/v1")
@@ -72,9 +74,13 @@ api.add_resource(GroupTypeListResource, '/groups/types', endpoint="groups_types"
 api.add_resource(PositionGroupTypeListResource, '/groups/positions', endpoint="groups_type_positions")
 api.add_resource(LocationListResource, '/groups/locations', endpoint="groups_locations")
 
-# User
+# User <> Contacts
 api.add_resource(UserContactListResource, '/users/me/contact/favorites', endpoint="user_contacts")
 api.add_resource(UserContactResource, '/users/me/contact/favorites/<contact_uuid>', endpoint="user_contacts_by_id")
+
+# Me
+api.add_resource(UserMeResource, '/users/me', endpoint="me_informations")
+api.add_resource(UserMeAffairsResource, '/users/me/affairs', endpoint="me_affairs")
 
 
 @enki_blueprint_v1.before_app_first_request
@@ -137,3 +143,8 @@ def register_views():
     # Users <> Contacts
     api_spec.spec.path(view=UserContactListResource, app=current_app)
     api_spec.spec.path(view=UserContactResource, app=current_app)
+
+
+    # Me
+    api_spec.spec.path(view=UserMeResource, app=current_app)
+    api_spec.spec.path(view=UserMeAffairsResource, app=current_app)

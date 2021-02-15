@@ -5,7 +5,8 @@ from flask import current_app
 from marshmallow import ValidationError
 
 from adapters.http.keycloak import KeycloakHelper
-from domain.users.entities.group import UserPositionEntity
+from domain.affairs.services.affair_service import AffairService
+from domain.users.entities.group import GroupType
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.user import UserSchema
 from entrypoints.config import EnkiConfig
@@ -81,7 +82,7 @@ class UserService:
             uow.user.get_user_contact(uuid=uuid, contact=contact)
 
     @staticmethod
-    def add_contact_to_user(uuid: str, contact_uuid: str,uow: AbstractUnitOfWork):
+    def add_contact_to_user(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
         with uow:
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
             uow.user.add_user_contact(uuid=uuid, contact=contact)
@@ -91,3 +92,16 @@ class UserService:
         with uow:
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
             uow.user.remove_user_contact(uuid=uuid, contact=contact)
+
+    @staticmethod
+    def get_affairs_by_user_uuid(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            user: UserEntity = uow.user.get_by_uuid(uuid=uuid)
+            code: str = user.position.group.location.external_id
+            group_type: GroupType = user.position.group.type
+            args = {
+                "insee_code": code if group_type is GroupType.MAIRIE else None,
+                "code_dept": code if group_type is GroupType.PREFECTURE else None,
+                "postal_code": None,
+            }
+            return AffairService.list_affairs_by_insee_and_postal_codes(uow=uow, **args)

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Contact } from '../interfaces/Contact';
 import { User } from '../interfaces/User';
@@ -29,9 +29,9 @@ export class UserService {
   }
 
   getUserInfo(): Observable<any> {
-    return this.http.get<any>(`https://run.mocky.io/v3/50538c73-1413-4066-9a0c-3ae98d63c20c`) // yes
-    // return this.http.get<any>(`https://run.mocky.io/v3/9a2b30a7-e02d-4132-9943-0a972f7a4cf5`) // no
-    return of({answer: 'no'})
+    // return this.http.get<any>(`https://run.mocky.io/v3/50538c73-1413-4066-9a0c-3ae98d63c20c`) // yes
+    return this.http.get(`${environment.backendUrl}/users/me`)
+    // return of({answer: 'no'})
   }
 
   // GET /user/{uuid}/favoriteContacts

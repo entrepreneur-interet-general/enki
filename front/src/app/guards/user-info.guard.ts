@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
 import { REGISTER } from '../constants';
 
@@ -29,13 +29,16 @@ export class UserInfoGuard implements CanActivate {
     } else {
       return this.userService.getUserInfo().pipe(
         map(res => {
-          if (res.answer === 'yes') {
+          console.log(res)
+          if (res.message === 'success') {
             this.userService.userExist = true
           }
           return this.getUrlTreeFromCurrentSnapshot(firstSegmentRouterSnapshot)
         }
-        // return res.answer === 'yes'
-        )
+        ),
+        catchError(() => {
+          return of(this.getUrlTreeFromCurrentSnapshot(firstSegmentRouterSnapshot))
+        })
       )
     }
   }

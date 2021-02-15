@@ -29,6 +29,7 @@ class LocationSchema(Schema):
         current_app.logger.info(f"data {data}")
         return LocationEntity.from_dict(data)
 
+
 class GroupSchema(Schema):
     __model__ = GroupEntity
 
@@ -60,4 +61,3 @@ class PositionGroupTypeEntitySchema(Schema):
     def make_position(self, data: dict, **kwargs):
         current_app.logger.info(f"data {data}")
         return PositionGroupTypeEntity.from_dict(data)
-

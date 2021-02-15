@@ -4,7 +4,6 @@ from flask import request, current_app, g
 from flask_restful import Resource
 from typing import Dict, Any
 
-from domain.evenements import command
 from domain.evenements.command import CreateEvenement
 from entrypoints.extensions import event_bus
 from domain.evenements.service import EvenementService

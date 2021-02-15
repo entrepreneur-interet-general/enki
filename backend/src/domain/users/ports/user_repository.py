@@ -12,23 +12,31 @@ class AlreadyExistingUserUuid(HTTPException):
     code = 409
     description = "Cet user existe déjà"
 
+    def __init__(self, uuid):
+        super(AlreadyExistingUserUuid, self).__init__()
+        self.description = f"Cet user {uuid} existe déjà"
+
 
 class NotFoundUser(HTTPException):
     code = 404
     description = "Cet user n'existe pas"
 
+    def __init__(self, uuid):
+        super(NotFoundUser, self).__init__()
+        self.description = f"Cet user {uuid} n'existe pas"
+
 
 class AbstractUserRepository(abc.ABC):
     def add(self, user: UserEntity) -> UserEntity:
         if self._match_uuid(user.uuid):
-            raise AlreadyExistingUserUuid()
+            raise AlreadyExistingUserUuid(uuid=user.uuid)
         _ = self._add(user)
         return user
 
     def get_by_uuid(self, uuid: str) -> UserEntity:
         matches = self._match_uuid(uuid)
         if not matches:
-            raise NotFoundUser
+            raise NotFoundUser(uuid=uuid)
         return matches
 
 

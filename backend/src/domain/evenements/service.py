@@ -20,7 +20,6 @@ class EvenementService:
         creator_id = data.pop("creator_id")
         try:
             evenement: EvenementEntity = EvenementService.schema().load(data)
-            return_value = EvenementService.schema().dump(evenement)
         except ValidationError as ve:
             raise ve
 
@@ -28,7 +27,8 @@ class EvenementService:
             user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
             _ = uow.evenement.add(evenement)
             evenement.creator = user
-        return return_value
+            final_evenement: UserEntity = uow.evenement.get_by_uuid(uuid=evenement.uuid)
+            return EvenementService.schema().dump(final_evenement)
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:

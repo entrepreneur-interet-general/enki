@@ -14,6 +14,21 @@ class GroupValidationError(HTTPException):
     code = 400
 
 
+class LocationSchema(Schema):
+    __model__ = LocationEntity
+
+    uuid = fields.Str(missing=lambda: str(uuid4()))
+    label = fields.Str(required=True)
+    slug = fields.Str(dump_only=True)
+    external_id = fields.Str(dump_only=True)
+    search_label = fields.Str(dump_only=True)
+    type = EnumField(LocationType, validate=validate.OneOf([e.value for e in LocationType]))
+
+    @post_load
+    def make_location(self, data: dict, **kwargs):
+        current_app.logger.info(f"data {data}")
+        return LocationEntity.from_dict(data)
+
 class GroupSchema(Schema):
     __model__ = GroupEntity
 
@@ -21,6 +36,7 @@ class GroupSchema(Schema):
     label = fields.Str(required=True)
     slug = fields.Str(dump_only=True)
     type = EnumField(GroupType, validate=validate.OneOf([e.value for e in GroupType]))
+    location = fields.Nested(LocationSchema, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
 
     @post_load
@@ -45,18 +61,3 @@ class PositionGroupTypeEntitySchema(Schema):
         current_app.logger.info(f"data {data}")
         return PositionGroupTypeEntity.from_dict(data)
 
-
-class LocationSchema(Schema):
-    __model__ = LocationEntity
-
-    uuid = fields.Str(missing=lambda: str(uuid4()))
-    label = fields.Str(required=True)
-    slug = fields.Str(dump_only=True)
-    external_id = fields.Str(dump_only=True)
-    search_label = fields.Str(dump_only=True)
-    type = EnumField(LocationType, validate=validate.OneOf([e.value for e in LocationType]))
-
-    @post_load
-    def make_location(self, data: dict, **kwargs):
-        current_app.logger.info(f"data {data}")
-        return LocationEntity.from_dict(data)

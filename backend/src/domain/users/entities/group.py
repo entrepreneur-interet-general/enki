@@ -38,6 +38,7 @@ class LocationEntity(Entity):
         self.slug = slugify(self.label)
         self.search_label = f"{self.label} ({self.external_id})"
 
+
 @dataclass_json
 @dataclass
 class GroupEntity(Entity):
@@ -46,7 +47,7 @@ class GroupEntity(Entity):
     type: GroupType
     label_search: Optional[str] = None
     location_id: Optional[str] = None
-    location: LocationEntity = None
+    location: Optional[LocationEntity] = None
 
     def __post_init__(self):
         self.slug = slugify(self.label)

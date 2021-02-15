@@ -119,7 +119,7 @@ def start_mappers():
 
     mapper(GroupEntity, groupTable,
            properties={
-               'location': relationship(LocationEntity)
+               'location': relationship(LocationEntity, backref='groups')
            }
           )
     mapper(UserEntity, usersTable,

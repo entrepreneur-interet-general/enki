@@ -6,7 +6,7 @@ from marshmallow import ValidationError
 
 from adapters.http.keycloak import KeycloakHelper
 from domain.affairs.services.affair_service import AffairService
-from domain.users.entities.group import UserPositionEntity, GroupType
+from domain.users.entities.group import GroupType
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.user import UserSchema
 from entrypoints.config import EnkiConfig

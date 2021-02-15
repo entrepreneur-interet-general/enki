@@ -10,7 +10,7 @@ class WithUserRepoResource(Resource):
         pass
 
 
-class UserResource(WithUserRepoResource):
+class UserMeResource(WithUserRepoResource):
     """Get specific user
     ---
     get:

@@ -10,7 +10,7 @@
   </div>
   <div *ngFor="let locationResult of locationResults">
     <div class="searchList--element">
-      <a class="searchList--link" (click)="selectLocation(locationResult)">{{locationResult.label}}</a>
+      <a class="searchList--link" (click)="selectLocation(locationResult)">{{locationResult.search_label}}</a>
 
 <!--       <a routerLink="/annuaire/contactdetail/{{contact.uuid}}" class="searchList--link">{{contact.name}}</a>
       <a (click)="addRemoveToUserFavs(contact.uuid)" class="searchList--action" [class.isFavorite]="isUserFav(contact.uuid)">

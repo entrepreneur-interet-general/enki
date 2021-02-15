@@ -84,8 +84,7 @@ contactTable = Table(
     Column('address', String(255), nullable=False),
     Column('tel', JSONB()),
     Column('position', String(255), nullable=False),
-    Column('group_id', String(60), ForeignKey("groups.uuid"), nullable=False),
-    Column('creator_id', String(60), ForeignKey("users.uuid")),
+    Column('group_id', String(60), ForeignKey("groups.uuid"), nullable=True),
     Column('updated_at', TIMESTAMP(), nullable=True, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=True, default=datetime.now)
 )

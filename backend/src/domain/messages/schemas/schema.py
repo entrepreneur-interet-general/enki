@@ -1,6 +1,5 @@
 from uuid import uuid4
 
-from flask import current_app
 from marshmallow import Schema, fields, post_load, validate
 from marshmallow_enum import EnumField
 from datetime import datetime
@@ -48,7 +47,7 @@ class MessageSchema(Schema):
     creator_id = fields.Str(required=False, dump_only=True)
     creator = fields.Nested(UserSchema, dump_only=True)
     started_at = fields.DateTime(required=False)
-    tags = fields.Nested(TagSchema, required=False, many=True, dump_only=True)
+    tags = fields.Nested(TagSchema, many=True, dump_only=True)
     tag_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)
     resources = fields.Nested(ResourceSchema, required=False, many=True, dump_only=True)
     resource_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)

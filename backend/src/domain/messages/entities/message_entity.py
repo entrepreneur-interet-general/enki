@@ -3,7 +3,7 @@ from dataclasses_json import dataclass_json
 from datetime import datetime
 from enum import Enum
 
-from typing import Union, List
+from typing import Union, List, Optional
 
 from domain.core.entity import Entity
 from domain.users.entities.user import UserEntity
@@ -33,9 +33,9 @@ class MessageEntity(Entity):
     title: str
     description: str
     evenement_id: str
-    creator_id: str = field(default_factory=lambda: None)
+    creator_id: Optional[str] = field(default_factory=lambda: None)
+    creator: UserEntity = field(default_factory=UserEntity)
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
-    creator_id: Union[str, None] = field(default_factory=lambda: None)
     started_at: Union[datetime, None] = field(default_factory=lambda: None)
     tags: List = field(default_factory=lambda: [])
     created_at: datetime = field(default_factory=lambda: datetime.now())

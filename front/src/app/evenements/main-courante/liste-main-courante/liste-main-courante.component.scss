@@ -1,6 +1,7 @@
 @import "../../../../../design-system/styles/variables";
 
 .mc {
+  margin-bottom: 104px;
   &--empty {
     padding: 0 16px;
     text-align: center;
@@ -8,23 +9,21 @@
       margin-top: 24px;
     }
   }
-}
-
-.situations {
-  &--tabs {
-    margin-bottom: 20px;
-    height: 56px;
-    background-color: $primary;
-    display: flex;
-    align-items: center;
-  }
-  &--element {
-    color: $white;
-    margin: 0 16px;
-    padding: 6px 16px;
-    border-radius: 26px;
-    &.-active {
-      background-color: $lighterPrimary;
+  .list {
+    &--element {
+      border: 0;
+      &.-right {
+        .contentInfos {
+          background-color: $blueGrey;
+          border-radius: 8px 0px 8px 8px;
+          border: 0;
+        }
+      }
     }
+  }
+  .contentInfos {
+    padding: 12px;
+    border-radius: 0px 8px 8px 8px;
+    border: 1px solid $lightGrey;
   }
 }

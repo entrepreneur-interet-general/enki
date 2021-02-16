@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [UserDashboardComponent],
@@ -8,7 +9,8 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
     CommonModule
   ],
   exports: [
-    UserDashboardComponent
+    UserDashboardComponent,
+    RouterModule
   ]
 })
 export class UserDashboardModule {}

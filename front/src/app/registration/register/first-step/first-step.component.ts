@@ -5,7 +5,6 @@ import { Observable} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from '../../../user/user.service';
 import { Router } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
 import { environment } from 'src/environments/environment';
 import { RegisterService } from '../../register.service';
 import { REGISTER } from 'src/app/constants';
@@ -34,7 +33,6 @@ export class FirstStepComponent {
     private http: HttpClient,
     private router: Router,
     private userService: UserService,
-    private keycloakService: KeycloakService,
     private registerService: RegisterService
   ) {
     this.httpOptions = {
@@ -79,25 +77,9 @@ export class FirstStepComponent {
         fonction: this.userGroup.value.fonction
       }
       console.log(response.data)
-      this.userService.user.location = this.userGroup.value.location
-      this.userService.user.fullname = `${this.userGroup.value.firstName} ${this.userGroup.value.lastName}`
 
-      console.log(this.userService.user)
       this.router.navigate(['dashboard'])
 
-      /* this.keycloakService.updateToken(3600).then(() => {
-        if(this.keycloakService.getUserRoles().includes('watchEvents')) { */
-/*           this.keycloakService.clearToken()
-          this.keycloakService.getToken().then((res) => {
-            console.log(res)
-            window.localStorage.setItem('token', res)
-            let decodedJWT: any = jwt_decode(res)
-
-            this.userService.user.attributes.fonction = decodedJWT.fonction ? decodedJWT.fonction : ""
-            this.userService.user.attributes.code_insee = decodedJWT.code_insee ? decodedJWT.code_insee : ""
-          }) */
-/*         }
-      }) */
     })
   }
 

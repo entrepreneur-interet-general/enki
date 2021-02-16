@@ -6,6 +6,7 @@ import { EvenementsService } from 'src/app/evenements/evenements.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'fronts-detail-intervention',
@@ -67,6 +68,17 @@ export class DetailInterventionComponent implements OnInit {
   }
   httpFormSubmit(): Observable<any> {
     return this.http.put(`${this.evenementsUrl}/${this.evenementGroup.value.evenement}/affairs/${this.uuid}`, this.httpOptions)
+      .pipe(
+        tap(() => {
+          // change current intervention "evenementID"
+          this.interventionsService.interventions = this.interventionsService.interventions.map((intervention) => {
+            if (intervention.uuid === this.uuid) {
+              intervention.evenementID = this.evenementGroup.value.evenement
+            }
+            return intervention
+          })
+        })
+      )
   }
 
 

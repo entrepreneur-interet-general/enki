@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,8 @@ export class HeaderComponent implements OnInit {
 
   menuActive: boolean;
 
-  constructor(private keycloakService: KeycloakService) {
+  constructor(private keycloakService: KeycloakService,
+    public userService: UserService) {
     this.menuActive = false;
   }
 

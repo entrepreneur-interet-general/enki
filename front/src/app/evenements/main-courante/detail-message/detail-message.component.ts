@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/user/user.service';
 import { Message, MessagesService } from '../messages.service';
 
 @Component({
@@ -14,9 +15,10 @@ export class DetailMessageComponent implements OnInit {
 
   constructor(
     private messagesService: MessagesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UserService
   ) {
-    this.message = {
+    /* this.message = {
       title: '',
       description: '',
       created_at: '',
@@ -24,7 +26,7 @@ export class DetailMessageComponent implements OnInit {
       tags: [],
       resources: [],
       evenement_id: ''
-    }
+    } */
   }
 
   ngOnInit(): void {

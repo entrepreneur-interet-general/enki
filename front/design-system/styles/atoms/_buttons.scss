@@ -38,36 +38,8 @@
         font-size: 11px;
     }
 
-    &-primary {
-        color: $white;
-        background: $black;
-
-        &:hover, &.-hover {
-            background: $grey;
-            text-decoration: none;
-        }
-
-        &:disabled {
-            background: $grey;
-        }
-    }
-
-    &-secondary {
-        color: $black;
-        background: none;
-        border: 1px solid $black;
-
-        &:hover, &.-hover {
-            background: $black;
-            color: $white;
-            text-decoration: none;
-        }
-
-        &:disabled {
-            background: none;
-            color: $grey;
-            border-color: $grey;
-        }
+    &.-green {
+        background: $lightGreen;
     }
 
     &-icon {

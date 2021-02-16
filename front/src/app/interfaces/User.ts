@@ -10,4 +10,5 @@ export interface User {
   location: string;
   fullname?: string;
   contacts: Contact[];
+  uuid: string;
 }

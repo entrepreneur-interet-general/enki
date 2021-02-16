@@ -3,6 +3,13 @@
     padding-top: 20px;
     border-bottom: 1px solid $grey;
     background: $white;
+    &.-right {
+      text-align: right;
+      padding-left: 40px;
+      .badge {
+        order: 2;
+      }
+    }
   }
   &--wrapper {
     margin: 0 16px 20px;
@@ -53,9 +60,16 @@
   &--dateTime {
     display: block;
     font-size: 17px;
-    margin-right: 8px;
+    margin: 0 8px;
     font-family: $secondaryFont;
     color: $darkestGrey;
+  }
+  .-right & {
+    justify-content: flex-end;
+
+    .secondInfos--dateTime {
+      order: 1;
+    }
   }
 }
 

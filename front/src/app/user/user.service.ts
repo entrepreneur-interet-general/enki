@@ -15,23 +15,21 @@ export class UserService {
   userExist: boolean;
 
   constructor(
-    // private keycloakService: KeycloakService,
-    private http: HttpClient,
+    private http: HttpClient
   ) {
     this.user = {
       attributes: {
         fonction: ''
       },
       location: '',
-      contacts: []
+      contacts: [],
+      uuid: ''
     };
 
   }
 
   getUserInfo(): Observable<any> {
-    // return this.http.get<any>(`https://run.mocky.io/v3/50538c73-1413-4066-9a0c-3ae98d63c20c`) // yes
     return this.http.get(`${environment.backendUrl}/users/me`)
-    // return of({answer: 'no'})
   }
 
   // GET /user/{uuid}/favoriteContacts
@@ -65,30 +63,10 @@ export class UserService {
           this.user.contacts = response.data
         })
       )
-    return of(this.user.contacts.filter(contact => contact.uuid !== contactId))
-      .pipe(
-        tap(response => {
-          this.user.contacts = response;
-        })
-      );
   }
 
   userIsValid(): boolean {
     return Object.keys(this.user).length > 0 && this.user.location !== '' && this.user.attributes.fonction !== '';
   }
 
-
-
-/*   loadUserProfile(): void {
-    this.keycloakService.loadUserProfile().then((response: any) => {
-      this.user = {
-        attributes: {
-          code_insee: response.attributes.code_insee[0] ? response.attributes.code_insee[0] : '',
-          fonction: response.attributes.fonction[0] ? response.attributes.fonction[0] : ''
-        },
-        contacts: response.contacts,
-        fullname: response.lastName && response.firstName ? `${response.firstName} ${response.lastName}` : ''
-      }
-    })
-  } */
 }

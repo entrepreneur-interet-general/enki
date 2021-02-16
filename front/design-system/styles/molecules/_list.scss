@@ -56,9 +56,10 @@
 .secondInfos {
   display: flex;
   align-items: center;
+  margin: 0 -4px;
   margin-bottom: 12px;
-  & > div:first-child {
-    margin: 0 8px 0 0;
+  div {
+    margin: 0 4px;
   }
   &--dateTime {
     display: block;

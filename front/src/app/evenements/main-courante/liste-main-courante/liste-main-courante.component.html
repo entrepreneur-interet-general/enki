@@ -23,12 +23,11 @@
   </div>
   
   <ul class="">
-    <li class="list--element" *ngFor="let message of messages" [ngClass]="message.creator_position === user.attributes.fonction ? '-right': ''">
+    <li class="list--element" *ngFor="let message of messages" [ngClass]="message.creator.position.position.slug === user.attributes.fonction ? '-right': ''">
       <a routerLink="../detailmessage/{{message.uuid}}">
         <div class="list--wrapper">
           <div class="secondInfos">
             <div class="badge" [ngClass]="(message.creator_position === 'prefet') ? 'badge__blueFill' :'badge__greenFill'">
-            <!-- <div class="badge" [ngClass]="{'badge__greenFill': message.creator_position === 'maire', 'badge__greenFill': message.creator_position === 'préfet' }"> -->
               {{message.creator.position.group.label}}
             </div>
             <div class="secondInfos--dateTime">

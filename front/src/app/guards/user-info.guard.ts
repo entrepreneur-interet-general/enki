@@ -33,6 +33,7 @@ export class UserInfoGuard implements CanActivate {
           if (res.message === 'success') {
             this.userService.userExist = true
             // this.userService.user = res.data
+            this.userService.user.attributes.fonction = res.data.position.position.slug
             this.userService.user.fullname = `${res.data.first_name} ${res.data.last_name}`
             this.userService.user.location = res.data.position.group.location.search_label
 

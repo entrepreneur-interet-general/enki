@@ -15,8 +15,7 @@ export class UserService {
   userExist: boolean;
 
   constructor(
-    // private keycloakService: KeycloakService,
-    private http: HttpClient,
+    private http: HttpClient
   ) {
     this.user = {
       attributes: {

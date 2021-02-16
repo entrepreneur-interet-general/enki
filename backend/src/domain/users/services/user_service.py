@@ -49,12 +49,12 @@ class UserService:
                 first_name=user.first_name,
                 last_name=user.last_name,
                 attributes={
-                    "fonction": user.position.position.label,
+                    "fonction": user.position.position.slug,
                     "group_type": group_type,
                 }
             )
-            current_app.logger.info(f"after updating in keycloak {str(user.position.position.label).lower()}")
-            kh.assign_to_group(user_id=user.uuid, group_name=str(user.position.position.label).lower())
+            current_app.logger.info(f"after updating in keycloak {str(user.position.position.slug).lower()}")
+            kh.assign_to_group(user_id=user.uuid, group_name=str(user.position.position.slug).lower())
 
         return return_value
 

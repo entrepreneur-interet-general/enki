@@ -93,7 +93,11 @@ def start_mappers():
            }
    )
     mapper(ResourceEntity, resourceTable)
-    mapper(SimpleAffairEntity, affairsTable)
+    mapper(SimpleAffairEntity, affairsTable,
+           properties={
+               'evenement': relationship(EvenementEntity, backref='affairs'),
+           }
+   )
     mapper(
         MessageEntity, messagesTable,
         properties={

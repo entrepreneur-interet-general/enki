@@ -5,7 +5,6 @@ from datetime import datetime
 from typing import Union, Optional
 
 from domain.core.entity import Entity
-from domain.core.timestamped import TimeStamped
 from enum import Enum
 
 from domain.users.entities.user import UserEntity

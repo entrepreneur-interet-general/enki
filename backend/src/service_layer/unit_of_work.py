@@ -99,8 +99,12 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.group = PgGroupRepository(self.session)
         return super().__enter__()
 
-    def __exit__(self, *args):
-        super().__exit__(*args)
+    def __exit__(self, exn_type, exn_value, traceback):
+        super().__exit__(exn_type, exn_value, traceback)
+        if exn_type is None:
+            self.commit()  # (1)
+        else:
+            self.rollback()  # (2)
         self.session.close()  # (3)
 
     def commit(self):  # (4)

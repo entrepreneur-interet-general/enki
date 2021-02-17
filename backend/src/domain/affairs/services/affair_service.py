@@ -37,7 +37,7 @@ class AffairService:
     @staticmethod
     def assign_affair_from_evenement(affair_id: str, evenement_id: str, uow: AbstractUnitOfWork):
         with uow:
-            affair: SimpleAffairEntity = uow.simple_affair.get_by_affair_uuid(uuid=affair_id)
+            affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
             uow.simple_affair.assign_evenement_to_affair(affair, evenement)
 
@@ -45,7 +45,7 @@ class AffairService:
     @staticmethod
     def delete_affair_from_evenement(affair_id: str, evenement_id: str, uow: AbstractUnitOfWork):
         with uow:
-            affair: SimpleAffairEntity = uow.simple_affair.get_by_affair_uuid(uuid=affair_id)
+            affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
             if affair.evenement_id == evenement.uuid:
                 uow.simple_affair.delete_affair_from_evenement(affair)

@@ -27,7 +27,7 @@ class EvenementEntity(Entity):
     type: EvenementType
     started_at: datetime
     creator_id: Optional[str] = field(default_factory=lambda: None)
-    creator: UserEntity = field(default_factory=UserEntity)
+    creator: UserEntity = field(default_factory=lambda: None)
     ended_at: Union[datetime, None] = field(default_factory=lambda: None)
     created_at: datetime = field(default_factory=lambda: datetime.utcnow())
     updated_at: datetime = field(default_factory=lambda: datetime.utcnow())

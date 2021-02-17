@@ -9,7 +9,7 @@ export interface Evenement {
   uuid: string;
   title: string;
   description: string;
-  started_at: string;
+  created_at: string;
 }
 
 @Injectable({
@@ -31,7 +31,7 @@ export class EvenementsService {
         uuid: '',
         title: '',
         description: '',
-        started_at: ''
+        created_at: ''
       }
       this.httpOptions = {
         headers: new HttpHeaders({
@@ -49,7 +49,7 @@ export class EvenementsService {
               uuid: event.uuid,
               title: event.title,
               description: event.description,
-              started_at: event.started_at
+              created_at: event.created_at
             }
           })
         })

@@ -2,9 +2,8 @@
   display: flex;
   padding: 0 0 16px 0;
   &--element {
+    margin-top: 8px;
     position: relative;
-    width: 82px;
-    height: 82px;
     display: flex;
     align-items: flex-end;
   }

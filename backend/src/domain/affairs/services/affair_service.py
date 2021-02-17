@@ -35,25 +35,26 @@ class AffairService:
         return affair
 
     @staticmethod
-    def assign_affair_from_evenement(affair_id: str, evenement_id: str, uow: AbstractUnitOfWork):
+    def assign_affair_from_evenement(affair_id: str, evenement_id: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
-            affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
+            affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
             uow.simple_affair.assign_evenement_to_affair(affair, evenement)
+            return SimpleAffairSchema().dump(affair)
 
 
     @staticmethod
     def delete_affair_from_evenement(affair_id: str, evenement_id: str, uow: AbstractUnitOfWork):
         with uow:
-            affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
+            affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
             if affair.evenement_id == evenement.uuid:
                 uow.simple_affair.delete_affair_from_evenement(affair)
             else:
                 raise ThisAffairNotAssignToThisEvent
 
     @staticmethod
-    def get_by_uuid(uuid: str, uow: AbstractUnitOfWork):
+    def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
             affair = uow.simple_affair.get_by_uuid(uuid=uuid)
             return SimpleAffairSchema().dump(affair)

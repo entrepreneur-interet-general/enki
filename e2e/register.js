@@ -27,7 +27,7 @@ fixture `Authentication register`
         .click(positionOption.withText('Maire'))
         .click('#location')
         .typeText('.fullscreen-form--searchInput', 'Chelles')
-        .click('#chelles')
+        .click('#locationid-77108')
         .click('#submit-register')
         
         await Selector('.dashboard')
@@ -54,25 +54,10 @@ fixture `Authentication register`
         .click(positionOption.withText('Préfet'))
         .click('#location')
         .typeText('.fullscreen-form--searchInput', 'Seine')
-        .click('#seine-et-marne')
+        .click('#locationid-77')
         .click('#submit-register')
         
         await Selector('.dashboard')
 
     })
     
-    
-    
-    
-    /* 
-            .typeText('#username', 'mairie@chelles.fr')
-            .typeText('#password', 'azeRTY123#')
-            .click('#kc-login')
-    
-            await Selector('.userInfoForm')
-            await t
-            .typeText('#lastName', 'PERNEY')
-            .typeText('#firstName', 'Benjamin')
-            .click(fonctionSelect)
-            .click(fonctionOption.withText('Préfet'))
-            .expect(fonctionSelect.value).eql('prefet') */

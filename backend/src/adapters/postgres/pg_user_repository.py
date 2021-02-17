@@ -31,7 +31,6 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
         if self._match_uuid(user.uuid):
             raise AlreadyExistingUserUuid()
         self.session.add(user)
-        self.commit()
 
     def get_all(self) -> usersList:
         return self.session.query(self.entity_type).all()
@@ -47,8 +46,6 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
 
     def _add_user_contact(self, user: UserEntity, contact: ContactEntity):
         user.contacts.append(contact)
-        self.commit()
 
     def _remove_user_contact(self, user: UserEntity, contact: ContactEntity):
         user.contacts.remove(contact)
-        self.commit()

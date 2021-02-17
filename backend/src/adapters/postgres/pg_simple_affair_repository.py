@@ -31,19 +31,16 @@ class PgSimpleAffairRepository(PgRepositoryMixin, AbstractSimpleAffairRepository
         if self._match_uuid(affair.uuid):
             raise AlreadyExistingAffairUuid()
         self.session.add(affair)
-        self.commit()
 
     def get_all(self) -> List[SimpleAffairEntity]:
         return self.session.query(SimpleAffairEntity).all()
 
     def assign_evenement_to_affair(self, affair: SimpleAffairEntity, evenement: EvenementEntity) -> SimpleAffairEntity:
-        affair.evenement_id = evenement.uuid
-        self.commit()
+        affair.evenement = evenement
         return affair
 
     def delete_affair_from_evenement(self, affair: SimpleAffairEntity) -> SimpleAffairEntity:
         affair.evenement_id = None
-        self.commit()
         return affair
 
     def get_by_evenement(self, uuid: str) -> List[SimpleAffairEntity]:

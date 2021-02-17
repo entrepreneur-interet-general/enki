@@ -19,21 +19,17 @@ class PgMessageRepository(PgRepositoryMixin, AbstractMessageRepository):
 
     def add_tag_to_message(self, message: MessageEntity, tag: TagEntity) -> None:
         message.tags.append(tag)
-        self.commit()
 
     def remove_tag_to_message(self, message: MessageEntity, tag: TagEntity) -> None:
         message.tags.remove(tag)
-        self.commit()
 
     def add_resource_to_message(self, message: MessageEntity,  resource: ResourceEntity) -> None:
         message.resources.append(resource)
         resource.message_id = message.uuid
-        self.commit()
 
     def remove_resource_to_message(self, message: MessageEntity, resource: ResourceEntity) -> None:
         message.resources.remove(resource)
         resource.message_id = None
-        self.commit()
 
     def _match_uuid(self, uuid: str) -> MessageEntity:
         matches = self.session.query(MessageEntity).filter(MessageEntity.uuid == uuid).all()
@@ -45,7 +41,6 @@ class PgMessageRepository(PgRepositoryMixin, AbstractMessageRepository):
         if self._match_uuid(message.uuid):
             raise AlreadyExistingMessageUuid()
         self.session.add(message)
-        self.commit()
 
     def get_all(self) -> List[MessageEntity]:
         return self.session.query(self.entity_type).order_by(self.entity_type.created_at.desc()).all()

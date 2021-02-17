@@ -11,14 +11,6 @@
     <input type="text" class="enkiform__input" id="firstName" formControlName="firstName" required>
     <label for="firstName" class="enkiform__label">Prénom</label>
   </div>
-<!--   <div class="enkiform__group">
-    <select class="enkiform__input" id="group" formControlName="group" required>
-      <option value="maire">Mairie</option>
-      <option value="prefecture">Préfecture</option>
-    </select>
-    <label for="group" class="enkiform__label">Groupe</label>
-    <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
-  </div> -->
   <div class="enkiform__group">
     <select class="enkiform__input" id="structure" formControlName="structure" required>
       <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option>
@@ -39,7 +31,7 @@
     <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
   </div>
   <div class="enkiform__group">
-    <input type="submit" class="btn" value="Valider l'inscription" [disabled]="!userGroup.valid">
+    <input type="submit" id="submit-register" class="btn" value="Valider l'inscription" [disabled]="!userGroup.valid">
   </div>
 </form>
 <router-outlet></router-outlet>

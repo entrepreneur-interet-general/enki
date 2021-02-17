@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from 'src/app/interfaces/Contact';
 import { AnnuaireService } from '../annuaire.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/interfaces/User';
+import { FormControl } from '@angular/forms';
 import { UserService } from 'src/app/user/user.service';
 
 @Component({

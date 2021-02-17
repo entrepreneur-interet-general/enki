@@ -56,11 +56,14 @@
 .secondInfos {
   display: flex;
   align-items: center;
+  margin: 0 -4px;
   margin-bottom: 12px;
+  div {
+    margin: 0 4px;
+  }
   &--dateTime {
     display: block;
     font-size: 17px;
-    margin: 0 8px;
     font-family: $secondaryFont;
     color: $darkestGrey;
   }

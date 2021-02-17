@@ -10,6 +10,7 @@ from adapters.http.sig import SigApiAdapter
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.affairs.ports.simple_affair_repository import ThisAffairNotAssignToThisEvent
+from domain.affairs.schema.simple_affair import SimpleAffairSchema
 from domain.evenements.entity import EvenementEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
 
@@ -21,8 +22,8 @@ class AffairService:
             uow.affair.add(affair)
             simple_affair = SimpleAffairEntity(
                 uuid=str(uuid4()),
-                evenement_id=None,
                 sge_hub_id=affair.uuid,
+                default_affair=affair
             )
             uow.simple_affair.add(simple_affair)
             return affair
@@ -40,6 +41,7 @@ class AffairService:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
             uow.simple_affair.assign_evenement_to_affair(affair, evenement)
 
+
     @staticmethod
     def delete_affair_from_evenement(affair_id: str, evenement_id: str, uow: AbstractUnitOfWork):
         with uow:
@@ -53,24 +55,20 @@ class AffairService:
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork):
         with uow:
-            return uow.affair.get_by_uuid(uuid=uuid).to_dict()
+            affair = uow.simple_affair.get_by_uuid(uuid=uuid)
+            return SimpleAffairSchema().dump(affair)
 
     @staticmethod
     def list_affairs(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
-            affairs: List[AffairEntity] = uow.affair.get_all()
-            serialized_affairs = [affair.to_dict() for affair in affairs]
-            return serialized_affairs
+            affairs: List[SimpleAffairEntity] = uow.simple_affair.get_all()
+            return SimpleAffairSchema(many=True).dump(affairs)
 
     @staticmethod
-    def list_affairs_by_evenement(evenement_id: str , uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+    def list_affairs_by_evenement(evenement_id: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             simple_affairs: List[SimpleAffairEntity] = uow.simple_affair.get_by_evenement(uuid=evenement_id)
-            simple_affair_uuids: List[str] = [af.sge_hub_id for af in simple_affairs]
-            current_app.logger.info(f"simple_affair_uuids {simple_affair_uuids}")
-            affairs = uow.affair.get_by_uuids(uuids=simple_affair_uuids)
-            serialized_affairs = [affair.to_dict() for affair in affairs]
-            return serialized_affairs
+            return SimpleAffairSchema(many=True).dump(simple_affairs)
 
     @staticmethod
     def list_affairs_by_insee_and_postal_codes(insee_code: Union[str, List[str], None],
@@ -83,10 +81,9 @@ class AffairService:
                                                                      code_dept=code_dept)
             result: dict = response.json()
             if result["geometrie"]:
-                affairs: List[AffairEntity] = uow.affair.get_from_polygon(
-                    multipolygon=result["geometrie"]["coordinates"][0][0])
-                serialized_affairs = [affair.to_dict() for affair in affairs]
-                return serialized_affairs
+                affairs: List[SimpleAffairEntity] = uow.simple_affair.match_polygons(
+                    polygon=result["geometrie"]["coordinates"][0][0])
+                return SimpleAffairSchema(many=True).dump(affairs)
             return []
 
     @staticmethod

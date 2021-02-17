@@ -1,5 +1,6 @@
 from typing import List, Union
 
+from flask import current_app
 from sqlalchemy.orm import Session
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
@@ -47,3 +48,14 @@ class PgSimpleAffairRepository(PgRepositoryMixin, AbstractSimpleAffairRepository
         matches = self.session.query(SimpleAffairEntity).filter(SimpleAffairEntity.evenement_id == uuid).all()
         return matches
 
+    def _match_uuids(self, uuids: List[str]):
+        matches = self.session.query(self.entity_type).filter(self.entity_type.uuid.in_(uuids)).all()
+        return matches
+
+    def match_polygons(self, polygon: List) -> List[SimpleAffairEntity]:
+
+        polygon_query_string = f"POLYGON(({' ,'.join([' '.join([str(e[1]), str(e[0])]) for e in polygon])}))"
+        matches = self.session.query(self.entity_type).filter(
+            self.entity_type.location.ST_Within(polygon_query_string)).all()
+        current_app.logger.info(f"matches in polygons {matches}")
+        return matches

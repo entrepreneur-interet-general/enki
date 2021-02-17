@@ -1,10 +1,12 @@
 import logging
 
 from datetime import datetime
-from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Integer, TIMESTAMP, Enum
+from sqlalchemy import Table, Column, String, ForeignKey, Integer, TIMESTAMP, Enum
+from sqlalchemy.dialects.postgresql import JSONB
+
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy_utils import ChoiceType
-from sqlalchemy_searchable import make_searchable
+from geoalchemy2 import Geometry
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entity import EvenementType, EvenementEntity
@@ -79,6 +81,8 @@ affairsTable = Table(
     'affairs', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('sge_hub_id', String(255), nullable=False),
+    Column("location", Geometry('POINT')),
+    Column('affair', JSONB()),
     Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)

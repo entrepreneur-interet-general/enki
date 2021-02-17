@@ -21,7 +21,6 @@ class PgEvenementRepository(PgRepositoryMixin, AbstractEvenementRepository):
         if self._match_uuid(evenement.uuid):
             raise AlreadyExistingEvenementUuid()
         self.session.add(evenement)
-        self.commit()
 
     def get_all(self) -> List[EvenementEntity]:
         return self.session.query(self.entity_type).all()

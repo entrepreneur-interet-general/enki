@@ -24,6 +24,11 @@ class AffairEntity(CreateEvent):
                     "lon": self.eventLocation.coord.lon
                 }
 
+
+    @property
+    def geom_location(self):
+        return f'POINT({self.location["lat"]} {self.location["lon"]})'
+
     @property
     def uuid(self):
         return self.eventId

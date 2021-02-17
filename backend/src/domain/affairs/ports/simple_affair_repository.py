@@ -41,6 +41,14 @@ class AbstractSimpleAffairRepository(abc.ABC):
             raise NotFoundSimpleAffair
         return match
 
+    @abc.abstractmethod
+    def match_polygons(self, polygon: List) -> List[SimpleAffairEntity]:
+        raise NotImplementedError
+
+    def get_by_uuids(self, uuids: List[str]) -> List[SimpleAffairEntity]:
+        matches = self._match_uuids(uuids)
+        return matches
+
     def get_by_affair_uuid(self, uuid: str) -> SimpleAffairEntity:
         match = self._match_by_affair_uuid(uuid)
         if not match:
@@ -56,6 +64,10 @@ class AbstractSimpleAffairRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def _match_uuids(self, uuids: List[str]):
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def assign_evenement_to_affair(self, affair: SimpleAffairEntity, evenement: EvenementEntity) -> SimpleAffairEntity:
         raise NotImplementedError
 
@@ -74,46 +86,3 @@ class AbstractSimpleAffairRepository(abc.ABC):
     @abc.abstractmethod
     def _match_by_affair_uuid(self, uuid: str) -> Union[SimpleAffairEntity, None]:
         raise NotImplementedError
-
-
-class InMemorySimpleAffairRepository(AbstractSimpleAffairRepository):
-
-
-    _simple_affairs: simple_affairsList = []
-
-    def _add(self, entity: SimpleAffairEntity):
-        self._simple_affairs.append(entity)
-
-    def get_all(self) -> simple_affairsList:
-        return self._simple_affairs
-
-    def _match_uuid(self, uuid: str) -> Union[SimpleAffairEntity, None]:
-        matches = [simple_affair for simple_affair in self._simple_affairs if simple_affair.uuid == uuid]
-        if matches:
-            return matches[0]
-
-    def assign_evenement_to_affair(self, affair: SimpleAffairEntity, evenement: EvenementEntity) -> SimpleAffairEntity:
-        affair.evenement_id = evenement.uuid
-        return affair
-
-    def delete_affair_from_evenement(self, affair: SimpleAffairEntity) -> SimpleAffairEntity:
-        affair.evenement_id = None
-        return affair
-
-    def get_by_evenement(self, uuid: str) -> simple_affairsList:
-        matches = [affair for affair in self.simple_affairs if affair.evenement_id == uuid]
-        return matches
-
-    def _match_by_affair_uuid(self, uuid: str) -> Union[SimpleAffairEntity, None]:
-        matches = [affair for affair in self.simple_affairs if affair.sge_hub_id == uuid]
-        if matches:
-            return matches[0]
-
-    # next methods are only for test purposes
-    @property
-    def simple_affairs(self) -> simple_affairsList:
-        return self._simple_affairs
-
-    def set_simple_affairs(self, simple_affairs: simple_affairsList) -> None:
-        self._simple_affairs = simple_affairs
-

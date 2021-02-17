@@ -1,5 +1,6 @@
 from typing import List, Union
 
+from flask import current_app
 from sqlalchemy.orm import Session
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
@@ -31,22 +32,30 @@ class PgSimpleAffairRepository(PgRepositoryMixin, AbstractSimpleAffairRepository
         if self._match_uuid(affair.uuid):
             raise AlreadyExistingAffairUuid()
         self.session.add(affair)
-        self.commit()
 
     def get_all(self) -> List[SimpleAffairEntity]:
         return self.session.query(SimpleAffairEntity).all()
 
     def assign_evenement_to_affair(self, affair: SimpleAffairEntity, evenement: EvenementEntity) -> SimpleAffairEntity:
-        affair.evenement_id = evenement.uuid
-        self.commit()
+        affair.evenement = evenement
         return affair
 
     def delete_affair_from_evenement(self, affair: SimpleAffairEntity) -> SimpleAffairEntity:
         affair.evenement_id = None
-        self.commit()
         return affair
 
     def get_by_evenement(self, uuid: str) -> List[SimpleAffairEntity]:
         matches = self.session.query(SimpleAffairEntity).filter(SimpleAffairEntity.evenement_id == uuid).all()
         return matches
 
+    def _match_uuids(self, uuids: List[str]):
+        matches = self.session.query(self.entity_type).filter(self.entity_type.uuid.in_(uuids)).all()
+        return matches
+
+    def match_polygons(self, polygon: List) -> List[SimpleAffairEntity]:
+
+        polygon_query_string = f"POLYGON(({' ,'.join([' '.join([str(e[1]), str(e[0])]) for e in polygon])}))"
+        matches = self.session.query(self.entity_type).filter(
+            self.entity_type.location.ST_Within(polygon_query_string)).all()
+        current_app.logger.info(f"matches in polygons {matches}")
+        return matches

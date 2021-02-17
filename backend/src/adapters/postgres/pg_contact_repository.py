@@ -28,7 +28,6 @@ class PgContactRepository(PgRepositoryMixin, AbstractContactRepository):
         if self._match_uuid(contact.uuid):
             raise AlreadyExistingContactUuid()
         self.session.add(contact)
-        self.commit()
 
     def get_all(self) -> contactsList:
         return self.session.query(self.entity_type).all()

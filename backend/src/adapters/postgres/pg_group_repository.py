@@ -55,7 +55,6 @@ class PgGroupRepository(PgRepositoryMixin, AbstractGroupRepository):
 
     def add_position(self, position: UserPositionEntity):
         self.session.add(position)
-        self.commit()
 
     def get_position(self, position_id: str) -> Union[PositionGroupTypeEntity, None]:
         matches = self.session.query(PositionGroupTypeEntity).filter(PositionGroupTypeEntity.uuid == position_id).all()

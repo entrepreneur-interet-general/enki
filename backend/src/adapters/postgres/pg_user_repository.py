@@ -1,6 +1,6 @@
 from typing import List, Union
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, lazyload
 
 from domain.users.entities.contact import ContactEntity
 from domain.users.ports.user_repository import AbstractUserRepository, AlreadyExistingUserUuid
@@ -18,18 +18,18 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
         AbstractUserRepository.__init__(self)
 
     def _match_uuid(self, uuid: str) -> Union[UserEntity, None]:
-        matches = self.session.query(UserEntity).filter(UserEntity.uuid == uuid).all()
+        matches = self.session.query(UserEntity).options(lazyload('*')).filter(UserEntity.uuid == uuid).all()
         if not matches:
             return None
         return matches[0]
 
     def _match_uuids(self, uuids: List[str]) -> usersList:
-        matches = self.session.query(self.entity_type).filter(self.entity_type.uuid.in_(uuids)).all()
+        matches = self.session.query(self.entity_type).options(lazyload('*')).filter(self.entity_type.uuid.in_(uuids)).all()
         return matches
 
     def _add(self, user: UserEntity):
         if self._match_uuid(user.uuid):
-            raise AlreadyExistingUserUuid()
+            raise AlreadyExistingUserUuid(uuid=user.uuid)
         self.session.add(user)
 
     def get_all(self) -> usersList:

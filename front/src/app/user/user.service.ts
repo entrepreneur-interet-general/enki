@@ -51,7 +51,7 @@ export class UserService {
     return this.http.put<any>(`${environment.backendUrl}/users/me/contact/favorites/${contactId}`, '')
       .pipe(
         tap(response => {
-          this.user.contacts = response;
+          this.user.contacts = response.data;
         })
       );
   }

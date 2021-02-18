@@ -24,7 +24,6 @@ export class MessagesService {
   messagesUrl: string;
   resourcesUrl: string;
   private readonly _messagesSource = new BehaviorSubject<Message[]>([]);
-  readonly messages$ = this._messagesSource.asObservable();
 
   httpHeaders: object;
   constructor(
@@ -88,14 +87,15 @@ export class MessagesService {
       )
   }
 
-  httpSubmitMessage(title, description, selectedLabels, event_id) : Observable<Message> {
+  httpSubmitMessage(title, description, selectedLabels, event_id, resources) : Observable<Message> {
     let uuid = uuidv4()
     let message = {
       "title":title,
       "description": description,
       "uuid": uuid,
       "tags": selectedLabels,
-      "evenement_id": event_id
+      "evenement_id": event_id,
+      "resources": resources
     }
     return this.http.post<any>(this.messagesUrl, message, this.httpHeaders)
       .pipe(

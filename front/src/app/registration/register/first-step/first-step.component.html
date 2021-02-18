@@ -1,0 +1,47 @@
+<div class="title-container">
+  <h1 class="login-title">Finaliser l'inscription</h1>
+  <h2 class="login-subtitle">Renseigner les informations suivantes</h2>
+</div>
+<form action="" class="userInfoForm" [formGroup]="userGroup" (ngSubmit)="onSubmit()">
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" id="lastName" formControlName="lastName" required>
+    <label for="lastName" class="enkiform__label">Nom</label>
+  </div>
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" id="firstName" formControlName="firstName" required>
+    <label for="firstName" class="enkiform__label">Prénom</label>
+  </div>
+  <div class="enkiform__group">
+    <select class="enkiform__input" id="structure" formControlName="structure" required>
+      <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option>
+    </select>
+    <label for="structure" class="enkiform__label">Structure</label>
+    <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+  </div>
+  <div class="enkiform__group" *ngIf="userGroup.value.structure !== ''">
+    <select class="enkiform__input" id="position" formControlName="position" required>
+      <option *ngFor="let userPosition of userPositions" [value]="userPosition.uuid">{{userPosition.label}}</option>
+    </select>
+    <label for="position" class="enkiform__label">Fonction</label>
+    <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+  </div>
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" id="location" formControlName="location" required (focus)="goToSearchLocation()">
+    <label for="location" class="enkiform__label">Localisation</label>
+    <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
+  </div>
+  <div class="enkiform__group">
+    <input type="submit" id="submit-register" class="btn" value="Valider l'inscription" [disabled]="!userGroup.valid">
+  </div>
+</form>
+<router-outlet></router-outlet>
+<!--<p *ngFor="let userPosition of userPositions" slug="{{userPosition.slug}}">
+  User pos : {{userPosition | json}}
+  {{ userPosition.slug}}
+</p>
+<p>
+  Form values: {{userGroup.value | json}}
+</p>
+<p>
+  Form Status: {{ userGroup.status }}
+</p>-->

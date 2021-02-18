@@ -24,7 +24,6 @@ class PgResourceRepository(PgRepositoryMixin, AbstractResourceRepository):
         if self._match_uuid(resource.uuid):
             raise AlreadyExistingResourceUuid()
         self.session.add(resource)
-        self.commit()
 
     def get_all(self) -> resourcesList:
         return self.session.query(self.entity_type).all()

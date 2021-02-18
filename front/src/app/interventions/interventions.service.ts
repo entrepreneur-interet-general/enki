@@ -15,11 +15,11 @@ export interface Intervention {
   coord: Coordinates;
   victims: number;
   address: string;
+  evenement_id: string;
 }
-
 interface Coordinates {
-  lat: number,
-  long: number
+  lat: number;
+  long: number;
 }
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,8 @@ export class InterventionsService {
   constructor(
     private http: HttpClient,
     private userService: UserService
-    ) { 
+    ) {
+      this.interventions = []
       this.interventionsUrl = `${environment.backendUrl}/affairs`;
       this.httpOptions = {
       };
@@ -43,35 +44,38 @@ export class InterventionsService {
     let updatedInterventions: Intervention[];
     updatedInterventions = interventions.map(intervention => {
       return {
-        uuid: intervention.eventId,
-        dateTimeSent: new Date(intervention.createdAt),
-        natureDeFait: intervention.primaryAlert.alertCode.whatsHappen.label,
-        victims: intervention.primaryAlert.alertCode.victims.count,
+        uuid: intervention.uuid,
+        evenement: intervention.evenement,
+        evenement_id: intervention.evenement_id,
+        dateTimeSent: new Date(intervention.affair.createdAt),
+        natureDeFait: intervention.affair.primaryAlert.alertCode.whatsHappen.label,
+        victims: intervention.affair.primaryAlert.alertCode.victims.count,
         coord: {
-          lat: intervention.eventLocation.coord.lat,
-          long: intervention.eventLocation.coord.lon
+          lat: intervention.affair.eventLocation.coord.lat,
+          long: intervention.affair.eventLocation.coord.lon
         },
-        address: intervention.eventLocation.address
-      }
-    })
-    return updatedInterventions
+        address: intervention.affair.eventLocation.address
+      };
+    });
+    return updatedInterventions;
   }
 
   httpGetAllInterventions(): Observable<Intervention[]> {
     // if there's already interventions in memory, send these
     if (this.interventions !== undefined && this.interventions.length > 0) {
-      return of(this.interventions)
+      return of(this.interventions);
     }
     if (!this.userService.user.attributes) {
       return of([]);
     }
-    return this.http.get<any>(`${this.interventionsUrl}?insee_code=77108`, this.httpOptions)
+    // if(this.userService.user.)
+    return this.http.get<any>(`${environment.backendUrl}/users/me/affairs`, this.httpOptions)
       .pipe(
         map(interventions => {
-          interventions = environment.HTTPClientInMemory ? interventions : interventions.data
-          let updatedInterventions = this.mapHTTPInterventions(interventions)
-          this.interventions = updatedInterventions
-          return updatedInterventions
+          interventions = environment.HTTPClientInMemory ? interventions : interventions.data;
+          const updatedInterventions = this.mapHTTPInterventions(interventions);
+          this.interventions = updatedInterventions;
+          return updatedInterventions;
         }),
         tap(_ => this.log('fetched all interventions'))
       );
@@ -81,11 +85,11 @@ export class InterventionsService {
     return this.http.get<any>(`${this.interventionsUrl}/${uuid}`, this.httpOptions)
       .pipe(
         map(intervention => {
-          intervention = environment.HTTPClientInMemory ? intervention : intervention.data
+          intervention = environment.HTTPClientInMemory ? intervention : intervention.data;
           let interventionsArray: Intervention[] = [];
           interventionsArray.push(intervention);
-          interventionsArray = this.mapHTTPInterventions(interventionsArray)
-          return interventionsArray[0]
+          interventionsArray = this.mapHTTPInterventions(interventionsArray);
+          return interventionsArray[0];
         }),
         tap(_ => this.log('fetched one intervention'))
       );
@@ -96,7 +100,7 @@ export class InterventionsService {
   }
 
   getInterventionFromMemory(uuid: string): Intervention {
-    return this.interventions ? this.interventions.filter(intervention => intervention.uuid == uuid)[0] : null
+    return this.interventions ? this.interventions.filter(intervention => intervention.uuid === uuid)[0] : null;
   }
   /**
    * Handle Http operation that failed.

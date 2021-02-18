@@ -14,7 +14,11 @@ clean:
 	docker-compose -f docker-compose.yml down -v --remove-orphans
 
 logs:
-	docker-compose -f docker-compose.yml logs --follow
+	docker-compose -f docker-compose.yml logs --follow --tail=50
+
+seed:
+	docker exec backend_enki-api_1 flask create-position-groups
+	docker exec backend_enki-api_1 flask create-groups-and-locations
 
 
 # Provisions

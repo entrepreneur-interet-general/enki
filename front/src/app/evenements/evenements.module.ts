@@ -15,62 +15,74 @@ import { EvenementDetailResolverService } from './evenement-detail-resolver.serv
 import { ListeMainCouranteComponent } from './main-courante/liste-main-courante/liste-main-courante.component';
 import { MessagesService } from './main-courante/messages.service';
 import { UiModule } from '../ui/ui.module';
+import { UserInfoGuard } from '../guards/user-info.guard';
 
 
 const routes : Routes = [
   {
-    path: 'evenements/create',
-    canActivate: [ AuthGuard ],
-    component: CreateEvenementComponent
-  },
-  {
-    path: 'evenements/:uuid',
-    canActivate: [AuthGuard],
-    component: DetailEvenementComponent,
-    resolve: {
-      event: EvenementDetailResolverService
-    },
+    path: '',
+    canActivate: [ UserInfoGuard ],
     children: [
       {
         path: '',
-        redirectTo: 'summary',
+        redirectTo: '/dashboard',
         pathMatch: 'full'
       },
       {
-        path: 'summary',
-        component: SummaryEvenementComponent,
+        path: 'evenements/create',
+        canActivate: [ AuthGuard ],
+        component: CreateEvenementComponent
       },
       {
-        path: 'maincourante',
-        component: MainCouranteComponent,
+        path: 'evenements/:uuid',
+        canActivate: [AuthGuard],
+        component: DetailEvenementComponent,
+        resolve: {
+          event: EvenementDetailResolverService
+        },
         children: [
           {
             path: '',
-            redirectTo: 'liste',
+            redirectTo: 'summary',
             pathMatch: 'full'
           },
           {
-            path: 'liste',
-            component: ListeMainCouranteComponent
+            path: 'summary',
+            component: SummaryEvenementComponent,
           },
           {
-            path: 'detailmessage/:uuid',
-            component: DetailMessageComponent
-          },
-          {
-            path: 'addmessage',
-            component: AddMessageComponent,
+            path: 'maincourante',
+            component: MainCouranteComponent,
             children: [
               {
-                path: 'addlabel',
-                component: AddLabelComponent
+                path: '',
+                redirectTo: 'liste',
+                pathMatch: 'full'
+              },
+              {
+                path: 'liste',
+                component: ListeMainCouranteComponent
+              },
+              {
+                path: 'detailmessage/:uuid',
+                component: DetailMessageComponent
+              },
+              {
+                path: 'addmessage',
+                component: AddMessageComponent,
+                children: [
+                  {
+                    path: 'addlabel',
+                    component: AddLabelComponent
+                  }
+                ]
               }
             ]
           }
         ]
       }
     ]
-  },
+  }
 ]
 
 @NgModule({

@@ -3,9 +3,10 @@ from dataclasses_json import dataclass_json
 from datetime import datetime
 from enum import Enum
 
-from typing import Union, List
+from typing import Union, List, Optional
 
 from domain.core.entity import Entity
+from domain.users.entities.user import UserEntity
 
 
 class Severity(Enum):
@@ -23,6 +24,8 @@ class MessageType(str, Enum):
     NEED_INFO = "need_info"
     UNKNOWN = "unknown"
 
+    def __str__(self):
+        return self.value
 
 @dataclass_json
 @dataclass
@@ -30,10 +33,9 @@ class MessageEntity(Entity):
     title: str
     description: str
     evenement_id: str
+    creator_id: Optional[str] = field(default_factory=lambda: None)
+    creator: UserEntity = None
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
-    creator_id: Union[str, None] = field(default_factory=lambda: None)
-    creator_position: Union[str, None] = field(default_factory=lambda: None)
-    creator_group: Union[str, None] = field(default_factory=lambda: None)
     started_at: Union[datetime, None] = field(default_factory=lambda: None)
     tags: List = field(default_factory=lambda: [])
     created_at: datetime = field(default_factory=lambda: datetime.now())

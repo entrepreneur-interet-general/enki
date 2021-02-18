@@ -1,9 +1,13 @@
 <header class="header">
-  <div class="header--col header--link" routerLink="/">
+  <div class="header--col header--link" routerLink="/" id="test--dashboardlink">
     <div class="logo-marianne">
       <img src="../assets/Marianne.jpg" />
     </div>
     <div class="enki-logo">ENKI</div>
+    <div class="badge" *ngIf="userService.user.attributes.fonction !== ''" [class]="userService.user.attributes.fonction === 'prefet' ? 'badge__blueFill' : 'badge__greenFill'">
+      <span *ngIf="userService.user.attributes.fonction === 'prefet'">Préfecture</span>
+      <span *ngIf="userService.user.attributes.fonction === 'maire'">Mairie</span>
+    </div>
   </div>
   <div class="header--col -right">
     <div class="burger" (click)="openCloseMenu()">
@@ -14,9 +18,9 @@
 <div class="menu-container">
   <div class="right-menu" [class.-active]="!menuActive">
     <nav>
-      <li class="right-menu--item"><a routerLink="/" (click)="openCloseMenu()">Dashboard</a></li>
-      <li class="right-menu--item"><a routerLink="/situations/interventions" (click)="openCloseMenu()">Situations</a></li>
-      <li class="right-menu--item"><a routerLink="/annuaire" (click)="openCloseMenu()">Annuaire</a></li>
+      <li class="right-menu--item"><a routerLink="/dashboard" id="test--link-dashboard" (click)="openCloseMenu()">Dashboard</a></li>
+      <li class="right-menu--item"><a routerLink="/situations/interventions" id="test--link-situation" (click)="openCloseMenu()">Situation</a></li>
+      <li class="right-menu--item"><a routerLink="/annuaire" id="test--link-annuaire" (click)="openCloseMenu()">Annuaire</a></li>
       <li class="right-menu--item"><a (click)="logout()">Se déconnecter</a></li>
     </nav>
   </div>

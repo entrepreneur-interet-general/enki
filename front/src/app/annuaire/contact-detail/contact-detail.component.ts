@@ -19,7 +19,18 @@ export class ContactDetailComponent implements OnInit {
     private annuaireService: AnnuaireService,
     public userService: UserService
   ) {
-    this.contact = {}
+    this.contact = {
+      uuid: '',
+      first_name: '',
+      last_name: '',
+      group_name: '',
+      position: '',
+      tel: {
+        mobile: '',
+      },
+      email: '',
+      address: ''
+    }
   }
 
   ngOnInit(): void {

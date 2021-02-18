@@ -12,7 +12,7 @@
   </div>
   <div class="info-block infosPrincipales">
     <div class="infosPrincipales--icon">
-      <img src="assets/natureDeFaits/accident-de-voiture.png" alt="">
+      <img src="assets/natureDeFaits/Incendies.png" alt="">
     </div>
     <div>
       <div class="infosPrincipales--natureDeFait">
@@ -63,15 +63,15 @@
       <div class="evenement--select">
         <div class="enkiform__group">
           <select class="enkiform__input" id="evenement" formControlName="evenement">
-            <option value="" disabled selected>Sélectionner ou créer un événement</option>
-            <option *ngFor="let evenement of evenementsList" value="{{evenement.uuid}}">{{evenement.title}}</option>
+            <option value="" disabled>Sélectionner ou créer un événement</option>
+            <option *ngFor="let evenement of evenementsList" [value]="evenement.uuid">{{evenement.title}}</option>
           </select>
           <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
           <svg class="icon-pen icon" (click)="modifySelectedEvenement()"><use xlink:href="#icon-pen"></use></svg>
         </div>
       </div>
       <div class="evenement--button">
-        <button type="submit" class="btn">Attacher le signalement</button>
+        <button type="submit" class="btn -green" [attr.disabled]="evenementGroup.controls.evenement.enabled ? null : true">Attacher le signalement</button>
       </div>
     </form>
   </div>

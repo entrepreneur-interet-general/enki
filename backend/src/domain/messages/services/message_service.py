@@ -1,5 +1,7 @@
 from typing import Any, Dict, List, Union
 
+from flask import current_app
+
 from domain.messages.entities.resource import ResourceEntity
 from domain.messages.entities.tag_entity import TagEntity
 from domain.messages.entities.message_entity import MessageEntity
@@ -7,6 +9,7 @@ from domain.messages.ports.message_repository import AlreadyExistingTagInThisMes
     NotFoundResourceInThisMessage, AlreadyExistingResourceInThisMessage
 from domain.messages.schemas.resource_schema import ResourceSchema
 from domain.messages.schemas.schema import MessageSchema, TagSchema
+from domain.users.entities.user import UserEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
@@ -17,9 +20,15 @@ class MessageService:
     def add_message(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
         tag_ids = data.pop("tags", [])
         resource_ids = data.pop("resources", [])
+        creator_id = data.pop("creator_id")
+
+        current_app.logger.info(f"data {data}")
         message: MessageEntity = MessageService.schema().load(data)
         with uow:
+            user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
             uow.message.add(message)
+            current_app.logger.info("test 2")
+            message.creator = user
             if tag_ids:
                 tags = uow.tag.get_by_uuid_list(tag_ids)
                 for tag in tags:
@@ -28,8 +37,9 @@ class MessageService:
                 resources = uow.resource.get_by_uuid_list(resource_ids)
                 for resource in resources:
                     uow.message.add_resource_to_message(message=message, resource=resource)
-
+            current_app.logger.info("test 3")
             new_message = uow.message.get_by_uuid(message.uuid)
+            current_app.logger.info(f"new message {new_message}")
             return MessageService.schema().dump(new_message)
 
     @staticmethod
@@ -116,4 +126,5 @@ class MessageService:
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
             message = uow.message.get_by_uuid(uuid)
+            current_app.logger.info(f"message {message}")
             return MessageService.schema().dump(message)

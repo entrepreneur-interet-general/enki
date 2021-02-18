@@ -1,0 +1,21 @@
+<div class="searchCommune fullscreen-form">
+  <div class="fullscreen-form--heading">
+    <a class="fullscreen-form--cancel" routerLink="..">
+      <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
+    </a>
+    <input type="text" class="fullscreen-form--searchInput" [formControl]="locationSearch" placeholder="Département, commune ou code postal">
+  </div>
+  <div class="searchResults--title">
+    Résultats de votre recherche
+  </div>
+  <div *ngFor="let locationResult of locationResults">
+    <div class="searchList--element">
+      <a class="searchList--link" (click)="selectLocation(locationResult)" id="locationid-{{locationResult.external_id}}">{{locationResult.search_label}}</a>
+
+<!--       <a routerLink="/annuaire/contactdetail/{{contact.uuid}}" class="searchList--link">{{contact.name}}</a>
+      <a (click)="addRemoveToUserFavs(contact.uuid)" class="searchList--action" [class.isFavorite]="isUserFav(contact.uuid)">
+        <svg class="icon-star icon"><use xlink:href="#icon-star"></use></svg>
+      </a> -->
+    </div>
+  </div>
+</div>

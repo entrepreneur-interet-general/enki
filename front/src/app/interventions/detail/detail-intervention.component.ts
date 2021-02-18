@@ -6,6 +6,7 @@ import { EvenementsService } from 'src/app/evenements/evenements.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'fronts-detail-intervention',
@@ -28,9 +29,8 @@ export class DetailInterventionComponent implements OnInit {
     private evenementsService: EvenementsService,
     private http: HttpClient
     ) {
-      this.evenementsService.getEvenements().subscribe((evenements) => {
-        this.evenementsList = evenements
-      })
+      this.evenementsList = []
+
       this.httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':  'application/json'
@@ -44,15 +44,29 @@ export class DetailInterventionComponent implements OnInit {
       this.uuid = params['uuid'];
       if (this.interventionsService.getInterventionFromMemory(this.uuid)) {
         this.intervention = this.interventionsService.getInterventionFromMemory(this.uuid)
+        this.getEvenements()
         this.fetchedIntervention = true
       } else {
         this.interventionsService.httpGetIntervention(this.uuid).subscribe((intervention) => {
           this.intervention = intervention
+          this.getEvenements()
           this.fetchedIntervention = true;
         });
       }
 
     });
+  }
+  getEvenements(): void {
+    this.evenementsService.getEvenements().subscribe((evenements) => {
+      this.evenementsList = evenements
+      if (this.intervention.evenement_id) {
+        this.evenementGroup.controls.evenement.disable()
+        this.evenementGroup.controls.evenement.setValue(this.intervention.evenement_id)
+      } else {
+        this.evenementGroup.controls.evenement.enable()
+        this.evenementGroup.controls.evenement.setValue('')
+      }
+    })
   }
   getIntervention(): Observable<Intervention> {
     return of(this.intervention)
@@ -67,6 +81,17 @@ export class DetailInterventionComponent implements OnInit {
   }
   httpFormSubmit(): Observable<any> {
     return this.http.put(`${this.evenementsUrl}/${this.evenementGroup.value.evenement}/affairs/${this.uuid}`, this.httpOptions)
+      .pipe(
+        tap(() => {
+          // change current intervention "evenementID"
+          this.interventionsService.interventions = this.interventionsService.interventions.map((intervention) => {
+            if (intervention.uuid === this.uuid) {
+              intervention.evenement_id = this.evenementGroup.value.evenement
+            }
+            return intervention
+          })
+        })
+      )
   }
 
 

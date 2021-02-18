@@ -24,7 +24,6 @@ class PgTagRepository(PgRepositoryMixin, AbstractTagRepository):
         if self._match_uuid(tag.uuid):
             raise AlreadyExistingTagUuid()
         self.session.add(tag)
-        self.commit()
 
     def get_all(self) -> tagsList:
         return self.session.query(self.entity_type).all()

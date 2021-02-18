@@ -14,13 +14,6 @@ class PgRepositoryMixin(abc.ABC):
         self.session = session
         self.entity_type = entity_type
 
-    def commit(self):
-        try:
-            self.session.commit()
-        except:
-            self.session.rollback()
-            raise
-
     def _match_uuid(self, uuid: str):
         matches = self.session.query(self.entity_type).filter(self.entity_type.uuid == uuid).all()
         if not matches:
@@ -29,7 +22,6 @@ class PgRepositoryMixin(abc.ABC):
 
     def _add(self, obj: Any):
         self.session.add(obj)
-        self.commit()
 
     def get_all(self) -> List[Any]:
         return self.session.query(self.entity_type).all()

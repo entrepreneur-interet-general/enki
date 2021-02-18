@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
 import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { AnnuaireService } from '../annuaire/annuaire.service';
 import { Contact } from '../interfaces/Contact';
 import { User } from '../interfaces/User';
 
@@ -14,19 +12,24 @@ import { User } from '../interfaces/User';
 export class UserService {
 
   user: User;
+  userExist: boolean;
 
   constructor(
-    // private keycloakService: KeycloakService,
-    private annuaireService: AnnuaireService,
     private http: HttpClient
   ) {
     this.user = {
       attributes: {
-        code_insee: "",
-        fonction: ""
+        fonction: ''
       },
-      contacts: []
+      location: '',
+      contacts: [],
+      uuid: ''
     };
+
+  }
+
+  getUserInfo(): Observable<any> {
+    return this.http.get(`${environment.backendUrl}/users/me`)
   }
 
   // GET /user/{uuid}/favoriteContacts
@@ -41,16 +44,16 @@ export class UserService {
     // return of(this.user.contacts);
   }
   isUserFav(contactId: string): boolean {
-    return this.user.contacts.some(contact => contact.uuid === contactId)
+    return this.user.contacts.some(contact => contact.uuid === contactId);
   }
   // PUT /user/me/favoriteContacts/{uuid}
   addContactToUserFavs(contactId: string): Observable<Contact[]> {
     return this.http.put<any>(`${environment.backendUrl}/users/me/contact/favorites/${contactId}`, '')
       .pipe(
         tap(response => {
-            this.user.contacts = response.data
+          this.user.contacts = response.data;
         })
-      )
+      );
   }
   // DELETE /user/{uuid}/favoriteContacts/{uuid}
   removeContactFromUserFavs(contactId: string): Observable<Contact[]> {
@@ -60,28 +63,10 @@ export class UserService {
           this.user.contacts = response.data
         })
       )
-    return of(this.user.contacts.filter(contact => contact.uuid !== contactId))
-      .pipe(
-        tap(response => {
-          this.user.contacts = response
-        })
-      )
   }
 
   userIsValid(): boolean {
-    return Object.keys(this.user).length > 0 && this.user.attributes.code_insee !== '' && this.user.attributes.fonction !== ''
+    return Object.keys(this.user).length > 0 && this.user.location !== '' && this.user.attributes.fonction !== '';
   }
 
-/*   loadUserProfile(): void {
-    this.keycloakService.loadUserProfile().then((response: any) => {
-      this.user = {
-        attributes: {
-          code_insee: response.attributes.code_insee[0] ? response.attributes.code_insee[0] : '',
-          fonction: response.attributes.fonction[0] ? response.attributes.fonction[0] : ''
-        },
-        contacts: response.contacts,
-        fullname: response.lastName && response.firstName ? `${response.firstName} ${response.lastName}` : ''
-      }
-    })
-  } */
 }

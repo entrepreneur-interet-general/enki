@@ -1,14 +1,11 @@
-@import "../../../../node_modules/enki-design-system/styles/variables";
-
-
-
-
+@import "../../../../design-system/styles/variables";
 
 .enki-logo {
   margin-bottom: 0;
   font-size: 24px;
   letter-spacing: 1px;
   font-weight: 800;
+  margin: 0 8px;
 }
 .header {
   position: sticky;
@@ -49,8 +46,8 @@
 }
 
 .right-menu {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 56px;
   left: 0;
   background: $white;
   transform: translate(0, 0);

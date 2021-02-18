@@ -10,34 +10,41 @@ import { AnnuaireService } from './annuaire.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchContactPipe } from './search-contact/search-contact.pipe';
 import { UiModule } from '../ui/ui.module';
+import { UserInfoGuard } from '../guards/user-info.guard';
 
 const routes : Routes = [
   {
-    path: 'annuaire',
-    component: AnnuaireComponent,
+    path: '',
+    canActivate: [ UserInfoGuard ],
     children: [
       {
-        path: '',
-        redirectTo: 'contactlist',
-        pathMatch: 'full'
+        path: 'annuaire',
+        component: AnnuaireComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'contactlist',
+            pathMatch: 'full'
+          },
+          {
+            path: 'contactlist',
+            component: ContactListComponent,
+          },
+          {
+            path: 'searchcontact',
+            component: SearchContactComponent
+          },
+          {
+            path: 'contactdetail/:uuid',
+            component: ContactDetailComponent
+          }
+        ]
       },
       {
-        path: 'contactlist',
-        component: ContactListComponent,
-      },
-      {
-        path: 'searchcontact',
-        component: SearchContactComponent
-      },
-      {
-        path: 'contactdetail/:uuid',
-        component: ContactDetailComponent
+        path: 'contactadd',
+        component: ContactAddComponent
       }
     ]
-  },
-  {
-    path: 'contactadd',
-    component: ContactAddComponent
   }
 ]
 @NgModule({

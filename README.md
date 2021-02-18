@@ -1,7 +1,4 @@
-# Enki
-.. image:: backend/notebook/enki.png
-
-## Installation
+# Installation
 
 This is a little trick to redirect to keycloak from localhost 
 ```
@@ -14,7 +11,7 @@ You need to create global default network with
 docker network create --driver=bridge enki_default
 ``` 
 
-### Keycloak
+# Keycloak
 ```
 cd authentication
 ```
@@ -39,7 +36,7 @@ make upd && sleep 5 && make provision
 
 
 Get kong client secret from Keycloak admin in Client section and change it in .env file
-### Kong Api Gateway
+# Kong Api Gateway
 
 ```
 cd kong
@@ -52,27 +49,20 @@ Change CLIENT_SECRET with keycloak kong client
 
 With make 
 ```
-make setup && sleep 5 && make build-provision && sleep 5 && make provision
+make setup && sleep 5 && make build-provision && sleep 5 && make provision 
 ```
-# Elasticsearch and Kibana
-(not mandatory to run)
-```
-cd elk
-```
-```
-docker-compose -f docker-compose.yml up
-```
-or with make 
-```
-make upd
-```
-### Backend
+
+# Backend
 ```
 cd backend
 ```
 
 ```
-make build && make upd 
+docker-compose -f docker-compose.yml up
+```
+or with make 
+```
+make build && make upd && make seed
 ```
 
 It's now possible to post new "affaires" in postman with this endpoint:
@@ -92,7 +82,7 @@ npm run seed
 make start
 ```
 
-### FrontEnd
+# FrontEnd
 ```
 cd front
 ```
@@ -129,3 +119,15 @@ and run
 make deploy
 ```
 (you have to be logged in to heroku to have access, and ask admin a collab access)
+
+# Elasticsearch and Kibana
+```
+cd elk
+```
+```
+docker-compose -f docker-compose.yml up
+```
+or with make 
+```
+make upd
+```

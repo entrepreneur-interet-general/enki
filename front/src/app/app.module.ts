@@ -15,7 +15,6 @@ import { HeaderComponent } from './ui/header/header.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
-import { FirstStepComponent } from './registration/first-step/first-step.component';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -38,7 +37,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       initOptions: {
         onLoad: 'login-required'
       },
-      bearerExcludedUrls: ['minio:9000'],
+      bearerExcludedUrls: ['minio:9000', 'https://yesno.wtf/'],
     });
 }
 @NgModule({
@@ -48,9 +47,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MapComponent,
     ListeInterventionsComponent,
     DetailInterventionComponent,
-    // SvgDefinitionsComponent,
-    // HeaderComponent,
-    FirstStepComponent,
     SecondStepComponent,
     PageNotFoundComponent,
     SituationsComponent,

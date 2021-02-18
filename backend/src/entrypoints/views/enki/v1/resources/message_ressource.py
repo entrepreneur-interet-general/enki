@@ -76,18 +76,13 @@ class MessageListResource(WithMessageRepoResource):
                }, 200
 
     def post(self):
+        current_app.logger.info(f"Start after post")
         body = request.get_json()
         current_app.logger.info(f"body {body}")
         body["creator_id"] = g.user_info["id"]
-        if g.user_info["fonction"] == "prefet":
-            body["creator_position"] = f'{g.user_info["fonction"]}'
-            body["creator_group"] = f'Préfecture {g.user_info["code_insee"]}'
-        else:
-            body["creator_position"] = f'{g.user_info["fonction"]}'
-            body["creator_group"] = f'Mairie {g.user_info["code_insee"]}'
-
         command = CreateMessage(data=body)
         result = event_bus.publish(command, current_app.context)
+        current_app.logger.info("test")
         return {
                    "message": "success",
                    "data": result[0]

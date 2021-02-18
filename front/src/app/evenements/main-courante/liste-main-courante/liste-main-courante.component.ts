@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/interfaces/User';
+import { UserService } from 'src/app/user/user.service';
 import { EvenementsService } from '../../evenements.service';
 import { Message, MessagesService } from '../messages.service';
 
@@ -13,12 +15,15 @@ export class ListeMainCouranteComponent implements OnInit {
   messages: Array<Message>;
   uuid: string;
   fetchedMessages: boolean;
+  user: User;
   constructor(
     private messagesService: MessagesService,
-    private evenementsService: EvenementsService
+    private evenementsService: EvenementsService,
+    private userService: UserService
     ) {
     this.messages = []
     this.uuid = this.evenementsService.selectedEvenement.uuid
+    this.user = this.userService.user
   }
 
   ngOnInit(): void {

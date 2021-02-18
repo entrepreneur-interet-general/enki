@@ -63,8 +63,8 @@
       <div class="evenement--select">
         <div class="enkiform__group">
           <select class="enkiform__input" id="evenement" formControlName="evenement">
-            <option value="" disabled [attr.selected]="intervention.evenementID === '' ? true : null">Sélectionner ou créer un événement</option>
-            <option *ngFor="let evenement of evenementsList" value="{{evenement.uuid}}" [attr.selected]="evenement.uuid === intervention.evenementID ? true: null">{{evenement.title}}</option>
+            <option value="" disabled>Sélectionner ou créer un événement</option>
+            <option *ngFor="let evenement of evenementsList" [value]="evenement.uuid">{{evenement.title}}</option>
           </select>
           <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
           <svg class="icon-pen icon" (click)="modifySelectedEvenement()"><use xlink:href="#icon-pen"></use></svg>

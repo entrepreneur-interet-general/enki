@@ -15,7 +15,7 @@ export interface Intervention {
   coord: Coordinates;
   victims: number;
   address: string;
-  evenementID: string;
+  evenement_id: string;
 }
 interface Coordinates {
   lat: number;
@@ -46,6 +46,7 @@ export class InterventionsService {
       return {
         uuid: intervention.uuid,
         evenement: intervention.evenement,
+        evenement_id: intervention.evenement_id,
         dateTimeSent: new Date(intervention.affair.createdAt),
         natureDeFait: intervention.affair.primaryAlert.alertCode.whatsHappen.label,
         victims: intervention.affair.primaryAlert.alertCode.victims.count,

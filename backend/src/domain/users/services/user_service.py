@@ -8,6 +8,7 @@ from adapters.http.keycloak import KeycloakHelper
 from domain.affairs.services.affair_service import AffairService
 from domain.users.entities.group import GroupType, UserPositionEntity
 from domain.users.entities.user import UserEntity
+from domain.users.schemas.contact import ContactSchema
 from domain.users.schemas.user import UserSchema
 from entrypoints.config import EnkiConfig
 from service_layer.unit_of_work import AbstractUnitOfWork
@@ -73,7 +74,7 @@ class UserService:
     def list_contacts(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             users: List[UserEntity] = uow.user.get_user_contacts(uuid=uuid)
-            return UserService.schema(many=True).dump(users)
+            return ContactSchema(many=True).dump(users)
 
     @staticmethod
     def get_user_contact(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
@@ -86,6 +87,7 @@ class UserService:
         with uow:
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
             uow.user.add_user_contact(uuid=uuid, contact=contact)
+
 
     @staticmethod
     def remove_contact_to_user(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):

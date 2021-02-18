@@ -1,13 +1,8 @@
 import abc
 from typing import List, Union
-import xml.dom.minidom
-
 from werkzeug.exceptions import HTTPException
 
 from domain.evenements.entity import EvenementEntity
-
-from shapely.geometry import Point
-from shapely.geometry.polygon import Polygon
 
 evenementsList = List[EvenementEntity]
 

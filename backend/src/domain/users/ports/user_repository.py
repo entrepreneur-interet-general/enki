@@ -39,8 +39,6 @@ class AbstractUserRepository(abc.ABC):
             raise NotFoundUser(uuid=uuid)
         return matches
 
-
-
     def get_user_contacts(self, uuid: str):
         user: UserEntity = self.get_by_uuid(uuid=uuid)
         return self._get_user_contacts(user)

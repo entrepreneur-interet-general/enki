@@ -44,15 +44,16 @@ export class InterventionsService {
     let updatedInterventions: Intervention[];
     updatedInterventions = interventions.map(intervention => {
       return {
-        uuid: intervention.eventId,
-        dateTimeSent: new Date(intervention.createdAt),
-        natureDeFait: intervention.primaryAlert.alertCode.whatsHappen.label,
-        victims: intervention.primaryAlert.alertCode.victims.count,
+        uuid: intervention.uuid,
+        evenement: intervention.evenement,
+        dateTimeSent: new Date(intervention.affair.createdAt),
+        natureDeFait: intervention.affair.primaryAlert.alertCode.whatsHappen.label,
+        victims: intervention.affair.primaryAlert.alertCode.victims.count,
         coord: {
-          lat: intervention.eventLocation.coord.lat,
-          long: intervention.eventLocation.coord.lon
+          lat: intervention.affair.eventLocation.coord.lat,
+          long: intervention.affair.eventLocation.coord.lon
         },
-        address: intervention.eventLocation.address
+        address: intervention.affair.eventLocation.address
       };
     });
     return updatedInterventions;

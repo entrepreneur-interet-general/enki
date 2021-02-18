@@ -1,6 +1,6 @@
 from typing import List, Union
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, lazyload
 
 from domain.evenements.entity import EvenementEntity
 from domain.evenements.repository import AbstractEvenementRepository, AlreadyExistingEvenementUuid
@@ -13,7 +13,7 @@ class PgEvenementRepository(PgRepositoryMixin, AbstractEvenementRepository):
         PgRepositoryMixin.__init__(self, session=session, entity_type=EvenementEntity)
 
     def _match_uuid(self, uuid: str) -> Union[EvenementEntity, None]:
-        matches = self.session.query(EvenementEntity).filter(EvenementEntity.uuid == uuid).all()
+        matches = self.session.query(EvenementEntity).options(lazyload('*')).filter(EvenementEntity.uuid == uuid).all()
         if matches:
             return matches[0]
 
@@ -24,4 +24,4 @@ class PgEvenementRepository(PgRepositoryMixin, AbstractEvenementRepository):
         self.commit()
 
     def get_all(self) -> List[EvenementEntity]:
-        return self.session.query(self.entity_type).all()
+        return self.session.query(self.entity_type).options(lazyload('*')).all()

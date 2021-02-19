@@ -2,7 +2,7 @@ from datetime import datetime
 
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
-from typing import Optional, Literal
+from typing import Optional
 
 from domain.core.entity import Entity
 

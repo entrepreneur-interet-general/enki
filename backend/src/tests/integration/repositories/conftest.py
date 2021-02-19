@@ -42,6 +42,7 @@ def message_in_memory_repo() -> AbstractMessageRepository:
     return message_repo
 
 
+
 @pytest.fixture(scope="session")
 def tag_pg_repo(session, sqlite_engine: Engine) -> AbstractTagRepository:
     clear_mappers()

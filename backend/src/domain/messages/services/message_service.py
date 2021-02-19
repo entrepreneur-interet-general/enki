@@ -27,7 +27,6 @@ class MessageService:
         with uow:
             user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
             uow.message.add(message)
-            current_app.logger.info("test 2")
             message.creator = user
             if tag_ids:
                 tags = uow.tag.get_by_uuid_list(tag_ids)

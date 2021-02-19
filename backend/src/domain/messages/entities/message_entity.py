@@ -27,6 +27,7 @@ class MessageType(str, Enum):
     def __str__(self):
         return self.value
 
+
 @dataclass_json
 @dataclass
 class MessageEntity(Entity):

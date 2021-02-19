@@ -35,4 +35,4 @@ test-resource-up:
 	docker-compose -f docker-compose.test.yml up
 
 test-resource-down:
-	docker-compose -f docker-compose.test.yml down
+	docker-compose -f docker-compose.test.yml down -v --remove-orphans

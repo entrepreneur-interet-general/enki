@@ -4,7 +4,7 @@ from datetime import datetime
 from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Unicode, TIMESTAMP, Enum
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import mapper, relationship
-from sqlalchemy_utils import TSVectorType
+#from sqlalchemy_utils import TSVectorType
 from geoalchemy2 import Geometry
 
 from domain.users.entities.group import GroupType, GroupEntity, \
@@ -60,7 +60,7 @@ groupTable = Table(
     Column('slug', String(255), nullable=False),
     Column('type', Enum(GroupType), nullable=False),
     Column('location_id', ForeignKey("locations.uuid")),
-    Column('search_vector', TSVectorType('label'), nullable=True),
+    #Column('search_vector', TSVectorType('label'), nullable=True),
 )
 
 locationTable = Table(
@@ -72,7 +72,7 @@ locationTable = Table(
     Column('type', Enum(LocationType), nullable=False),
     Column('external_id', String(60), nullable=False, unique=True, index=True),
     Column('polygon', Geometry('POLYGON')),
-    Column('search_vector', TSVectorType('search_label'), nullable=True),
+    #Column('search_vector', TSVectorType('search_label'), nullable=True),
 )
 
 contactTable = Table(

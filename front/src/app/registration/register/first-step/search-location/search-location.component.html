@@ -8,7 +8,7 @@
   <div class="searchResults--title">
     Résultats de votre recherche
   </div>
-  <div *ngFor="let locationResult of locationResults">
+  <div *ngFor="let locationResult of locationResults$ | async">
     <div class="searchList--element">
       <a class="searchList--link" (click)="selectLocation(locationResult)" id="locationid-{{locationResult.external_id}}">{{locationResult.search_label}}</a>
 

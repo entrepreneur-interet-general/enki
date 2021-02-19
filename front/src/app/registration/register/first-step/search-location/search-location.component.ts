@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { interval, Observable, Subject } from 'rxjs';
-import { debounce, map, switchMap } from 'rxjs/operators';
+import { interval, Observable, of, Subject } from 'rxjs';
+import { debounce, map, pluck, switchMap } from 'rxjs/operators';
 import { REGISTER } from 'src/app/constants';
 import { environment } from 'src/environments/environment';
 import { Location } from '../../../../interfaces/Location';
@@ -21,23 +21,17 @@ export class SearchLocationComponent implements OnInit {
 
   constructor(
     private registerService: RegisterService,
-    private router: Router,
-    private http: HttpClient
+    private router: Router
   ) {
     this.locationResults$ = this.subjet.pipe(
       debounce(() => interval(500)),
-      switchMap(searchText => {
-        return this.http.get<any>(`${environment.backendUrl}/groups/locations?query=${searchText}`).pipe(
-          map(res => res.data)
-        )
+      switchMap((searchText: string) => {
+        return this.registerService.searchLocation(searchText)
       })
     )
-    this.locationSearch.valueChanges.subscribe(value => {
+    this.locationSearch.valueChanges.subscribe((value: string) => {
       if (value.length > 2) {
         this.subjet.next(value)
-        /* this.registerService.searchLocation(value).subscribe(locationResults => {
-          this.locationResults = locationResults
-        }) */
       }
     })
   }

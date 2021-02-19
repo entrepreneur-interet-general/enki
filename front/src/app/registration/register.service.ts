@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Location } from '../interfaces/Location';
-import { map } from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { HTTP_DATA } from '../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -44,32 +45,25 @@ export class RegisterService {
     this.selectedLocation.next(location)
   }
 
-  searchLocation(query): Observable<Location[]> {
+  searchLocation(query: string): Observable<Location[]> {
     // return of(this.mockLocations as Location[])
-    return this.http.get<any>(`${environment.backendUrl}/groups/locations?query=${query}`)
-      .pipe(
-        map(res => res.data)
-      )
+    return this.http.get<any>(`${environment.backendUrl}/groups/locations?query=${query}`).pipe(
+      pluck(HTTP_DATA)
+    )
   }
 
 
   getUserTypes(): Observable<[]> {
     return this.http.get<any>(`${environment.backendUrl}/groups/types`)
       .pipe(
-        map(res => res.data)
+        pluck(HTTP_DATA)
       )
   }
 
   getUserPositions(groupeTypeName: string): Observable<object[]> {
-    // return of([
-    //   {
-    //     name: 'prefet',
-    //     label: 'Préfet'
-    //   }
-    // ])
     return this.http.get<any>(`${environment.backendUrl}/groups/positions?groupType=${groupeTypeName}`)
       .pipe(
-        map(res => res.data)
+        pluck(HTTP_DATA)
       )
   }
 

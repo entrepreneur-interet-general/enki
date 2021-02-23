@@ -91,7 +91,7 @@ class UserService:
         with uow:
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
             uow.user.add_user_contact(uuid=uuid, contact=contact)
-            return ContactSchema(many=True).dump(contact)
+            return ContactSchema().dump(contact)
 
 
     @staticmethod

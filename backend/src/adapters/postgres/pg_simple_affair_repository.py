@@ -51,7 +51,7 @@ class PgSimpleAffairRepository(PgRepositoryMixin, AbstractSimpleAffairRepository
 
     def _match_uuids(self, uuids: List[str]):
         matches = self.session.query(self.entity_type).filter(self.entity_type.uuid.in_(uuids)).all()
-        return matchess
+        return matches
 
     def match_polygons(self, polygon: Union[List, str]) -> List[SimpleAffairEntity]:
         current_app.logger.info(f"Polygon {polygon}")

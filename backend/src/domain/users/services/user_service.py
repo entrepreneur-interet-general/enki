@@ -99,7 +99,7 @@ class UserService:
         with uow:
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
             uow.user.remove_user_contact(uuid=uuid, contact=contact)
-            return ContactSchema(many=True).dump(contact)
+            return ContactSchema().dump(contact)
 
     @staticmethod
     def get_affairs_by_user_uuid(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:

@@ -23,7 +23,7 @@ fixture `Test as Maire`
     const EVENT_TITLE = 'Test auto événement'
     const EVENT_DESCRIPTION = 'Test auto événement'
 
-    test('Create `événement`', async t => {
+    test.skip('Create `événement`', async t => {
       await t
       .click('.burger')
       .click('#test--link-situation')
@@ -40,7 +40,7 @@ fixture `Test as Maire`
     const MESSAGE_TITLE = 'Test auto message 2'
     const MESSAGE_DESCRIPTION = 'Test auto description'
     const LABEL_TITLE = randomString(5)
-    test('Add message to `main courante`', async t => {
+    test.skip('Add message to `main courante`', async t => {
       await t
       // go to the previously created event
       .click('.burger')
@@ -76,6 +76,60 @@ fixture `Test as Maire`
       .click('.action--add')
       .click('.small-heading--close')
       .expect(Selector('.mc').exists).ok()
+
+    })
+
+    const INPUT_INFOS = randomString(5)
+    test('Create contact and add to favorite', async t => {
+      await t
+        .click('.burger')
+        .click('#test--link-annuaire')
+        // add contact to annuaire
+        .click('.action--add')
+        .typeText('#name', INPUT_INFOS)
+        .typeText('#group', INPUT_INFOS)
+        .typeText('#function', INPUT_INFOS)
+        .typeText('#phone', INPUT_INFOS)
+        .typeText('#email', INPUT_INFOS)
+        .typeText('#address', INPUT_INFOS)
+        .click('#test--add-contact')
+        .click('#test--search-contact')
+
+      const contactsNb = await Selector('.searchList--link').count;
+      let containsPreviouslyCreatedContact = false;
+      let indexOfPreviouslyCreatedContact = 0;
+      for (let index = 0; index <= contactsNb - 1; index++) {
+        if (await Selector('.searchList--link').nth(index).innerText === INPUT_INFOS) {
+          containsPreviouslyCreatedContact = true;
+          indexOfPreviouslyCreatedContact = index;
+        }
+      }
+      await t
+        .expect(containsPreviouslyCreatedContact).ok()
+      await t
+        .click(Selector(".searchList--action").nth(indexOfPreviouslyCreatedContact))
+        .click('.fullscreen-form--cancel')
+      let userContactsNb = await Selector('.test--contact-link').count;
+      for (let index = 0; index <= userContactsNb - 1; index++) {
+        let currentSelector = await Selector('.test--contact-link').nth(index)
+        if (currentSelector.innerText === INPUT_INFOS) [
+          await t
+            .click(currentSelector)
+        ]
+      }
+      await t
+        .click('.contact-detail--addToFav')
+        .click('.goTo')
+      userContactsNb = await Selector('.test--contact-link').count;
+      let userContainsContact = false
+      for (let index = 0; index <= userContactsNb - 1; index++) {
+        let currentSelector = await Selector('.test--contact-link').nth(index)
+        if (currentSelector.innerText === INPUT_INFOS) [
+          userContainsContact = true
+        ]
+      }
+      await t.expect(userContainsContact).notOk()
+
 
     })
 

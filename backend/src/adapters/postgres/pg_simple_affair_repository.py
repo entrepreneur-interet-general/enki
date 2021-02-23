@@ -60,6 +60,8 @@ class PgSimpleAffairRepository(PgRepositoryMixin, AbstractSimpleAffairRepository
             polygon_query_string = f"POLYGON(({' ,'.join([' '.join([str(e[1]), str(e[0])]) for e in polygon])}))"
         elif isinstance(polygon, WKBElement):
             polygon_query_string = polygon
+        else:
+            polygon_query_string = polygon
 
         matches = self.session.query(self.entity_type).filter(
             self.entity_type.location.ST_Within(polygon_query_string)

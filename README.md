@@ -11,6 +11,13 @@ You need to create global default network with
 docker network create --driver=bridge enki_default
 ``` 
 
+Add these lines in /etc/hosts 
+```
+localhost       keycloak
+127.0.0.1       keycloak
+127.0.0.1       minio
+```
+
 # Keycloak
 ```
 cd authentication

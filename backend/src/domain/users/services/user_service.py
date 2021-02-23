@@ -5,6 +5,8 @@ from flask import current_app
 from marshmallow import ValidationError
 
 from adapters.http.keycloak import KeycloakHelper
+from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
+from domain.affairs.schema.simple_affair import SimpleAffairSchema
 from domain.affairs.services.affair_service import AffairService
 from domain.users.entities.group import GroupType, UserPositionEntity
 from domain.users.entities.user import UserEntity
@@ -103,11 +105,8 @@ class UserService:
     def get_affairs_by_user_uuid(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             user: UserEntity = uow.user.get_by_uuid(uuid=uuid)
-            code: str = user.position.group.location.external_id
-            group_type: GroupType = user.position.group.type
-            args = {
-                "insee_code": code if group_type is GroupType.MAIRIE else None,
-                "code_dept": code if group_type is GroupType.PREFECTURE else None,
-                "postal_code": None,
-            }
-            return AffairService.list_affairs_by_insee_and_postal_codes(uow=uow, **args)
+            affairs: List[SimpleAffairEntity] = uow.simple_affair.match_polygons(
+                polygon=user.position.group.location.polygon
+            )
+            return SimpleAffairSchema(many=True).dump(affairs)
+

@@ -32,7 +32,7 @@ class LocationEntity(Entity):
     search_label: str = field(init=False)
     external_id: str
     type: LocationType
-    polygon: Optional[List] = None
+    polygon: Optional[str] = None
 
     def __post_init__(self):
         self.slug = slugify(self.label)

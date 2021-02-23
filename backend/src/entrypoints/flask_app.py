@@ -6,7 +6,7 @@ from sqlalchemy.orm import clear_mappers
 from adapters.postgres.base_orm import start_mappers
 from entrypoints import views
 from service_layer.messagebus import HANDLERS
-from .commands.seeds import create_group_and_locations, create_position_group
+from .commands.seeds import create_group_and_locations, create_position_group, create_affairs
 from .config import EnkiConfig
 from .extensions import event_bus, api_spec
 from .errors import errors
@@ -72,6 +72,7 @@ def create_app(testing=False):
 def register_cli_commands(app):
     app.cli.add_command(create_group_and_locations)
     app.cli.add_command(create_position_group)
+    app.cli.add_command(create_affairs)
 
 
 def configure_redoc(app):

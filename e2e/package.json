@@ -1,0 +1,6 @@
+{
+    "scripts": {
+        "register": "testcafe chrome register.js",
+        "maire": "testcafe chrome testAsMaire.js"
+    }
+}

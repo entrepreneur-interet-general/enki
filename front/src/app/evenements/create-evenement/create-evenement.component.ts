@@ -16,6 +16,8 @@ export class CreateEvenementComponent implements OnInit {
   evenementGroup = new FormGroup({
     nomEvenement: new FormControl('', Validators.required),
     descriptionEvenement: new FormControl('', Validators.required),
+    startDate: new FormControl('', Validators.required),
+    endDate: new FormControl('', Validators.required)
   })
 
   evenementUrl: string;

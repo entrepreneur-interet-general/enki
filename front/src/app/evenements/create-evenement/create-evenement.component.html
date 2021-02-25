@@ -12,11 +12,11 @@
     <label for="descriptionEvenement" class="enkiform__label">Description</label>
   </div>
   <div class="enkiform__group">
-    <input type="date" placeholder="Format : 14/12/2021" class="enkiform__input" id="startDate" formControlName="startDate" required pattern="\d{2}-\d{2}-\d{4}">
+    <input type="datetime-local" placeholder="Format : 14/12/2021" class="enkiform__input" id="startDate" formControlName="startDate" required pattern="\d{2}-\d{2}-\d{4}" min="{{todayDay | date:'yyyy-MM-dd'}}">
     <label for="startDate" class="enkiform__label">Date de début</label>
   </div>
   <div class="enkiform__group">
-    <input type="date" placeholder="Format : 31/12/2021" class="enkiform__input" id="endDate" formControlName="endDate" required pattern="\d{2}-\d{2}-\d{4}">
+    <input type="datetime-local" placeholder="Format : 31/12/2021" class="enkiform__input" id="endDate" formControlName="endDate" required pattern="\d{2}-\d{2}-\d{4}">
     <label for="endDate" class="enkiform__label">Date de fin</label>
   </div>
   <input type="submit" class="btn" value="Valider">

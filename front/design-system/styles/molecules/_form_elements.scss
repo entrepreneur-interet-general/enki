@@ -97,7 +97,7 @@
         top: 14px;
         left: 8px;
         cursor: text;
-        padding: 8px 16px 8px 8px;
+        padding: 8px 60px 8px 8px;
         transition: ease .2s all;
     }
 
@@ -113,10 +113,11 @@
         -webkit-appearance: none;
         appearance: none;
         background-color: $white;
-        &[type="date"]::-webkit-calendar-picker-indicator {
+        &[type="datetime-local"]::-webkit-calendar-picker-indicator {
             background: url('../../../src/assets/svg-icons/calendar.svg');
             content: '';
             display: block;
+            margin-right: 8px;
         }
         &:focus + label {
             top: -7px;

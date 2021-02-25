@@ -11,6 +11,15 @@
     <div class="evenement--description subtitle">
       {{evenement.description}}
     </div>
+    <div class="evenement--dateTime">
+      <div class="evenement--startDateTime">
+        {{evenement.started_at | date:"dd/MM/yyyy à HH:mm":"UTC/GMT+2"}}
+      </div>
+      <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
+      <div class="evenement--endDateTime">
+        {{evenement.ended_at | date:"dd/MM/yyyy à HH:mm":"UTC/GMT+2"}}
+      </div>
+    </div>
   </div>
 <!-- </div>
 <div class="map">

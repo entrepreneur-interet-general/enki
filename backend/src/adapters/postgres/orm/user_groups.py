@@ -83,8 +83,7 @@ contactTable = Table(
     Column('email', String(255), nullable=False),
     Column('address', String(255), nullable=False),
     Column('tel', JSONB()),
-    Column('position', String(255), nullable=False),
-    Column('group_id', String(60), ForeignKey("groups.uuid"), nullable=True),
+    Column('position_id', String(60), ForeignKey("users_positions.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=True, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=True, default=datetime.now)
 )
@@ -132,5 +131,5 @@ def start_mappers():
 
     mapper(ContactEntity, contactTable,
            properties={
-               'group': relationship(GroupEntity, backref='contacts'),
+               'position': relationship(UserPositionEntity, backref='contacts'),
            })

@@ -7,6 +7,9 @@ EVENT_HANDLERS: Dict[Type[Topic], List[Callable]] = {
     topics.AffairCreatedTopic: [
         events.send_affair_created_email_notification,
     ],
+    topics.CreateUserTopic: [
+        events.create_contact_from_user,
+    ],
 }
 
 COMMAND_HANDLERS: Dict[Type[Topic], List[Callable]] = {

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { interval, Observable, of, Subject } from 'rxjs';
-import { debounce, map, pluck, switchMap } from 'rxjs/operators';
+import { catchError, debounce, map, pluck, switchMap } from 'rxjs/operators';
 import { REGISTER } from 'src/app/constants';
 import { environment } from 'src/environments/environment';
 import { Location } from '../../../../interfaces/Location';
@@ -17,18 +17,25 @@ export class SearchLocationComponent implements OnInit {
 
   locationSearch = new FormControl('', Validators.required)
   locationResults$: Observable<Location[]>;
+  locationResults: Location[];
   subjet = new Subject();
 
   constructor(
     private registerService: RegisterService,
     private router: Router
   ) {
+
     this.locationResults$ = this.subjet.pipe(
       debounce(() => interval(500)),
       switchMap((searchText: string) => {
-        return this.registerService.searchLocation(searchText)
+        return this.registerService.searchLocation(searchText, this.registerService.selectedGroupType.getValue())
       })
     )
+
+    this.locationResults$.subscribe((results) => {
+      this.locationResults = results
+    })
+
     this.locationSearch.valueChanges.subscribe((value: string) => {
       if (value.length > 2) {
         this.subjet.next(value)

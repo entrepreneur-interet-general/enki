@@ -46,13 +46,14 @@ export class FirstStepComponent {
       this.userGroup.get('structure').setValue(structure.label)
       console.log(this.userGroup.status)
     })
-
+    
     this.registerService.getUserTypes().subscribe(response => {
       this.userTypes = response
     })
-
-
+    
+    
     this.userGroup.get('group').valueChanges.subscribe(typeName => {
+      this.registerService.selectedGroupType.next(typeName);
       this.registerService.getUserPositions(typeName).subscribe(positions => {
         this.userPositions = positions
       })

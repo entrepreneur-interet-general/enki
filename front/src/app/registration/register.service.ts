@@ -46,10 +46,11 @@ export class RegisterService {
   }
 
   searchLocation(query: string): Observable<Location[]> {
+    return this.http.get<any>(`${environment.backendUrl}/groups`)
     // return of(this.mockLocations as Location[])
-    return this.http.get<any>(`${environment.backendUrl}/groups/locations?query=${query}`).pipe(
+    /* return this.http.get<any>(`${environment.backendUrl}/groups/locations?query=${query}`).pipe(
       pluck(HTTP_DATA)
-    )
+    ) */
   }
 
 

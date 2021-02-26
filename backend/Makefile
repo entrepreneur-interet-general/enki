@@ -20,6 +20,8 @@ seed:
 	docker exec backend_enki-api_1 flask create-position-groups
 	docker exec backend_enki-api_1 flask create-groups-and-locations
 
+shell:
+	docker-compose exec enki-api flask shell
 
 # Provisions
 

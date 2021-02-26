@@ -1,10 +1,12 @@
-import logging
-
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy_searchable import make_searchable
 from datetime import datetime
+import sqlalchemy as sa
+
 from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Unicode, TIMESTAMP, Enum
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import mapper, relationship
-#from sqlalchemy_utils import TSVectorType
+from sqlalchemy_utils import TSVectorType
 from geoalchemy2 import Geometry
 
 from domain.users.entities.group import GroupType, GroupEntity, \
@@ -60,7 +62,7 @@ groupTable = Table(
     Column('slug', String(255), nullable=False),
     Column('type', Enum(GroupType), nullable=False),
     Column('location_id', ForeignKey("locations.uuid")),
-    #Column('search_vector', TSVectorType('label'), nullable=True),
+    Column('search_vector', TSVectorType('label'), nullable=True),
 )
 
 locationTable = Table(

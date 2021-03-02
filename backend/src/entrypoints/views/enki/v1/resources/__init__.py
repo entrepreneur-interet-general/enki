@@ -14,7 +14,7 @@ __all__ = [
     TagResource, TagListResource,
     AffairListResource, AffairResource,
     AffairRandomResource, AffairRandomListResource,
-    EvenementListResource, EvenementResource, EvenementClosedResource
+    EvenementListResource, EvenementResource, EvenementClosedResource,
     ResourceListResource, ResourceResource,
     MessageResourceListResource, MessageResourceResource,
     AffairEvenementResource, AffairListEvenementResource,

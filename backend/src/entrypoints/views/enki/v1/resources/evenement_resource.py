@@ -20,7 +20,7 @@ class EvenementListResource(WithEvenementRepoResource):
     ---
     get:
       tags:
-        - evenements
+        - events
       responses:
         200:
           description: Return a list of evenements
@@ -94,7 +94,7 @@ class EvenementResource(WithEvenementRepoResource):
 class EvenementClosedResource(WithEvenementRepoResource):
     """Close specific evenement
     ---
-    get:
+    put:
       parameters:
         - in: path
           name: uuid

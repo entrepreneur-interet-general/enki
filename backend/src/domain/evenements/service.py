@@ -63,4 +63,6 @@ class EvenementService:
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
             evenement.ended_at = datetime.now()
+            return EvenementService.schema().dump(evenement)
+
 

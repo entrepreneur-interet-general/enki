@@ -44,7 +44,6 @@ export class FirstStepComponent {
 
     this.registerService.selectedLocation.subscribe((structure) => {
       this.userGroup.get('structure').setValue(structure.label)
-      console.log(this.userGroup.status)
     })
     
     this.registerService.getUserTypes().subscribe(response => {

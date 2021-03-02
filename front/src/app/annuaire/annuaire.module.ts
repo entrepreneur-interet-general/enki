@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SearchContactPipe } from './search-contact/search-contact.pipe';
 import { UiModule } from '../ui/ui.module';
 import { UserInfoGuard } from '../guards/user-info.guard';
+import { SearchStructureComponent } from './search-structure.component';
 
 const routes : Routes = [
   {
@@ -42,7 +43,13 @@ const routes : Routes = [
       },
       {
         path: 'contactadd',
-        component: ContactAddComponent
+        component: ContactAddComponent,
+        children: [
+          {
+            path: 'searchstructure',
+            component: SearchStructureComponent
+          }
+        ]
       }
     ]
   }
@@ -54,7 +61,8 @@ const routes : Routes = [
     SearchContactComponent,
     ContactAddComponent,
     AnnuaireComponent,
-    SearchContactPipe
+    SearchContactPipe,
+    SearchStructureComponent
   ],
   providers: [AnnuaireService],
   imports: [

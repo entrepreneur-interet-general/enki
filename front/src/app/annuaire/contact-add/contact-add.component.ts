@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { REGISTER } from 'src/app/constants';
 import { Contact } from 'src/app/interfaces/Contact';
 import { RegisterService } from 'src/app/registration/register.service';
 import { AnnuaireService } from '../annuaire.service';
@@ -22,6 +21,7 @@ export class ContactAddComponent implements OnInit {
     email: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
   })
+  userPositions: object[];
 
   userTypes: [];
 
@@ -33,6 +33,16 @@ export class ContactAddComponent implements OnInit {
     this.registerService.getUserTypes().subscribe(response => {
       this.userTypes = response
     })
+    this.contactGroup.get('group').valueChanges.subscribe(typeName => {
+      this.registerService.selectedGroupType.next(typeName);
+      this.registerService.getUserPositions(typeName).subscribe(positions => {
+        this.userPositions = positions
+      })
+    })
+
+    this.registerService.selectedLocation.subscribe((structure) => {
+      this.contactGroup.get('structure').setValue(structure.label)
+    })
   }
 
   ngOnInit(): void {
@@ -41,8 +51,9 @@ export class ContactAddComponent implements OnInit {
     const contact: Contact = {
       first_name: this.contactGroup.value.firstName,
       last_name: this.contactGroup.value.lastName,
-      group_name: this.contactGroup.value.group,
-      position: this.contactGroup.value.function,
+      group_type: this.contactGroup.value.group,
+      group_id: this.registerService.selectedLocation.getValue().uuid,
+      position_id: this.contactGroup.value.position,
       tel: {
         mobile: this.contactGroup.value.phone
       },
@@ -55,7 +66,7 @@ export class ContactAddComponent implements OnInit {
   }
 
   goToSearchLocation() {
-    this.router.navigate([`${REGISTER}/step1/searchlocation`])
+    this.router.navigate([`contactadd/searchstructure`])
   }
 
 }

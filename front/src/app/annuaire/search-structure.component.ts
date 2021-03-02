@@ -3,15 +3,17 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { interval, Observable, Subject } from 'rxjs';
 import { debounce, switchMap } from 'rxjs/operators';
-import { REGISTER } from 'src/app/constants';
-import { Location } from '../../../../interfaces/Location';
-import { RegisterService } from '../../../register.service';
+import { REGISTER } from '../constants';
+import { RegisterService } from '../registration/register.service';
+import { Location } from '../interfaces/Location';
 
 @Component({
-  selector: 'app-search-location',
-  templateUrl: './search-location.component.html'
+  selector: 'app-search-structure',
+  templateUrl: './search-structure.component.html',
+  styles: [
+  ]
 })
-export class SearchLocationComponent implements OnInit {
+export class SearchStructureComponent implements OnInit {
 
   locationSearch = new FormControl('', Validators.required)
   locationResults$: Observable<Location[]>;
@@ -47,7 +49,7 @@ export class SearchLocationComponent implements OnInit {
 
   selectLocation(location: Location) {
     this.registerService.setSelectedLocation(location)
-    this.router.navigate([`${REGISTER}/step1`])
+    this.router.navigate([`contactadd`])
   }
 
 }

@@ -24,7 +24,14 @@ export class ContactDetailComponent implements OnInit {
       first_name: '',
       last_name: '',
       group_name: '',
-      position: '',
+      position: {
+        position: {
+          label: ''
+        },
+        group: {
+          label: ''
+        }
+      },
       tel: {
         mobile: '',
       },

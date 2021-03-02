@@ -16,6 +16,9 @@ from domain.users.entities.group import GroupType, GroupEntity, \
 from domain.users.entities.user import UserEntity
 from domain.users.entities.contact import ContactEntity
 from adapters.postgres.orm.metadata import metadata
+from sqlalchemy.orm import column_property
+from sqlalchemy import select, func
+
 
 group_location_table = Table(
     'group_location', metadata,
@@ -88,6 +91,7 @@ contactTable = Table(
     Column('position_id', String(60), ForeignKey("users_positions.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=True, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=True, default=datetime.now)
+
 )
 
 position_group_type_table = Table(
@@ -134,4 +138,7 @@ def start_mappers():
     mapper(ContactEntity, contactTable,
            properties={
                'position': relationship(UserPositionEntity, backref='contacts'),
+               'full_name': column_property(
+                   func.concat(contactTable.c.first_name, ' ', contactTable.c.last_name
+               ))
            })

@@ -3,6 +3,7 @@ from typing import List, Union
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
+from domain.users.entities.group import UserPositionEntity, PositionGroupTypeEntity, GroupEntity
 from domain.users.ports.contact_repository import AbstractContactRepository, AlreadyExistingContactUuid
 from domain.users.entities.contact import ContactEntity
 from .repository import PgRepositoryMixin
@@ -35,10 +36,15 @@ class PgContactRepository(PgRepositoryMixin, AbstractContactRepository):
         return self.session.query(self.entity_type).all()
 
     def get_by_query(self, query):
-        matches = self.session.query(self.entity_type).filter(
+        matches = self.session.query(self.entity_type).\
+            join(UserPositionEntity).\
+            join(PositionGroupTypeEntity).\
+            join(GroupEntity).\
+            filter(
             or_(
-                self.entity_type.first_name.match(query),
-                self.entity_type.last_name.match(query),
+                self.entity_type.full_name.match(query),
+                PositionGroupTypeEntity.label.match(query),
+                GroupEntity.label.match(query),
             )
         ).all()
         return matches

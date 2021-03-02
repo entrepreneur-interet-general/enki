@@ -41,7 +41,11 @@ export class AppComponent {
   }
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit(): void {
-
+    console.log(`---
+Bienvenue sur 🅴🅽🅺🅸 !
+Un petit 🅱🅱🆃🅴🅰 ?
+---
+`)
   }
 
   canSeeEvents(): boolean {

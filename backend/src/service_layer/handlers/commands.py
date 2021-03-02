@@ -4,7 +4,7 @@ from domain.messages.command import CreateTag, CreateMessage, CreateResource
 from domain.messages.services.resource_service import ResourceService
 from domain.messages.services.tag_service import TagService
 from domain.messages.services.message_service import MessageService
-from domain.users.command import CreateUser
+from domain.users.command import CreateUser, CreateContact
 from domain.users.services.contact_service import ContactService
 from domain.users.services.user_service import UserService
 from service_layer.unit_of_work import AbstractUnitOfWork
@@ -38,7 +38,7 @@ def create_user(command: CreateUser, uow: AbstractUnitOfWork):
         uow=uow)
 
 
-def create_contact(command: CreateUser, uow: AbstractUnitOfWork):
+def create_contact(command: CreateContact, uow: AbstractUnitOfWork):
     return ContactService.add_contact(
         data=command.data,
         uow=uow)

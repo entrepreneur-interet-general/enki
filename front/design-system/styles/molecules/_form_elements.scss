@@ -113,11 +113,19 @@
         -webkit-appearance: none;
         appearance: none;
         background-color: $white;
+        opacity: 1;
         &[type="datetime-local"]::-webkit-calendar-picker-indicator {
             background: url('../../../src/assets/svg-icons/calendar.svg');
             content: '';
             display: block;
             margin-right: 8px;
+        }
+        &:disabled {
+            background: $lighterGrey;
+            opacity: 1;
+            + label {
+                background: $lighterGrey;
+            }
         }
         &:focus + label {
             top: -7px;

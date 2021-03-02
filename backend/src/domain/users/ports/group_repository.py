@@ -46,6 +46,10 @@ class AbstractGroupRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_from_group_type_and_query(self, group_type: GroupType, query: str) -> List[GroupEntity]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def add_position(self, position: UserPositionEntity):
         raise NotImplementedError
 

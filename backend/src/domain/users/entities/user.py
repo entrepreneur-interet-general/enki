@@ -16,6 +16,9 @@ class UserEntity(Entity):
     """
     first_name: str
     last_name: str
+    position_id: str = field(default_factory=lambda: None)
+    group_id: str = field(default_factory=lambda: None)
+    group_type: str = field(default_factory=lambda: None)
     contacts: List[ContactEntity] = field(default_factory=lambda: [])
     position: UserPositionEntity = field(default_factory=lambda: None)
     created_at: datetime = field(default_factory=lambda: datetime.utcnow())

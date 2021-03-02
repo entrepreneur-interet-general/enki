@@ -53,6 +53,14 @@ class PgGroupRepository(PgRepositoryMixin, AbstractGroupRepository):
             raise NotFoundGroup
         return matches[0]
 
+    def get_from_group_type_and_query(self, group_type: GroupType, query: str) -> List[GroupEntity]:
+        sql_query = self.session.query(GroupEntity).filter(GroupEntity.type == group_type)
+        sql_query = sql_query.filter(GroupEntity.label.match(query))
+        matches = sql_query.all()
+        if not matches:
+            raise NotFoundGroup
+        return matches
+
     def add_position(self, position: UserPositionEntity):
         self.session.add(position)
 

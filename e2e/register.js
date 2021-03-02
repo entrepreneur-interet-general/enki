@@ -12,7 +12,7 @@ fixture `Authentication register`
     }
 
 
-    const structureSelect = Selector('#structure');
+    const structureSelect = Selector('#group');
     const structureOption = structureSelect.find('option');
     const positionSelect = Selector('#position');
     const positionOption = positionSelect.find('option')
@@ -36,7 +36,7 @@ fixture `Authentication register`
         .click(structureOption.withText('Mairie'))
         .click(positionSelect)
         .click(positionOption.withText('Maire'))
-        .click('#location')
+        .click('#structure')
         .typeText('.fullscreen-form--searchInput', 'Chelles')
         .click('#locationid-77108')
         .click('#submit-register')
@@ -63,7 +63,7 @@ fixture `Authentication register`
         .click(structureOption.withText('Prefecture'))
         .click(positionSelect)
         .click(positionOption.withText('Préfet'))
-        .click('#location')
+        .click('#structure')
         .typeText('.fullscreen-form--searchInput', 'Seine')
         .click('#locationid-77')
         .click('#submit-register')

@@ -34,6 +34,13 @@ mapping = {'Ain': "de l'", 'Aisne': "de l'", 'Allier': "de l'", 'Alpes-de-Haute-
            'Hauts-de-Seine': 'des ', 'Seine-Saint-Denis': 'de ', 'Val-de-Marne': 'du ', "Val-d'Oise": 'du '}
 
 
+def _build_polygon_from_coordinates(coordinates):
+    polygon_value = f"POLYGON(({' ,'.join([' '.join([str(e[1]), str(e[0])]) for e in coordinates])}))"
+    if "[" in polygon_value:
+        return None
+    return polygon_value
+
+
 @click.command("create-groups-and-locations")
 @with_appcontext
 def create_group_and_locations():
@@ -49,7 +56,7 @@ def create_group_and_locations():
                                    label=commune_data["properties"]["nom"],
                                    external_id=commune_data["properties"]["code"],
                                    type=LocationType.VILLE,
-                                   # polygon=commune_data["geometry"]["coordinates"]
+                                   polygon=_build_polygon_from_coordinates(commune_data["geometry"]["coordinates"][0]),
                                    ) for commune_data in communes_data if commune_data["geometry"]]
     with open(dept_path) as f:
         depts_data = json.load(f)["features"]
@@ -58,7 +65,7 @@ def create_group_and_locations():
                                 label=dept_data["properties"]["nom"],
                                 external_id=dept_data["properties"]["code"],
                                 type=LocationType.DEPARTEMENT,
-                                # polygon=dept_data["geometry"]["coordinates"]
+                                polygon=_build_polygon_from_coordinates(dept_data["geometry"]["coordinates"][0]),
                                 ) for dept_data in depts_data]
     prefectures_groups = [
         GroupEntity(

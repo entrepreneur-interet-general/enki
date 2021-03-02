@@ -13,6 +13,7 @@ CLIENT_ID = os.environ.get("CLIENT_ID")
 CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
 
 ENKI_API_SERVICE_ID = os.environ.get("ENKI_API_SERVICE_ID")
+BACKEND_HOST_IP = os.environ.get("BACKEND_HOST_IP")
 
 data = [
   ('name', 'cors'),
@@ -38,7 +39,8 @@ data = [
 
 def get_enki_service_id():
   response = requests.get(f'http://{KONG_HOST_IP}:{KONG_PORT}/services')
-  enki_api_id = [elt["id"] for elt in response.json()["data"] if elt["host"] == ENKI_API_SERVICE_ID][0]
+  print(response.json()["data"])
+  enki_api_id = [elt["id"] for elt in response.json()["data"] if elt["host"] == BACKEND_HOST_IP][0]
   return enki_api_id
 
 enki_service_id = get_enki_service_id()

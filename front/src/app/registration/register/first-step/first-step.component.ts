@@ -19,9 +19,9 @@ export class FirstStepComponent {
   userGroup = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
+    group: new FormControl('', Validators.required),
     position: new FormControl('', Validators.required),
     structure: new FormControl('', Validators.required),
-    location: new FormControl('', Validators.required)
   })
   fonctions: object;
   updateUserUrl: string;
@@ -42,17 +42,17 @@ export class FirstStepComponent {
       })
     }
 
-    this.registerService.selectedLocation.subscribe((location) => {
-      this.userGroup.get('location').setValue(location.label)
-      console.log(this.userGroup.status)
+    this.registerService.selectedLocation.subscribe((structure) => {
+      this.userGroup.get('structure').setValue(structure.label)
     })
-
+    
     this.registerService.getUserTypes().subscribe(response => {
       this.userTypes = response
     })
-
-
-    this.userGroup.get('structure').valueChanges.subscribe(typeName => {
+    
+    
+    this.userGroup.get('group').valueChanges.subscribe(typeName => {
+      this.registerService.selectedGroupType.next(typeName);
       this.registerService.getUserPositions(typeName).subscribe(positions => {
         this.userPositions = positions
       })
@@ -68,8 +68,8 @@ export class FirstStepComponent {
         position_id: this.userGroup.value.position,
         first_name: this.userGroup.value.firstName,
         last_name: this.userGroup.value.lastName,
-        group_type: this.userGroup.value.structure,
-        location_id: this.registerService.selectedLocation.getValue().uuid
+        group_type: this.userGroup.value.group,
+        group_id: this.registerService.selectedLocation.getValue().uuid
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
 

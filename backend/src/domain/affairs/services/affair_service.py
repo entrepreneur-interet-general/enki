@@ -12,6 +12,7 @@ from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.affairs.ports.simple_affair_repository import ThisAffairNotAssignToThisEvent
 from domain.affairs.schema.simple_affair import SimpleAffairSchema
 from domain.evenements.entity import EvenementEntity
+from domain.users.entities.user import UserEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
@@ -42,7 +43,6 @@ class AffairService:
             uow.simple_affair.assign_evenement_to_affair(affair, evenement)
             return SimpleAffairSchema().dump(affair)
 
-
     @staticmethod
     def delete_affair_from_evenement(affair_id: str, evenement_id: str, uow: AbstractUnitOfWork):
         with uow:
@@ -70,6 +70,15 @@ class AffairService:
         with uow:
             simple_affairs: List[SimpleAffairEntity] = uow.simple_affair.get_by_evenement(uuid=evenement_id)
             return SimpleAffairSchema(many=True).dump(simple_affairs)
+
+    @staticmethod
+    def get_user_affairs(user_id: str, uow: AbstractUnitOfWork):
+        with uow:
+            user: UserEntity = uow.user.get_by_uuid(uuid=user_id)
+            affairs: List[SimpleAffairEntity] = uow.simple_affair.match_polygons(
+                polygon=user.group.location.polygon
+            )
+            return SimpleAffairSchema(many=True).dump(affairs)
 
     @staticmethod
     def list_affairs_by_insee_and_postal_codes(insee_code: Union[str, List[str], None],

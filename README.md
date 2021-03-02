@@ -11,6 +11,13 @@ You need to create global default network with
 docker network create --driver=bridge enki_default
 ``` 
 
+Add these lines in /etc/hosts 
+```
+localhost       keycloak
+127.0.0.1       keycloak
+127.0.0.1       minio
+```
+
 # Keycloak
 ```
 cd authentication
@@ -73,13 +80,11 @@ http://localhost:5000/api/v1/echanges/messages
 
 You can access affairs from:
 ```
-http://localhost:5000/api/enki/v1/affairs?code_insee=77108
+http://localhost:5000/api/enki/v1/affairs
 ```
-You also have to start SIG in the NexSIS repository: nexsis/sig/api
+You can generate affairs running
 ```
-make install
-npm run seed
-make start
+docker exec backend_enki-api_1 flask create-affairs --number=10 --dept_code=77
 ```
 
 # FrontEnd

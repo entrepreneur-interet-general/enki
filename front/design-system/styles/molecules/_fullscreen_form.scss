@@ -51,6 +51,9 @@
     }
   }
   .searchResults {
+    &--noResults {
+      padding: 16px;
+    }
     &--title {
       font-family: $secondaryFont;
       border-bottom: 1px solid $lightGrey;

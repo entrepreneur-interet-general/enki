@@ -4,9 +4,13 @@ from typing import Any, Dict, List, Union
 from flask import current_app
 from marshmallow import ValidationError
 
+from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
+from domain.affairs.schema.simple_affair import SimpleAffairSchema
 from domain.evenements.entity import EvenementEntity, EvenementType
 from domain.evenements.repository import AbstractEvenementRepository
 from domain.evenements.schema import EvenementSchema
+from domain.messages.entities.message_entity import MessageEntity
+from domain.messages.services.message_service import MessageService
 from domain.users.entities.user import UserEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
 
@@ -41,3 +45,18 @@ class EvenementService:
         with uow:
             evenements: List[EvenementEntity] = uow.evenement.get_all()
             return EvenementService.schema(many=True).dump(evenements)
+
+    @staticmethod
+    def get_all_messages_and_affairs(evenement_id: str, uow: AbstractUnitOfWork):
+        with uow:
+            messages: List[MessageEntity] = uow.message.get_messages_by_query(evenement_id=evenement_id,
+                                                                              tag_ids=[])
+            return messages
+
+    @staticmethod
+    def list_affairs_by_evenement(evenement_id: str, uow: AbstractUnitOfWork) -> List[SimpleAffairEntity]:
+        with uow:
+            simple_affairs: List[SimpleAffairEntity] = uow.simple_affair.get_by_evenement(uuid=evenement_id)
+            return simple_affairs
+
+

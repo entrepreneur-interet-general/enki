@@ -10,8 +10,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AnnuaireService {
-  contacts: Contact[] = CONTACTS;
-  annuaire: Contact[] = ANNUAIRE;
+  contacts: Contact[] = [];
+  annuaire: Contact[] = [];
 
   constructor(
     private http: HttpClient

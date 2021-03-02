@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { Evenement, EvenementsService } from '../evenements.service';
+import { Evenement } from '../evenements.service';
 
 @Component({
   selector: 'app-detail-evenement',
@@ -14,15 +13,12 @@ export class DetailEvenementComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private evenementsService: EvenementsService
   ) { }
 
   ngOnInit(): void {
-    // this.uuid = this.route.snapshot.paramMap.get('foo')
     this.route.data.subscribe((data: { event: Evenement }) => {
       this.evenement = data.event;
       this.uuid = data.event.uuid;
-
     });
   }
 

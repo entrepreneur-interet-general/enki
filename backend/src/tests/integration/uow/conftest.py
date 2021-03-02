@@ -1,22 +1,24 @@
+import os
 import pytest
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
-from sqlalchemy.engine import Engine
+from sqlalchemy.orm import clear_mappers
+
+from adapters.postgres.base_orm import start_mappers
 from entrypoints.config import EnkiConfig
-from service_layer.unit_of_work import SqlAlchemyUnitOfWork, InMemoryUnitOfWork, AbstractUnitOfWork
+from service_layer.unit_of_work import SqlAlchemyUnitOfWork, AbstractUnitOfWork
 
 
-@pytest.fixture(scope="session")
-def config() -> Engine:
-    load_dotenv(".envs/.test/.env.flaskenv")
+@pytest.fixture
+def config():
+    load_dotenv("/Users/raphael/PycharmProjects/enki/backend/.envs/.test/.env.flaskenv")
+    load_dotenv("/Users/raphael/PycharmProjects/enki/backend/.envs/.test/.env.pg")
     config = EnkiConfig()
     return config
 
 
-@pytest.fixture(scope="function", params=["in_memory", "sqlite"])  # , "sqlite"
-def uow(request, config: EnkiConfig) -> AbstractUnitOfWork:
-    if request.param == "sqlite":
-        uow = SqlAlchemyUnitOfWork(config=config)
-    else:  # request.param == "in_memory"
-        uow = InMemoryUnitOfWork(config=config)
+@pytest.fixture
+def uow(config: EnkiConfig)-> AbstractUnitOfWork:
+    clear_mappers()
+    start_mappers()
+    uow = SqlAlchemyUnitOfWork(config=config)
     return uow

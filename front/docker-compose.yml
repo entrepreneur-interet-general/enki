@@ -3,10 +3,12 @@ version: '3.5'
 services:
   front:
     build: .
+    command: ng serve --host=0.0.0.0
     ports:
       - "1337:1337"
     volumes:
       - ./src:/app/src
+      - ./design-system:/app/design-system
     networks:
       - default
       - enki_default

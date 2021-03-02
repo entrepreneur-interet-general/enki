@@ -3,6 +3,7 @@ import sqlalchemy as sa
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy_searchable import make_searchable
 
 from adapters.postgres import PgMessageRepository, PgTagRepository, PgEvenementRepository
 from adapters.postgres.base_orm import metadata
@@ -78,6 +79,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.engine = build_engine(sql_engine_uri=self.config.DATABASE_URI)
         self.session_factory = sessionmaker(bind=self.engine)
         sa.orm.configure_mappers()  # IMPORTANT!
+        make_searchable(metadata=metadata)
 
         metadata.create_all(self.engine)
 

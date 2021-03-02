@@ -42,7 +42,7 @@ class InMemoryEventBus(AbstractEventBus):
         for callback in set(self._subscriptions[message.topic]):
             current_app.logger.debug(f"callback {callback}")
             if isinstance(message, events.Event):
-                self._handle_event(message, callback=callback)
+                self._handle_event(message, callback=callback, uow=uow)
             elif isinstance(message, commands.Command):
                 result = self._handle_command(message, callback=callback, uow=uow)
                 results.append(result)
@@ -51,10 +51,10 @@ class InMemoryEventBus(AbstractEventBus):
         return results
 
     @staticmethod
-    def _handle_event(event: events.Event, callback: Callable):
+    def _handle_event(event: events.Event, callback: Callable, uow: AbstractUnitOfWork):
         try:
             current_app.logger.debug('handling event %s with handler %s', event, callback)
-            callback(event)
+            callback(event, uow=uow)
         except Exception:
             current_app.logger.exception('Exception handling event %s', event)
 

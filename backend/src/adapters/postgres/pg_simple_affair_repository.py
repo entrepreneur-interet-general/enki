@@ -1,6 +1,7 @@
 from typing import List, Union
 
 from flask import current_app
+from geoalchemy2 import WKBElement
 from sqlalchemy.orm import Session
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
@@ -52,10 +53,18 @@ class PgSimpleAffairRepository(PgRepositoryMixin, AbstractSimpleAffairRepository
         matches = self.session.query(self.entity_type).filter(self.entity_type.uuid.in_(uuids)).all()
         return matches
 
-    def match_polygons(self, polygon: List) -> List[SimpleAffairEntity]:
+    def match_polygons(self, polygon: Union[List, str]) -> List[SimpleAffairEntity]:
+        current_app.logger.info(f"Polygon {polygon}")
+        current_app.logger.info(f"Type(Polygon) {type(polygon)}")
+        if isinstance(polygon, list):
+            polygon_query_string = f"POLYGON(({' ,'.join([' '.join([str(e[1]), str(e[0])]) for e in polygon])}))"
+        elif isinstance(polygon, WKBElement):
+            polygon_query_string = polygon
+        else:
+            polygon_query_string = polygon
 
-        polygon_query_string = f"POLYGON(({' ,'.join([' '.join([str(e[1]), str(e[0])]) for e in polygon])}))"
         matches = self.session.query(self.entity_type).filter(
-            self.entity_type.location.ST_Within(polygon_query_string)).all()
-        current_app.logger.info(f"matches in polygons {matches}")
+            self.entity_type.location.ST_Within(polygon_query_string)
+        ).all()
+
         return matches

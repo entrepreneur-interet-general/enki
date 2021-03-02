@@ -5,8 +5,10 @@ from flask import current_app
 from marshmallow import ValidationError
 
 from adapters.http.keycloak import KeycloakHelper
+from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
+from domain.affairs.schema.simple_affair import SimpleAffairSchema
 from domain.affairs.services.affair_service import AffairService
-from domain.users.entities.group import GroupType, UserPositionEntity
+from domain.users.entities.group import GroupType, UserPositionEntity, PositionGroupTypeEntity
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.contact import ContactSchema
 from domain.users.schemas.user import UserSchema
@@ -20,44 +22,49 @@ class UserService:
     @staticmethod
     def add_user(data: dict,
                  uow: AbstractUnitOfWork):
-
-        position_id = data.pop("position_id", None)
-        location_id = data.pop("location_id", None)
-        group_type = data.pop("group_type", None)
-
         try:
             user: UserEntity = UserService.schema().load(data)
-            return_value = UserService.schema().dump(user)
-            current_app.logger.info(f"return_value {return_value}")
-
         except ValidationError as ve:
             raise ve
 
         with uow:
-            kh = KeycloakHelper.from_config(EnkiConfig())
             _ = uow.user.add(user)
-            group = uow.group.get_from_group_type_and_location_id(group_type=group_type, location_id=location_id)
 
-            position = uow.group.get_position(position_id=position_id)
-            user_position = UserPositionEntity(uuid=str(uuid4()))
-            user_position.group = group
-            user_position.position = position
-            uow.group.add_position(user_position)
+            user_position = UserService.build_position_from_group_id_ad_position_id(
+                group_id=user.group_id,
+                position_id=user.position_id,
+                group_type=user.group_type,
+                uow=uow
+            )
             user.position = user_position
 
-            kh.update_user_at_creation(
-                user_id=user.uuid,
+            UserService.handle_keycloak(
+                uuid=user.uuid,
                 first_name=user.first_name,
                 last_name=user.last_name,
-                attributes={
-                    "fonction": user.position.position.slug,
-                    "group_type": group_type,
-                }
+                group_type=user.group_type,
+                fonction=user.position.position.slug
             )
-            current_app.logger.info(f"after updating in keycloak {str(user.position.position.slug).lower()}")
-            kh.assign_to_group(user_id=user.uuid, group_name=str(user.position.position.slug).lower())
 
-        return return_value
+            uuid = str(user.uuid)
+
+        return UserService.get_by_uuid(uuid=uuid, uow=uow)
+
+    @staticmethod
+    def handle_keycloak(uuid: str, first_name: str, last_name: str,
+                        fonction: str, group_type: str):
+        kh = KeycloakHelper.from_config(EnkiConfig())
+
+        kh.update_user_at_creation(
+            user_id=uuid,
+            first_name=first_name,
+            last_name=last_name,
+            attributes={
+                "fonction": fonction,
+                "group_type": group_type,
+            }
+        )
+        kh.assign_to_group(user_id=uuid, group_name=fonction.lower())
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
@@ -83,31 +90,43 @@ class UserService:
             uow.user.get_user_contact(uuid=uuid, contact=contact)
             return ContactSchema(many=True).dump(contact)
 
-
     @staticmethod
     def add_contact_to_user(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
         with uow:
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
             uow.user.add_user_contact(uuid=uuid, contact=contact)
-            return ContactSchema(many=True).dump(contact)
-
+            return ContactSchema().dump(contact)
 
     @staticmethod
     def remove_contact_to_user(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
         with uow:
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
             uow.user.remove_user_contact(uuid=uuid, contact=contact)
-            return ContactSchema(many=True).dump(contact)
+            return ContactSchema().dump(contact)
 
     @staticmethod
     def get_affairs_by_user_uuid(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             user: UserEntity = uow.user.get_by_uuid(uuid=uuid)
-            code: str = user.position.group.location.external_id
-            group_type: GroupType = user.position.group.type
-            args = {
-                "insee_code": code if group_type is GroupType.MAIRIE else None,
-                "code_dept": code if group_type is GroupType.PREFECTURE else None,
-                "postal_code": None,
-            }
-            return AffairService.list_affairs_by_insee_and_postal_codes(uow=uow, **args)
+            affairs: List[SimpleAffairEntity] = uow.simple_affair.match_polygons(
+                polygon=user.position.group.location.polygon
+            )
+            return SimpleAffairSchema(many=True).dump(affairs)
+
+    @staticmethod
+    def build_position_from_group_id_ad_position_id(
+            group_id: str, position_id: str, group_type: str, uow: AbstractUnitOfWork
+    ):
+        group = uow.group.get_by_uuid(uuid=group_id)
+        if group.type != group_type:
+            raise IndexError
+
+        position: PositionGroupTypeEntity = uow.group.get_position(position_id=position_id)
+        if position.group_type != group_type:
+            raise IndexError
+
+        user_position = UserPositionEntity(uuid=str(uuid4()))
+        user_position.group = group
+        user_position.position = position
+        uow.group.add_position(user_position)
+        return user_position

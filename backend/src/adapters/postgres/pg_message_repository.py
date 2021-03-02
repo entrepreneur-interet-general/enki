@@ -17,20 +17,6 @@ class PgMessageRepository(PgRepositoryMixin, AbstractMessageRepository):
         PgRepositoryMixin.__init__(self, session=session, entity_type=MessageEntity)
         AbstractMessageRepository.__init__(self)
 
-    def add_tag_to_message(self, message: MessageEntity, tag: TagEntity) -> None:
-        message.tags.append(tag)
-
-    def remove_tag_to_message(self, message: MessageEntity, tag: TagEntity) -> None:
-        message.tags.remove(tag)
-
-    def add_resource_to_message(self, message: MessageEntity,  resource: ResourceEntity) -> None:
-        message.resources.append(resource)
-        resource.message_id = message.uuid
-
-    def remove_resource_to_message(self, message: MessageEntity, resource: ResourceEntity) -> None:
-        message.resources.remove(resource)
-        resource.message_id = None
-
     def _match_uuid(self, uuid: str) -> MessageEntity:
         matches = self.session.query(MessageEntity).filter(MessageEntity.uuid == uuid).all()
         if not matches:

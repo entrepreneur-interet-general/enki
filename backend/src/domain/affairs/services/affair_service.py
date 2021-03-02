@@ -40,7 +40,7 @@ class AffairService:
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
             affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
-            uow.simple_affair.assign_evenement_to_affair(affair, evenement)
+            affair.assign_evenement(evenement=evenement)
             return SimpleAffairSchema().dump(affair)
 
     @staticmethod
@@ -48,10 +48,8 @@ class AffairService:
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
             affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
-            if affair.evenement_id == evenement.uuid:
-                uow.simple_affair.delete_affair_from_evenement(affair)
-            else:
-                raise ThisAffairNotAssignToThisEvent
+            affair.delete_evenement(evenement=evenement)
+            return SimpleAffairSchema().dump(affair)
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:

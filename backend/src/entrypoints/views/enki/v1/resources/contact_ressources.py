@@ -1,5 +1,5 @@
 from flask import request, current_app, g
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 
 from domain.users.command import CreateContact
 from domain.users.services.contact_service import ContactService
@@ -18,6 +18,13 @@ class ContactListResource(WithContactRepoResource):
     get:
       tags:
         - contacts
+      parameters:
+        - in: query
+          required: true
+          name: query
+          schema:
+            type: str
+          description: query to find contacts
       responses:
         200:
           description: Return a list of contacts
@@ -44,8 +51,17 @@ class ContactListResource(WithContactRepoResource):
     method_decorators = [user_info_middleware]
 
     def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('query', type=str, required=True)
+
+        args = parser.parse_args()
+        query: str = args.get("query")
+        if query:
+            contacts = ContactService.get_contacts_from_query(query=query, uow=current_app.context)
+        else:
+            contacts = ContactService.list_contacts(current_app.context)
         return {
-                   "data": ContactService.list_contacts(current_app.context),
+                   "data": contacts,
                    "message": "success",
                }, 200
 

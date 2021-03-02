@@ -1,5 +1,6 @@
 from typing import List, Union
 
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from domain.users.ports.contact_repository import AbstractContactRepository, AlreadyExistingContactUuid
@@ -10,6 +11,7 @@ contactsList = List[ContactEntity]
 
 
 class PgContactRepository(PgRepositoryMixin, AbstractContactRepository):
+
     def __init__(self, session: Session):
         PgRepositoryMixin.__init__(self, session=session, entity_type=ContactEntity)
         AbstractContactRepository.__init__(self)
@@ -31,4 +33,13 @@ class PgContactRepository(PgRepositoryMixin, AbstractContactRepository):
 
     def get_all(self) -> contactsList:
         return self.session.query(self.entity_type).all()
+
+    def get_by_query(self, query):
+        matches = self.session.query(self.entity_type).filter(
+            or_(
+                self.entity_type.first_name.match(query),
+                self.entity_type.last_name.match(query),
+            )
+        ).all()
+        return matches
 

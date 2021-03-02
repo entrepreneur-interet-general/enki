@@ -38,7 +38,6 @@ class MessageService:
                     uow.message.add_resource_to_message(message=message, resource=resource)
             current_app.logger.info("test 3")
             new_message = uow.message.get_by_uuid(message.uuid)
-            current_app.logger.info(f"new message {new_message}")
             return MessageService.schema().dump(new_message)
 
     @staticmethod
@@ -92,8 +91,8 @@ class MessageService:
     @staticmethod
     def list_resources(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
-            message: MessageEntity = uow.message.get_resources(uuid)
-            return ResourceSchema(many=True).dump(message.resources)
+            resources: List[ResourceEntity] = uow.message.get_resources(uuid)
+            return ResourceSchema(many=True).dump(resources)
 
     @staticmethod
     def get_message_resource(uuid: str, resource_uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
@@ -125,5 +124,4 @@ class MessageService:
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
             message = uow.message.get_by_uuid(uuid)
-            current_app.logger.info(f"message {message}")
             return MessageService.schema().dump(message)

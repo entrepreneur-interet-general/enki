@@ -8,7 +8,7 @@
       {{contact.first_name}}
     </h1>
     <div class="contact-detail--description subtitle">
-      {{contact.group}} - {{contact.position}}
+      {{contact.position.group.label}} - {{contact.position.position.label}}
     </div>
     <div class="contact-detail--addToFav" (click)="addContactToFavorite(contact)" [class.-userInFav]="userService.isUserFav(contact.uuid)">
       <svg class="icon-star icon"><use xlink:href="#icon-star"></use></svg>

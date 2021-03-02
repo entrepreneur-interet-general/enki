@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { REGISTER } from 'src/app/constants';
 import { Contact } from 'src/app/interfaces/Contact';
-import { uuidv4 } from 'src/app/utilities';
+import { RegisterService } from 'src/app/registration/register.service';
 import { AnnuaireService } from '../annuaire.service';
 
 @Component({
@@ -12,24 +13,34 @@ import { AnnuaireService } from '../annuaire.service';
 })
 export class ContactAddComponent implements OnInit {
   contactGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    firstName: new FormControl('', Validators.required),
     group: new FormControl('', Validators.required),
-    function: new FormControl('', Validators.required),
+    structure: new FormControl('', Validators.required),
+    position: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
   })
+
+  userTypes: [];
+
   constructor(
     private annuaireService: AnnuaireService,
+    private registerService: RegisterService,
     private router: Router
-  ) { }
+  ) {
+    this.registerService.getUserTypes().subscribe(response => {
+      this.userTypes = response
+    })
+  }
 
   ngOnInit(): void {
   }
   onSubmit(): void {
     const contact: Contact = {
-      first_name: this.contactGroup.value.name,
-      last_name: '',
+      first_name: this.contactGroup.value.firstName,
+      last_name: this.contactGroup.value.lastName,
       group_name: this.contactGroup.value.group,
       position: this.contactGroup.value.function,
       tel: {
@@ -41,6 +52,10 @@ export class ContactAddComponent implements OnInit {
     this.annuaireService.addContactToAnnuaire(contact).subscribe((contact) => {
       this.router.navigate(['annuaire/contactlist']);
     })
+  }
+
+  goToSearchLocation() {
+    this.router.navigate([`${REGISTER}/step1/searchlocation`])
   }
 
 }

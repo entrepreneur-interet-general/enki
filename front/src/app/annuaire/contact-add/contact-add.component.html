@@ -8,17 +8,34 @@
   </div>
   <form action="" class="contactAddForm" [formGroup]="contactGroup" (ngSubmit)="onSubmit()">
     <div class="enkiform__group">
-      <input type="text" class="enkiform__input" id="name" formControlName="name" required>
-      <label for="name" class="enkiform__label">Nom</label>
+      <input type="text" class="enkiform__input" id="lastName" formControlName="lastName" required>
+      <label for="lastName" class="enkiform__label">Nom</label>
     </div>
     <div class="enkiform__group">
-      <input type="text" class="enkiform__input" id="group" formControlName="group" required>
+      <input type="text" class="enkiform__input" id="firstName" formControlName="firstName" required>
+      <label for="firstName" class="enkiform__label">Prénom</label>
+    </div>
+    <div class="enkiform__group">
+      <select class="enkiform__input" id="group" formControlName="group" required>
+        <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option>
+      </select>
       <label for="group" class="enkiform__label">Groupe</label>
+      <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
     </div>
     <div class="enkiform__group">
-      <input type="text" class="enkiform__input" id="function" formControlName="function" required>
-      <label for="function" class="enkiform__label">Fonction</label>
+      <input type="text" class="enkiform__input" id="structure" formControlName="structure" required (focus)="goToSearchLocation()" [attr.disabled]="contactGroup.value.group == '' ? true : null">
+      <label for="structure" class="enkiform__label">Structure</label>
+      <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
     </div>
+    <div class="enkiform__group">
+      <select class="enkiform__input" id="position" formControlName="position" required [attr.disabled]="contactGroup.value.group == '' ? true : null">
+        <option *ngFor="let userPosition of userPositions" [value]="userPosition.uuid">{{userPosition.label}}</option>
+      </select>
+      <label for="position" class="enkiform__label">Fonction</label>
+      <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+    </div>
+
+
     <div class="enkiform__group">
       <input type="text" class="enkiform__input" id="phone" formControlName="phone" required>
       <label for="phone" class="enkiform__label">Téléphone</label>

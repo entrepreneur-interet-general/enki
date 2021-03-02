@@ -122,9 +122,13 @@
         }
         &:disabled {
             background: $lighterGrey;
+            color: $darkerGrey;
             opacity: 1;
             + label {
                 background: $lighterGrey;
+            }
+            ~ .icon {
+                fill: $darkGrey;
             }
         }
         &:focus + label {

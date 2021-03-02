@@ -78,7 +78,7 @@ class EvenementResource(WithEvenementRepoResource):
         - events
       responses:
         200:
-          description: Return a list of evenements
+          description: Return specific evenement
           content:
             application/json:
               schema: EvenementSchema
@@ -87,5 +87,33 @@ class EvenementResource(WithEvenementRepoResource):
     def get(self, uuid: str):
         return {
                    "data": EvenementService.get_by_uuid(uuid, current_app.context),
+                   "message": "success",
+               }, 200
+
+
+class EvenementClosedResource(WithEvenementRepoResource):
+    """Close specific evenement
+    ---
+    get:
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: Event id
+      tags:
+        - events
+      responses:
+        200:
+          description: Return updated Evenement
+          content:
+            application/json:
+              schema: EvenementSchema
+    """
+
+    def put(self, uuid: str):
+        return {
+                   "data": EvenementService.finish_evenement(uuid, current_app.context),
                    "message": "success",
                }, 200

@@ -18,7 +18,7 @@
       <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
       <div class="evenement--endDateTime">
         <div *ngIf="evenement.ended_at; else inprogress">{{evenement.ended_at | date:"dd/MM/yyyy à HH:mm":"UTC/GMT+2"}}</div>
-        <ng-template #elseBlock="inprogress">En cours</ng-template>
+        <ng-template #inprogress>En cours</ng-template>
       </div>
     </div>
   </div>
@@ -65,8 +65,8 @@
         </ul>
       </div>
     </div>
-    <div class="evenement--endAction">
-      <button class="btn">Événement terminé</button>
+    <div class="evenement--endAction" *ngIf="!evenement.closed">
+      <button class="btn" (click)="closeEvenement()">Événement terminé</button>
     </div>
   </div>
 </div>

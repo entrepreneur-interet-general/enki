@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Evenement } from '../evenements.service';
+import { Evenement, EvenementsService } from '../evenements.service';
 
 @Component({
   selector: 'app-detail-evenement',
@@ -21,6 +21,5 @@ export class DetailEvenementComponent implements OnInit {
       this.uuid = data.event.uuid;
     });
   }
-
 
 }

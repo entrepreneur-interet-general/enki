@@ -96,22 +96,6 @@ class AbstractMessageRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def add_tag_to_message(self, message: MessageEntity, tag: TagEntity) -> None:
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def add_resource_to_message(self, message: MessageEntity, resource: ResourceEntity) -> None:
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def remove_tag_to_message(self, message: MessageEntity, tag: TagEntity) -> None:
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def remove_resource_to_message(self, message: MessageEntity, resource: ResourceEntity) -> None:
-        raise NotImplementedError
-
-    @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> Union[MessageEntity, None]:
         raise NotImplementedError
 
@@ -150,18 +134,6 @@ class InMemoryMessageRepository(AbstractMessageRepository):
 
     def set_messages(self, messages: MessagesList) -> None:
         self._messages = messages
-
-    def add_tag_to_message(self, message: MessageEntity, tag: TagEntity) -> None:
-        message.tags.append(tag)
-
-    def add_resource_to_message(self, message: MessageEntity, resource: ResourceEntity) -> None:
-        message.tags.append(resource)
-
-    def remove_tag_to_message(self, message: MessageEntity, tag: TagEntity) -> None:
-        message.tags.remove(tag)
-
-    def remove_resource_to_message(self, message: MessageEntity, resource: ResourceEntity) -> None:
-        message.tags.remove(resource)
 
     def _get_tag_by_message(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:
         message: MessageEntity = self.get_by_uuid(uuid=uuid)

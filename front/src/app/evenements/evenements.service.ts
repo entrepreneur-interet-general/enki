@@ -10,6 +10,7 @@ export interface Evenement {
   title: string;
   description: string;
   created_at: string;
+  closed: boolean;
 }
 
 @Injectable({
@@ -31,7 +32,8 @@ export class EvenementsService {
         uuid: '',
         title: '',
         description: '',
-        created_at: ''
+        created_at: '',
+        closed: false
       }
       this.httpOptions = {
         headers: new HttpHeaders({
@@ -49,7 +51,8 @@ export class EvenementsService {
               uuid: event.uuid,
               title: event.title,
               description: event.description,
-              created_at: event.created_at
+              created_at: event.created_at,
+              closed: event.closed
             }
           })
         })
@@ -72,5 +75,9 @@ export class EvenementsService {
           return this.interventionsService.mapHTTPInterventions(response.data)
         })
       )
+  }
+
+  closeEvenement(uuid: string): Observable<any> {
+    return this.http.put<any>(`${environment.backendUrl}/events/${uuid}/close`, {})
   }
 }

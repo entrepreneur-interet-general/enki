@@ -8,7 +8,7 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
     MessageListResource, MessageResource, \
     MessageTagResource, MessageTagListResource, \
     TagResource, TagListResource, AffairResource, \
-    EvenementListResource, EvenementResource, \
+    EvenementListResource, EvenementResource, EvenementClosedResource, \
     ResourceListResource, ResourceResource, \
     MessageResourceResource, MessageResourceListResource, \
     AffairEvenementResource, AffairListEvenementResource
@@ -55,6 +55,7 @@ api.add_resource(MessageResourceListResource, '/messages/<uuid>/resources', endp
 # Evenements
 api.add_resource(EvenementListResource, '/events', endpoint="events")
 api.add_resource(EvenementResource, '/events/<uuid>', endpoint="events_by_id")
+api.add_resource(EvenementClosedResource, '/events/<uuid>/close', endpoint="event_finish_by_id")
 
 # Affairs <> Evenement
 api.add_resource(AffairEvenementResource, '/events/<uuid>/affairs/<affair_uuid>', endpoint="evenement_affairs_by_id")
@@ -120,6 +121,7 @@ def register_views():
     # Evenements
     api_spec.spec.path(view=EvenementListResource, app=current_app)
     api_spec.spec.path(view=EvenementResource, app=current_app)
+    api_spec.spec.path(view=EvenementClosedResource, app=current_app)
 
     # Affairs <> Evenement
     api_spec.spec.path(view=AffairEvenementResource, app=current_app)

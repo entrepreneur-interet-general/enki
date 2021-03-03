@@ -33,3 +33,9 @@ class ResourceEntity(Entity):
     @property
     def complete_path(self) -> str:
         return f"{self.bucket_name}/{self.path_without_bucket}"
+
+    def set_message_id(self, message_id):
+        self.message_id = message_id
+
+    def reset_message_id(self):
+        self.message_id = None

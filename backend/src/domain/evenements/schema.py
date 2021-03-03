@@ -24,9 +24,10 @@ class EvenementSchema(Schema):
     description = fields.Str(required=True)
     type = EnumField(EvenementType, required=True, by_value=True)
     started_at = fields.DateTime(required=True)
+    closed = fields.Boolean(dump_only=True)
     creator_id = fields.Str(required=False, dump_only=True)
     creator = fields.Nested(UserSchema, required=False, dump_only=True)
-    ended_at = fields.DateTime(required=False)
+    ended_at = fields.DateTime(required=False, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow())
 

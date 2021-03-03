@@ -17,10 +17,6 @@ class NotFoundSimpleAffair(HTTPException):
     code = 404
     description = "Cette intervention n'existe pas"
 
-class ThisAffairNotAssignToThisEvent(HTTPException):
-    code = 404
-    description = "Cette intervention n'est pas rataché à cet évenement"
-
 
 class AbstractSimpleAffairRepository(abc.ABC):
     def add(self, simple_affair: SimpleAffairEntity) -> Union[bool, None]:
@@ -65,14 +61,6 @@ class AbstractSimpleAffairRepository(abc.ABC):
 
     @abc.abstractmethod
     def _match_uuids(self, uuids: List[str]):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def assign_evenement_to_affair(self, affair: SimpleAffairEntity, evenement: EvenementEntity) -> SimpleAffairEntity:
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def delete_affair_from_evenement(self, affair: SimpleAffairEntity) -> SimpleAffairEntity:
         raise NotImplementedError
 
     @abc.abstractmethod

@@ -9,6 +9,7 @@ from adapters.postgres import PgMessageRepository, PgTagRepository, PgEvenementR
 from adapters.postgres.base_orm import metadata
 from adapters.postgres.pg_contact_repository import PgContactRepository
 from adapters.postgres.pg_group_repository import PgGroupRepository
+from adapters.postgres.pg_invitation_repository import PgInvitationRepository
 from adapters.postgres.pg_resource_repository import PgResourceRepository
 from adapters.postgres.pg_simple_affair_repository import PgSimpleAffairRepository
 from adapters.postgres.pg_user_repository import PgUserRepository
@@ -20,6 +21,7 @@ from domain.messages.ports.message_repository import InMemoryMessageRepository
 from domain.messages.ports.tag_repository import InMemoryTagRepository
 from domain.users.ports.contact_repository import AbstractContactRepository
 from domain.users.ports.group_repository import AbstractGroupRepository
+from domain.users.ports.invitation_repository import AbstractInvitationRepository
 from domain.users.ports.user_repository import AbstractUserRepository
 from entrypoints.repositories import ElasticRepositories
 
@@ -34,6 +36,7 @@ class AbstractUnitOfWork(abc.ABC):
     user: AbstractUserRepository
     contact: AbstractContactRepository
     group: AbstractGroupRepository
+    invitation: AbstractInvitationRepository
 
     def __init__(self, config):
         self.config = config
@@ -99,6 +102,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.user = PgUserRepository(self.session)
         self.contact = PgContactRepository(self.session)
         self.group = PgGroupRepository(self.session)
+        self.invitation = PgInvitationRepository(self.session)
         return super().__enter__()
 
     def __exit__(self, *args):

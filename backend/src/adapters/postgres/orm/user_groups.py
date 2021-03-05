@@ -15,6 +15,7 @@ from domain.users.entities.group import GroupType, GroupEntity, \
 
 from domain.users.entities.user import UserEntity
 from domain.users.entities.contact import ContactEntity
+from domain.users.entities.invitation import InvitationEntity
 from adapters.postgres.orm.metadata import metadata
 from sqlalchemy.orm import column_property
 from sqlalchemy import select, func
@@ -111,6 +112,15 @@ user_position_table = Table(
     Column('created_at', TIMESTAMP(), nullable=True, default=datetime.now)
 )
 
+invitation_table = Table(
+    'invitations', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('token', String(100)),
+    Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
+    Column('creator_id', String(60), ForeignKey("users.uuid")),
+    Column('expire_at', TIMESTAMP(), nullable=True),
+    Column('created_at', TIMESTAMP(), nullable=True, default=datetime.now)
+)
 
 def start_mappers():
     mapper(LocationEntity, locationTable)
@@ -141,4 +151,12 @@ def start_mappers():
                'full_name': column_property(
                    func.concat(contactTable.c.first_name, ' ', contactTable.c.last_name
                ))
+           })
+
+    mapper(InvitationEntity, invitation_table,
+           properties={
+               'creator': relationship(UserEntity,
+                                       backref='invitations',
+                                       foreign_keys=invitation_table.c.creator_id,
+                                       lazy='noload')
            })

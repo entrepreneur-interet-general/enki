@@ -46,6 +46,12 @@ class CreateResourceTopic(Topic):
 class CreateUserTopic(Topic):
     name: str = "CreateUser"
 
+
 @dataclass
 class CreateContactTopic(Topic):
     name: str = "CreateContact"
+
+
+@dataclass
+class CreateInvitationTopic(Topic):
+    name: str = "CreateInvitation"

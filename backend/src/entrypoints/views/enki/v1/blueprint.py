@@ -14,6 +14,7 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
     AffairEvenementResource, AffairListEvenementResource
 from .resources.contact_ressources import ContactListResource, ContactResource
 from entrypoints.views.enki.v1.resources.users.user_ressources import UserResource, UserListResource
+from .resources.invitation_ressources import InvitationResource, ValidateInvitationResource
 from .resources.message_resource_resource import MessageMultipleResourceResource
 from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, LocationListResource, \
     PositionGroupTypeListResource
@@ -84,6 +85,11 @@ api.add_resource(UserMeResource, '/users/me', endpoint="me_informations")
 api.add_resource(UserMeAffairsResource, '/users/me/affairs', endpoint="me_affairs")
 
 
+# Invitations
+api.add_resource(InvitationResource, '/invitation', endpoint="create_invitation")
+api.add_resource(ValidateInvitationResource, '/invitation/validate', endpoint="validate_invitation")
+
+
 @enki_blueprint_v1.before_app_first_request
 def register_views():
     # Add documents Schemas
@@ -146,7 +152,11 @@ def register_views():
     api_spec.spec.path(view=UserContactListResource, app=current_app)
     api_spec.spec.path(view=UserContactResource, app=current_app)
 
-
     # Me
     api_spec.spec.path(view=UserMeResource, app=current_app)
     api_spec.spec.path(view=UserMeAffairsResource, app=current_app)
+
+    # Invitation
+    api_spec.spec.path(view=InvitationResource, app=current_app)
+    api_spec.spec.path(view=ValidateInvitationResource, app=current_app)
+

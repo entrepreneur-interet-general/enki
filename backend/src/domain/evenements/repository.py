@@ -2,7 +2,7 @@ import abc
 from typing import List, Union
 from werkzeug.exceptions import HTTPException
 
-from domain.evenements.entity import EvenementEntity
+from domain.evenements.entity import EvenementEntity, UserEvenementRole
 
 evenementsList = List[EvenementEntity]
 
@@ -11,6 +11,9 @@ class AlreadyExistingEvenementUuid(HTTPException):
     code = 409
     description = "Cet évenement existe déjà"
 
+class UserAlreadyAccessEvenement(HTTPException):
+    code = 409
+    description = "Cet utilisateur à déjà accès à cet évenement"
 
 class NotFoundEvenement(HTTPException):
     code = 404
@@ -30,8 +33,22 @@ class AbstractEvenementRepository(abc.ABC):
             raise NotFoundEvenement
         return matches
 
+    def add_user_role(self, user_role: UserEvenementRole):
+        if self._match_user_event(user_role):
+            raise UserAlreadyAccessEvenement()
+        _ = self._add_user_role(user_role)
+        return  user_role
+
     @abc.abstractmethod
     def _add(self, entity: EvenementEntity):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _add_user_role(self, user_role: UserEvenementRole):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _match_user_event(self, user_role: UserEvenementRole):
         raise NotImplementedError
 
     @abc.abstractmethod

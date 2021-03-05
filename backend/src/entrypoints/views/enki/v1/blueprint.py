@@ -14,6 +14,7 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
     AffairEvenementResource, AffairListEvenementResource
 from .resources.contact_ressources import ContactListResource, ContactResource
 from entrypoints.views.enki.v1.resources.users.user_ressources import UserResource, UserListResource
+from .resources.envement_invitation_resource import EvenementInviteUserResource
 from .resources.invitation_ressources import InvitationResource, ValidateInvitationResource
 from .resources.message_resource_resource import MessageMultipleResourceResource
 from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, LocationListResource, \
@@ -57,6 +58,7 @@ api.add_resource(MessageResourceListResource, '/messages/<uuid>/resources', endp
 api.add_resource(EvenementListResource, '/events', endpoint="events")
 api.add_resource(EvenementResource, '/events/<uuid>', endpoint="events_by_id")
 api.add_resource(EvenementClosedResource, '/events/<uuid>/close', endpoint="event_finish_by_id")
+api.add_resource(EvenementInviteUserResource, '/events/<uuid>/invite/<user_uuid>', endpoint="events_by_id_invite_user")
 
 # Affairs <> Evenement
 api.add_resource(AffairEvenementResource, '/events/<uuid>/affairs/<affair_uuid>', endpoint="evenement_affairs_by_id")

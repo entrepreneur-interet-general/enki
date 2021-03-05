@@ -9,7 +9,7 @@ from sqlalchemy_utils import ChoiceType
 from geoalchemy2 import Geometry
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
-from domain.evenements.entity import EvenementType, EvenementEntity
+from domain.evenements.entity import EvenementType, EvenementEntity, EvenementRoleType, UserEvenementRole
 from domain.messages.entities.message_entity import MessageType, Severity, MessageEntity
 from domain.messages.entities.resource import ResourceEntity
 from domain.messages.entities.tag_entity import TagEntity
@@ -18,14 +18,12 @@ from adapters.postgres.orm.metadata import metadata
 
 logger = logging.getLogger(__name__)
 
-
 tagMessageTable = Table(
     'tags_messages', metadata,
     Column('messages_uuid', String(60), ForeignKey("messages.uuid")),
     Column('tag_uuid', String(60), ForeignKey("tags.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
 )
-
 
 messagesTable = Table(
     'messages', metadata,
@@ -48,6 +46,17 @@ tagTable = Table(
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False, unique=True),
     Column('creator_id', String(255), ForeignKey("users.uuid")),
+    Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
+)
+
+user_evenement_role_table = Table(
+    'user_evenement_roles', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('user_id', String(255), ForeignKey("users.uuid")),
+    Column('evenement_id', String(255), ForeignKey("evenements.uuid")),
+    Column('type', ChoiceType(EvenementRoleType, impl=String())),
+    Column('revoked_at', TIMESTAMP(), nullable=True),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
@@ -93,15 +102,18 @@ def start_mappers():
     mapper(TagEntity, tagTable)
     mapper(EvenementEntity, evenementsTable,
            properties={
-               'creator': relationship(UserEntity, backref='evenements',  foreign_keys=evenementsTable.c.creator_id, lazy='noload')
+               'creator': relationship(UserEntity, backref='evenements', foreign_keys=evenementsTable.c.creator_id,
+                                       lazy='noload'),
+               'user_roles': relationship(UserEvenementRole, backref='evenements', lazy='dynamic')
            }
-   )
+           )
     mapper(ResourceEntity, resourceTable)
+    mapper(UserEvenementRole, user_evenement_role_table)
     mapper(SimpleAffairEntity, affairsTable,
            properties={
                'evenement': relationship(EvenementEntity, backref='affairs'),
            }
-   )
+           )
     mapper(
         MessageEntity, messagesTable,
         properties={

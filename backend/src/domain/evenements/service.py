@@ -1,12 +1,13 @@
 from datetime import datetime
 from typing import Any, Dict, List, Union
+from uuid import uuid4
 
 from flask import current_app
 from marshmallow import ValidationError
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.affairs.schema.simple_affair import SimpleAffairSchema
-from domain.evenements.entity import EvenementEntity, EvenementType
+from domain.evenements.entity import EvenementEntity, EvenementType, UserEvenementRole, EvenementRoleType
 from domain.evenements.repository import AbstractEvenementRepository
 from domain.evenements.schema import EvenementSchema
 from domain.messages.entities.message_entity import MessageEntity
@@ -31,8 +32,22 @@ class EvenementService:
             user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
             _ = uow.evenement.add(evenement)
             evenement.creator = user
-            final_evenement: UserEntity = uow.evenement.get_by_uuid(uuid=evenement.uuid)
+            final_evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement.uuid)
             return EvenementService.schema().dump(final_evenement)
+
+    @staticmethod
+    def invite_user(uuid: str, user_id: str, role_type: EvenementRoleType, uow: AbstractUnitOfWork):
+        with uow:
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
+            user: UserEntity = uow.user.get_by_uuid(uuid=user_id)
+            user_event_role: UserEvenementRole = UserEvenementRole(
+                uuid=str(uuid4()),
+                user_id=user.uuid,
+                evenement_id=evenement.uuid,
+                type=role_type
+            )
+            uow.evenement.add_user_role(user_event_role)
+            evenement.add_user_role(user_role=user_event_role)
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:

@@ -1,0 +1,11 @@
+<div class="title-container">
+  <h1 class="h2-title">Partager l'événement</h1>
+</div>
+<div class="share">
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" id="participants" (focus)="goToSearchUser()" [formControl]="participants" required>
+    <label for="participants" class="enkiform__label">Ajouter des participants</label>
+    <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
+  </div>
+</div>
+<router-outlet></router-outlet>

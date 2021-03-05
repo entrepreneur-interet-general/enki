@@ -6,7 +6,7 @@ import { CreateEvenementComponent } from './create-evenement/create-evenement.co
 import { DetailEvenementComponent } from './detail-evenement/detail-evenement.component';
 import { SummaryEvenementComponent } from './summary-evenement/summary-evenement.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MainCouranteComponent } from './main-courante/main-courante/main-courante.component';
+import { MainCouranteComponent } from './main-courante/main-courante.component';
 import { AddMessageComponent } from './main-courante/add-message/add-message.component';
 import { AddLabelComponent } from './main-courante/add-label/add-label.component';
 import { FilterLabelsPipe } from './main-courante/add-label/filter-labels.pipe';
@@ -16,6 +16,8 @@ import { ListeMainCouranteComponent } from './main-courante/liste-main-courante/
 import { MessagesService } from './main-courante/messages.service';
 import { UiModule } from '../ui/ui.module';
 import { UserInfoGuard } from '../guards/user-info.guard';
+import { ShareEvenementComponent } from './share-evenement/share-evenement.component';
+import { SearchUserComponent } from './share-evenement/search-user/search-user.component';
 
 
 const routes : Routes = [
@@ -78,6 +80,16 @@ const routes : Routes = [
                 ]
               }
             ]
+          },
+          {
+            path: 'share',
+            component: ShareEvenementComponent,
+            children: [
+              {
+                path: 'searchuser',
+                component: SearchUserComponent
+              }
+            ]
           }
         ]
       }
@@ -95,7 +107,9 @@ const routes : Routes = [
     FilterLabelsPipe,
     DetailMessageComponent,
     SummaryEvenementComponent,
-    ListeMainCouranteComponent
+    ListeMainCouranteComponent,
+    ShareEvenementComponent,
+    SearchUserComponent
   ],
   providers: [MessagesService],
   imports: [

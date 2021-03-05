@@ -1,0 +1,19 @@
+<div class="searchUser fullscreen-form">
+  <div class="fullscreen-form--heading">
+    <a class="fullscreen-form--cancel" routerLink="..">
+      <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
+    </a>
+    <input type="text" class="fullscreen-form--searchInput" [formControl]="userSearch" placeholder="Rechercher un utilisateur (Nom, Prénom, Établissement...">
+  </div>
+  <div class="searchResults--title">
+    Résultats de votre recherche
+  </div>
+  <div class="searchResults--noResults" *ngIf="userResults && userResults.length === 0">
+    Pas de résultats... ¯\_(ツ)_/¯
+  </div>
+  <div *ngFor="let user of userResults">
+    <div class="searchList--element">
+      <a class="searchList--link" (click)="selectUser(user)" id="userid-{{user.uuid}}">{{user.firstname}}</a>
+    </div>
+  </div>
+</div>

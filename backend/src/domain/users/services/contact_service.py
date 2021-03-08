@@ -28,6 +28,12 @@ class ContactService:
         return ContactService.get_by_uuid(uuid, uow=uow)
 
     @staticmethod
+    def get_contacts_from_query(query: str, uow: AbstractUnitOfWork):
+        with uow:
+            contacts: List[ContactEntity] = uow.contact.get_by_query(query=query)
+            return ContactService.schema(many=True).dump(contacts)
+
+    @staticmethod
     def list_contacts(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             contacts: List[ContactEntity] = uow.contact.get_all()

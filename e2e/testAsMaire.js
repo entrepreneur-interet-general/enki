@@ -32,7 +32,6 @@ fixture `Test as Maire`
       .typeText('#nomEvenement', EVENT_TITLE)
       .typeText('#descriptionEvenement', EVENT_DESCRIPTION)
       .typeText('#startDate', `2021-03-09T19:37`)
-      .typeText('#endDate', `2021-03-10T19:37`)
       .click('.createEvenement--form input[type="submit"]')
       .expect(Selector('.evenement--title').innerText).eql(EVENT_TITLE)
       .click('#test--maincourante')
@@ -107,6 +106,8 @@ fixture `Test as Maire`
         .typeText('#address', INPUT_INFOS)
         .click('#test--add-contact')
         .click('#test--search-contact')
+        .typeText('.fullscreen-form--searchInput', INPUT_INFOS)
+        .debug()
 
       const contactsNb = await Selector('.searchList--link').count;
       let containsPreviouslyCreatedContact = false;

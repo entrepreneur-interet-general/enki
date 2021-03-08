@@ -35,7 +35,7 @@ export class AddMessageComponent implements OnInit {
 
   onSubmit(): void {
     let selectedLabelsUUID = this.labelsService.selectedLabels.map(label => label.uuid)
-    this.evenementUUID = this.evenementsService.selectedEvenement.uuid
+    this.evenementUUID = this.evenementsService.selectedEvenement.getValue().uuid
     this.messagesService.httpSubmitMessage(
         this.messageGroup.value.title,
         this.messageGroup.value.content,

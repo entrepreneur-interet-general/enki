@@ -1,9 +1,10 @@
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Intervention, InterventionsService } from '../interventions/interventions.service';
+import { User } from '../interfaces/User';
 
 export interface Evenement {
   uuid: string;
@@ -11,7 +12,7 @@ export interface Evenement {
   description: string;
   created_at: string;
   closed: boolean;
-  user_roles: [];
+  user_roles: User[];
 }
 
 @Injectable({
@@ -21,7 +22,14 @@ export class EvenementsService {
 
   evenements: Array<Evenement>
   evenementsUrl: string;
-  selectedEvenement: Evenement;
+  selectedEvenement = new BehaviorSubject<Evenement>({
+    uuid: '',
+    title: '',
+    description: '',
+    created_at: '',
+    closed: false,
+    user_roles: []
+  });
   httpOptions: object;
   constructor(
     private http: HttpClient,
@@ -29,14 +37,6 @@ export class EvenementsService {
     ) {
       this.evenements = []
       this.evenementsUrl = `${environment.backendUrl}/events`
-      this.selectedEvenement = {
-        uuid: '',
-        title: '',
-        description: '',
-        created_at: '',
-        closed: false,
-        user_roles: []
-      }
       this.httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':  'application/json'
@@ -68,11 +68,16 @@ export class EvenementsService {
         map(response => response.data)
       )
   }
-  addParticipantsToEvenement(user): void {
-
+  addParticipantsToEvenement(user: User): void {
+    
+    const copyEvent = this.selectedEvenement.getValue()
+    console.log(copyEvent)
+    copyEvent.user_roles = copyEvent.user_roles.concat(user)
+    console.log(copyEvent)
+    this.selectedEvenement.next(copyEvent);
   }
   selectEvenement(event: Evenement): void {
-    this.selectedEvenement = event;
+    this.selectedEvenement.next(event);
   }
   getSignalementsForEvenement(uuid): Observable<Intervention[]> {
     return this.http.get<any>(`${this.evenementsUrl}/${uuid}/affairs`, this.httpOptions)

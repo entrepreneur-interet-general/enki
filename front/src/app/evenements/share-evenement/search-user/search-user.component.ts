@@ -69,12 +69,14 @@ export class SearchUserComponent implements OnInit {
     // PUT http://localhost:8000/enki/v1/events/<event_id>/invite/<user_id>
     this.addParticipantsToEvenement(user.uuid).subscribe((res) => {
       console.log(res);
-      // this.evenementsService.addParticipantsToEvenement(res)
+      this.evenementsService.addParticipantsToEvenement(res)
       this.router.navigate(['..'], { relativeTo: this.activatedRoute});
     })
   }
   
-  addParticipantsToEvenement(userUUID: string): Observable<any> {
-    return this.http.put<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.uuid}/invite/${userUUID}`, {})
+  addParticipantsToEvenement(userUUID: string): Observable<User> {
+    return this.http.put<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/invite/${userUUID}`, {}).pipe(
+      pluck(HTTP_DATA)
+    )
   }
 }

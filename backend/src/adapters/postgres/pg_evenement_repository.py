@@ -35,7 +35,7 @@ class PgEvenementRepository(PgRepositoryMixin, AbstractEvenementRepository):
             return matches[0]
 
     def list_from_user_id(self, user_uuid: str) -> List[EvenementEntity]:
-        return self.session.query(self.entity_type).join(UserEvenementRole).options(lazyload('*')).filter(
+        return self.session.query(self.entity_type).outerjoin(UserEvenementRole).options(lazyload('*')).filter(
             or_(
                 EvenementEntity.creator_id == user_uuid,
                 UserEvenementRole.user_id == user_uuid

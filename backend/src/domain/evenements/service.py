@@ -43,6 +43,7 @@ class EvenementService:
                 evenement_id=evenement.uuid,
                 type=role_type
             )
+            user_event_role.user = user
             uow.evenement.add_user_role(user_event_role)
             evenement.add_user_role(user_role=user_event_role)
 

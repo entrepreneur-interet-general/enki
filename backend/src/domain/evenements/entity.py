@@ -45,6 +45,7 @@ class UserEvenementRole(Entity):
     def revoke(self):
         self.revoked_at = datetime.now()
 
+
 @dataclass_json
 @dataclass
 class EvenementEntity(Entity):

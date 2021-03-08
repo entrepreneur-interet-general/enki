@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from flask import request, current_app, g
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 from typing import Dict, Any
 
 from domain.evenements.command import CreateEvenement
@@ -23,24 +23,71 @@ class EvenementInviteUserResource(WithEvenementRepoResource):
       description: Creating an event
       tags:
         - events
-      requestBody:
-        content:
-          application/json:
-            schema:  EvenementSchema
+      parameters:
+        - in: query
+          name: role_type
+          required: false
+          enum:
+            - view
+            - edit
+            - admin
+          schema:
+            type: str
+          description: Role type
       responses:
         201:
+          description: Successfully added
+          content:
+            application/json:
+              schema:
+                type: array
+                items: UserSchema
+        400:
+          description: bad request, bad parameters
+        409:
+          description: User already has access
+    delete:
+      description: revoke access to an event
+      tags:
+        - events
+      responses:
+        202:
           description: Successfully created
+          content:
+            application/json:
+              schema:
+                type: array
+                items: UserSchema
         400:
           description: bad request, bad parameters
     """
     method_decorators = [user_info_middleware]
 
     def put(self, uuid: str, user_uuid: str):
-        result = EvenementService.invite_user(uuid=uuid,
-                                              user_id=user_uuid,
-                                              role_type=EvenementRoleType.VIEW,
-                                              uow=current_app.context)
+        parser = reqparse.RequestParser()
+        parser.add_argument('role_type', type=str, required=False,     choices=([e.value for e in EvenementRoleType]))
+
+        args = parser.parse_args()
+        role_type: EvenementRoleType = args.get("role_type")
+        if role_type:
+            result = EvenementService.change_user_role(uuid=uuid, user_id=user_uuid,
+                                                       role_type=role_type,
+                                                       uow=current_app.context)
+        else:
+            result = EvenementService.invite_user(uuid=uuid,
+                                                  user_id=user_uuid,
+                                                  role_type=EvenementRoleType.VIEW,
+                                                  uow=current_app.context)
         return {
                    "message": "success",
                    "data": result,
                }, 201
+
+    def delete(self, uuid: str, user_uuid: str):
+        result = EvenementService.revoke_access(uuid=uuid,
+                                                user_id=user_uuid,
+                                                uow=current_app.context)
+        return {
+                   "message": "success",
+                   "data": result,
+               }, 202

@@ -116,6 +116,7 @@ class EvenementClosedResource(WithEvenementRepoResource):
         return {
                    "data": EvenementService.finish_evenement(uuid, current_app.context),
         }
+
 class MeEvenementResource(WithEvenementRepoResource):
     """Get me evenement
     ---

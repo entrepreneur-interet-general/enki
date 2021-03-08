@@ -50,6 +50,22 @@ class EvenementService:
             return UserSchema().dump(user)
 
     @staticmethod
+    def change_user_role(uuid: str , user_id: str, role_type:EvenementRoleType, uow: AbstractUnitOfWork)-> Dict[str, Any]:
+        with uow:
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
+            user: UserEntity = uow.user.get_by_uuid(uuid=user_id)
+            evenement.change_access_type(user_id=user_id, role_type=role_type)
+            return UserSchema().dump(user)
+
+    @staticmethod
+    def revoke_access(uuid: str , user_id: str, uow: AbstractUnitOfWork)-> Dict[str, Any]:
+        with uow:
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
+            user: UserEntity = uow.user.get_by_uuid(uuid=user_id)
+            evenement.revoke_user_access(user_id=user_id)
+            return UserSchema().dump(user)
+
+    @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
             current_app.logger.info(uow.evenement.get_by_uuid(uuid=uuid))

@@ -22,6 +22,10 @@ class UserAlreadyAccessEvenement(HTTPException):
     description = "Cet utilisateur à déjà accès à cet évenement"
 
 
+class UserHasNoAccessEvenement(HTTPException):
+    code = 409
+    description = "Cet utilisateur n'à pas accès à cet évenement"
+
 class EvenementType(str, Enum):
     NATURAL = "natural"
     RASSEMBLEMENT = "rassemblement"
@@ -75,6 +79,14 @@ class EvenementEntity(Entity):
     def check_can_assign(self):
         if self.closed:
             raise EvenementClosedException
+
+    def change_access_type(self, user_id: str, role_type: EvenementRoleType):
+        for role in self.user_roles:
+            if role.user_id == user_id:
+                role.type = role_type
+                return
+        raise UserHasNoAccessEvenement()
+
     def add_user_role(self, user_role: UserEvenementRole):
         for role in self.user_roles:
             if role.user_id == user_role.user_id and user_role.uuid != role.uuid:
@@ -85,6 +97,8 @@ class EvenementEntity(Entity):
         for user_role in self.user_roles:
             if user_role.user_id == user_id:
                 self.user_role.revoke()
+                return
+        raise UserHasNoAccessEvenement()
 
     def user_has_access(self, user_id: str, role_type: EvenementRoleType = EvenementRoleType.VIEW) -> bool:
         for user_role in self.user_roles:

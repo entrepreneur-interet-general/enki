@@ -107,7 +107,6 @@ fixture `Test as Maire`
         .click('#test--add-contact')
         .click('#test--search-contact')
         .typeText('.fullscreen-form--searchInput', INPUT_INFOS)
-        .debug()
 
       const contactsNb = await Selector('.searchList--link').count;
       let containsPreviouslyCreatedContact = false;

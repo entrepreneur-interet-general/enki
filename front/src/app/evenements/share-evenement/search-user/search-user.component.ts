@@ -68,7 +68,6 @@ export class SearchUserComponent implements OnInit {
   selectUser(user: User): void {
     // PUT http://localhost:8000/enki/v1/events/<event_id>/invite/<user_id>
     this.addParticipantsToEvenement(user.uuid).subscribe((res) => {
-      console.log(res);
       this.evenementsService.addParticipantsToEvenement(res)
       this.router.navigate(['..'], { relativeTo: this.activatedRoute});
     })

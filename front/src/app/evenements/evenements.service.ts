@@ -69,11 +69,8 @@ export class EvenementsService {
       )
   }
   addParticipantsToEvenement(user: User): void {
-    
     const copyEvent = this.selectedEvenement.getValue()
-    console.log(copyEvent)
     copyEvent.user_roles = copyEvent.user_roles.concat(user)
-    console.log(copyEvent)
     this.selectedEvenement.next(copyEvent);
   }
   selectEvenement(event: Evenement): void {

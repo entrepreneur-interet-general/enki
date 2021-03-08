@@ -60,7 +60,6 @@ export class AddMessageComponent implements OnInit {
     const file = (event.target as HTMLInputElement).files[0]
     this.messagesService.getUrlFileUpload((event.target as HTMLInputElement).files[0]).subscribe(response => {
       this.messagesService.putFileOnServer(file, response.data.upload_url).subscribe(() => {
-        // console.log('success, show image preview')
         // TODO : cacher le loader
         // montrer l'image de preview
         let mediaUUID = response.data.uuid

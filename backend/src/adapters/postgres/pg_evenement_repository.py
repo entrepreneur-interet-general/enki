@@ -1,9 +1,10 @@
 from typing import List, Union
 
+from sqlalchemy import or_
 from sqlalchemy.orm import Session, lazyload
 
 from domain.evenements.entity import EvenementEntity, UserEvenementRole
-from domain.evenements.repository import AbstractEvenementRepository, AlreadyExistingEvenementUuid
+from domain.evenements.repository import AbstractEvenementRepository
 from .repository import PgRepositoryMixin
 
 
@@ -32,3 +33,11 @@ class PgEvenementRepository(PgRepositoryMixin, AbstractEvenementRepository):
             filter(UserEvenementRole.user_id == user_role.user_id).all()
         if matches:
             return matches[0]
+
+    def list_from_user_id(self, user_uuid: str)  -> List[EvenementEntity]:
+        return self.session.query(self.entity_type).join(UserEvenementRole).options(lazyload('*')).filter(
+            or_(
+                EvenementEntity.creator_id == user_uuid,
+                UserEvenementRole.user == user_uuid
+            )
+        ).all()

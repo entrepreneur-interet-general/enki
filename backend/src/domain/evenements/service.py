@@ -6,12 +6,9 @@ from flask import current_app
 from marshmallow import ValidationError
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
-from domain.affairs.schema.simple_affair import SimpleAffairSchema
-from domain.evenements.entity import EvenementEntity, EvenementType, UserEvenementRole, EvenementRoleType
-from domain.evenements.repository import AbstractEvenementRepository
+from domain.evenements.entity import EvenementEntity, UserEvenementRole, EvenementRoleType
 from domain.evenements.schema import EvenementSchema
 from domain.messages.entities.message_entity import MessageEntity
-from domain.messages.services.message_service import MessageService
 from domain.users.entities.user import UserEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
 
@@ -74,10 +71,13 @@ class EvenementService:
             simple_affairs: List[SimpleAffairEntity] = uow.simple_affair.get_by_evenement(uuid=evenement_id)
             return simple_affairs
 
-    def finish_evenement(uuid: str, uow: AbstractUnitOfWork):
+    @staticmethod
+    def get_evenements_by_user_id(user_uuid: str):
+        pass
+
+    @staticmethod
+    def finish_evenement(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
             evenement.ended_at = datetime.now()
             return EvenementService.schema().dump(evenement)
-
-

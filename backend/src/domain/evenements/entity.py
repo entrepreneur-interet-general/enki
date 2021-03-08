@@ -72,7 +72,7 @@ class EvenementEntity(Entity):
     def add_user_role(self, user_role: UserEvenementRole):
         self.user_roles.append(user_role)
 
-    def revoke_user_access(self, user_id):
+    def revoke_user_agccess(self, user_id):
         for user_role in self.user_roles:
             if user_role.user_id == user_id:
                 self.user_role.revoke()

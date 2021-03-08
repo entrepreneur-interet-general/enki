@@ -3,6 +3,8 @@ import { Contact } from 'src/app/interfaces/Contact';
 import { AnnuaireService } from '../annuaire.service';
 import { FormControl } from '@angular/forms';
 import { UserService } from 'src/app/user/user.service';
+import { interval, Observable, Subject } from 'rxjs';
+import { debounce, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-contact',
@@ -12,31 +14,39 @@ import { UserService } from 'src/app/user/user.service';
 export class SearchContactComponent implements OnInit {
 
   contactList: Contact[];
-  contactSearch = new FormControl('')
+  contactSearch = new FormControl('');
+  subject = new Subject();
+  contactResult$: Observable<Contact[]>;
+  
 
   constructor(
     private annuaireService: AnnuaireService,
     public userService: UserService
   ) {
     this.contactList = []
-  }
+    this.contactSearch.valueChanges.subscribe(value => {
+      if (value.length > 2) {
+        this.subject.next(value)
+      }
+    });
+    this.contactResult$ = this.subject.pipe(
+      debounce(() => interval(500)),
+      switchMap((query: string) => {
+        return this.annuaireService.searchInAnnuaire(query)
+      })
+    )
 
-  ngOnInit(): void {
-    // this.contactSearch.valueChanges.subscribe(value => this.onSearchInputChange(value));
-    this.annuaireService.searchInAnnuaire().subscribe((res) => {
-      this.contactList = res
+    this.contactResult$.subscribe(contacts => {
+      this.contactList = contacts;
     })
   }
 
-  onSearchInputChange(query: string): void {
-
-    /* TODO: search in backend */
-/*     if (query.length >= 3) {
-      this.annuaireService.searchInAnnuaire(query).subscribe((res) => {
-        this.contactList = res
-      })
-    } */
+  ngOnInit(): void {
+/*     this.annuaireService.searchInAnnuaire().subscribe((res) => {
+      this.contactList = res
+    }) */
   }
+
 
   addRemoveToUserFavs(contactId: string): void {
     if (this.userService.user.contacts.filter(contact => contact.uuid === contactId).length > 0) {

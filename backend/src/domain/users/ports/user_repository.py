@@ -80,8 +80,13 @@ class AbstractUserRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def search(self, query: str) -> UsersList:
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> Union[UserEntity, None]:
         raise NotImplementedError
+
 
 class InMemoryUserRepository(AbstractUserRepository):
     _users: UsersList = []

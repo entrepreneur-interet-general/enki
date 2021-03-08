@@ -35,6 +35,9 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
     def get_all(self) -> usersList:
         return self.session.query(self.entity_type).all()
 
+    def search(self, query: str) -> usersList:
+        return self.session.query(self.entity_type).all()
+
     def _get_user_contacts(self, user: UserEntity):
         return user.contacts
 

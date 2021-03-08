@@ -77,6 +77,13 @@ class UserService:
             users: List[UserEntity] = uow.user.get_all()
             return UserService.schema(many=True).dump(users)
 
+
+    @staticmethod
+    def search_users(query: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            users: List[UserEntity] = uow.user.get_all()
+            return UserService.schema(many=True).dump(users)
+
     @staticmethod
     def list_contacts(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:

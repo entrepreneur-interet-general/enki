@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ShareEvenementComponent implements OnInit {
 
-  participants = new FormControl('', Validators.required)
+  // participants = new FormControl('', Validators.required)
 
   constructor(
     private router: Router,

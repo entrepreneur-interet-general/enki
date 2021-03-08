@@ -45,7 +45,7 @@ export class EvenementsService {
   }
 
   getEvenements(): Observable<Evenement[]> {
-    return this.http.get<any>(this.evenementsUrl)
+    return this.http.get<any>(`${environment.backendUrl}/users/me/events`)
       .pipe(
         map(response => {
           return response.data.map(event => {

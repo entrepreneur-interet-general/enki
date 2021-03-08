@@ -21,11 +21,12 @@ class UserEvenementRoleSchema(Schema):
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
     user_id = fields.Str(required=True)
+    user = fields.Nested(UserSchema, dump_only=True)
     evenement_id = fields.Str(required=True)
     type = EnumField(EvenementRoleType, required=True, by_value=True)
-    revoked_at = fields.DateTime()
-    created_at = fields.DateTime(missing=lambda: datetime.utcnow())
-    updated_at = fields.DateTime(missing=lambda: datetime.utcnow())
+    revoked_at = fields.DateTime(dump_only=True)
+    created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
+    updated_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
 
 
 class EvenementSchema(Schema):

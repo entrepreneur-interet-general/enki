@@ -34,6 +34,7 @@ class UserEvenementRole(Entity):
     user_id: str
     evenement_id: str
     type: EvenementRoleType
+    user: UserEntity = field(default_factory=lambda:None)
     created_at: datetime = field(default_factory=lambda: datetime.utcnow())
     revoked_at: Optional[datetime] = field(default_factory=lambda:None)
     updated_at: datetime = field(default_factory=lambda: datetime.utcnow())

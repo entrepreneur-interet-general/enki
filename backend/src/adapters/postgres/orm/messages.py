@@ -108,7 +108,11 @@ def start_mappers():
            }
            )
     mapper(ResourceEntity, resourceTable)
-    mapper(UserEvenementRole, user_evenement_role_table)
+    mapper(UserEvenementRole, user_evenement_role_table,
+           properties={
+               'user': relationship(UserEntity, backref='user_evenement_roles'),
+           }
+           )
     mapper(SimpleAffairEntity, affairsTable,
            properties={
                'evenement': relationship(EvenementEntity, backref='affairs'),

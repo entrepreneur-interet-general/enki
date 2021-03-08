@@ -17,7 +17,7 @@ class WithEvenementRepoResource(Resource):
 
 
 class EvenementInviteUserResource(WithEvenementRepoResource):
-    """Get all evenements
+    """Invite user on an event
     ---
     put:
       description: Creating an event
@@ -34,6 +34,18 @@ class EvenementInviteUserResource(WithEvenementRepoResource):
           schema:
             type: str
           description: Role type
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: Event id
+        - in: path
+          name: user_uuid
+          schema:
+            type: string
+          required: true
+          description: User uuid
       responses:
         201:
           description: Successfully added
@@ -50,6 +62,19 @@ class EvenementInviteUserResource(WithEvenementRepoResource):
       description: revoke access to an event
       tags:
         - events
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: Event id
+        - in: path
+          name: user_uuid
+          schema:
+            type: string
+          required: true
+          description: User uuid
       responses:
         202:
           description: Successfully created

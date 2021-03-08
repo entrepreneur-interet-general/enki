@@ -132,6 +132,7 @@ def register_views():
     api_spec.spec.path(view=EvenementListResource, app=current_app)
     api_spec.spec.path(view=EvenementResource, app=current_app)
     api_spec.spec.path(view=EvenementClosedResource, app=current_app)
+    api_spec.spec.path(view=EvenementInviteUserResource, app=current_app)
 
     # Affairs <> Evenement
     api_spec.spec.path(view=AffairEvenementResource, app=current_app)

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EvenementsService } from '../evenements.service';
 
 @Component({
   selector: 'app-share-evenement',
@@ -10,11 +10,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ShareEvenementComponent implements OnInit {
 
   // participants = new FormControl('', Validators.required)
+  participants: [];
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    public evenementsService: EvenementsService
+  ) {
+    this.participants = this.evenementsService.selectedEvenement.user_roles;
+  }
 
   ngOnInit(): void {
   }

@@ -11,6 +11,7 @@ export interface Evenement {
   description: string;
   created_at: string;
   closed: boolean;
+  user_roles: [];
 }
 
 @Injectable({
@@ -33,7 +34,8 @@ export class EvenementsService {
         title: '',
         description: '',
         created_at: '',
-        closed: false
+        closed: false,
+        user_roles: []
       }
       this.httpOptions = {
         headers: new HttpHeaders({
@@ -52,7 +54,8 @@ export class EvenementsService {
               title: event.title,
               description: event.description,
               created_at: event.created_at,
-              closed: event.closed
+              closed: event.closed,
+              user_roles: event.user_roles
             }
           })
         })
@@ -64,6 +67,9 @@ export class EvenementsService {
       .pipe(
         map(response => response.data)
       )
+  }
+  addParticipantsToEvenement(user): void {
+
   }
   selectEvenement(event: Evenement): void {
     this.selectedEvenement = event;

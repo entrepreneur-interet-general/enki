@@ -23,7 +23,7 @@ fixture `Test as Maire`
     const EVENT_TITLE = 'Test auto événement'
     const EVENT_DESCRIPTION = 'Test auto événement'
 
-    test.skip('Create `événement`', async t => {
+    test('Create `événement`', async t => {
       await t
       .click('.burger')
       .click('#test--link-situation')
@@ -42,7 +42,7 @@ fixture `Test as Maire`
     const MESSAGE_TITLE = 'Test auto message 2'
     const MESSAGE_DESCRIPTION = 'Test auto description'
     const LABEL_TITLE = randomString(5)
-    test.skip('Add message to `main courante`', async t => {
+    test('Add message to `main courante`', async t => {
       await t
       // go to the previously created event
       .click('.burger')

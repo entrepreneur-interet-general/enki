@@ -1,8 +1,10 @@
 from typing import List, Union
 
+from sqlalchemy import or_
 from sqlalchemy.orm import Session, lazyload
 
 from domain.users.entities.contact import ContactEntity
+from domain.users.entities.group import UserPositionEntity, PositionGroupTypeEntity, GroupEntity
 from domain.users.ports.user_repository import AbstractUserRepository, AlreadyExistingUserUuid
 from domain.users.entities.user import UserEntity
 from .repository import PgRepositoryMixin
@@ -36,7 +38,18 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
         return self.session.query(self.entity_type).all()
 
     def search(self, query: str) -> usersList:
-        return self.session.query(self.entity_type).all()
+        matches = self.session.query(self.entity_type).\
+            join(UserPositionEntity).\
+            join(PositionGroupTypeEntity).\
+            join(GroupEntity).\
+            filter(
+            or_(
+                self.entity_type.full_name.match(query),
+                PositionGroupTypeEntity.label.match(query),
+                GroupEntity.label.match(query),
+            )
+        ).all()
+        return matches
 
     def _get_user_contacts(self, user: UserEntity):
         return user.contacts

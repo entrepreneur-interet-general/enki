@@ -3,9 +3,9 @@ from sqlalchemy_searchable import make_searchable
 from datetime import datetime
 import sqlalchemy as sa
 
-from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Unicode, TIMESTAMP, Enum
+from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Unicode, TIMESTAMP, Enum, func
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.orm import mapper, relationship
+from sqlalchemy.orm import mapper, relationship, column_property
 from sqlalchemy_utils import TSVectorType
 from geoalchemy2 import Geometry
 
@@ -142,6 +142,9 @@ def start_mappers():
                'position': relationship(UserPositionEntity, backref='users'),
                'contacts': relationship(ContactEntity, backref='users', secondary=users_favorites_contact_table,
                                         lazy='noload'),
+               'full_name': column_property(
+                   func.concat(usersTable.c.first_name, ' ', usersTable.c.last_name
+                               ))
            }
            )
 

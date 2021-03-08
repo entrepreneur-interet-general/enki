@@ -10,6 +10,7 @@ from domain.evenements.entity import EvenementEntity, UserEvenementRole, Eveneme
 from domain.evenements.schema import EvenementSchema
 from domain.messages.entities.message_entity import MessageEntity
 from domain.users.entities.user import UserEntity
+from domain.users.schemas.user import UserSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
@@ -33,7 +34,7 @@ class EvenementService:
             return EvenementService.schema().dump(final_evenement)
 
     @staticmethod
-    def invite_user(uuid: str, user_id: str, role_type: EvenementRoleType, uow: AbstractUnitOfWork):
+    def invite_user(uuid: str, user_id: str, role_type: EvenementRoleType, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
             user: UserEntity = uow.user.get_by_uuid(uuid=user_id)
@@ -45,6 +46,8 @@ class EvenementService:
             )
             user_event_role.user = user
             evenement.add_user_role(user_role=user_event_role)
+
+            return UserSchema().dump(user)
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:

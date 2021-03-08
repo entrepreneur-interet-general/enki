@@ -72,8 +72,10 @@ class EvenementService:
             return simple_affairs
 
     @staticmethod
-    def get_evenements_by_user_id(user_uuid: str):
-        pass
+    def get_evenements_by_user_id(user_uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            evenements: List[EvenementEntity] = uow.evenement.list_from_user_id(user_uuid=user_uuid)
+            return EvenementService.schema(many=True).dump(evenements)
 
     @staticmethod
     def finish_evenement(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:

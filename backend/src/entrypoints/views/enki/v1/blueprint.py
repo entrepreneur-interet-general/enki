@@ -15,6 +15,7 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
 from .resources.contact_ressources import ContactListResource, ContactResource
 from entrypoints.views.enki.v1.resources.users.user_ressources import UserResource, UserListResource
 from .resources.envement_invitation_resource import EvenementInviteUserResource
+from .resources.evenement_resource import MeEvenementResource
 from .resources.invitation_ressources import InvitationResource, ValidateInvitationResource
 from .resources.message_resource_resource import MessageMultipleResourceResource
 from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, LocationListResource, \
@@ -85,6 +86,7 @@ api.add_resource(UserContactResource, '/users/me/contact/favorites/<contact_uuid
 # Me
 api.add_resource(UserMeResource, '/users/me', endpoint="me_informations")
 api.add_resource(UserMeAffairsResource, '/users/me/affairs', endpoint="me_affairs")
+api.add_resource(MeEvenementResource, '/users/me/events', endpoint="me_events")
 
 
 # Invitations

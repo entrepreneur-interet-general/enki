@@ -11,10 +11,6 @@ class AlreadyExistingEvenementUuid(HTTPException):
     code = 409
     description = "Cet évenement existe déjà"
 
-class UserAlreadyAccessEvenement(HTTPException):
-    code = 409
-    description = "Cet utilisateur à déjà accès à cet évenement"
-
 class NotFoundEvenement(HTTPException):
     code = 404
     description = "Cet évenement n'existe pas"
@@ -33,12 +29,6 @@ class AbstractEvenementRepository(abc.ABC):
             raise NotFoundEvenement
         return matches
 
-    def add_user_role(self, user_role: UserEvenementRole):
-        if self._match_user_event(user_role):
-            raise UserAlreadyAccessEvenement()
-        _ = self._add_user_role(user_role)
-        return  user_role
-
     @abc.abstractmethod
     def list_from_user_id(self, user_uuid: str):
         raise NotImplementedError
@@ -47,13 +37,6 @@ class AbstractEvenementRepository(abc.ABC):
     def _add(self, entity: EvenementEntity):
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def _add_user_role(self, user_role: UserEvenementRole):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def _match_user_event(self, user_role: UserEvenementRole):
-        raise NotImplementedError
 
     @abc.abstractmethod
     def get_all(self) -> evenementsList:

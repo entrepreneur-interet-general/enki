@@ -7,14 +7,19 @@ from typing import Union, Optional, List
 from werkzeug.exceptions import HTTPException
 
 from domain.core.entity import Entity
+from flask import current_app
 from enum import Enum
 
+from domain.core.entity import Entity
 from domain.users.entities.user import UserEntity
 
 
 class EvenementClosedException(HTTPException):
     code = 410
     description = "Evenement is closed"
+class UserAlreadyAccessEvenement(HTTPException):
+    code = 409
+    description = "Cet utilisateur à déjà accès à cet évenement"
 
 
 class EvenementType(str, Enum):
@@ -34,9 +39,9 @@ class UserEvenementRole(Entity):
     user_id: str
     evenement_id: str
     type: EvenementRoleType
-    user: UserEntity = field(default_factory=lambda:None)
+    user: UserEntity = field(default_factory=lambda: None)
     created_at: datetime = field(default_factory=lambda: datetime.utcnow())
-    revoked_at: Optional[datetime] = field(default_factory=lambda:None)
+    revoked_at: Optional[datetime] = field(default_factory=lambda: None)
     updated_at: datetime = field(default_factory=lambda: datetime.utcnow())
 
     def is_active(self):
@@ -71,9 +76,12 @@ class EvenementEntity(Entity):
         if self.closed:
             raise EvenementClosedException
     def add_user_role(self, user_role: UserEvenementRole):
+        for role in self.user_roles:
+            if role.user_id == user_role.user_id and user_role.uuid != role.uuid:
+                raise UserAlreadyAccessEvenement()
         self.user_roles.append(user_role)
 
-    def revoke_user_agccess(self, user_id):
+    def revoke_user_access(self, user_id):
         for user_role in self.user_roles:
             if user_role.user_id == user_id:
                 self.user_role.revoke()

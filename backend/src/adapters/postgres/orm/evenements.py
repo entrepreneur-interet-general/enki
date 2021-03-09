@@ -104,9 +104,9 @@ def start_mappers():
            properties={
                'creator': relationship(UserEntity, backref='evenements', foreign_keys=evenementsTable.c.creator_id,
                                        lazy='noload'),
-               'user_roles': relationship(UserEvenementRole, backref='evenements', lazy='dynamic'),
-               'affairs': relationship(SimpleAffairEntity, back_populates='evenement', lazy='dynamic'),
-               'messages': relationship(MessageEntity, backref='evenements', lazy='dynamic')
+               'user_roles': relationship(UserEvenementRole, backref='evenements', lazy='noload'),
+               'affairs': relationship(SimpleAffairEntity, back_populates='evenement', lazy='noload'),
+               'messages': relationship(MessageEntity, backref='evenements', lazy='noload')
            }
            )
     mapper(ResourceEntity, resourceTable)
@@ -117,7 +117,7 @@ def start_mappers():
            )
     mapper(SimpleAffairEntity, affairsTable,
            properties={
-               'evenement': relationship(EvenementEntity, back_populates='affairs'),
+               'evenement': relationship(EvenementEntity, back_populates='affairs', lazy="noload"),
            }
            )
     mapper(

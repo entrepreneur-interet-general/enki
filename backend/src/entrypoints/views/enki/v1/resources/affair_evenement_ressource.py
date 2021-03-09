@@ -43,6 +43,6 @@ class AffairListEvenementResource(WithAffairEvenementRepoResource):
     """
 
     def get(self, uuid):
-        affairs = EvenementService.list_affairs(uuid, current_app.context)
+        affairs = AffairService.list_affairs_by_evenement(uuid, current_app.context)
         return {"data": affairs,
                 "message": "success"}, 201

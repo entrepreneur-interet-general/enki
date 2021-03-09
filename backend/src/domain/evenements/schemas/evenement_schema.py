@@ -40,6 +40,8 @@ class EvenementSchema(Schema):
     creator_id = fields.Str(required=False, dump_only=True)
     creator = fields.Nested(UserSchema, required=False, dump_only=True)
     ended_at = fields.DateTime(required=False, dump_only=True)
+    # messages = fields.Nested("MessageSchema", many=True, dump_only=True)
+    # affairs = fields.Nested("SimpleAffairSchema", many=True, dump_only=True)
     user_roles = fields.Nested(UserEvenementRoleSchema, many=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow())

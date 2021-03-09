@@ -1,9 +1,8 @@
-from typing import List
+import pathlib
 
 import pytest
 from flask import Response
 from flask.testing import FlaskClient
-import pathlib
 
 BASE_PATH_ECHANGES: str = "/api/v1/echanges/messages"
 BASE_PATH_AFFAIRS: str = "/api/enki/v1/affairs"

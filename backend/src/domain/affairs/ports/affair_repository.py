@@ -1,13 +1,12 @@
 import abc
 from typing import List, Union
-import xml.dom.minidom
 
 from flask import current_app
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.affair_entity import AffairEntity
-from shapely.geometry import Point
-from shapely.geometry.polygon import Polygon
 
 affairsList = List[AffairEntity]
 

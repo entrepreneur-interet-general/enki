@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app, make_response, jsonify
+from flask import Blueprint, current_app
 from flask_restful import Api
 
 from .resources.echanges import EchangeMessageResource

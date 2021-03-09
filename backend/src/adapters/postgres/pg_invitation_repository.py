@@ -2,8 +2,8 @@ from typing import List, Union
 
 from sqlalchemy.orm import Session
 
-from domain.users.ports.invitation_repository import AbstractInvitationRepository, AlreadyExistingInvitationUuid
 from domain.users.entities.invitation import InvitationEntity
+from domain.users.ports.invitation_repository import AbstractInvitationRepository, AlreadyExistingInvitationUuid
 from .repository import PgRepositoryMixin
 
 invitationsList = List[InvitationEntity]

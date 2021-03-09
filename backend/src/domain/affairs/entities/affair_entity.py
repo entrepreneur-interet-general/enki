@@ -1,6 +1,7 @@
 from dataclasses import dataclass
-from dataclasses_json import dataclass_json
+
 from cisu.entities.cisu_entity import CreateEvent
+from dataclasses_json import dataclass_json
 
 
 @dataclass_json

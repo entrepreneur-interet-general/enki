@@ -1,10 +1,10 @@
 import abc
+import json
 import pathlib
 from http.client import HTTPException
-
 from typing import List, Any
+
 from elasticsearch import Elasticsearch
-import json
 
 
 class NotFoundException(HTTPException):

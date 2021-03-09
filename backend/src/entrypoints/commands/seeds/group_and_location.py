@@ -1,12 +1,12 @@
-import itertools
+import json
+import os
 from uuid import uuid4
 
-from flask import current_app
 import click
+from flask import current_app
 from flask.cli import with_appcontext
-import os
+
 from domain.users.entities.group import LocationEntity, LocationType, GroupEntity, GroupType
-import json
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 

@@ -1,10 +1,9 @@
+from datetime import datetime
 from uuid import uuid4
 
 from flask import current_app
 from marshmallow import Schema, fields, post_load
 from marshmallow_enum import EnumField
-from datetime import datetime
-
 from werkzeug.exceptions import HTTPException
 
 from domain.evenements.entities.evenement_entity import EvenementType, EvenementEntity

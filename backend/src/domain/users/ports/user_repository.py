@@ -1,8 +1,8 @@
 import abc
 from typing import List, Union
+
 from werkzeug.exceptions import HTTPException
 
-from domain.users.entities.contact import ContactEntity
 from domain.users.entities.user import UserEntity
 
 UsersList = List[UserEntity]

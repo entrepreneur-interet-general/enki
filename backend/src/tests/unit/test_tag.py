@@ -1,6 +1,7 @@
+import random
+
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.schemas import TagSchema
-import random
 
 
 def build_tag_data():

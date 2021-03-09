@@ -7,8 +7,8 @@ from marshmallow import ValidationError
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entities.evenement_entity import EvenementEntity, EvenementRoleType, UserEvenementRole
-from domain.evenements.schemas.evenement_schema import EvenementSchema
 from domain.evenements.entities.message_entity import MessageEntity
+from domain.evenements.schemas.evenement_schema import EvenementSchema
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.user import UserSchema
 from service_layer.unit_of_work import AbstractUnitOfWork

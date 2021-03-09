@@ -1,17 +1,13 @@
 import abc
-import logging
 from collections import defaultdict
-from dataclasses import asdict, dataclass
-from datetime import datetime
-from typing import Any, Callable, Coroutine, Dict, Generic, List, Generic
+from typing import Any, Dict, List
+from typing import Union, Callable
 
 from flask import current_app
 
 from domain.core import commands, events
-from domain.core.events import EventCallback, Event
+from domain.core.events import EventCallback
 from domain.core.topics import Topic
-from typing import Union, Callable
-
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 Message = Union[commands.Command, events.Event]

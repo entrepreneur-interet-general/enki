@@ -1,11 +1,10 @@
-import base64
-from email.mime.text import MIMEText
+import os
+import smtplib
 from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 from flask import current_app
-import smtplib
 from jinja2 import Environment, FileSystemLoader
-import os
 
 env = Environment(loader=FileSystemLoader('%s/templates/' % os.path.dirname(__file__)))
 

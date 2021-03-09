@@ -1,6 +1,7 @@
-from uuid import uuid4
-from marshmallow import Schema, fields, post_load
 from datetime import datetime
+from uuid import uuid4
+
+from marshmallow import Schema, fields, post_load
 from werkzeug.exceptions import HTTPException
 
 from domain.users.entities.contact import ContactEntity

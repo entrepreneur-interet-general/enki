@@ -1,25 +1,20 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy_searchable import make_searchable
 from datetime import datetime
-import sqlalchemy as sa
 
-from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Unicode, TIMESTAMP, Enum, func
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.orm import mapper, relationship, column_property
-from sqlalchemy_utils import TSVectorType
 from geoalchemy2 import Geometry
-
-from domain.users.entities.group import GroupType, GroupEntity, \
-    LocationEntity, LocationType, UserPositionEntity,\
-    PositionGroupTypeEntity
-
-from domain.users.entities.user import UserEntity
-from domain.users.entities.contact import ContactEntity
-from domain.users.entities.invitation import InvitationEntity
-from adapters.postgres.orm.metadata import metadata
+from sqlalchemy import Table, Column, String, ForeignKey, TIMESTAMP, Enum
+from sqlalchemy import func
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import column_property
-from sqlalchemy import select, func
+from sqlalchemy.orm import mapper, relationship
+from sqlalchemy_utils import TSVectorType
 
+from adapters.postgres.orm.metadata import metadata
+from domain.users.entities.contact import ContactEntity
+from domain.users.entities.group import GroupType, GroupEntity, \
+    LocationEntity, LocationType, UserPositionEntity, \
+    PositionGroupTypeEntity
+from domain.users.entities.invitation import InvitationEntity
+from domain.users.entities.user import UserEntity
 
 group_location_table = Table(
     'group_location', metadata,

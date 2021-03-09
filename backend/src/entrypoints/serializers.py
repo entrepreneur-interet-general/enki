@@ -1,12 +1,12 @@
 import json
 from datetime import date, datetime
 
-from flask import make_response
-
 from cisu.entities.commons import DateType
 from cisu.entities.commons.cisu_enum import CisuEnum
 from cisu.entities.commons.common_alerts import AttributeType, Victims
 from cisu.entities.commons.location_type import LocationShape
+from flask import make_response
+
 from domain.evenements.entities.message_entity import Severity, MessageType
 
 

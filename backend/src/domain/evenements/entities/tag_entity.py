@@ -1,8 +1,10 @@
-from datetime import datetime
-from typing import Optional, Union
-from domain.core.entity import Entity
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Union
+
 from dataclasses_json import dataclass_json
+
+from domain.core.entity import Entity
 
 
 @dataclass_json

@@ -1,9 +1,9 @@
 import json
-from uuid import uuid4
-import pytest
 import pathlib
 
+import pytest
 import requests_mock
+
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, AlreadyExistingAffairUuid
 from domain.affairs.services.affair_service import AffairService
 

@@ -1,8 +1,10 @@
+from uuid import uuid4
+
+import pytest
+
 from domain.evenements.entities.message_entity import MessageEntity
 from domain.evenements.ports.message_repository import AlreadyExistingMessageUuid, NotFoundMessage, \
     AbstractMessageRepository
-from uuid import uuid4
-import pytest
 
 
 def test_add_message(message_repo: AbstractMessageRepository):

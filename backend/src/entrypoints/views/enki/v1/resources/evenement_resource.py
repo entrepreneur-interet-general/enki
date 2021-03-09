@@ -2,8 +2,8 @@ from flask import request, current_app, g
 from flask_restful import Resource
 
 from domain.evenements.commands import CreateEvenement
-from entrypoints.extensions import event_bus
 from domain.evenements.services.evenement_service import EvenementService
+from entrypoints.extensions import event_bus
 from entrypoints.middleware import user_info_middleware
 
 

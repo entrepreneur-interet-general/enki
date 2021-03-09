@@ -1,11 +1,12 @@
 from typing import Any, Dict, List, Union
 
+from domain.evenements.entities.message_entity import MessageEntity
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
-from domain.evenements.entities.message_entity import MessageEntity
-from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage, AlreadyExistingResourceInThisMessage
-from domain.evenements.schemas.resource_schema import ResourceSchema
+from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage, \
+    AlreadyExistingResourceInThisMessage
 from domain.evenements.schemas import MessageSchema, TagSchema
+from domain.evenements.schemas.resource_schema import ResourceSchema
 from domain.users.entities.user import UserEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
 

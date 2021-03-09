@@ -1,9 +1,9 @@
+import xml.dom.minidom
 from typing import Any, Dict, List, Union
 from uuid import uuid4
 
-from requests import Response
 from cisu.entities.edxl_entity import EdxlEntity
-import xml.dom.minidom
+from requests import Response
 
 from adapters.http.sig import SigApiAdapter
 from domain.affairs.entities.affair_entity import AffairEntity

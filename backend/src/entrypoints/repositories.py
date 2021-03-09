@@ -1,5 +1,6 @@
-from adapters.elasticsearch.affair_repository import ElasticAffairRepository
 from elasticsearch import Elasticsearch
+
+from adapters.elasticsearch.affair_repository import ElasticAffairRepository
 
 
 class ElasticRepositories:

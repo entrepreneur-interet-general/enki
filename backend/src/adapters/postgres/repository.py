@@ -1,8 +1,8 @@
 import abc
 from http.client import HTTPException
+from typing import List, Any
 
 from sqlalchemy.orm.session import Session
-from typing import List, Any
 
 
 class NotFoundException(HTTPException):

@@ -6,8 +6,8 @@ from sqlalchemy.orm import sessionmaker, clear_mappers
 from adapters.postgres import PgTagRepository, PgMessageRepository
 from adapters.postgres.orm import start_mappers, metadata
 from domain.affairs.ports.affair_repository import InMemoryAffairRepository, AbstractAffairRepository
-from domain.evenements.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 from domain.evenements.ports.message_repository import InMemoryMessageRepository, AbstractMessageRepository
+from domain.evenements.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 
 
 @pytest.fixture(scope="session")

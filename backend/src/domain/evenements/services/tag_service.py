@@ -1,4 +1,5 @@
 from typing import Any, Dict, List
+
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.schemas import TagSchema
 from service_layer.unit_of_work import AbstractUnitOfWork

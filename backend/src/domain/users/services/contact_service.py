@@ -1,7 +1,5 @@
 from typing import Any, Dict, List
 
-from flask import current_app
-
 from domain.users.entities.contact import ContactEntity
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.contact import ContactSchema

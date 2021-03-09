@@ -1,5 +1,4 @@
-from dataclasses import dataclass, field
-from typing import List, Any
+from dataclasses import dataclass
 
 from domain.core.commands import Command
 from domain.core.topics import Topic, CreateMessageTopic, CreateTagTopic, \

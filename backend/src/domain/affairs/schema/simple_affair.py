@@ -1,7 +1,7 @@
+from datetime import datetime
 from uuid import uuid4
 
 from marshmallow import Schema, fields, post_load
-from datetime import datetime
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity

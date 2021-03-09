@@ -1,6 +1,7 @@
+import random
+
 from domain.evenements.entities.message_entity import MessageEntity
 from domain.evenements.schemas import MessageSchema
-import random
 
 
 def build_message_data():

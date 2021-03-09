@@ -1,4 +1,5 @@
 from uuid import uuid4
+
 import pytest
 
 from domain.evenements.entities.tag_entity import TagEntity

@@ -1,10 +1,11 @@
 from datetime import datetime
-
-from domain.evenements.entities.evenement_entity import EvenementEntity, EvenementType
-from domain.evenements.ports.evenement_repository import AbstractEvenementRepository, AlreadyExistingEvenementUuid, NotFoundEvenement
 from uuid import uuid4
+
 import pytest
 
+from domain.evenements.entities.evenement_entity import EvenementEntity, EvenementType
+from domain.evenements.ports.evenement_repository import AbstractEvenementRepository, AlreadyExistingEvenementUuid, \
+    NotFoundEvenement
 from .utils import make_evenemnt
 
 

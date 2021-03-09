@@ -1,7 +1,10 @@
+from uuid import uuid4
+
+import pytest
+
 from domain.evenements.entities.message_entity import MessageEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
-from uuid import uuid4
-import pytest
+
 
 def build_event(uow: AbstractUnitOfWork):
     pass

@@ -1,5 +1,6 @@
 import abc
 from typing import List, Union
+
 from werkzeug.exceptions import HTTPException
 
 from domain.evenements.entities.evenement_entity import EvenementEntity

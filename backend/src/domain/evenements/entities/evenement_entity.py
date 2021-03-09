@@ -1,14 +1,10 @@
 from dataclasses import dataclass, field
-from dataclasses_json import dataclass_json
 from datetime import datetime
-
+from enum import Enum
 from typing import Union, Optional, List
 
+from dataclasses_json import dataclass_json
 from werkzeug.exceptions import HTTPException
-
-from domain.core.entity import Entity
-from flask import current_app
-from enum import Enum
 
 from domain.core.entity import Entity
 from domain.users.entities.user import UserEntity

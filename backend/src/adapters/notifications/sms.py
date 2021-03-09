@@ -1,6 +1,5 @@
-import os
-from twilio.rest import Client
 from flask import current_app
+from twilio.rest import Client
 
 
 def send(*args):

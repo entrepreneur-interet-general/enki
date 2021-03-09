@@ -1,15 +1,13 @@
 from typing import Any, Dict, List
 from uuid import uuid4
 
-from flask import current_app
 from marshmallow import ValidationError
 
 from adapters.http.keycloak import KeycloakHelper
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.affairs.schema.simple_affair import SimpleAffairSchema
-from domain.affairs.services.affair_service import AffairService
 from domain.users.entities.contact import ContactEntity
-from domain.users.entities.group import GroupType, UserPositionEntity, PositionGroupTypeEntity
+from domain.users.entities.group import UserPositionEntity, PositionGroupTypeEntity
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.contact import ContactSchema
 from domain.users.schemas.user import UserSchema

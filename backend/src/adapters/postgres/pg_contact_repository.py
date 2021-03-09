@@ -3,9 +3,9 @@ from typing import List, Union
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
+from domain.users.entities.contact import ContactEntity
 from domain.users.entities.group import UserPositionEntity, PositionGroupTypeEntity, GroupEntity
 from domain.users.ports.contact_repository import AbstractContactRepository, AlreadyExistingContactUuid
-from domain.users.entities.contact import ContactEntity
 from .repository import PgRepositoryMixin
 
 contactsList = List[ContactEntity]

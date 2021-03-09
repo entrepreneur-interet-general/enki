@@ -1,5 +1,5 @@
-from uuid import uuid4
 from datetime import datetime
+from uuid import uuid4
 
 from domain.evenements.entities.evenement_entity import EvenementType
 

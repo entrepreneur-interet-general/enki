@@ -3,8 +3,6 @@ from typing import List, Union
 
 from werkzeug.exceptions import HTTPException
 
-from domain.evenements.entities.resource import ResourceEntity
-from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.entities.message_entity import MessageEntity
 
 MessagesList = List[MessageEntity]

@@ -1,13 +1,13 @@
 import json
 import os
 from pathlib import Path
-
 from typing import List
+
+import pytest
 
 from adapters.elasticsearch.affair_repository import ElasticAffairRepository
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AlreadyExistingAffairUuid
-import pytest
 from .utils import create_index
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))

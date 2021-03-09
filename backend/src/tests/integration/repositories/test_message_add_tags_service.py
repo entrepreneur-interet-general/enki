@@ -1,9 +1,10 @@
-from adapters.postgres.repository import PgRepositoryMixin
-from domain.evenements.entities.tag_entity import TagEntity
-from domain.evenements.entities.message_entity import MessageEntity
-from domain.evenements.ports.tag_repository import AbstractTagRepository
-from domain.evenements.ports.message_repository import AbstractMessageRepository
 from uuid import uuid4
+
+from adapters.postgres.repository import PgRepositoryMixin
+from domain.evenements.entities.message_entity import MessageEntity
+from domain.evenements.entities.tag_entity import TagEntity
+from domain.evenements.ports.message_repository import AbstractMessageRepository
+from domain.evenements.ports.tag_repository import AbstractTagRepository
 
 
 def test_add_message_and_add_tag(message_repo: AbstractMessageRepository, tag_repo: AbstractTagRepository):

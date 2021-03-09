@@ -1,6 +1,8 @@
+from typing import Dict, Any
+
 from flask import current_app
 from flask_restful import Resource
-from typing import Dict, Any
+
 from domain.evenements.services import MessageService
 
 

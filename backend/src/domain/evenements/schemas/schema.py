@@ -1,11 +1,12 @@
+from datetime import datetime
 from uuid import uuid4
 
 from marshmallow import Schema, fields, post_load, validate
 from marshmallow_enum import EnumField
-from datetime import datetime
 from werkzeug.exceptions import HTTPException
-from domain.evenements.entities.tag_entity import TagEntity
+
 from domain.evenements.entities.message_entity import MessageEntity, MessageType, Severity
+from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.schemas.resource_schema import ResourceSchema
 from domain.users.schemas.user import UserSchema
 

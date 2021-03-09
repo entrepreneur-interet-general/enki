@@ -1,10 +1,9 @@
 from dataclasses import dataclass, field
-from dataclasses_json import dataclass_json
 from datetime import datetime
 from enum import Enum
-
 from typing import Union, List, Optional
 
+from dataclasses_json import dataclass_json
 from werkzeug.exceptions import HTTPException
 
 from domain.core.entity import Entity

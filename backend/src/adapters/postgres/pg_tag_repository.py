@@ -2,8 +2,8 @@ from typing import List, Union
 
 from sqlalchemy.orm import Session
 
-from domain.evenements.ports.tag_repository import AbstractTagRepository, AlreadyExistingTagUuid
 from domain.evenements.entities.tag_entity import TagEntity
+from domain.evenements.ports.tag_repository import AbstractTagRepository, AlreadyExistingTagUuid
 from .repository import PgRepositoryMixin
 
 tagsList = List[TagEntity]

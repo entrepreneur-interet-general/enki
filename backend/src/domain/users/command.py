@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 from domain.core.commands import Command
-
 from domain.core.topics import CreateUserTopic, CreateContactTopic, CreateInvitationTopic, Topic
 
 

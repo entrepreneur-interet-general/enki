@@ -1,20 +1,20 @@
 import logging
-
 from datetime import datetime
+
+from geoalchemy2 import Geometry
 from sqlalchemy import Table, Column, String, ForeignKey, Integer, TIMESTAMP, Enum
 from sqlalchemy.dialects.postgresql import JSONB
-
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy_utils import ChoiceType
-from geoalchemy2 import Geometry
 
-from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
-from domain.evenements.entity import EvenementType, EvenementEntity, EvenementRoleType, UserEvenementRole
-from domain.messages.entities.message_entity import MessageType, Severity, MessageEntity
-from domain.messages.entities.resource import ResourceEntity
-from domain.messages.entities.tag_entity import TagEntity
-from domain.users.entities.user import UserEntity
 from adapters.postgres.orm.metadata import metadata
+from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
+from domain.evenements.entities.evenement_entity import EvenementType, EvenementEntity, EvenementRoleType, \
+    UserEvenementRole
+from domain.evenements.entities.message_entity import MessageType, Severity, MessageEntity
+from domain.evenements.entities.resource import ResourceEntity
+from domain.evenements.entities.tag_entity import TagEntity
+from domain.users.entities.user import UserEntity
 
 logger = logging.getLogger(__name__)
 

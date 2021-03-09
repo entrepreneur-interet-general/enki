@@ -1,6 +1,6 @@
-from adapters.postgres.orm.user_groups import start_mappers as user_start_mappers
 from adapters.postgres.orm.messages import start_mappers as message_start_mappers
 from adapters.postgres.orm.metadata import metadata
+from adapters.postgres.orm.user_groups import start_mappers as user_start_mappers
 
 
 def start_mappers():

@@ -1,10 +1,10 @@
-from domain.messages.entities.message_entity import MessageEntity
-from domain.messages.ports.message_repository import AlreadyExistingMessageUuid, NotFoundMessage, \
-    AbstractMessageRepository
-from domain.messages.services.message_service import MessageService
-from tests.helpers.filter import filter_dict_with_keys
 from uuid import uuid4
+
 import pytest
+
+from domain.evenements.entities.message_entity import MessageEntity
+from domain.evenements.ports.message_repository import AlreadyExistingMessageUuid, NotFoundMessage, \
+    AbstractMessageRepository
 
 
 def test_add_message(message_repo: AbstractMessageRepository):

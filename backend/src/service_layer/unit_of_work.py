@@ -1,4 +1,5 @@
 import abc
+
 import sqlalchemy as sa
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
@@ -15,10 +16,10 @@ from adapters.postgres.pg_simple_affair_repository import PgSimpleAffairReposito
 from adapters.postgres.pg_user_repository import PgUserRepository
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, InMemoryAffairRepository
 from domain.affairs.ports.simple_affair_repository import AbstractSimpleAffairRepository
-from domain.evenements.repository import AbstractEvenementRepository, InMemoryEvenementRepository
-from domain.messages.ports import AbstractTagRepository, AbstractMessageRepository, AbstractResourceRepository
-from domain.messages.ports.message_repository import InMemoryMessageRepository
-from domain.messages.ports.tag_repository import InMemoryTagRepository
+from domain.evenements.ports import AbstractTagRepository, AbstractMessageRepository, AbstractResourceRepository
+from domain.evenements.ports.evenement_repository import AbstractEvenementRepository, InMemoryEvenementRepository
+from domain.evenements.ports.message_repository import InMemoryMessageRepository
+from domain.evenements.ports.tag_repository import InMemoryTagRepository
 from domain.users.ports.contact_repository import AbstractContactRepository
 from domain.users.ports.group_repository import AbstractGroupRepository
 from domain.users.ports.invitation_repository import AbstractInvitationRepository

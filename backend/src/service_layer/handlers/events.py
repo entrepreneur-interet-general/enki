@@ -1,8 +1,8 @@
 from flask import current_app
 
-from domain.core import events
-from adapters.notifications import email, sms
 from adapters.http.sge import SgeHelper
+from adapters.notifications import email, sms
+from domain.core import events
 from domain.users.entities.user import UserEntity
 from domain.users.services.contact_service import ContactService
 from service_layer.unit_of_work import AbstractUnitOfWork

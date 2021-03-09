@@ -1,12 +1,11 @@
-from datetime import datetime, timedelta
-from dataclasses import dataclass, field
 import secrets
-
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
 from typing import Optional
 
-from domain.core.entity import Entity
 from dataclasses_json import DataClassJsonMixin
 
+from domain.core.entity import Entity
 from domain.users.entities.user import UserEntity
 
 

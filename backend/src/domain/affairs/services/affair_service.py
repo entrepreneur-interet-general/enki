@@ -1,16 +1,15 @@
+import xml.dom.minidom
 from typing import Any, Dict, List, Union
 from uuid import uuid4
 
-from flask import current_app
-from requests import Response
 from cisu.entities.edxl_entity import EdxlEntity
-import xml.dom.minidom
+from requests import Response
 
 from adapters.http.sig import SigApiAdapter
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.affairs.schema.simple_affair import SimpleAffairSchema
-from domain.evenements.entity import EvenementEntity
+from domain.evenements.entities.evenement_entity import EvenementEntity
 from domain.users.entities.user import UserEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
 

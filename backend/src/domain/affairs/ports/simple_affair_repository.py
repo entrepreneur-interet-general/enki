@@ -1,9 +1,9 @@
 import abc
 from typing import List, Union
+
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
-from domain.evenements.entity import EvenementEntity
 
 simple_affairsList = List[SimpleAffairEntity]
 

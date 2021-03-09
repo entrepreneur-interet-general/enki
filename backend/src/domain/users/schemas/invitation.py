@@ -1,10 +1,10 @@
-from uuid import uuid4
-from marshmallow import Schema, fields, post_load
 from datetime import datetime
+from uuid import uuid4
+
+from marshmallow import Schema, fields, post_load
 from werkzeug.exceptions import HTTPException
 
 from domain.users.entities.invitation import InvitationEntity
-from domain.users.schemas.group import GroupSchema
 from domain.users.schemas.user import UserSchema
 
 

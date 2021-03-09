@@ -1,11 +1,12 @@
 from typing import Dict
+
 from flask.testing import FlaskClient
 
-from domain.messages.ports.message_repository import AlreadyExistingTagInThisMessage
-from .test_tag_api import BASE_PATH_TAG
+from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage
 from .test_message_api import BASE_PATH_TASK, get_message
-from ..factories.tag import tag_factory
+from .test_tag_api import BASE_PATH_TAG
 from ..factories.message import message_factory
+from ..factories.tag import tag_factory
 from ..helpers.filter import filter_dict_with_keys
 
 

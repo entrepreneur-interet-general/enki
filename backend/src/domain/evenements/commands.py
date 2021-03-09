@@ -1,9 +1,8 @@
-from dataclasses import dataclass, field
-from typing import List, Any
+from dataclasses import dataclass
 
 from domain.core.commands import Command
 from domain.core.topics import Topic, CreateMessageTopic, CreateTagTopic, \
-    CreateResourceTopic
+    CreateResourceTopic, CreateEvenementTopic
 
 
 @dataclass
@@ -22,3 +21,9 @@ class CreateTag(Command):
 class CreateResource(Command):
     data: dict
     topic: Topic = CreateResourceTopic
+
+
+@dataclass
+class CreateEvenement(Command):
+    data: dict
+    topic: Topic = CreateEvenementTopic

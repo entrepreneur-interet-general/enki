@@ -1,9 +1,10 @@
-from uuid import uuid4
-from marshmallow import Schema, fields, post_load, validate
 from datetime import datetime
+from uuid import uuid4
+
+from marshmallow import Schema, fields, post_load, validate
 from werkzeug.exceptions import HTTPException
 
-from domain.messages.entities.resource import ResourceEntity, content_types
+from domain.evenements.entities.resource import ResourceEntity, content_types
 from entrypoints.extensions import minio
 
 

@@ -1,9 +1,9 @@
-from flask import request, current_app, g
-from flask_restful import Resource
 from typing import Dict, Any
+
+from flask import current_app, g
+from flask_restful import Resource
+
 from domain.users.services.user_service import UserService
-from domain.users.command import CreateUser
-from entrypoints.extensions import event_bus
 from entrypoints.middleware import user_info_middleware
 
 

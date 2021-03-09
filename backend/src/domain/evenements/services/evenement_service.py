@@ -1,14 +1,14 @@
 from datetime import datetime
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List
 from uuid import uuid4
 
 from flask import current_app
 from marshmallow import ValidationError
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
-from domain.evenements.entity import EvenementEntity, UserEvenementRole, EvenementRoleType
-from domain.evenements.schema import EvenementSchema
-from domain.messages.entities.message_entity import MessageEntity
+from domain.evenements.entities.evenement_entity import EvenementEntity, EvenementRoleType, UserEvenementRole
+from domain.evenements.entities.message_entity import MessageEntity
+from domain.evenements.schemas.evenement_schema import EvenementSchema
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.user import UserSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
@@ -30,8 +30,15 @@ class EvenementService:
             user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
             _ = uow.evenement.add(evenement)
             evenement.creator = user
-            final_evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement.uuid)
+            final_evenement: UserEntity = uow.evenement.get_by_uuid(uuid=evenement.uuid)
             return EvenementService.schema().dump(final_evenement)
+
+    @staticmethod
+    def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
+        with uow:
+            current_app.logger.info(uow.evenement.get_by_uuid(uuid=uuid))
+            return EvenementService.schema().dump(uow.evenement.get_by_uuid(uuid=uuid))
+
 
     @staticmethod
     def invite_user(uuid: str, user_id: str, role_type: EvenementRoleType, uow: AbstractUnitOfWork) -> Dict[str, Any]:
@@ -58,18 +65,19 @@ class EvenementService:
             return UserSchema().dump(user)
 
     @staticmethod
+    def get_evenements_by_user_id(user_uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            evenements: List[EvenementEntity] = uow.evenement.list_from_user_id(user_uuid=user_uuid)
+            return EvenementService.schema(many=True).dump(evenements)
+
+
+    @staticmethod
     def revoke_access(uuid: str , user_id: str, uow: AbstractUnitOfWork)-> Dict[str, Any]:
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
             user: UserEntity = uow.user.get_by_uuid(uuid=user_id)
             evenement.revoke_user_access(user_id=user_id)
             return UserSchema().dump(user)
-
-    @staticmethod
-    def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
-        with uow:
-            current_app.logger.info(uow.evenement.get_by_uuid(uuid=uuid))
-            return EvenementService.schema().dump(uow.evenement.get_by_uuid(uuid=uuid))
 
     @staticmethod
     def list_evenements(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
@@ -91,14 +99,10 @@ class EvenementService:
             return simple_affairs
 
     @staticmethod
-    def get_evenements_by_user_id(user_uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
-        with uow:
-            evenements: List[EvenementEntity] = uow.evenement.list_from_user_id(user_uuid=user_uuid)
-            return EvenementService.schema(many=True).dump(evenements)
-
-    @staticmethod
-    def finish_evenement(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+    def finish_evenement(uuid: str, uow: AbstractUnitOfWork):
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
             evenement.ended_at = datetime.now()
             return EvenementService.schema().dump(evenement)
+
+

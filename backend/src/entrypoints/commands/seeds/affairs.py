@@ -1,23 +1,21 @@
+import json
+import os
 import random
 from datetime import datetime
 from typing import List
 from uuid import uuid4
 
+import click
 from cisu.entities.commons import Severity, CoordType, LocationType
 from cisu.entities.commons.location_type import LocationShape
 from cisu.factories.alert_factory import PrimaryAlertFactory
-from cisu.factories.location_factory import LocationTypeFactory
 from cisu.factories.uid_factory import UidFactory
-from shapely.geometry import Polygon, Point
-from slugify import slugify
 from flask import current_app
-import click
 from flask.cli import with_appcontext
+from shapely.geometry import Polygon, Point
 
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
-import json
-import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 

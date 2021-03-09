@@ -1,14 +1,13 @@
+from datetime import datetime
 from uuid import uuid4
 
 from flask import current_app
 from marshmallow import Schema, fields, post_load
 from marshmallow_enum import EnumField
-from datetime import datetime
-from marshmallow.exceptions import ValidationError
-
 from werkzeug.exceptions import HTTPException
 
-from domain.evenements.entity import EvenementType, EvenementEntity, EvenementRoleType, UserEvenementRole
+from domain.evenements.entities.evenement_entity import EvenementType, EvenementEntity, EvenementRoleType, \
+    UserEvenementRole
 from domain.users.schemas.user import UserSchema
 
 
@@ -39,15 +38,14 @@ class EvenementSchema(Schema):
     started_at = fields.DateTime(required=True)
     closed = fields.Boolean(dump_only=True)
     creator_id = fields.Str(required=False, dump_only=True)
-    user_roles = fields.Nested(UserEvenementRoleSchema, many=True)
     creator = fields.Nested(UserSchema, required=False, dump_only=True)
     ended_at = fields.DateTime(required=False, dump_only=True)
+    user_roles = fields.Nested(UserEvenementRoleSchema, many=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow())
 
     @post_load
     def make_event(self, data: dict, **kwargs):
-        current_app.logger.info(f"data {data}")
         return EvenementEntity.from_dict(data)
 
     def handle_error(self, exc, data, **kwargs):

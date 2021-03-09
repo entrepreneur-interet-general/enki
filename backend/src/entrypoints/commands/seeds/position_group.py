@@ -1,7 +1,7 @@
 from uuid import uuid4
-from slugify import slugify
-from flask import current_app
+
 import click
+from flask import current_app
 from flask.cli import with_appcontext
 
 from domain.users.entities.group import GroupType, PositionGroupTypeEntity

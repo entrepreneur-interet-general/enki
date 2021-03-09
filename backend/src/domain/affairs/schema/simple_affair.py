@@ -1,12 +1,11 @@
+from datetime import datetime
 from uuid import uuid4
 
-from flask import current_app
-from marshmallow import Schema, fields, post_load, post_dump
-from datetime import datetime
+from marshmallow import Schema, fields, post_load
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
-from domain.evenements.schema import EvenementSchema
+from domain.evenements.schemas.evenement_schema import EvenementSchema
 
 
 class AffairValidationError(HTTPException):

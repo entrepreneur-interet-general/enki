@@ -1,8 +1,8 @@
 import json
+from typing import Union
 
 from flask import current_app
 from keycloak import KeycloakAdmin
-from typing import Union
 
 
 class KeycloakHelper:

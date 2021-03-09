@@ -1,5 +1,5 @@
-from flask_restful import Resource
 from flask import current_app, request
+from flask_restful import Resource
 
 from domain.affairs.services.affair_service import AffairService
 from domain.core.events import AffairCreatedEvent

@@ -1,12 +1,13 @@
+from datetime import datetime
 from uuid import uuid4
 
 from marshmallow import Schema, fields, post_load, validate
 from marshmallow_enum import EnumField
-from datetime import datetime
 from werkzeug.exceptions import HTTPException
-from domain.messages.entities.tag_entity import TagEntity
-from domain.messages.entities.message_entity import MessageEntity, MessageType, Severity
-from domain.messages.schemas.resource_schema import ResourceSchema
+
+from domain.evenements.entities.message_entity import MessageEntity, MessageType, Severity
+from domain.evenements.entities.tag_entity import TagEntity
+from domain.evenements.schemas.resource_schema import ResourceSchema
 from domain.users.schemas.user import UserSchema
 
 
@@ -23,6 +24,7 @@ class TagSchema(Schema):
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
     title = fields.Str(required=True, validate=validate.Length(min=5))
+    slug = fields.Str(dump_only=True)
     creator_id = fields.Str(required=False)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
     updated_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)

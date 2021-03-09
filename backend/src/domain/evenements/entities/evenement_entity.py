@@ -1,14 +1,10 @@
 from dataclasses import dataclass, field
-from dataclasses_json import dataclass_json
 from datetime import datetime
-
+from enum import Enum
 from typing import Union, Optional, List
 
+from dataclasses_json import dataclass_json
 from werkzeug.exceptions import HTTPException
-
-from domain.core.entity import Entity
-from flask import current_app
-from enum import Enum
 
 from domain.core.entity import Entity
 from domain.users.entities.user import UserEntity
@@ -17,6 +13,8 @@ from domain.users.entities.user import UserEntity
 class EvenementClosedException(HTTPException):
     code = 410
     description = "Evenement is closed"
+
+
 class UserAlreadyAccessEvenement(HTTPException):
     code = 409
     description = "Cet utilisateur à déjà accès à cet évenement"
@@ -25,6 +23,7 @@ class UserAlreadyAccessEvenement(HTTPException):
 class UserHasNoAccessEvenement(HTTPException):
     code = 409
     description = "Cet utilisateur n'à pas accès à cet évenement"
+
 
 class EvenementType(str, Enum):
     NATURAL = "natural"
@@ -35,6 +34,13 @@ class EvenementRoleType(str, Enum):
     ADMIN = "admin"
     EDIT = "edit"
     VIEW = "view"
+
+
+evenement_role_dependancies = {
+    EvenementRoleType.ADMIN: [EvenementRoleType.EDIT, EvenementRoleType.VIEW],
+    EvenementRoleType.EDIT: [EvenementRoleType.VIEW],
+    EvenementRoleType.VIEW: [],
+}
 
 
 @dataclass_json
@@ -49,7 +55,7 @@ class UserEvenementRole(Entity):
     updated_at: datetime = field(default_factory=lambda: datetime.utcnow())
 
     def is_active(self):
-        return self.revoked_at > datetime.now()
+        return self.revoked_at is None or self.revoked_at > datetime.now()
 
     def revoke(self):
         self.revoked_at = datetime.now()
@@ -73,35 +79,41 @@ class EvenementEntity(Entity):
     updated_at: datetime = field(default_factory=lambda: datetime.utcnow())
 
     @property
-    def closed(self):
+    def closed(self) -> bool:
         return self.ended_at and self.ended_at < datetime.now()
 
-    def check_can_assign(self):
+    def close(self):
+        self.ended_at = datetime.now()
+
+    def check_can_assign(self) -> bool:
         if self.closed:
             raise EvenementClosedException
+        return True
 
-    def change_access_type(self, user_id: str, role_type: EvenementRoleType):
+    def change_access_type(self, user_id: str, role_type: EvenementRoleType) -> UserEvenementRole:
         for role in self.user_roles:
             if role.user_id == user_id:
                 role.type = role_type
-                return
+                return role
         raise UserHasNoAccessEvenement()
 
-    def add_user_role(self, user_role: UserEvenementRole):
+    def add_user_role(self, user_role: UserEvenementRole) ->  UserEvenementRole:
         for role in self.user_roles:
             if role.user_id == user_role.user_id and user_role.uuid != role.uuid:
                 raise UserAlreadyAccessEvenement()
         self.user_roles.append(user_role)
+        return user_role
 
-    def revoke_user_access(self, user_id):
+    def revoke_user_access(self, user_id) -> UserEvenementRole:
         for user_role in self.user_roles:
             if user_role.user_id == user_id:
-                self.user_role.revoke()
-                return
+                user_role.revoke()
+                return user_role
         raise UserHasNoAccessEvenement()
 
     def user_has_access(self, user_id: str, role_type: EvenementRoleType = EvenementRoleType.VIEW) -> bool:
         for user_role in self.user_roles:
-            if user_role.user_id == user_id and user_role.type == role_type:
+            if user_role.user_id == user_id and user_role.is_active() \
+                    and (user_role.type == role_type or role_type in evenement_role_dependancies.get(user_role.type, [])):
                 return True
         return False

@@ -1,9 +1,6 @@
 import logging
 
-from datetime import datetime
-from sqlalchemy import Table, MetaData, Column, String, ForeignKey, Integer, TIMESTAMP, Enum
-from sqlalchemy_searchable import make_searchable
-
+from sqlalchemy import MetaData
 
 logger = logging.getLogger(__name__)
 

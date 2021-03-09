@@ -1,4 +1,4 @@
-from flask import request, current_app, g
+from flask import current_app
 from flask_restful import Resource, reqparse
 
 from domain.users.entities.group import GroupType

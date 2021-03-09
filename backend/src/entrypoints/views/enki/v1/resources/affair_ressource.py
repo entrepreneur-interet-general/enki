@@ -1,6 +1,7 @@
-from flask import current_app, request
-from flask_restful import Resource, reqparse
 from typing import Union, List
+
+from flask import current_app
+from flask_restful import Resource, reqparse
 
 from domain.affairs.services.affair_service import AffairService
 

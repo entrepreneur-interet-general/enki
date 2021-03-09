@@ -1,7 +1,8 @@
-from functools import wraps
-from flask import Response, request, g, current_app
 import base64
 import json
+from functools import wraps
+
+from flask import request, g, current_app
 
 
 def user_info_middleware(func):

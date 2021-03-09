@@ -1,13 +1,13 @@
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
-from sqlalchemy.orm import sessionmaker, Session, clear_mappers
+from sqlalchemy.orm import sessionmaker, clear_mappers
 
 from adapters.postgres import PgTagRepository, PgMessageRepository
 from adapters.postgres.orm import start_mappers, metadata
 from domain.affairs.ports.affair_repository import InMemoryAffairRepository, AbstractAffairRepository
-from domain.messages.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
-from domain.messages.ports.message_repository import InMemoryMessageRepository, AbstractMessageRepository
+from domain.evenements.ports.message_repository import InMemoryMessageRepository, AbstractMessageRepository
+from domain.evenements.ports.tag_repository import AbstractTagRepository, InMemoryTagRepository
 
 
 @pytest.fixture(scope="session")

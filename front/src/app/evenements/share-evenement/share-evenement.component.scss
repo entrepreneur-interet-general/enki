@@ -1,6 +1,45 @@
+@import '../../../../design-system/styles/variables';
+
 .share {
   padding: 0 16px;
   &--description {
     margin-bottom: 20px;
   }
+}
+.list-participants {
+  padding: 16px;
+  background: $blueGrey;
+  &--title {
+    svg {
+      fill: $primary;
+    }
+  }
+  &--user {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid $lighterGrey;
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+  &--role {
+    display: flex;
+    color: $primary;
+    margin-top: 4px;
+    line-height: 25px;
+    svg {
+      fill: $primary;
+    }
+  }
+  &--primaryInfos {
+    color: $darkestPrimary;
+    line-height: 25px;
+  }
+  &--secondaryInfos {
+    color: $darkestGrey;
+    font-family: $secondaryFont;
+    font-size: 16px;
+    line-height: 25px;
+  }
+
 }

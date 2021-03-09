@@ -31,4 +31,17 @@ export class ShareEvenementComponent implements OnInit {
     this.router.navigate(['./searchuser'], {relativeTo: this.activatedRoute})
   }
 
+  mapUserRoleToLabel(type: string): string {
+    switch (type) {
+      case 'view':
+        return 'Lecteur'
+      case 'admin':
+        return 'Administrateur'
+      case 'write':
+        return 'Éditeur'
+      default:
+        return 'Lecteur'
+    }
+  }
+
 }

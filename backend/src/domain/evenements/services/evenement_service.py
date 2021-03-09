@@ -1,14 +1,16 @@
 from datetime import datetime
 from typing import Any, Dict, List
+from uuid import uuid4
 
 from flask import current_app
 from marshmallow import ValidationError
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
-from domain.evenements.entities.evenement_entity import EvenementEntity
+from domain.evenements.entities.evenement_entity import EvenementEntity, EvenementRoleType, UserEvenementRole
 from domain.evenements.schemas.evenement_schema import EvenementSchema
 from domain.evenements.entities.message_entity import MessageEntity
 from domain.users.entities.user import UserEntity
+from domain.users.schemas.user import UserSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
@@ -36,6 +38,46 @@ class EvenementService:
         with uow:
             current_app.logger.info(uow.evenement.get_by_uuid(uuid=uuid))
             return EvenementService.schema().dump(uow.evenement.get_by_uuid(uuid=uuid))
+
+
+    @staticmethod
+    def invite_user(uuid: str, user_id: str, role_type: EvenementRoleType, uow: AbstractUnitOfWork) -> Dict[str, Any]:
+        with uow:
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
+            user: UserEntity = uow.user.get_by_uuid(uuid=user_id)
+            user_event_role: UserEvenementRole = UserEvenementRole(
+                uuid=str(uuid4()),
+                user_id=user.uuid,
+                evenement_id=evenement.uuid,
+                type=role_type
+            )
+            user_event_role.user = user
+            evenement.add_user_role(user_role=user_event_role)
+
+            return UserSchema().dump(user)
+
+    @staticmethod
+    def change_user_role(uuid: str , user_id: str, role_type:EvenementRoleType, uow: AbstractUnitOfWork)-> Dict[str, Any]:
+        with uow:
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
+            user: UserEntity = uow.user.get_by_uuid(uuid=user_id)
+            evenement.change_access_type(user_id=user_id, role_type=role_type)
+            return UserSchema().dump(user)
+
+    @staticmethod
+    def get_evenements_by_user_id(user_uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            evenements: List[EvenementEntity] = uow.evenement.list_from_user_id(user_uuid=user_uuid)
+            return EvenementService.schema(many=True).dump(evenements)
+
+
+    @staticmethod
+    def revoke_access(uuid: str , user_id: str, uow: AbstractUnitOfWork)-> Dict[str, Any]:
+        with uow:
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
+            user: UserEntity = uow.user.get_by_uuid(uuid=user_id)
+            evenement.revoke_user_access(user_id=user_id)
+            return UserSchema().dump(user)
 
     @staticmethod
     def list_evenements(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:

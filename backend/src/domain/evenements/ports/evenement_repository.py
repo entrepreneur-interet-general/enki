@@ -31,6 +31,10 @@ class AbstractEvenementRepository(abc.ABC):
         return matches
 
     @abc.abstractmethod
+    def list_from_user_id(self, user_uuid: str):
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def _add(self, entity: EvenementEntity):
         raise NotImplementedError
 

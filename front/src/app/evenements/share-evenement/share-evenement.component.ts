@@ -53,9 +53,9 @@ export class ShareEvenementComponent implements OnInit {
         this.evenementsService.changeParticipantRole({
           user: res,
           type: value
-        })
-      })
-    })
+        });
+      });
+    });
   }
 
   ngOnInit(): void {

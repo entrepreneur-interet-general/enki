@@ -6,7 +6,7 @@
     margin-bottom: 20px;
   }
 }
-.list-participants {
+.participants {
   padding: 16px;
   background: $blueGrey;
   &--title {
@@ -17,10 +17,15 @@
   &--user {
     margin-bottom: 16px;
     padding-bottom: 16px;
-    border-bottom: 1px solid $lighterGrey;
+    border-bottom: 1px solid $lightGrey;
     &:last-child {
       border-bottom: 0;
     }
+  }
+  &--infos {
+    padding-bottom: 16px;
+    border-bottom: 1px solid $lightGrey;
+    margin-bottom: 16px;
   }
   &--role {
     display: flex;
@@ -30,6 +35,7 @@
     svg {
       fill: $primary;
     }
+
   }
   &--primaryInfos {
     color: $darkestPrimary;
@@ -42,4 +48,10 @@
     line-height: 25px;
   }
 
+}
+
+.participants--roles {
+  .radio-roles {
+    margin-bottom: 16px;
+  }
 }

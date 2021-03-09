@@ -50,18 +50,3 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
             )
         ).all()
         return matches
-
-    def _get_user_contacts(self, user: UserEntity):
-        return user.contacts
-
-    def _get_user_contact(self, user: UserEntity, contact: ContactEntity):
-        matches = [contact for contact in user.contacts if contact.uuid == contact.uuid]
-        if not matches:
-            return None
-        return matches[0]
-
-    def _add_user_contact(self, user: UserEntity, contact: ContactEntity):
-        user.contacts.append(contact)
-
-    def _remove_user_contact(self, user: UserEntity, contact: ContactEntity):
-        user.contacts.remove(contact)

@@ -5,7 +5,7 @@ from typing import Dict, Optional
 from domain.core.entity import Entity
 from dataclasses_json import DataClassJsonMixin
 
-from domain.users.entities.group import GroupEntity, UserPositionEntity
+from domain.users.entities.group import UserPositionEntity
 
 
 @dataclass

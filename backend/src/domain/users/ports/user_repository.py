@@ -39,38 +39,6 @@ class AbstractUserRepository(abc.ABC):
             raise NotFoundUser(uuid=uuid)
         return matches
 
-    def get_user_contacts(self, uuid: str):
-        user: UserEntity = self.get_by_uuid(uuid=uuid)
-        return self._get_user_contacts(user)
-
-    def get_user_contact(self, uuid: str, contact: ContactEntity):
-        user: UserEntity = self.get_by_uuid(uuid=uuid)
-        return self._get_user_contact(user, contact=contact)
-
-    def add_user_contact(self, uuid: str, contact: ContactEntity):
-        user: UserEntity = self.get_by_uuid(uuid=uuid)
-        self._add_user_contact(user=user, contact=contact)
-
-    def remove_user_contact(self, uuid: str, contact: ContactEntity):
-        user: UserEntity = self.get_by_uuid(uuid=uuid)
-        self._remove_user_contact(user=user, contact=contact)
-
-    @abc.abstractmethod
-    def _get_user_contacts(self, user: UserEntity):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def _get_user_contact(self, user: UserEntity, contact: ContactEntity):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def _add_user_contact(self, user: UserEntity, contact: ContactEntity):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def _remove_user_contact(self, user: UserEntity, contact: ContactEntity):
-        raise NotImplementedError
-
     @abc.abstractmethod
     def _add(self, entity: UserEntity):
         raise NotImplementedError

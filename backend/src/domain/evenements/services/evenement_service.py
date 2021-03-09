@@ -1,3 +1,4 @@
+from dataclasses import fields
 from datetime import datetime
 from typing import Any, Dict, List, Union
 from uuid import uuid4
@@ -135,3 +136,19 @@ class EvenementService:
             _ = uow.evenement.get_by_uuid(uuid=uuid)
             messages: List[MessageEntity] = uow.message.get_messages_by_query(evenement_id=uuid, tag_ids=tag_ids)
             return MessageService.schema(many=True).dump(messages)
+
+    @staticmethod
+    def create_list_of_dict_entries(self, uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, str]]:
+        data_dict = []
+        with uow:
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
+            for message in evenement.get_all_entries():
+                message_data = MessageSchema().dump(message)
+                data_dict.append({field: message_data[field] for field in fields(MessageEntity)})
+        return data_dict
+
+    @staticmethod
+    def create_dataframe(uuid: str, uow: AbstractUnitOfWork):
+        with uow:
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
+            entries = evenement.get_all_entries()

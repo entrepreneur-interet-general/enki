@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Intervention, InterventionsService } from '../interventions/interventions.service';
 import { User } from '../interfaces/User';
+import { Participant } from '../interfaces/Participant';
 
 export interface Evenement {
   uuid: string;
@@ -12,7 +13,7 @@ export interface Evenement {
   description: string;
   created_at: string;
   closed: boolean;
-  user_roles: User[];
+  user_roles: Participant[];
 }
 
 @Injectable({
@@ -68,10 +69,24 @@ export class EvenementsService {
         map(response => response.data)
       )
   }
-  addParticipantsToEvenement(user: User): void {
+  addParticipantsToEvenement(participant: Participant): void {
     const copyEvent = this.selectedEvenement.getValue()
-    copyEvent.user_roles = copyEvent.user_roles.concat(user)
+    copyEvent.user_roles = copyEvent.user_roles.concat(participant)
     this.selectedEvenement.next(copyEvent);
+  }
+  changeParticipantRole(participant: Participant): void {
+    const copyEvent = this.selectedEvenement.getValue();
+
+    // Replace the right participant by the received one
+    const newUserRoles = copyEvent.user_roles.map(user_role => {
+      if (user_role.user.uuid === participant.user.uuid) {
+        return participant
+      } else {
+        return user_role
+      }
+    })
+    copyEvent.user_roles = newUserRoles
+    this.selectedEvenement.next(copyEvent)
   }
   selectEvenement(event: Evenement): void {
     this.selectedEvenement.next(event);

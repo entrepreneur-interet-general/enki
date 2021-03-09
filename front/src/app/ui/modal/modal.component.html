@@ -1,0 +1,8 @@
+<div class="enki-modal" *ngIf="isOpened">
+  <div class="enki-modal--overlay" (click)="close()"></div>
+  <div class="enki-modal--wrapper">
+    <!-- <a class="" (click)="close()">Quit</a> -->
+    <!-- modal works! -->
+    <ng-content></ng-content>
+  </div>
+</div>

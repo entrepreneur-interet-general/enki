@@ -23,10 +23,29 @@
     <div class="list-participants--secondaryInfos">
       {{participant.user.last_name}} {{participant.user.first_name}}
     </div>
-    <div class="list-participants--role">
+    <div class="list-participants--role" (click)="showEditParticipantRights(participant)">
       {{mapUserRoleToLabel(participant.type)}}
       <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
     </div>
   </div>
 </div>
+<app-modal (closed)="removeSelectedParticipant($event)">
+  <!-- {{selectedParticipant | json}} -->
+  <div *ngIf="selectedParticipant">
+    <div class="list-participants--primaryInfos">
+      {{selectedParticipant.user.position.group.label}} - {{selectedParticipant.user.position.position.label}}
+    </div>
+    <div class="list-participants--secondaryInfos">
+      {{selectedParticipant.user.last_name}} {{selectedParticipant.user.first_name}}
+    </div>
+    <div class="participants--roles">
+      <form [formGroup]="roleGroup">
+        <div *ngFor="let role of roles | keyvalue">
+          <input type="radio" formControlName="role" id="{{role.key}}" value="{{role.key}}" />
+          <label for="{{role.key}}">{{role.value}}</label>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-modal>
 <router-outlet></router-outlet>

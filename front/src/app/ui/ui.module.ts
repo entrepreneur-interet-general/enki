@@ -3,17 +3,20 @@ import { CommonModule } from '@angular/common';
 import { SvgDefinitionsComponent } from './svg-definitions/svg-definitions.component';
 import { SmallHeadingComponent } from './small-heading/small-heading.component';
 import { RouterModule } from '@angular/router';
+import { ModalComponent } from './modal/modal.component';
 
 
 
 @NgModule({
   declarations: [
     SvgDefinitionsComponent,
-    SmallHeadingComponent
+    SmallHeadingComponent,
+    ModalComponent
   ],
   exports: [
     SvgDefinitionsComponent,
-    SmallHeadingComponent
+    SmallHeadingComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,

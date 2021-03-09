@@ -1,14 +1,12 @@
 from typing import Any, Dict, List, Union
 
-from flask import current_app
-
-from domain.messages.entities.resource import ResourceEntity
-from domain.messages.entities.tag_entity import TagEntity
-from domain.messages.entities.message_entity import MessageEntity
-from domain.messages.ports.message_repository import AlreadyExistingTagInThisMessage, NotFoundTagInThisMessage, \
+from domain.evenements.entities.resource import ResourceEntity
+from domain.evenements.entities.tag_entity import TagEntity
+from domain.evenements.entities.message_entity import MessageEntity
+from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage, NotFoundTagInThisMessage, \
     NotFoundResourceInThisMessage, AlreadyExistingResourceInThisMessage
-from domain.messages.schemas.resource_schema import ResourceSchema
-from domain.messages.schemas.schema import MessageSchema, TagSchema
+from domain.evenements.schemas.resource_schema import ResourceSchema
+from domain.evenements.schemas import MessageSchema, TagSchema
 from domain.users.entities.user import UserEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
 

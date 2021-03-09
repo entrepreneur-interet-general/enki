@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from flask.testing import FlaskClient
 
-from domain.messages.ports.tag_repository import NotFoundTag, AlreadyExistingTagUuid
+from domain.evenements.ports.tag_repository import NotFoundTag, AlreadyExistingTagUuid
 from ..factories.tag import tag_factory
 from ..helpers.filter import filter_dict_with_keys
 

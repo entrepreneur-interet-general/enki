@@ -3,7 +3,7 @@ from typing import List, Any
 
 from domain.core.commands import Command
 from domain.core.topics import Topic, CreateMessageTopic, CreateTagTopic, \
-    CreateResourceTopic
+    CreateResourceTopic, CreateEvenementTopic
 
 
 @dataclass
@@ -22,3 +22,9 @@ class CreateTag(Command):
 class CreateResource(Command):
     data: dict
     topic: Topic = CreateResourceTopic
+
+
+@dataclass
+class CreateEvenement(Command):
+    data: dict
+    topic: Topic = CreateEvenementTopic

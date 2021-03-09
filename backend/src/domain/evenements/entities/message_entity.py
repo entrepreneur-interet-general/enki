@@ -6,9 +6,9 @@ from enum import Enum
 from typing import Union, List, Optional
 
 from domain.core.entity import Entity
-from domain.evenements.entity import EvenementEntity
-from domain.messages.entities.resource import ResourceEntity
-from domain.messages.entities.tag_entity import TagEntity
+from domain.evenements.entities.evenement_entity import EvenementEntity
+from domain.evenements.entities.resource import ResourceEntity
+from domain.evenements.entities.tag_entity import TagEntity
 from domain.users.entities.user import UserEntity
 
 

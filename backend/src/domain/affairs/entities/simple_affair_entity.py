@@ -9,7 +9,7 @@ from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.core.entity import Entity
-from domain.evenements.entity import EvenementEntity
+from domain.evenements.entities.evenement_entity import EvenementEntity
 from entrypoints.serializers import EnkiJsonEncoder
 
 

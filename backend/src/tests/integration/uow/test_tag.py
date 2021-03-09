@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from domain.messages.entities.tag_entity import TagEntity
+from domain.evenements.entities.tag_entity import TagEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 

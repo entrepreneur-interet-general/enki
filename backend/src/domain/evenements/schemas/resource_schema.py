@@ -3,7 +3,7 @@ from marshmallow import Schema, fields, post_load, validate
 from datetime import datetime
 from werkzeug.exceptions import HTTPException
 
-from domain.messages.entities.resource import ResourceEntity, content_types
+from domain.evenements.entities.resource import ResourceEntity, content_types
 from entrypoints.extensions import minio
 
 

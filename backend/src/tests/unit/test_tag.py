@@ -1,5 +1,5 @@
-from domain.messages.entities.tag_entity import TagEntity
-from domain.messages.schemas.schema import TagSchema
+from domain.evenements.entities.tag_entity import TagEntity
+from domain.evenements.schemas import TagSchema
 import random
 
 

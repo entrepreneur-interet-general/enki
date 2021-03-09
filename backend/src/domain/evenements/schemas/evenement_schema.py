@@ -4,29 +4,15 @@ from flask import current_app
 from marshmallow import Schema, fields, post_load
 from marshmallow_enum import EnumField
 from datetime import datetime
-from marshmallow.exceptions import ValidationError
 
 from werkzeug.exceptions import HTTPException
 
-from domain.evenements.entity import EvenementType, EvenementEntity, EvenementRoleType, UserEvenementRole
+from domain.evenements.entities.evenement_entity import EvenementType, EvenementEntity
 from domain.users.schemas.user import UserSchema
 
 
 class EvenementValidationError(HTTPException):
     code = 400
-
-
-class UserEvenementRoleSchema(Schema):
-    __model__ = UserEvenementRole
-
-    uuid = fields.Str(missing=lambda: str(uuid4()))
-    user_id = fields.Str(required=True)
-    user = fields.Nested(UserSchema, dump_only=True)
-    evenement_id = fields.Str(required=True)
-    type = EnumField(EvenementRoleType, required=True, by_value=True)
-    revoked_at = fields.DateTime(dump_only=True)
-    created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
-    updated_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
 
 
 class EvenementSchema(Schema):
@@ -39,7 +25,6 @@ class EvenementSchema(Schema):
     started_at = fields.DateTime(required=True)
     closed = fields.Boolean(dump_only=True)
     creator_id = fields.Str(required=False, dump_only=True)
-    user_roles = fields.Nested(UserEvenementRoleSchema, many=True)
     creator = fields.Nested(UserSchema, required=False, dump_only=True)
     ended_at = fields.DateTime(required=False, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())

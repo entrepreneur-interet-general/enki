@@ -2,7 +2,7 @@ import abc
 from typing import List, Union
 from werkzeug.exceptions import HTTPException
 
-from domain.evenements.entity import EvenementEntity, UserEvenementRole
+from domain.evenements.entities.evenement_entity import EvenementEntity
 
 evenementsList = List[EvenementEntity]
 
@@ -10,6 +10,7 @@ evenementsList = List[EvenementEntity]
 class AlreadyExistingEvenementUuid(HTTPException):
     code = 409
     description = "Cet évenement existe déjà"
+
 
 class NotFoundEvenement(HTTPException):
     code = 404
@@ -30,13 +31,8 @@ class AbstractEvenementRepository(abc.ABC):
         return matches
 
     @abc.abstractmethod
-    def list_from_user_id(self, user_uuid: str):
-        raise NotImplementedError
-
-    @abc.abstractmethod
     def _add(self, entity: EvenementEntity):
         raise NotImplementedError
-
 
     @abc.abstractmethod
     def get_all(self) -> evenementsList:

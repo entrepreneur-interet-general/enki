@@ -3,10 +3,11 @@ from typing import List, Union
 from flask import current_app
 from sqlalchemy.orm import Session
 
-from domain.messages.entities.resource import ResourceEntity
-from domain.messages.ports.message_repository import AbstractMessageRepository, AlreadyExistingMessageUuid, NotFoundMessage, MessagesList
-from domain.messages.entities.message_entity import MessageEntity
-from domain.messages.entities.tag_entity import TagEntity
+from domain.evenements.entities.resource import ResourceEntity
+from domain.evenements.ports.message_repository import AbstractMessageRepository, AlreadyExistingMessageUuid, \
+    MessagesList
+from domain.evenements.entities.message_entity import MessageEntity
+from domain.evenements.entities.tag_entity import TagEntity
 from .repository import PgRepositoryMixin
 
 

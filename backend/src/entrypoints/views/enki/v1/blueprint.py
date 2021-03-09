@@ -1,8 +1,8 @@
 from flask import Blueprint, current_app
 from flask_restful import Api
 
-from domain.evenements.schema import EvenementSchema
-from domain.messages.schemas.schema import MessageSchema
+from domain.evenements.schemas.evenement_schema import EvenementSchema
+from domain.evenements.schemas import MessageSchema
 from entrypoints.extensions import api_spec
 from .resources import AffairListResource, AffairRandomResource, AffairRandomListResource, \
     MessageListResource, MessageResource, \

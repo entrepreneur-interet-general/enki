@@ -3,7 +3,7 @@ from typing import List, Union
 
 from werkzeug.exceptions import HTTPException
 
-from domain.messages.entities.resource import ResourceEntity
+from domain.evenements.entities.resource import ResourceEntity
 
 ResourcesList = List[ResourceEntity]
 

@@ -2,8 +2,8 @@ from typing import List, Union
 
 from sqlalchemy.orm import Session
 
-from domain.messages.entities.resource import ResourceEntity
-from domain.messages.ports.resource_repository import AlreadyExistingResourceUuid, AbstractResourceRepository
+from domain.evenements.entities.resource import ResourceEntity
+from domain.evenements.ports.resource_repository import AlreadyExistingResourceUuid, AbstractResourceRepository
 from .repository import PgRepositoryMixin
 
 resourcesList = List[ResourceEntity]

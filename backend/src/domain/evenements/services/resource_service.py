@@ -1,12 +1,7 @@
-from tempfile import NamedTemporaryFile
-from typing import Any, Dict, List
-from uuid import uuid4
+from typing import Any, Dict
 
-from werkzeug.datastructures import FileStorage
-from werkzeug.utils import secure_filename
-
-from domain.messages.entities.resource import ResourceEntity
-from domain.messages.schemas.resource_schema import ResourceSchema
+from domain.evenements.entities.resource import ResourceEntity
+from domain.evenements.schemas.resource_schema import ResourceSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 

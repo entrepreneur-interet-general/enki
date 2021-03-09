@@ -124,10 +124,12 @@ class UserService:
             group_id: str, position_id: str, group_type: str, uow: AbstractUnitOfWork
     ):
         group = uow.group.get_by_uuid(uuid=group_id)
+        current_app.logger.info(f"GRoup {group.type} => {group_type}")
         if group.type != group_type:
             raise IndexError
 
         position: PositionGroupTypeEntity = uow.group.get_position(position_id=position_id)
+        current_app.logger.info(f"Position {position.group_type} => {group_type}")
         if position.group_type != group_type:
             raise IndexError
 

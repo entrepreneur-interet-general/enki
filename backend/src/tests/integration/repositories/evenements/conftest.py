@@ -2,11 +2,10 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker, clear_mappers
-from typing import Dict, Any
 
 from adapters.postgres.orm import start_mappers, metadata
 from adapters.postgres.pg_evenement_repository import PgEvenementRepository
-from domain.evenements.repository import AbstractEvenementRepository, InMemoryEvenementRepository
+from domain.evenements.ports.evenement_repository import AbstractEvenementRepository, InMemoryEvenementRepository
 
 
 @pytest.fixture(scope="session")

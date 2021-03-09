@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, AlreadyExistingAffairUuid
 from domain.affairs.ports.simple_affair_repository import AbstractSimpleAffairRepository
-from domain.evenements.entity import EvenementEntity
+from domain.evenements.entities.evenement_entity import EvenementEntity
 from .repository import PgRepositoryMixin
 
 

@@ -1,7 +1,7 @@
 from typing import Dict
 from flask.testing import FlaskClient
 
-from domain.messages.ports.message_repository import AlreadyExistingTagInThisMessage
+from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage
 from .test_tag_api import BASE_PATH_TAG
 from .test_message_api import BASE_PATH_TASK, get_message
 from ..factories.tag import tag_factory

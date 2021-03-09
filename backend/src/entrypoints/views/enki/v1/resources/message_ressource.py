@@ -1,8 +1,8 @@
 from flask import request, current_app, g
 from flask_restful import Resource, reqparse
-from typing import Dict, Any, Union, List
-from domain.messages.services.message_service import MessageService
-from domain.messages.command import CreateMessage
+from typing import Union, List
+from domain.evenements.services import MessageService
+from domain.evenements.commands import CreateMessage
 from entrypoints.extensions import event_bus
 from entrypoints.middleware import user_info_middleware
 

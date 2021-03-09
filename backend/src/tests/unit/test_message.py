@@ -1,5 +1,5 @@
-from domain.messages.entities.message_entity import MessageEntity
-from domain.messages.schemas.schema import MessageSchema
+from domain.evenements.entities.message_entity import MessageEntity
+from domain.evenements.schemas import MessageSchema
 import random
 
 

@@ -1,7 +1,7 @@
 from uuid import uuid4
 from datetime import datetime
 
-from domain.evenements.entity import EvenementType
+from domain.evenements.entities.evenement_entity import EvenementType
 
 
 def make_evenemnt(uuid: str = str(uuid4())):

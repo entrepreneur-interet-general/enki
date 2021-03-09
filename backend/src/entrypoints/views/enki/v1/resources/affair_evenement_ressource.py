@@ -2,6 +2,7 @@ from flask import current_app
 from flask_restful import Resource
 
 from domain.affairs.services.affair_service import AffairService
+from domain.evenements.services.evenement_service import EvenementService
 
 
 class WithAffairEvenementRepoResource(Resource):
@@ -42,6 +43,6 @@ class AffairListEvenementResource(WithAffairEvenementRepoResource):
     """
 
     def get(self, uuid):
-        affairs = AffairService.list_affairs_by_evenement(uuid, current_app.context)
+        affairs = EvenementService.list_affairs(uuid, current_app.context)
         return {"data": affairs,
                 "message": "success"}, 201

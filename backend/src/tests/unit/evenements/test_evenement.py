@@ -2,9 +2,7 @@ import pytest
 
 from domain.evenements.entities.evenement_entity import EvenementEntity, EvenementClosedException, UserEvenementRole, \
     EvenementRoleType
-from domain.evenements.entities.message_entity import MessageEntity, TagAlreadyInThisMessage, NotFoundTagInThisMessage
-from domain.evenements.entities.tag_entity import TagEntity
-from domain.evenements.schemas import MessageSchema, EvenementSchema
+from domain.evenements.schemas.evenement_schema import EvenementSchema
 from domain.users.entities.user import UserEntity
 
 

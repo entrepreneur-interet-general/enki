@@ -43,7 +43,6 @@ class MessageSchema(Schema):
     uuid = fields.Str(missing=lambda: str(uuid4()))
     title = fields.Str(required=True, validate=validate.Length(min=5))
     description = fields.Str(required=True, validate=validate.Length(min=5))
-    evenement_id = fields.Str(required=True)
     severity = EnumField(Severity, validate=validate.OneOf([e.value for e in Severity]))
     type = fields.Str(validate=validate.OneOf([e.value for e in MessageType]))
     creator_id = fields.Str(required=False, dump_only=True)

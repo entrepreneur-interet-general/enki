@@ -1,7 +1,7 @@
 from flask import Blueprint, current_app
 from flask_restful import Api
 
-from domain.evenements.schemas import MessageSchema
+from domain.evenements.schemas.schema import MessageSchema
 from domain.evenements.schemas.evenement_schema import EvenementSchema
 from entrypoints.extensions import api_spec
 from entrypoints.views.enki.v1.resources.users.user_ressources import UserResource, UserListResource
@@ -33,9 +33,7 @@ api.add_resource(AffairListResource, '/affairs', endpoint="affairs")
 api.add_resource(AffairRandomResource, '/affair/random', endpoint="affair_random")
 api.add_resource(AffairRandomListResource, '/affairs/random', endpoint="affairs_random")
 
-# Messages
-api.add_resource(MessageListResource, '/messages', endpoint="messages")
-api.add_resource(MessageResource, '/messages/<uuid>', endpoint="message_by_id")
+
 
 # Tags
 api.add_resource(TagListResource, '/tags', endpoint="tags")
@@ -60,8 +58,10 @@ api.add_resource(EvenementListResource, '/events', endpoint="events")
 api.add_resource(EvenementResource, '/events/<uuid>', endpoint="events_by_id")
 api.add_resource(EvenementClosedResource, '/events/<uuid>/close', endpoint="event_finish_by_id")
 api.add_resource(EvenementInviteUserResource, '/events/<uuid>/invite/<user_uuid>', endpoint="events_by_id_invite_user")
-
-# Affairs <> Evenement
+# Evenements <> Messages
+api.add_resource(MessageListResource, '/events/<uuid>/messages', endpoint="messages")
+api.add_resource(MessageResource, '/events/<uuid>/messages/<message_uuid>', endpoint="message_by_id")
+# Evenement <> Affairs
 api.add_resource(AffairEvenementResource, '/events/<uuid>/affairs/<affair_uuid>', endpoint="evenement_affairs_by_id")
 api.add_resource(AffairListEvenementResource, '/events/<uuid>/affairs', endpoint="evenement_affairs_list")
 

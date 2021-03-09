@@ -38,7 +38,7 @@ class AffairService:
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
             affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
-            affair.assign_evenement(evenement=evenement)
+            evenement.add_affair(affair=affair)
             return SimpleAffairSchema().dump(affair)
 
     @staticmethod
@@ -46,7 +46,7 @@ class AffairService:
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
             affair: SimpleAffairEntity = uow.simple_affair.get_by_uuid(uuid=affair_id)
-            affair.delete_evenement(evenement=evenement)
+            evenement.remove_affair(affair=affair)
             return SimpleAffairSchema().dump(affair)
 
     @staticmethod

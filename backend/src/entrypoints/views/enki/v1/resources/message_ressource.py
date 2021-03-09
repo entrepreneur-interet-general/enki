@@ -4,7 +4,7 @@ from flask import request, current_app, g
 from flask_restful import Resource, reqparse
 
 from domain.evenements.commands import CreateMessage
-from domain.evenements.services import MessageService
+from domain.evenements.services.evenement_service import EvenementService
 from entrypoints.extensions import event_bus
 from entrypoints.middleware import user_info_middleware
 
@@ -60,28 +60,27 @@ class MessageListResource(WithMessageRepoResource):
     """
     method_decorators = [user_info_middleware]
 
-    def get(self):
+    def get(self, uuid: str):
         parser = reqparse.RequestParser()
         parser.add_argument('tags', type=str, help='Tags ids', action='append')
-        parser.add_argument('evenement_id', type=str, help='Evenement id')
         args = parser.parse_args()
         tags: Union[str, List[str], None] = args.get("tags")
-        evenement_id: Union[str, None] = args.get("evenement_id")
-        if tags or evenement_id:
-            messages = MessageService.list_messages_by_query(tag_ids=tags, evenement_id=evenement_id, uow=current_app.context)
+        if tags:
+            messages = EvenementService.list_messages_by_query(uuid=uuid, tag_ids=tags,  uow=current_app.context)
         else:
-            messages = MessageService.list_messages(current_app.context)
+            messages = EvenementService.list_messages(uuid=uuid, uow=current_app.context)
 
         return {
                    "data": messages,
                    "message": "success"
                }, 200
 
-    def post(self):
+    def post(self, uuid: str):
         current_app.logger.info(f"Start after post")
         body = request.get_json()
         current_app.logger.info(f"body {body}")
         body["creator_id"] = g.user_info["id"]
+        body["evenement_id"] = uuid
         command = CreateMessage(data=body)
         result = event_bus.publish(command, current_app.context)
         current_app.logger.info("test")
@@ -112,9 +111,9 @@ class MessageResource(WithMessageRepoResource):
               schema: MessageSchema
     """
 
-    def get(self, uuid: str):
+    def get(self, uuid: str, message_uuid: str):
         return {
-                   "data": MessageService.get_by_uuid(uuid, current_app.context),
+                   "data": EvenementService.get_message_by_uuid(uuid=uuid, message_uuid=message_uuid, uow=current_app.context),
                    "message": "success"
                }, 200
 

@@ -3,7 +3,7 @@ from typing import Dict, Any
 from flask import current_app
 from flask_restful import Resource
 
-from domain.evenements.services import MessageService
+from domain.evenements.services.message_service import MessageService
 
 
 class WithMessageRepoResource(Resource):

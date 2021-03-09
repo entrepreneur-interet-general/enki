@@ -107,11 +107,13 @@ fixture `Test as Maire`
         .click('#test--add-contact')
         .click('#test--search-contact')
         .typeText('.fullscreen-form--searchInput', INPUT_INFOS)
+        .expect(Selector('.searchList--link').exists).ok()
 
       const contactsNb = await Selector('.searchList--link').count;
       let containsPreviouslyCreatedContact = false;
       let indexOfPreviouslyCreatedContact = 0;
       for (let index = 0; index <= contactsNb - 1; index++) {
+        console.log('nb of results')
         if (await Selector('.searchList--link').nth(index).innerText === INPUT_INFOS) {
           containsPreviouslyCreatedContact = true;
           indexOfPreviouslyCreatedContact = index;

@@ -1,5 +1,6 @@
 from typing import Any, Dict, List, Union
 
+from domain.evenements.entities.evenement_entity import EvenementEntity
 from domain.evenements.entities.message_entity import MessageEntity
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
@@ -20,8 +21,10 @@ class MessageService:
         resource_ids = data.pop("resources", [])
         creator_id = data.pop("creator_id")
 
-        message: MessageEntity = MessageService.schema().load(data)
         with uow:
+            message: MessageEntity = MessageService.schema().load(data)
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=message.evenement_id)
+            message.assign_evenement(evenement=evenement)
             user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
             uow.message.add(message)
             message.set_creator(user=user)

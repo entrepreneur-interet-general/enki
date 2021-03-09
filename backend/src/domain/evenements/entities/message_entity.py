@@ -18,6 +18,11 @@ class NotFoundResourceInThisMessage(HTTPException):
     description = "Resource not found in this message"
 
 
+class TagAlreadyInThisMessage(HTTPException):
+    code = 409
+    description = "Tag already exists in this message"
+
+
 class NotFoundTagInThisMessage(HTTPException):
     code = 404
     description = "Tag not found in this message"
@@ -68,10 +73,15 @@ class MessageEntity(Entity):
         self.evenement_id = evenement.uuid
 
     def add_tag(self, tag: TagEntity) -> TagEntity:
-        self.tags.append(tag)
-        return tag
+        try:
+            self.get_tag_by_id(uuid=tag.uuid)
+            raise TagAlreadyInThisMessage()
+        except NotFoundTagInThisMessage:
+            self.tags.append(tag)
+            return tag
 
     def remove_tag(self, tag: TagEntity) -> TagEntity:
+        self.get_tag_by_id(uuid=tag.uuid)
         self.tags.remove(tag)
         return tag
 

@@ -95,12 +95,12 @@ class EvenementEntity(Entity):
     def revoke_user_access(self, user_id):
         for user_role in self.user_roles:
             if user_role.user_id == user_id:
-                self.user_role.revoke()
+                user_role.revoke()
                 return
         raise UserHasNoAccessEvenement()
 
     def user_has_access(self, user_id: str, role_type: EvenementRoleType = EvenementRoleType.VIEW) -> bool:
         for user_role in self.user_roles:
-            if user_role.user_id == user_id and user_role.type == role_type:
+            if user_role.user_id == user_id and user_role.type == role_type and user_role.is_active():
                 return True
         return False

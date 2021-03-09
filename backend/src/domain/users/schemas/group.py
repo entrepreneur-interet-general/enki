@@ -25,7 +25,6 @@ class LocationSchema(Schema):
 
     @post_load
     def make_location(self, data: dict, **kwargs):
-        current_app.logger.info(f"data {data}")
         return LocationEntity.from_dict(data)
 
 
@@ -41,7 +40,6 @@ class GroupSchema(Schema):
 
     @post_load
     def make_group(self, data: dict, **kwargs):
-        current_app.logger.info(f"data {data}")
         return GroupEntity.from_dict(data)
 
     def handle_error(self, exc, data, **kwargs):
@@ -58,5 +56,4 @@ class PositionGroupTypeEntitySchema(Schema):
 
     @post_load
     def make_position(self, data: dict, **kwargs):
-        current_app.logger.info(f"data {data}")
         return PositionGroupTypeEntity.from_dict(data)

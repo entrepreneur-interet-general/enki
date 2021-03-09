@@ -40,7 +40,6 @@ class UserSchema(Schema):
 
     @post_load
     def make_user(self, data: dict, **kwargs):
-        current_app.logger.info(f"data {data}")
         return UserEntity.from_dict(data)
 
     def handle_error(self, exc, data, **kwargs):

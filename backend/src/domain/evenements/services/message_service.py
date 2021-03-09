@@ -3,8 +3,7 @@ from typing import Any, Dict, List, Union
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.entities.message_entity import MessageEntity
-from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage, NotFoundTagInThisMessage, \
-    NotFoundResourceInThisMessage, AlreadyExistingResourceInThisMessage
+from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage, AlreadyExistingResourceInThisMessage
 from domain.evenements.schemas.resource_schema import ResourceSchema
 from domain.evenements.schemas import MessageSchema, TagSchema
 from domain.users.entities.user import UserEntity
@@ -51,7 +50,6 @@ class MessageService:
             results = message.get_tag_by_id(uuid=tag_uuid)
             if results:
                 raise AlreadyExistingTagInThisMessage()
-
             tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
             message.add_tag(tag=tag)
 
@@ -76,9 +74,7 @@ class MessageService:
     def remove_resource_to_message(message_uuid, resource_uuid, uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
-            if not message.get_resource_by_id(uuid=resource_uuid):
-                raise NotFoundResourceInThisMessage()
-            resource: ResourceEntity = uow.resource.get_by_uuid(uuid=resource_uuid)
+            resource: ResourceEntity = message.get_resource_by_id(uuid=resource_uuid)
             message.remove_resource(resource=resource)
 
     @staticmethod

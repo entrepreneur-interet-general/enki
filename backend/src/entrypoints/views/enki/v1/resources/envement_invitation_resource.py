@@ -4,10 +4,10 @@ from flask import request, current_app, g
 from flask_restful import Resource, reqparse
 from typing import Dict, Any
 
-from domain.evenements.command import CreateEvenement
-from domain.evenements.entity import EvenementRoleType
+from domain.evenements.commands import CreateEvenement
+from domain.evenements.entities.evenement_entity import EvenementRoleType
 from entrypoints.extensions import event_bus
-from domain.evenements.service import EvenementService
+from domain.evenements.services.evenement_service import EvenementService
 from entrypoints.middleware import user_info_middleware
 
 

@@ -25,9 +25,6 @@ class AlreadyExistingTagInThisMessage(HTTPException):
     description = "Tag already exists in this message"
 
 
-class NotFoundTagInThisMessage(HTTPException):
-    code = 404
-    description = "Tag not found in this message"
 
 
 class AlreadyExistingResourceInThisMessage(HTTPException):
@@ -35,9 +32,6 @@ class AlreadyExistingResourceInThisMessage(HTTPException):
     description = "Resource already exists in this message"
 
 
-class NotFoundResourceInThisMessage(HTTPException):
-    code = 404
-    description = "Resource not found in this message"
 
 
 class AbstractMessageRepository(abc.ABC):
@@ -59,30 +53,6 @@ class AbstractMessageRepository(abc.ABC):
             raise NotFoundMessage()
         return matches
 
-    def get_tag_by_message(self, uuid: str, tag_uuid: str) -> TagEntity:
-        match = self._get_tag_by_message(uuid=uuid, tag_uuid=tag_uuid)
-        if not match:
-            raise NotFoundTagInThisMessage()
-        return match
-
-    def get_resource_by_message(self, uuid: str, resource_uuid: str) -> TagEntity:
-        match = self._get_resource_by_message(uuid=uuid, resource_uuid=resource_uuid)
-        if not match:
-            raise NotFoundResourceInThisMessage()
-        return match
-
-    def get_resources(self, uuid: str):
-        match = self.get_by_uuid(uuid=uuid)
-        if not match:
-            raise NotFoundMessage
-        return match.resources
-
-    def get_tags(self, uuid: str):
-        match = self.get_by_uuid(uuid=uuid)
-        if not match:
-            raise NotFoundMessage()
-        return match.tags
-
     @abc.abstractmethod
     def get_all(self) -> MessagesList:
         raise NotImplementedError
@@ -101,14 +71,6 @@ class AbstractMessageRepository(abc.ABC):
 
     @abc.abstractmethod
     def _match_uuids(self, uuids: List[str]) -> MessagesList:
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def _get_tag_by_message(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def _get_resource_by_message(self, uuid: str, resource_uuid: str) -> Union[ResourceEntity, None]:
         raise NotImplementedError
 
 
@@ -134,20 +96,6 @@ class InMemoryMessageRepository(AbstractMessageRepository):
 
     def set_messages(self, messages: MessagesList) -> None:
         self._messages = messages
-
-    def _get_tag_by_message(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:
-        message: MessageEntity = self.get_by_uuid(uuid=uuid)
-        matches = [tag for tag in message.tags if tag.uuid == tag_uuid]
-        if not matches:
-            return None
-        return matches[0]
-
-    def _get_resource_by_message(self, uuid: str, resource_uuid: str) -> Union[ResourceEntity, None]:
-        message: MessageEntity = self.get_by_uuid(uuid=uuid)
-        matches = [resource for resource in message.resources if resource.uuid == resource_uuid]
-        if not matches:
-            return None
-        return matches[0]
 
     def _match_uuids(self, uuids: List[str]) -> MessagesList:
         matches = [message for message in self._messages if message.uuid in uuids]

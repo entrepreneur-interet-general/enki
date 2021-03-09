@@ -48,66 +48,63 @@ class MessageService:
     def add_tag_to_message(message_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
-            try:
-                results = uow.message.get_tag_by_message(uuid=message.uuid, tag_uuid=tag_uuid)
-                if results:
-                    raise AlreadyExistingTagInThisMessage()
-            except NotFoundTagInThisMessage:
-                tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
-                message.remove_tag(tag=tag)
+            results = message.get_tag_by_id(uuid=tag_uuid)
+            if results:
+                raise AlreadyExistingTagInThisMessage()
+
+            tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
+            message.add_tag(tag=tag)
 
     @staticmethod
     def remove_tag_to_message(message_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:
         with uow:
-            if not uow.message.get_tag_by_message(uuid=message_uuid, tag_uuid=tag_uuid):
-                raise NotFoundTagInThisMessage()
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
-            tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
+            tag: TagEntity = message.get_tag_by_id(uuid=tag_uuid)
             message.remove_tag(tag=tag)
 
     @staticmethod
     def add_resource_to_message(message_uuid, resource_uuid, uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
-            try:
-                results = uow.message.get_resource_by_message(uuid=message.uuid, resource_uuid=resource_uuid)
-                if results:
-                    raise AlreadyExistingResourceInThisMessage()
-            except NotFoundResourceInThisMessage:
-                resource: ResourceEntity = uow.resource.get_by_uuid(uuid=resource_uuid)
-                message.add_resource(resource=resource)
+            results = message.get_resource_by_id(uuid=resource_uuid)
+            if results:
+                raise AlreadyExistingResourceInThisMessage()
+            resource: ResourceEntity = uow.resource.get_by_uuid(uuid=resource_uuid)
+            message.add_resource(resource=resource)
 
     @staticmethod
     def remove_resource_to_message(message_uuid, resource_uuid, uow: AbstractUnitOfWork) -> None:
         with uow:
-            if not uow.message.get_resource_by_message(uuid=message_uuid, resource_uuid=resource_uuid):
-                raise NotFoundResourceInThisMessage()
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
+            if not message.get_resource_by_id(uuid=resource_uuid):
+                raise NotFoundResourceInThisMessage()
             resource: ResourceEntity = uow.resource.get_by_uuid(uuid=resource_uuid)
             message.remove_resource(resource=resource)
-            
+
     @staticmethod
     def list_tags(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
-            message: MessageEntity = uow.message.get_tags(uuid)
-            return TagSchema(many=True).dump(message.tags)
+            message: MessageEntity = uow.message.get_by_uuid(uuid=uuid)
+            return TagSchema(many=True).dump(message.get_tags())
 
     @staticmethod
     def list_resources(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
-            resources: List[ResourceEntity] = uow.message.get_resources(uuid)
-            return ResourceSchema(many=True).dump(resources)
+            message: MessageEntity = uow.message.get_by_uuid(uuid=uuid)
+            return ResourceSchema(many=True).dump(message.get_resources())
 
     @staticmethod
     def get_message_resource(uuid: str, resource_uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
-            resource: ResourceEntity = uow.message.get_resource_by_message(uuid=uuid, resource_uuid=resource_uuid)
+            message: MessageEntity = uow.message.get_by_uuid(uuid=uuid)
+            resource: ResourceEntity = message.get_resource_by_id(uuid=resource_uuid)
             return ResourceSchema().dump(resource)
 
     @staticmethod
     def get_message_tag(uuid: str, tag_uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
-            tag: TagEntity = uow.message.get_tag_by_message(uuid=uuid, tag_uuid=tag_uuid)
+            message: MessageEntity = uow.message.get_by_uuid(uuid=uuid)
+            tag: TagEntity = message.get_tag_by_id(uuid=tag_uuid)
             return TagSchema().dump(tag)
 
     @staticmethod

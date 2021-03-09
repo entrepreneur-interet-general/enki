@@ -32,20 +32,6 @@ class PgMessageRepository(PgRepositoryMixin, AbstractMessageRepository):
     def get_all(self) -> List[MessageEntity]:
         return self.session.query(self.entity_type).order_by(self.entity_type.created_at.desc()).all()
 
-    def _get_tag_by_message(self, uuid: str, tag_uuid: str) -> Union[TagEntity, None]:
-        match = self.get_by_uuid(uuid=uuid)
-        matches = [tag for tag in match.tags if tag.uuid == tag_uuid]
-        if not matches:
-            return None
-        return matches[0]
-
-    def _get_resource_by_message(self, uuid: str, resource_uuid: str) -> Union[ResourceEntity, None]:
-        match = self.get_by_uuid(uuid=uuid)
-        matches = [resource for resource in match.resources if resource.uuid == resource_uuid]
-        if not matches:
-            return None
-        return matches[0]
-
     def _match_uuids(self, uuids: List[str]) -> MessagesList:
         matches = self.session.query(self.entity_type).filter(self.entity_type.uuid.in_(uuids)).all()
         return matches

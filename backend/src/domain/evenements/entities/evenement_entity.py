@@ -76,6 +76,9 @@ class EvenementEntity(Entity):
     def closed(self):
         return self.ended_at and self.ended_at < datetime.now()
 
+    def close(self):
+        self.ended_at = datetime.now()
+
     def check_can_assign(self):
         if self.closed:
             raise EvenementClosedException

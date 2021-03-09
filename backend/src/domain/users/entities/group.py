@@ -3,7 +3,7 @@ from dataclasses_json import dataclass_json
 from enum import Enum
 
 from slugify import slugify
-from typing import Optional, List
+from typing import Optional
 from domain.core.entity import Entity
 
 

@@ -137,3 +137,11 @@ class EvenementEntity(Entity):
 
     def get_messages(self) -> List[MessageEntity]:
         return self.messages
+
+    def get_all_entries(self) -> List[MessageEntity]:
+        entries: List[MessageEntity] = self.messages + \
+            [MessageEntity.from_affair(affair=affair) for affair in self.affairs]
+        return entries
+
+
+

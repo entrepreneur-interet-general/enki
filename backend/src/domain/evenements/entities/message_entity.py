@@ -71,8 +71,8 @@ class MessageEntity(Entity):
     def from_affair(cls, affair):
         return cls(
             uuid=affair.uuid,
-            description=affair.default_affair.eventLocation.address,
-            title=affair.default_affair.primaryAlert.alertCode.whatsHappen.label,
+            description=affair.affair["eventLocation"]["address"],
+            title=affair.affair["primaryAlert"]["alertCode"]["whatsHappen"]["label"],
             created_at=affair.created_at,
             updated_at=affair.updated_at,
             type=MessageType.AFFAIR

@@ -70,4 +70,4 @@ class MessageEntity(Entity):
         resource.reset_message_id()
 
     def set_creator(self, user: UserEntity):
-        self.creator = UserEntity
+        self.creator = user

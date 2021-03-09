@@ -35,7 +35,7 @@ export class AddMessageComponent implements OnInit {
 
   onSubmit(): void {
     let selectedLabelsUUID = this.labelsService.selectedLabels.map(label => label.uuid)
-    this.evenementUUID = this.evenementsService.selectedEvenement.uuid
+    this.evenementUUID = this.evenementsService.selectedEvenement.getValue().uuid
     this.messagesService.httpSubmitMessage(
         this.messageGroup.value.title,
         this.messageGroup.value.content,
@@ -60,7 +60,6 @@ export class AddMessageComponent implements OnInit {
     const file = (event.target as HTMLInputElement).files[0]
     this.messagesService.getUrlFileUpload((event.target as HTMLInputElement).files[0]).subscribe(response => {
       this.messagesService.putFileOnServer(file, response.data.upload_url).subscribe(() => {
-        // console.log('success, show image preview')
         // TODO : cacher le loader
         // montrer l'image de preview
         let mediaUUID = response.data.uuid

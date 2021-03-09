@@ -78,6 +78,12 @@ class UserService:
             return UserService.schema(many=True).dump(users)
 
     @staticmethod
+    def search_users(query: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            users: List[UserEntity] = uow.user.search(query=query)
+            return UserService.schema(many=True).dump(users)
+
+    @staticmethod
     def list_contacts(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
             contacts: List[UserEntity] = uow.user.get_user_contacts(uuid=uuid)

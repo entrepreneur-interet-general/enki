@@ -23,7 +23,7 @@ fixture `Test as Maire`
     const EVENT_TITLE = 'Test auto événement'
     const EVENT_DESCRIPTION = 'Test auto événement'
 
-    test.skip('Create `événement`', async t => {
+    test('Create `événement`', async t => {
       await t
       .click('.burger')
       .click('#test--link-situation')
@@ -32,7 +32,6 @@ fixture `Test as Maire`
       .typeText('#nomEvenement', EVENT_TITLE)
       .typeText('#descriptionEvenement', EVENT_DESCRIPTION)
       .typeText('#startDate', `2021-03-09T19:37`)
-      .typeText('#endDate', `2021-03-10T19:37`)
       .click('.createEvenement--form input[type="submit"]')
       .expect(Selector('.evenement--title').innerText).eql(EVENT_TITLE)
       .click('#test--maincourante')
@@ -42,7 +41,7 @@ fixture `Test as Maire`
     const MESSAGE_TITLE = 'Test auto message 2'
     const MESSAGE_DESCRIPTION = 'Test auto description'
     const LABEL_TITLE = randomString(5)
-    test.skip('Add message to `main courante`', async t => {
+    test('Add message to `main courante`', async t => {
       await t
       // go to the previously created event
       .click('.burger')
@@ -107,6 +106,7 @@ fixture `Test as Maire`
         .typeText('#address', INPUT_INFOS)
         .click('#test--add-contact')
         .click('#test--search-contact')
+        .typeText('.fullscreen-form--searchInput', INPUT_INFOS)
 
       const contactsNb = await Selector('.searchList--link').count;
       let containsPreviouslyCreatedContact = false;

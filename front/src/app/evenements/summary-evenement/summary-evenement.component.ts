@@ -20,7 +20,7 @@ export class SummaryEvenementComponent implements OnInit {
     private evenementsService: EvenementsService,
     private router: Router
   ) {
-    this.evenement = this.evenementsService.selectedEvenement
+    this.evenement = this.evenementsService.selectedEvenement.getValue()
     this.interventions = []
   }
 

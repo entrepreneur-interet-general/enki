@@ -1,0 +1,32 @@
+<div class="title-container">
+  <h1 class="h2-title">Partager l'événement</h1>
+</div>
+<div class="share">
+  <p class="share--description">
+    Vous pouvez ajouter des particpants depuis l’annuaire ENKI.
+  </p>
+  <div class="enkiform__group">
+    <!-- <input type="text" class="enkiform__input" id="participants"  [formControl]="participants" required> -->
+    <button class="btn" (click)="goToSearchUser()">Ajouter des participants</button>
+    <!-- <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg> -->
+  </div>
+</div>
+<div class="list-participants" *ngIf="participants.length">
+  <h2 class="list-participants--title title-with-icon">
+    <svg class="icon-user icon"><use xlink:href="#icon-user"></use></svg>
+    {{participants.length}} PARTICIPANTS
+  </h2>
+  <div class="list-participants--user" *ngFor="let participant of participants">
+    <div class="list-participants--primaryInfos">
+      {{participant.user.position.group.label}} - {{participant.user.position.position.label}}
+    </div>
+    <div class="list-participants--secondaryInfos">
+      {{participant.user.last_name}} {{participant.user.first_name}}
+    </div>
+    <div class="list-participants--role">
+      {{mapUserRoleToLabel(participant.type)}}
+      <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

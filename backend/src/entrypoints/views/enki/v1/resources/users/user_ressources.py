@@ -1,5 +1,5 @@
 from flask import request, current_app, g
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 
 from domain.users.command import CreateUser
 from domain.users.services.user_service import UserService
@@ -16,6 +16,13 @@ class UserListResource(WithUserRepoResource):
     """Get all users
     ---
     get:
+      parameters:
+        - in: query
+          required: true
+          name: query
+          schema:
+            type: str
+          description: query to find users
       tags:
         - users
       security:
@@ -48,8 +55,14 @@ class UserListResource(WithUserRepoResource):
     method_decorators = [user_info_middleware]
 
     def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('query', type=str, required=True)
+
+        args = parser.parse_args()
+        query: str = args.get("query")
+        users = UserService.search_users(query=query, uow=current_app.context)
         return {
-                   "data": UserService.list_users(current_app.context),
+                   "data": users,
                    "message": "success",
                }, 200
 

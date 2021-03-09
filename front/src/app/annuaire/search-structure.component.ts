@@ -3,7 +3,6 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { interval, Observable, Subject } from 'rxjs';
 import { debounce, switchMap } from 'rxjs/operators';
-import { REGISTER } from '../constants';
 import { RegisterService } from '../registration/register.service';
 import { Location } from '../interfaces/Location';
 

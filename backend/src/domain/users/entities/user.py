@@ -23,3 +23,6 @@ class UserEntity(Entity):
     position: UserPositionEntity = field(default_factory=lambda: None)
     created_at: datetime = field(default_factory=lambda: datetime.utcnow())
     updated_at: datetime = field(default_factory=lambda: datetime.utcnow())
+
+    def __repr__(self):
+        return f"UserEntity {self.uuid} : {self.first_name}, {self.last_name}"

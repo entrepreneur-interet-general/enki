@@ -115,5 +115,28 @@ class EvenementClosedResource(WithEvenementRepoResource):
     def put(self, uuid: str):
         return {
                    "data": EvenementService.finish_evenement(uuid, current_app.context),
+        }
+
+class MeEvenementResource(WithEvenementRepoResource):
+    """Get me evenement
+    ---
+    get:
+      tags:
+        - evenements
+        - me
+      responses:
+        200:
+          description: Return a list of evenements
+          content:
+            application/json:
+              schema:
+                type: array
+                items: EvenementSchema
+    """
+    method_decorators = [user_info_middleware]
+
+    def get(self):
+        return {
+                   "data": EvenementService.get_evenements_by_user_id(g.user_info["id"], current_app.context),
                    "message": "success",
                }, 200

@@ -34,7 +34,7 @@ class UserSchema(Schema):
     last_name = fields.Str(required=True)
     position_id = fields.Str(required=True)
     group_id = fields.Str(required=True, load_only=True)
-    group_type = EnumField(GroupType, validate=validate.OneOf([e.value for e in GroupType]))
+    group_type = fields.Str(validate=validate.OneOf([e.value for e in GroupType]))
     position = fields.Nested("UserPositionSchema",  dump_only=True)
     contacts = fields.Nested(ContactSchema, many=True, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())

@@ -54,7 +54,7 @@ class MessageEntity(Entity):
     description: str
     evenement_id: str
     creator_id: Optional[str] = field(default_factory=lambda: None)
-    creator: UserEntity = None
+    creator: Optional[UserEntity] = field(default_factory=lambda: None)
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
     started_at: Union[datetime, None] = field(default_factory=lambda: None)
     tags: List[TagEntity] = field(default_factory=lambda: [])

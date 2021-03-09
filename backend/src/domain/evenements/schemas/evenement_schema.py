@@ -15,7 +15,6 @@ class EvenementValidationError(HTTPException):
     code = 400
 
 
-
 class UserEvenementRoleSchema(Schema):
     __model__ = UserEvenementRole
 

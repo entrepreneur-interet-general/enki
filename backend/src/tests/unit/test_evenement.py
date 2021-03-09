@@ -33,10 +33,15 @@ def test_user_roles(user: UserEntity, evenement: EvenementEntity):
 
     assert evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.VIEW)
     assert not evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.EDIT)
+    assert not evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.ADMIN)
     evenement.change_access_type(user_id=user.uuid, role_type=EvenementRoleType.EDIT)
-    assert not evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.VIEW)
+    assert evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.VIEW)
     assert evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.EDIT)
-
+    assert not evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.ADMIN)
+    evenement.change_access_type(user_id=user.uuid, role_type=EvenementRoleType.ADMIN)
+    assert evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.VIEW)
+    assert evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.EDIT)
+    assert evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.ADMIN)
     evenement.revoke_user_access(user_id=user.uuid)
     assert not evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.VIEW)
     assert not evenement.user_has_access(user_id=user.uuid, role_type=EvenementRoleType.EDIT)

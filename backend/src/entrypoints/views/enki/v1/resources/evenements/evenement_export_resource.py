@@ -48,9 +48,7 @@ class EvenementExportResource(WithEvenementRepoResource):
             if format_ == "csv":
                 df.to_csv(f.name, index=False)
             if format_ == "xlsx":
-                with pd.ExcelWriter(f.name,
-                                    mode='a') as writer:
-                    df.to_excel(writer, sheet_name='export')
+                df.to_excel(f.name, sheet_name='export')
 
             if format_ == "json":
                 df.to_json(f.name)

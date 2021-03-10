@@ -1,14 +1,13 @@
 import json
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Any
 
 from dataclasses_json import dataclass_json
 from werkzeug.exceptions import HTTPException
 
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.core.entity import Entity
-from domain.evenements.entities.evenement_entity import EvenementEntity
 from entrypoints.serializers import EnkiJsonEncoder
 
 
@@ -30,7 +29,7 @@ class SimpleAffairEntity(Entity):
     affair: dict = field(init=False)
     location: str = field(init=False)
     evenement_id: Optional[str] = None
-    evenement: Optional[EvenementEntity] = None
+    evenement: Optional[Any] = None
     created_at: datetime = field(default_factory=lambda: datetime.utcnow())
     updated_at: datetime = field(default_factory=lambda: datetime.utcnow())
 
@@ -38,13 +37,13 @@ class SimpleAffairEntity(Entity):
         self.location = self.default_affair.geom_location
         self.affair = json.loads(EnkiJsonEncoder().encode(self.default_affair.to_dict()))
 
-    def assign_evenement(self, evenement: EvenementEntity):
+    def assign_evenement(self, evenement):
         evenement.check_can_assign()
         if self.evenement_id and self.evenement:
             raise ThisAffairNotAssignToThisEvent
         self.evenement = evenement
 
-    def delete_evenement(self, evenement: EvenementEntity):
+    def delete_evenement(self, evenement):
         if self.evenement_id != evenement.uuid:
             raise ThisAffairNotAssignToThisEvent
         self.evenement_id = None

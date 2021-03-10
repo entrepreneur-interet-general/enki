@@ -6,7 +6,7 @@ from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage, \
     AlreadyExistingResourceInThisMessage
-from domain.evenements.schemas import MessageSchema, TagSchema
+from domain.evenements.schemas.schema import MessageSchema, TagSchema
 from domain.evenements.schemas.resource_schema import ResourceSchema
 from domain.users.entities.user import UserEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
@@ -20,13 +20,14 @@ class MessageService:
         tag_ids = data.pop("tags", [])
         resource_ids = data.pop("resources", [])
         creator_id = data.pop("creator_id")
+        evenement_id = data.pop("evenement_id")
 
         with uow:
             message: MessageEntity = MessageService.schema().load(data)
-            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=message.evenement_id)
-            message.assign_evenement(evenement=evenement)
-            user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
             uow.message.add(message)
+            evenement.add_message(message=message)
+            user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
             message.set_creator(user=user)
             MessageService.add_tags(message=message, tag_ids=tag_ids, uow=uow)
             MessageService.add_resources(message=message, resource_ids=resource_ids, uow=uow)
@@ -106,20 +107,6 @@ class MessageService:
             message: MessageEntity = uow.message.get_by_uuid(uuid=uuid)
             tag: TagEntity = message.get_tag_by_id(uuid=tag_uuid)
             return TagSchema().dump(tag)
-
-    @staticmethod
-    def list_messages(uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
-        with uow:
-            messages: List[MessageEntity] = uow.message.get_all()
-            return MessageService.schema(many=True).dump(messages)
-
-    @staticmethod
-    def list_messages_by_query(evenement_id: str, tag_ids: Union[str, List[str], None], uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
-        if isinstance(tag_ids, str):
-            tag_ids = [tag_ids]
-        with uow:
-            messages: List[MessageEntity] = uow.message.get_messages_by_query(evenement_id=evenement_id, tag_ids=tag_ids)
-            return MessageService.schema(many=True).dump(messages)
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:

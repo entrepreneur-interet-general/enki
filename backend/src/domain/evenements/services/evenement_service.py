@@ -1,14 +1,18 @@
+from dataclasses import fields
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 from uuid import uuid4
-
+import pandas as pd
 from flask import current_app
 from marshmallow import ValidationError
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
+from domain.affairs.schema.simple_affair import SimpleAffairSchema
 from domain.evenements.entities.evenement_entity import EvenementEntity, EvenementRoleType, UserEvenementRole
 from domain.evenements.entities.message_entity import MessageEntity
+from domain.evenements.schemas.schema import MessageSchema
 from domain.evenements.schemas.evenement_schema import EvenementSchema
+from domain.evenements.services.message_service import MessageService
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.user import UserSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
@@ -39,7 +43,6 @@ class EvenementService:
             current_app.logger.info(uow.evenement.get_by_uuid(uuid=uuid))
             return EvenementService.schema().dump(uow.evenement.get_by_uuid(uuid=uuid))
 
-
     @staticmethod
     def invite_user(uuid: str, user_id: str, role_type: EvenementRoleType, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
@@ -57,7 +60,8 @@ class EvenementService:
             return UserSchema().dump(user)
 
     @staticmethod
-    def change_user_role(uuid: str , user_id: str, role_type:EvenementRoleType, uow: AbstractUnitOfWork)-> Dict[str, Any]:
+    def change_user_role(uuid: str, user_id: str, role_type: EvenementRoleType, uow: AbstractUnitOfWork) -> Dict[
+        str, Any]:
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
             user: UserEntity = uow.user.get_by_uuid(uuid=user_id)
@@ -70,9 +74,8 @@ class EvenementService:
             evenements: List[EvenementEntity] = uow.evenement.list_from_user_id(user_uuid=user_uuid)
             return EvenementService.schema(many=True).dump(evenements)
 
-
     @staticmethod
-    def revoke_access(uuid: str , user_id: str, uow: AbstractUnitOfWork)-> Dict[str, Any]:
+    def revoke_access(uuid: str, user_id: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
             user: UserEntity = uow.user.get_by_uuid(uuid=user_id)
@@ -105,4 +108,46 @@ class EvenementService:
             evenement.ended_at = datetime.now()
             return EvenementService.schema().dump(evenement)
 
+    @staticmethod
+    def list_affairs(uuid: str, uow: AbstractUnitOfWork):
+        with uow:
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
+            return SimpleAffairSchema(many=True).dump(evenement.get_affairs())
 
+    @staticmethod
+    def get_message_by_uuid(uuid: str, message_uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
+        with uow:
+            _ = uow.evenement.get_by_uuid(uuid=uuid)
+            message = uow.message.get_by_uuid(uuid=message_uuid)
+            return MessageSchema().dump(message)
+
+    @staticmethod
+    def list_messages(uuid: str, uow: AbstractUnitOfWork):
+        with uow:
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
+            return MessageSchema(many=True).dump(evenement.get_messages())
+
+    @staticmethod
+    def list_messages_by_query(uuid: str, tag_ids: Union[str, List[str], None], uow: AbstractUnitOfWork) -> List[
+        Dict[str, Any]]:
+        if isinstance(tag_ids, str):
+            tag_ids = [tag_ids]
+        with uow:
+            _ = uow.evenement.get_by_uuid(uuid=uuid)
+            messages: List[MessageEntity] = uow.message.get_messages_by_query(evenement_id=uuid, tag_ids=tag_ids)
+            return MessageService.schema(many=True).dump(messages)
+
+    @staticmethod
+    def create_list_of_dict_entries(uuid: str, uow: AbstractUnitOfWork) -> List[Dict]:
+        data_dict = []
+        with uow:
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
+            for message in evenement.get_all_entries():
+                data_dict.append(MessageSchema().dump(message))
+        return data_dict
+
+    @staticmethod
+    def create_dataframe(uuid: str, uow: AbstractUnitOfWork) -> pd.DataFrame:
+        entries = EvenementService.create_list_of_dict_entries(uuid=uuid, uow=uow)
+        df = pd.DataFrame(entries)
+        return df

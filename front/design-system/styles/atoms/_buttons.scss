@@ -77,37 +77,24 @@
 }
 
 .action {
-    padding: 16px;
+    width: 56px;
+    height: 56px;
+    border-radius: 56px;
+    background-color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    cursor: pointer;
+    .icon {
+        fill: white;
+    }
     &--add {
-        width: 56px;
-        height: 56px;
-        border-radius: 56px;
-        background-color: $primary;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
         right: 16px;
         bottom: 80px;
-        cursor: pointer;
-        .icon {
-        fill: white;
-        }
     }
     &--filter {
-        width: 56px;
-        height: 56px;
-        border-radius: 56px;
-        background-color: $primary;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
         right: 85px;
         bottom: 80px;
-        cursor: pointer;
-        .icon {
-        fill: white;
-        }
     }
 }

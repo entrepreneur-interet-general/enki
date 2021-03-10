@@ -1,7 +1,7 @@
 from flask import Blueprint, current_app
 from flask_restful import Api
 
-from domain.evenements.schemas import MessageSchema
+from domain.evenements.schemas.schema import MessageSchema
 from domain.evenements.schemas.evenement_schema import EvenementSchema
 from entrypoints.extensions import api_spec
 from entrypoints.views.enki.v1.resources.users.user_ressources import UserResource, UserListResource
@@ -16,6 +16,7 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
 from .resources.contact_ressources import ContactListResource, ContactResource
 from .resources.envement_invitation_resource import EvenementInviteUserResource
 from .resources.evenement_resource import MeEvenementResource
+from .resources.evenements.evenement_export_resource import EvenementExportResource
 from .resources.invitation_ressources import InvitationResource, ValidateInvitationResource
 from .resources.message_resource_resource import MessageMultipleResourceResource
 from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, LocationListResource, \
@@ -33,9 +34,7 @@ api.add_resource(AffairListResource, '/affairs', endpoint="affairs")
 api.add_resource(AffairRandomResource, '/affair/random', endpoint="affair_random")
 api.add_resource(AffairRandomListResource, '/affairs/random', endpoint="affairs_random")
 
-# Messages
-api.add_resource(MessageListResource, '/messages', endpoint="messages")
-api.add_resource(MessageResource, '/messages/<uuid>', endpoint="message_by_id")
+
 
 # Tags
 api.add_resource(TagListResource, '/tags', endpoint="tags")
@@ -60,10 +59,14 @@ api.add_resource(EvenementListResource, '/events', endpoint="events")
 api.add_resource(EvenementResource, '/events/<uuid>', endpoint="events_by_id")
 api.add_resource(EvenementClosedResource, '/events/<uuid>/close', endpoint="event_finish_by_id")
 api.add_resource(EvenementInviteUserResource, '/events/<uuid>/invite/<user_uuid>', endpoint="events_by_id_invite_user")
-
-# Affairs <> Evenement
+# Evenements <> Messages
+api.add_resource(MessageListResource, '/events/<uuid>/messages', endpoint="messages")
+api.add_resource(MessageResource, '/events/<uuid>/messages/<message_uuid>', endpoint="message_by_id")
+# Evenement <> Affairs
 api.add_resource(AffairEvenementResource, '/events/<uuid>/affairs/<affair_uuid>', endpoint="evenement_affairs_by_id")
 api.add_resource(AffairListEvenementResource, '/events/<uuid>/affairs', endpoint="evenement_affairs_list")
+# Evenement <> Export
+api.add_resource(EvenementExportResource, '/events/<uuid>/export', endpoint="evenement_export")
 
 # User
 api.add_resource(UserListResource, '/users', endpoint="users")
@@ -133,6 +136,7 @@ def register_views():
     api_spec.spec.path(view=EvenementResource, app=current_app)
     api_spec.spec.path(view=EvenementClosedResource, app=current_app)
     api_spec.spec.path(view=EvenementInviteUserResource, app=current_app)
+    api_spec.spec.path(view=EvenementExportResource, app=current_app)
 
     # Affairs <> Evenement
     api_spec.spec.path(view=AffairEvenementResource, app=current_app)

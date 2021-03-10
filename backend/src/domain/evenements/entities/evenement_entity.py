@@ -6,7 +6,9 @@ from typing import Union, Optional, List
 from dataclasses_json import dataclass_json
 from werkzeug.exceptions import HTTPException
 
+from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.core.entity import Entity
+from domain.evenements.entities.message_entity import MessageEntity
 from domain.users.entities.user import UserEntity
 
 
@@ -73,6 +75,8 @@ class EvenementEntity(Entity):
     started_at: datetime
     creator_id: Optional[str] = field(default_factory=lambda: None)
     creator: Optional[UserEntity] = field(default_factory=lambda: None)
+    messages: List[MessageEntity] = field(default_factory=lambda: [])
+    affairs: List[SimpleAffairEntity] = field(default_factory=lambda: [])
     user_roles: List[UserEvenementRole] = field(default_factory=lambda: [])
     ended_at: Union[datetime, None] = field(default_factory=lambda: None)
     created_at: datetime = field(default_factory=lambda: datetime.utcnow())
@@ -90,6 +94,15 @@ class EvenementEntity(Entity):
             raise EvenementClosedException
         return True
 
+    def add_message(self, message: MessageEntity):
+        self.messages.append(message)
+
+    def add_affair(self, affair: SimpleAffairEntity):
+        self.affairs.append(affair)
+
+    def remove_affair(self, affair: SimpleAffairEntity):
+        self.affairs.remove(affair)
+
     def change_access_type(self, user_id: str, role_type: EvenementRoleType) -> UserEvenementRole:
         for role in self.user_roles:
             if role.user_id == user_id:
@@ -97,7 +110,7 @@ class EvenementEntity(Entity):
                 return role
         raise UserHasNoAccessEvenement()
 
-    def add_user_role(self, user_role: UserEvenementRole) ->  UserEvenementRole:
+    def add_user_role(self, user_role: UserEvenementRole) -> UserEvenementRole:
         for role in self.user_roles:
             if role.user_id == user_role.user_id and user_role.uuid != role.uuid:
                 raise UserAlreadyAccessEvenement()
@@ -114,6 +127,21 @@ class EvenementEntity(Entity):
     def user_has_access(self, user_id: str, role_type: EvenementRoleType = EvenementRoleType.VIEW) -> bool:
         for user_role in self.user_roles:
             if user_role.user_id == user_id and user_role.is_active() \
-                    and (user_role.type == role_type or role_type in evenement_role_dependancies.get(user_role.type, [])):
+                    and (
+                    user_role.type == role_type or role_type in evenement_role_dependancies.get(user_role.type, [])):
                 return True
         return False
+
+    def get_affairs(self) -> List[SimpleAffairEntity]:
+        return self.affairs
+
+    def get_messages(self) -> List[MessageEntity]:
+        return self.messages
+
+    def get_all_entries(self) -> List[MessageEntity]:
+        entries: List[MessageEntity] = self.messages + \
+            [MessageEntity.from_affair(affair=affair) for affair in self.affairs]
+        return entries
+
+
+

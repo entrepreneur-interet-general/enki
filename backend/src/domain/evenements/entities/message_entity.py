@@ -7,7 +7,6 @@ from dataclasses_json import dataclass_json
 from werkzeug.exceptions import HTTPException
 
 from domain.core.entity import Entity
-from domain.evenements.entities.evenement_entity import EvenementEntity
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.users.entities.user import UserEntity
@@ -41,6 +40,7 @@ class MessageType(str, Enum):
     ASK = "ask"
     DO = "do"
     NEED_INFO = "need_info"
+    AFFAIR = "affair"
     UNKNOWN = "unknown"
 
     def __str__(self):
@@ -52,7 +52,6 @@ class MessageType(str, Enum):
 class MessageEntity(Entity):
     title: str
     description: str
-    evenement_id: str
     creator_id: Optional[str] = field(default_factory=lambda: None)
     creator: Optional[UserEntity] = field(default_factory=lambda: None)
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
@@ -68,9 +67,16 @@ class MessageEntity(Entity):
     def __eq__(self, other):
         return self.uuid == other.uuid
 
-    def assign_evenement(self, evenement: EvenementEntity):
-        evenement.check_can_assign()
-        self.evenement_id = evenement.uuid
+    @classmethod
+    def from_affair(cls, affair):
+        return cls(
+            uuid=affair.uuid,
+            description=affair.affair["eventLocation"]["address"],
+            title=affair.affair["primaryAlert"]["alertCode"]["whatsHappen"]["label"],
+            created_at=affair.created_at,
+            updated_at=affair.updated_at,
+            type=MessageType.AFFAIR
+        )
 
     def add_tag(self, tag: TagEntity) -> TagEntity:
         try:

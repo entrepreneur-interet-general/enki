@@ -1,5 +1,10 @@
 @import "../../../../../design-system/styles/variables";
 
+.action--export {
+  position: absolute;
+  top: 0;
+  right: 16px;
+}
 .mc {
   margin-bottom: 104px;
   &--empty {

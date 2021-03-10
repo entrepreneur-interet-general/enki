@@ -3,10 +3,6 @@ from typing import Dict
 
 import pytest
 
-from domain.evenements.entities.evenement_entity import EvenementEntity
-from domain.evenements.entities.message_entity import MessageEntity
-from domain.evenements.entities.tag_entity import TagEntity
-from domain.evenements.schemas import TagSchema, MessageSchema, EvenementSchema
 from domain.users.entities.contact import ContactEntity
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.contact import ContactSchema

@@ -1,11 +1,11 @@
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, pluck } from 'rxjs/operators';
 import { Intervention, InterventionsService } from '../interventions/interventions.service';
-import { User } from '../interfaces/User';
 import { Participant } from '../interfaces/Participant';
+import { HTTP_DATA } from '../constants';
 
 export interface Evenement {
   uuid: string;
@@ -40,7 +40,7 @@ export class EvenementsService {
       this.evenementsUrl = `${environment.backendUrl}/events`
       this.httpOptions = {
         headers: new HttpHeaders({
-          'Content-Type':  'application/json'
+          'Content-Type':  'application/json',
         })
       }
   }
@@ -98,6 +98,40 @@ export class EvenementsService {
           return this.interventionsService.mapHTTPInterventions(response.data)
         })
       )
+  }
+
+  callMainCouranteData(): Observable<any> {
+    return this.http.get<any>(
+        `${environment.backendUrl}/events/${this.selectedEvenement.getValue().uuid}/export?format=csv`,
+        { responseType: "arraybuffer" as "json" }
+      ).pipe(
+      map((file: ArrayBuffer) => {
+        return file;
+      })
+    )
+  }
+
+  downloadFile(): void {
+    this.callMainCouranteData().subscribe(data => {
+      const a = document.createElement("a");
+      a.style.display = "none";
+      document.body.appendChild(a);
+    
+      // Set the HREF to a Blob representation of the data to be downloaded
+      a.href = window.URL.createObjectURL(
+        new Blob([data], { type: 'text/csv;charset=utf-8;' })
+      );
+    
+      // Use download attribute to set set desired file name
+      a.setAttribute("download", `${this.selectedEvenement.getValue().uuid}-${(new Date()).toISOString()}`);
+    
+      // Trigger the download by simulating click
+      a.click();
+    
+      // Cleanup
+      window.URL.revokeObjectURL(a.href);
+      document.body.removeChild(a);
+    })
   }
 
   closeEvenement(uuid: string): Observable<any> {

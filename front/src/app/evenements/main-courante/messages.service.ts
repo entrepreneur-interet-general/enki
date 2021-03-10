@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { uuidv4 } from '../../utilities';
+import { EvenementsService } from '../evenements.service';
 
 export interface Message {
   title: string;
@@ -28,6 +29,7 @@ export class MessagesService {
   httpHeaders: object;
   constructor(
     private http: HttpClient,
+    private evenementsService: EvenementsService
   ) {
     this.resourcesUrl = `${environment.backendUrl}/resources`
     this.messagesUrl = `${environment.backendUrl}/messages`
@@ -62,7 +64,7 @@ export class MessagesService {
   }
 
   httpGetMessages(evenementUUID: string): Observable<Message[]> {
-    return this.http.get<any>(`${this.messagesUrl}`, { params: { "evenement_id": evenementUUID }})
+    return this.http.get<any>(`${environment.backendUrl}/events/${evenementUUID}/messages`)
       .pipe(
         map(messages => {
           if (!this.containsEvenementMessages(evenementUUID)) {
@@ -79,7 +81,7 @@ export class MessagesService {
   }
 
   httpGetMessageByID(messageUUID: string): Observable<Message> {
-    return this.http.get<any>(`${this.messagesUrl}/${messageUUID}`)
+    return this.http.get<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/messages/${messageUUID}`)
       .pipe(
         map(response => {
           return response.data
@@ -97,7 +99,7 @@ export class MessagesService {
       "evenement_id": event_id,
       "resources": resources
     }
-    return this.http.post<any>(this.messagesUrl, message, this.httpHeaders)
+    return this.http.post<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/messages`, message, this.httpHeaders)
       .pipe(
         map(message => {
           this.addMessages([message.data])

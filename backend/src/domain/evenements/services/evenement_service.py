@@ -2,7 +2,7 @@ from dataclasses import fields
 from datetime import datetime
 from typing import Any, Dict, List, Union
 from uuid import uuid4
-
+import pandas as pd
 from flask import current_app
 from marshmallow import ValidationError
 
@@ -138,17 +138,16 @@ class EvenementService:
             return MessageService.schema(many=True).dump(messages)
 
     @staticmethod
-    def create_list_of_dict_entries(self, uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, str]]:
+    def create_list_of_dict_entries(uuid: str, uow: AbstractUnitOfWork) -> List[Dict]:
         data_dict = []
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
             for message in evenement.get_all_entries():
-                message_data = MessageSchema().dump(message)
-                data_dict.append({field: message_data[field] for field in fields(MessageEntity)})
+                data_dict.append(MessageSchema().dump(message))
         return data_dict
 
     @staticmethod
-    def create_dataframe(uuid: str, uow: AbstractUnitOfWork):
-        with uow:
-            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
-            entries = evenement.get_all_entries()
+    def create_dataframe(uuid: str, uow: AbstractUnitOfWork) -> pd.DataFrame:
+        entries = EvenementService.create_list_of_dict_entries(uuid=uuid, uow=uow)
+        df = pd.DataFrame(entries)
+        return df

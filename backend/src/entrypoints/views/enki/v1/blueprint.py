@@ -16,6 +16,7 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
 from .resources.contact_ressources import ContactListResource, ContactResource
 from .resources.envement_invitation_resource import EvenementInviteUserResource
 from .resources.evenement_resource import MeEvenementResource
+from .resources.evenements.evenement_export_resource import EvenementExportResource
 from .resources.invitation_ressources import InvitationResource, ValidateInvitationResource
 from .resources.message_resource_resource import MessageMultipleResourceResource
 from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, LocationListResource, \
@@ -64,6 +65,8 @@ api.add_resource(MessageResource, '/events/<uuid>/messages/<message_uuid>', endp
 # Evenement <> Affairs
 api.add_resource(AffairEvenementResource, '/events/<uuid>/affairs/<affair_uuid>', endpoint="evenement_affairs_by_id")
 api.add_resource(AffairListEvenementResource, '/events/<uuid>/affairs', endpoint="evenement_affairs_list")
+# Evenement <> Export
+api.add_resource(EvenementExportResource, '/events/<uuid>/export', endpoint="evenement_export")
 
 # User
 api.add_resource(UserListResource, '/users', endpoint="users")
@@ -133,6 +136,7 @@ def register_views():
     api_spec.spec.path(view=EvenementResource, app=current_app)
     api_spec.spec.path(view=EvenementClosedResource, app=current_app)
     api_spec.spec.path(view=EvenementInviteUserResource, app=current_app)
+    api_spec.spec.path(view=EvenementExportResource, app=current_app)
 
     # Affairs <> Evenement
     api_spec.spec.path(view=AffairEvenementResource, app=current_app)

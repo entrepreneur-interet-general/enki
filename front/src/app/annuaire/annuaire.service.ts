@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { CONTACTS, ANNUAIRE } from '../mocks/contacts-mocks';
 import { Contact } from '../interfaces/Contact';
 import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -18,8 +17,8 @@ export class AnnuaireService {
   ) { }
 
   // GET /annuaire/search?q=queryString
-  searchInAnnuaire(/* queryString: string */): Observable<Contact[]> {
-    return this.http.get<any>(`${environment.backendUrl}/contacts`)
+  searchInAnnuaire(query: string): Observable<Contact[]> {
+    return this.http.get<any>(`${environment.backendUrl}/contacts?query=${query}`)
       .pipe(
         map(contacts => {
           this.annuaire = contacts.data

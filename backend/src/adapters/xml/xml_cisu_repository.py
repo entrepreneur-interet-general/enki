@@ -1,13 +1,12 @@
-import glob
-from typing import List
-import xml.dom.minidom
 import logging
+import pathlib
+import xml.dom.minidom
+from typing import List
 
 from cisu.entities.edxl_entity import EdxlEntity
 
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, affairsList
-import pathlib
 
 
 class XmlCisuRepository(AbstractAffairRepository):

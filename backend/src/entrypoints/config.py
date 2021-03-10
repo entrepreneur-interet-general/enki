@@ -1,8 +1,8 @@
+import os
 from typing import Optional
 
 from service_layer.unit_of_work import AbstractUnitOfWork, SqlAlchemyUnitOfWork
 from .serializers import EnkiJsonEncoder
-import os
 
 
 class EnkiConfig(object):

@@ -1,11 +1,10 @@
 from uuid import uuid4
+
 import pytest
 
-from domain.messages.entities.tag_entity import TagEntity
-from domain.messages.ports.tag_repository import AlreadyExistingTagUuid, InMemoryTagRepository, NotFoundTag, \
+from domain.evenements.entities.tag_entity import TagEntity
+from domain.evenements.ports.tag_repository import AlreadyExistingTagUuid, NotFoundTag, \
     AbstractTagRepository
-from domain.messages.services.tag_service import TagService
-from tests.helpers.filter import filter_dict_with_keys
 
 
 def test_add_tag(tag_repo: AbstractTagRepository):

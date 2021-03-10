@@ -1,15 +1,19 @@
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, pluck } from 'rxjs/operators';
 import { Intervention, InterventionsService } from '../interventions/interventions.service';
+import { Participant } from '../interfaces/Participant';
+import { HTTP_DATA } from '../constants';
 
 export interface Evenement {
   uuid: string;
   title: string;
   description: string;
   created_at: string;
+  closed: boolean;
+  user_roles: Participant[];
 }
 
 @Injectable({
@@ -19,7 +23,14 @@ export class EvenementsService {
 
   evenements: Array<Evenement>
   evenementsUrl: string;
-  selectedEvenement: Evenement;
+  selectedEvenement = new BehaviorSubject<Evenement>({
+    uuid: '',
+    title: '',
+    description: '',
+    created_at: '',
+    closed: false,
+    user_roles: []
+  });
   httpOptions: object;
   constructor(
     private http: HttpClient,
@@ -27,21 +38,15 @@ export class EvenementsService {
     ) {
       this.evenements = []
       this.evenementsUrl = `${environment.backendUrl}/events`
-      this.selectedEvenement = {
-        uuid: '',
-        title: '',
-        description: '',
-        created_at: ''
-      }
       this.httpOptions = {
         headers: new HttpHeaders({
-          'Content-Type':  'application/json'
+          'Content-Type':  'application/json',
         })
       }
   }
 
   getEvenements(): Observable<Evenement[]> {
-    return this.http.get<any>(this.evenementsUrl)
+    return this.http.get<any>(`${environment.backendUrl}/users/me/events`)
       .pipe(
         map(response => {
           return response.data.map(event => {
@@ -49,7 +54,9 @@ export class EvenementsService {
               uuid: event.uuid,
               title: event.title,
               description: event.description,
-              created_at: event.created_at
+              created_at: event.created_at,
+              closed: event.closed,
+              user_roles: event.user_roles
             }
           })
         })
@@ -62,8 +69,27 @@ export class EvenementsService {
         map(response => response.data)
       )
   }
+  addParticipantsToEvenement(participant: Participant): void {
+    const copyEvent = this.selectedEvenement.getValue()
+    copyEvent.user_roles = copyEvent.user_roles.concat(participant)
+    this.selectedEvenement.next(copyEvent);
+  }
+  changeParticipantRole(participant: Participant): void {
+    const copyEvent = this.selectedEvenement.getValue();
+
+    // Replace the right participant by the received one
+    const newUserRoles = copyEvent.user_roles.map(user_role => {
+      if (user_role.user.uuid === participant.user.uuid) {
+        return participant
+      } else {
+        return user_role
+      }
+    })
+    copyEvent.user_roles = newUserRoles
+    this.selectedEvenement.next(copyEvent)
+  }
   selectEvenement(event: Evenement): void {
-    this.selectedEvenement = event;
+    this.selectedEvenement.next(event);
   }
   getSignalementsForEvenement(uuid): Observable<Intervention[]> {
     return this.http.get<any>(`${this.evenementsUrl}/${uuid}/affairs`, this.httpOptions)
@@ -72,5 +98,43 @@ export class EvenementsService {
           return this.interventionsService.mapHTTPInterventions(response.data)
         })
       )
+  }
+
+  callMainCouranteData(): Observable<any> {
+    return this.http.get<any>(
+        `${environment.backendUrl}/events/${this.selectedEvenement.getValue().uuid}/export?format=csv`,
+        { responseType: "arraybuffer" as "json" }
+      ).pipe(
+      map((file: ArrayBuffer) => {
+        return file;
+      })
+    )
+  }
+
+  downloadFile(): void {
+    this.callMainCouranteData().subscribe(data => {
+      const a = document.createElement("a");
+      a.style.display = "none";
+      document.body.appendChild(a);
+    
+      // Set the HREF to a Blob representation of the data to be downloaded
+      a.href = window.URL.createObjectURL(
+        new Blob([data], { type: 'text/csv;charset=utf-8;' })
+      );
+    
+      // Use download attribute to set set desired file name
+      a.setAttribute("download", `${this.selectedEvenement.getValue().uuid}-${(new Date()).toISOString()}`);
+    
+      // Trigger the download by simulating click
+      a.click();
+    
+      // Cleanup
+      window.URL.revokeObjectURL(a.href);
+      document.body.removeChild(a);
+    })
+  }
+
+  closeEvenement(uuid: string): Observable<any> {
+    return this.http.put<any>(`${environment.backendUrl}/events/${uuid}/close`, {})
   }
 }

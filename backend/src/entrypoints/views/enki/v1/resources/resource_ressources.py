@@ -1,7 +1,8 @@
 from flask import request, current_app, g
 from flask_restful import Resource
-from domain.messages.command import CreateResource
-from domain.messages.services.resource_service import ResourceService
+
+from domain.evenements.commands import CreateResource
+from domain.evenements.services.resource_service import ResourceService
 from entrypoints.extensions import event_bus
 from entrypoints.middleware import user_info_middleware
 

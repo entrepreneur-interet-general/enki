@@ -15,8 +15,7 @@ export class DetailMessageComponent implements OnInit {
 
   constructor(
     private messagesService: MessagesService,
-    private route: ActivatedRoute,
-    private userService: UserService
+    private route: ActivatedRoute
   ) {
     /* this.message = {
       title: '',

@@ -1,16 +1,10 @@
-from pathlib import Path
-
 import pytest
 import requests
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, clear_mappers
 from sqlalchemy.exc import OperationalError
 
-from adapters.postgres.orm import start_mappers, metadata
-from entrypoints.config import EnkiConfig
 from entrypoints.flask_app import create_app
-import time
 
 
 @pytest.fixture(scope="function")

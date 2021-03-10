@@ -1,10 +1,9 @@
 import os
 import pathlib
-import time
+from typing import List
 
 import pytest
 from elasticsearch import Elasticsearch
-from typing import List
 
 from adapters.elasticsearch.affair_repository import ElasticAffairRepository
 from adapters.xml.xml_cisu_repository import XmlCisuRepository

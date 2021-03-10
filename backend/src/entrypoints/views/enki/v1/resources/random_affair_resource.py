@@ -1,4 +1,3 @@
-from flask import current_app
 from flask_restful import Resource
 
 from adapters.random.random_cisu_repository import RandomCisuRepository

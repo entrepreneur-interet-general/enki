@@ -2,12 +2,12 @@ from typing import List, Union
 
 from flask import current_app
 from geoalchemy2 import WKBElement
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, lazyload
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, AlreadyExistingAffairUuid
 from domain.affairs.ports.simple_affair_repository import AbstractSimpleAffairRepository
-from domain.evenements.entity import EvenementEntity
+from domain.evenements.entities.evenement_entity import EvenementEntity
 from .repository import PgRepositoryMixin
 
 
@@ -18,7 +18,7 @@ class PgSimpleAffairRepository(PgRepositoryMixin, AbstractSimpleAffairRepository
         AbstractAffairRepository.__init__(self)
 
     def _match_uuid(self, uuid: str) -> Union[SimpleAffairEntity, None]:
-        matches = self.session.query(SimpleAffairEntity).filter(SimpleAffairEntity.uuid == uuid).all()
+        matches = self.session.query(SimpleAffairEntity).filter(SimpleAffairEntity.uuid == uuid).options(lazyload('*')).all()
         if matches:
             return matches[0]
         return None
@@ -35,15 +35,7 @@ class PgSimpleAffairRepository(PgRepositoryMixin, AbstractSimpleAffairRepository
         self.session.add(affair)
 
     def get_all(self) -> List[SimpleAffairEntity]:
-        return self.session.query(SimpleAffairEntity).all()
-
-    def assign_evenement_to_affair(self, affair: SimpleAffairEntity, evenement: EvenementEntity) -> SimpleAffairEntity:
-        affair.evenement = evenement
-        return affair
-
-    def delete_affair_from_evenement(self, affair: SimpleAffairEntity) -> SimpleAffairEntity:
-        affair.evenement_id = None
-        return affair
+        return self.session.query(SimpleAffairEntity).options(lazyload('*')).all()
 
     def get_by_evenement(self, uuid: str) -> List[SimpleAffairEntity]:
         matches = self.session.query(SimpleAffairEntity).filter(SimpleAffairEntity.evenement_id == uuid).all()

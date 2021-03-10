@@ -1,8 +1,7 @@
-from flask import current_app
 import click
+from flask import current_app
 from flask.cli import with_appcontext
 
-from domain.users.entities.group import GroupEntity, GroupType
 from domain.users.entities.user import UserEntity
 
 

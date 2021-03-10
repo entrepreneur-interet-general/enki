@@ -1,11 +1,12 @@
-from domain.evenements.command import CreateEvenement
-from domain.evenements.service import EvenementService
-from domain.messages.command import CreateTag, CreateMessage, CreateResource
-from domain.messages.services.resource_service import ResourceService
-from domain.messages.services.tag_service import TagService
-from domain.messages.services.message_service import MessageService
-from domain.users.command import CreateUser, CreateContact
+from domain.evenements.commands import CreateEvenement
+from domain.evenements.commands import CreateTag, CreateMessage, CreateResource
+from domain.evenements.services.evenement_service import EvenementService
+from domain.evenements.services.message_service import MessageService
+from domain.evenements.services.resource_service import ResourceService
+from domain.evenements.services.tag_service import TagService
+from domain.users.command import CreateUser, CreateContact, CreateInvitation
 from domain.users.services.contact_service import ContactService
+from domain.users.services.invitation_service import InvitationService
 from domain.users.services.user_service import UserService
 from service_layer.unit_of_work import AbstractUnitOfWork
 
@@ -42,3 +43,10 @@ def create_contact(command: CreateContact, uow: AbstractUnitOfWork):
     return ContactService.add_contact(
         data=command.data,
         uow=uow)
+
+
+def create_invitation(command: CreateInvitation, uow: AbstractUnitOfWork):
+    return InvitationService.create_invitation(
+        data=command.data,
+        uow=uow
+    )

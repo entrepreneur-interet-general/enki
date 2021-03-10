@@ -1,14 +1,13 @@
 from typing import Any, Dict, List
 from uuid import uuid4
 
-from flask import current_app
 from marshmallow import ValidationError
 
 from adapters.http.keycloak import KeycloakHelper
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.affairs.schema.simple_affair import SimpleAffairSchema
-from domain.affairs.services.affair_service import AffairService
-from domain.users.entities.group import GroupType, UserPositionEntity, PositionGroupTypeEntity
+from domain.users.entities.contact import ContactEntity
+from domain.users.entities.group import UserPositionEntity, PositionGroupTypeEntity
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.contact import ContactSchema
 from domain.users.schemas.user import UserSchema
@@ -78,30 +77,41 @@ class UserService:
             return UserService.schema(many=True).dump(users)
 
     @staticmethod
+    def search_users(query: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+        with uow:
+            users: List[UserEntity] = uow.user.search(query=query)
+            return UserService.schema(many=True).dump(users)
+
+    @staticmethod
     def list_contacts(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         with uow:
-            contacts: List[UserEntity] = uow.user.get_user_contacts(uuid=uuid)
+            user: UserEntity = uow.user.get_by_uuid(uuid=uuid)
+            contacts: List[ContactEntity] = user.get_contacts()
             return ContactSchema(many=True).dump(contacts)
 
     @staticmethod
     def get_user_contact(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
         with uow:
+            user: UserEntity = uow.user.get_by_uuid(uuid=uuid)
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
-            uow.user.get_user_contact(uuid=uuid, contact=contact)
+            user.get_contact(contact=contact)
             return ContactSchema(many=True).dump(contact)
 
     @staticmethod
     def add_contact_to_user(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
         with uow:
+            user: UserEntity = uow.user.get_by_uuid(uuid=uuid)
+
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
-            uow.user.add_user_contact(uuid=uuid, contact=contact)
+            user.add_contact(contact=contact)
             return ContactSchema().dump(contact)
 
     @staticmethod
     def remove_contact_to_user(uuid: str, contact_uuid: str, uow: AbstractUnitOfWork):
         with uow:
+            user: UserEntity = uow.user.get_by_uuid(uuid=uuid)
             contact = uow.contact.get_by_uuid(uuid=contact_uuid)
-            uow.user.remove_user_contact(uuid=uuid, contact=contact)
+            user.remove_contact(contact=contact)
             return ContactSchema().dump(contact)
 
     @staticmethod

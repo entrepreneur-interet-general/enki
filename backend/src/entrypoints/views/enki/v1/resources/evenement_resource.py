@@ -1,12 +1,9 @@
-from datetime import datetime
-
 from flask import request, current_app, g
 from flask_restful import Resource
-from typing import Dict, Any
 
-from domain.evenements.command import CreateEvenement
+from domain.evenements.commands import CreateEvenement
+from domain.evenements.services.evenement_service import EvenementService
 from entrypoints.extensions import event_bus
-from domain.evenements.service import EvenementService
 from entrypoints.middleware import user_info_middleware
 
 
@@ -20,7 +17,7 @@ class EvenementListResource(WithEvenementRepoResource):
     ---
     get:
       tags:
-        - evenements
+        - events
       responses:
         200:
           description: Return a list of evenements
@@ -78,7 +75,7 @@ class EvenementResource(WithEvenementRepoResource):
         - events
       responses:
         200:
-          description: Return a list of evenements
+          description: Return specific evenement
           content:
             application/json:
               schema: EvenementSchema
@@ -87,5 +84,56 @@ class EvenementResource(WithEvenementRepoResource):
     def get(self, uuid: str):
         return {
                    "data": EvenementService.get_by_uuid(uuid, current_app.context),
+                   "message": "success",
+               }, 200
+
+
+class EvenementClosedResource(WithEvenementRepoResource):
+    """Close specific evenement
+    ---
+    put:
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: Event id
+      tags:
+        - events
+      responses:
+        200:
+          description: Return updated Evenement
+          content:
+            application/json:
+              schema: EvenementSchema
+    """
+
+    def put(self, uuid: str):
+        return {
+                   "data": EvenementService.finish_evenement(uuid, current_app.context),
+        }
+
+class MeEvenementResource(WithEvenementRepoResource):
+    """Get me evenement
+    ---
+    get:
+      tags:
+        - evenements
+        - me
+      responses:
+        200:
+          description: Return a list of evenements
+          content:
+            application/json:
+              schema:
+                type: array
+                items: EvenementSchema
+    """
+    method_decorators = [user_info_middleware]
+
+    def get(self):
+        return {
+                   "data": EvenementService.get_evenements_by_user_id(g.user_info["id"], current_app.context),
                    "message": "success",
                }, 200

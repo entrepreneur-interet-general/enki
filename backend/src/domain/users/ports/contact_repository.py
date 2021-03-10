@@ -23,7 +23,6 @@ class AbstractContactRepository(abc.ABC):
         if self._match_uuid(contact.uuid):
             raise AlreadyExistingContactUuid()
         self._add(contact)
-        # TODO : test if title already exists
 
     def get_by_uuid(self, uuid: str) -> ContactEntity:
         matches = self._match_uuid(uuid)
@@ -36,6 +35,10 @@ class AbstractContactRepository(abc.ABC):
         if not matches:
             raise NotFoundContact
         return matches
+
+    @abc.abstractmethod
+    def get_by_query(self, query):
+        raise NotImplementedError
 
     @abc.abstractmethod
     def get_all(self) -> ContactsList:

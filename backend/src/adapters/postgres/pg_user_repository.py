@@ -1,10 +1,11 @@
 from typing import List, Union
 
+from sqlalchemy import or_
 from sqlalchemy.orm import Session, lazyload
 
-from domain.users.entities.contact import ContactEntity
-from domain.users.ports.user_repository import AbstractUserRepository, AlreadyExistingUserUuid
+from domain.users.entities.group import UserPositionEntity, PositionGroupTypeEntity, GroupEntity
 from domain.users.entities.user import UserEntity
+from domain.users.ports.user_repository import AbstractUserRepository, AlreadyExistingUserUuid
 from .repository import PgRepositoryMixin
 
 usersList = List[UserEntity]
@@ -35,17 +36,16 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
     def get_all(self) -> usersList:
         return self.session.query(self.entity_type).all()
 
-    def _get_user_contacts(self, user: UserEntity):
-        return user.contacts
-
-    def _get_user_contact(self, user: UserEntity, contact: ContactEntity):
-        matches = [contact for contact in user.contacts if contact.uuid == contact.uuid]
-        if not matches:
-            return None
-        return matches[0]
-
-    def _add_user_contact(self, user: UserEntity, contact: ContactEntity):
-        user.contacts.append(contact)
-
-    def _remove_user_contact(self, user: UserEntity, contact: ContactEntity):
-        user.contacts.remove(contact)
+    def search(self, query: str) -> usersList:
+        matches = self.session.query(self.entity_type).\
+            join(UserPositionEntity).\
+            join(PositionGroupTypeEntity).\
+            join(GroupEntity).\
+            filter(
+            or_(
+                self.entity_type.full_name.match(query),
+                PositionGroupTypeEntity.label.match(query),
+                GroupEntity.label.match(query),
+            )
+        ).all()
+        return matches

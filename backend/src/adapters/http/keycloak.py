@@ -1,6 +1,8 @@
+import json
+from typing import Union
+
 from flask import current_app
 from keycloak import KeycloakAdmin
-from typing import Union
 
 
 class KeycloakHelper:
@@ -58,3 +60,19 @@ class KeycloakHelper:
         group_id = self.keycloak_admin.get_group_by_path(f"/{group_name}")["id"]
         self.keycloak_admin.group_user_add(user_id=user_id, group_id=group_id)
         return True
+
+    def create_user_from_invitation(self, email: str):
+        self._authentificate()
+        user_id = self.keycloak_admin.create_user({"email": email,
+                                                   "username": email,
+                                                   "enabled": True,
+                                                   "requiredActions": ["UPDATE_PASSWORD",
+                                                                       "UPDATE_PROFILE",
+                                                                       "VERIFY_EMAIL"]})
+        return user_id
+
+    def send_update_email(self, user_id):
+        self._authentificate()
+        response = self.keycloak_admin.send_update_account(user_id=user_id,
+                                                           payload=json.dumps(
+                                                               ['UPDATE_PASSWORD', 'UPDATE_PROFILE', 'VERIFY_EMAIL']))

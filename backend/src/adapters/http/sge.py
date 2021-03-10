@@ -1,14 +1,13 @@
-from uuid import uuid4
 import requests
+from cisu.entities.cisu_entity import AddressType
+from cisu.entities.commons.common_alerts import AnyURI
+from cisu.entities.edxl_entity import EdxlEntity
+from cisu.factories.edxl_factory import EdxlMessageFactory
 from flask import current_app
 from requests import Response
 
-from cisu.entities.edxl_entity import EdxlEntity
-from cisu.entities.cisu_entity import AddressType
-from cisu.entities.commons.common_alerts import AnyURI
-from cisu.factories.edxl_factory import EdxlMessageFactory
-from entrypoints.config import EnkiConfig
 from domain.core import events
+from entrypoints.config import EnkiConfig
 
 
 class SgeHelper:

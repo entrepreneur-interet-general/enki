@@ -14,11 +14,6 @@
     <div *ngFor="let locationResult of locationResults">
       <div class="searchList--element">
         <a class="searchList--link" (click)="selectLocation(locationResult)" id="locationid-{{locationResult.location.external_id}}">{{locationResult.label}}</a>
-  
-  <!--       <a routerLink="/annuaire/contactdetail/{{contact.uuid}}" class="searchList--link">{{contact.name}}</a>
-        <a (click)="addRemoveToUserFavs(contact.uuid)" class="searchList--action" [class.isFavorite]="isUserFav(contact.uuid)">
-          <svg class="icon-star icon"><use xlink:href="#icon-star"></use></svg>
-        </a> -->
       </div>
     </div>
   </div>

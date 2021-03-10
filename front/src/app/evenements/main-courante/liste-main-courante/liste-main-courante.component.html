@@ -7,6 +7,9 @@
   <div class="subtitle">
     Mis à jour il y a une minute
   </div>
+  <div class="action action--export" (click)="exportMainCourante()">
+    <svg class="icon-download icon"><use xlink:href="#icon-download"></use></svg>
+  </div>
 </div>
 <div class="mc">
   <div class="head-tab">
@@ -56,10 +59,10 @@
       </a>
     </li>
   </ul>
-  <div class="action--filter">
+  <div class="action action--filter">
     <svg class="icon-filter icon"><use xlink:href="#icon-filter"></use></svg>
   </div>
-  <div class="action--add" routerLink="../addmessage" *ngIf="messages.length > 0">
+  <div class="action action--add" routerLink="../addmessage" *ngIf="messages.length > 0">
     <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
   </div>
 </div>

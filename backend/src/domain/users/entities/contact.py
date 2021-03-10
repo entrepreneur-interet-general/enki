@@ -1,11 +1,11 @@
-from datetime import datetime
 from dataclasses import dataclass, field
-from typing import Dict, Optional
+from datetime import datetime
+from typing import Dict
 
-from domain.core.entity import Entity
 from dataclasses_json import DataClassJsonMixin
 
-from domain.users.entities.group import GroupEntity, UserPositionEntity
+from domain.core.entity import Entity
+from domain.users.entities.group import UserPositionEntity
 
 
 @dataclass

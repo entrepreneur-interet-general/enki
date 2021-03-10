@@ -1,8 +1,10 @@
+from typing import Dict, Any, Union, List
+
 from flask import current_app
 from flask_restful import Resource, reqparse
-from typing import Dict, Any, Union, List
-from domain.messages.services.message_service import MessageService
-from domain.messages.services.resource_service import ResourceService
+
+from domain.evenements.services.message_service import MessageService
+from domain.evenements.services.resource_service import ResourceService
 
 
 class WithMessageRepoResource(Resource):

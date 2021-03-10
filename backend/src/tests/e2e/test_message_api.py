@@ -3,8 +3,7 @@ from uuid import uuid4
 
 from flask.testing import FlaskClient
 
-from domain.messages.ports.message_repository import AlreadyExistingMessageUuid, NotFoundMessage
-from entrypoints.flask_app import app
+from domain.evenements.ports.message_repository import AlreadyExistingMessageUuid, NotFoundMessage
 from ..factories.message import message_factory
 from ..helpers.filter import filter_dict_with_keys
 

@@ -1,6 +1,7 @@
 from typing import List, Dict, Callable, Type
-from domain.core.topics import Topic
+
 from domain.core import topics
+from domain.core.topics import Topic
 from .handlers import events, commands
 
 EVENT_HANDLERS: Dict[Type[Topic], List[Callable]] = {
@@ -30,6 +31,9 @@ COMMAND_HANDLERS: Dict[Type[Topic], List[Callable]] = {
     ],
     topics.CreateContactTopic: [
         commands.create_contact,
+    ],
+    topics.CreateInvitationTopic: [
+        commands.create_invitation,
     ],
 }
 

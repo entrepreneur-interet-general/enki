@@ -1,14 +1,12 @@
 import json
+from typing import List, Union
 
 from elasticsearch import Elasticsearch, helpers
-
-from typing import List, Union
+from elasticsearch.exceptions import NotFoundError
 
 from adapters.elasticsearch.base_repo import ElasticRepositoryMixin
 from domain.affairs.entities.affair_entity import AffairEntity
 from domain.affairs.ports.affair_repository import AbstractAffairRepository, affairsList
-from elasticsearch.exceptions import NotFoundError
-
 from entrypoints.serializers import EnkiJsonEncoder
 
 

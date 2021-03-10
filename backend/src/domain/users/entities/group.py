@@ -1,9 +1,10 @@
 from dataclasses import dataclass, field
-from dataclasses_json import dataclass_json
 from enum import Enum
+from typing import Optional
 
+from dataclasses_json import dataclass_json
 from slugify import slugify
-from typing import Optional, List
+
 from domain.core.entity import Entity
 
 

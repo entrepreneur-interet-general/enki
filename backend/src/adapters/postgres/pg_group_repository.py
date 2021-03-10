@@ -3,9 +3,9 @@ from typing import List, Union
 from sqlalchemy.orm import Session
 from werkzeug.exceptions import HTTPException
 
-from domain.users.ports.group_repository import AbstractGroupRepository, AlreadyExistingGroupUuid, GroupsList
 from domain.users.entities.group import GroupEntity, GroupType, PositionGroupTypeEntity, LocationEntity, \
     UserPositionEntity
+from domain.users.ports.group_repository import AbstractGroupRepository
 from .repository import PgRepositoryMixin
 
 tagsList = List[GroupEntity]

@@ -1,6 +1,7 @@
+from apispec import APISpec, BasePlugin
 from apispec.ext.marshmallow import MarshmallowPlugin
 from flask import jsonify, render_template, Blueprint
-from apispec import APISpec, BasePlugin
+
 from .plugin import FlaskRestfulPlugin
 
 

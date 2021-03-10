@@ -21,3 +21,5 @@ flask-redoc
 SQLAlchemy-Searchable
 geoalchemy2
 python-slugify
+pandas
+openpyxl

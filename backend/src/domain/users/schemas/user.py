@@ -1,12 +1,11 @@
+from datetime import datetime
 from uuid import uuid4
 
 from flask import current_app
-from marshmallow import Schema, fields, post_load
-from datetime import datetime
-
+from marshmallow import Schema, fields, post_load, validate
 from werkzeug.exceptions import HTTPException
 
-from domain.users.entities.group import UserPositionEntity
+from domain.users.entities.group import UserPositionEntity, GroupType
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.contact import ContactSchema
 from domain.users.schemas.group import GroupSchema, PositionGroupTypeEntitySchema
@@ -33,7 +32,7 @@ class UserSchema(Schema):
     last_name = fields.Str(required=True)
     position_id = fields.Str(required=True)
     group_id = fields.Str(required=True, load_only=True)
-    group_type = fields.Str(required=True, load_only=True)
+    group_type = fields.Str(validate=validate.OneOf([e.value for e in GroupType]))
     position = fields.Nested("UserPositionSchema",  dump_only=True)
     contacts = fields.Nested(ContactSchema, many=True, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow())
@@ -41,7 +40,6 @@ class UserSchema(Schema):
 
     @post_load
     def make_user(self, data: dict, **kwargs):
-        current_app.logger.info(f"data {data}")
         return UserEntity.from_dict(data)
 
     def handle_error(self, exc, data, **kwargs):

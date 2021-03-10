@@ -17,7 +17,7 @@ export class CreateEvenementComponent implements OnInit {
     nomEvenement: new FormControl('', Validators.required),
     descriptionEvenement: new FormControl('', Validators.required),
     startDate: new FormControl('', Validators.required),
-    endDate: new FormControl('', Validators.required)
+    // endDate: new FormControl('', Validators.required)
   })
 
   evenementUrl: string;
@@ -48,7 +48,7 @@ export class CreateEvenementComponent implements OnInit {
       "title": this.evenementGroup.value.nomEvenement,
       "description": this.evenementGroup.value.descriptionEvenement,
       "started_at": (new Date(this.evenementGroup.controls.startDate.value)).toISOString(),
-      "ended_at": (new Date(this.evenementGroup.controls.endDate.value)).toISOString(),
+      // "ended_at": (new Date(this.evenementGroup.controls.endDate.value)).toISOString(),
       "type": "natural"
     }
     this.httpFormSubmit(formBody).subscribe(response => {

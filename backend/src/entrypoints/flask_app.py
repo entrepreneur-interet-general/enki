@@ -1,6 +1,8 @@
+import logging
+
 from flask import Flask
-from flask_restful import Api
 from flask_cors import CORS
+from flask_restful import Api
 from sqlalchemy.orm import clear_mappers
 
 from adapters.postgres.base_orm import start_mappers
@@ -8,9 +10,8 @@ from entrypoints import views
 from service_layer.messagebus import HANDLERS
 from .commands.seeds import create_group_and_locations, create_position_group, create_affairs
 from .config import EnkiConfig
-from .extensions import event_bus, api_spec
 from .errors import errors
-import logging
+from .extensions import event_bus, api_spec
 
 logging.basicConfig()
 logging.getLogger('sqlalchemy.engine').setLevel(logging.ERROR)

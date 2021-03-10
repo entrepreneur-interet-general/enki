@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { Intervention } from 'src/app/interventions/interventions.service';
 import { EvenementsService } from '../evenements.service';
@@ -17,8 +18,9 @@ export class SummaryEvenementComponent implements OnInit {
 
   constructor(
     private evenementsService: EvenementsService,
+    private router: Router
   ) {
-    this.evenement = this.evenementsService.selectedEvenement
+    this.evenement = this.evenementsService.selectedEvenement.getValue()
     this.interventions = []
   }
 
@@ -50,6 +52,12 @@ export class SummaryEvenementComponent implements OnInit {
   }
   ngAfterViewInit(): void {
     // this.initMap()
+  }
+
+  closeEvenement(): void {
+    this.evenementsService.closeEvenement(this.evenement.uuid).subscribe((res) => {
+      this.router.navigate(['/situations/evenements'])
+    })
   }
 
 }

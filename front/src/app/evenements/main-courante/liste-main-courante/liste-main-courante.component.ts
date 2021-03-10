@@ -22,7 +22,7 @@ export class ListeMainCouranteComponent implements OnInit {
     private userService: UserService
     ) {
     this.messages = []
-    this.uuid = this.evenementsService.selectedEvenement.uuid
+    this.uuid = this.evenementsService.selectedEvenement.getValue().uuid
     this.user = this.userService.user
   }
 
@@ -33,6 +33,11 @@ export class ListeMainCouranteComponent implements OnInit {
       })
       this.fetchedMessages = true
     })
+  }
+
+  exportMainCourante(): void {
+    
+    this.evenementsService.downloadFile();
   }
 
 }

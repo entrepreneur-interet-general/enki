@@ -1,5 +1,6 @@
 import abc
 from typing import List, Union
+
 from werkzeug.exceptions import HTTPException
 
 from domain.users.entities.group import GroupEntity, GroupType, PositionGroupTypeEntity, LocationEntity, \

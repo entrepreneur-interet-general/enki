@@ -35,4 +35,9 @@ export class ListeMainCouranteComponent implements OnInit {
     })
   }
 
+  exportMainCourante(): void {
+    
+    this.evenementsService.downloadFile();
+  }
+
 }

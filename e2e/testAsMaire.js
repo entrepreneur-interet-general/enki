@@ -148,3 +148,20 @@ fixture `Test as Maire`
 
     })
 
+    test('Share event with other user', async t => {
+      await t
+      .click('.burger')
+      .click('#test--link-situation')
+      .click('#test--evenements')
+      .click('.evenement--element:last-child')
+      .click('#test--share')
+      .click('.test--shareWithUser')
+      .typeText('.fullscreen-form--searchInput', 'Benjamin')
+      .expect(Selector('.searchList--link').exists).ok()
+      .click(Selector('.searchList--link').nth(0))
+      .click('.test--changeParticipantRole')
+      // we change user role to "edit"
+      .click('#edit')
+      .click('.enki-modal--overlay')
+      .expect(Selector('.test--changeParticipantRole').innerText).contains('Éditeur')
+    })

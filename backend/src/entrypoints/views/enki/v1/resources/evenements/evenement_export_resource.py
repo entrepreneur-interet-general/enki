@@ -1,6 +1,6 @@
 from datetime import datetime
 from tempfile import NamedTemporaryFile
-
+import pandas as pd
 from flask import current_app, send_file
 from flask_restful import Resource, reqparse
 
@@ -47,8 +47,11 @@ class EvenementExportResource(WithEvenementRepoResource):
         with NamedTemporaryFile(suffix=f".{format_}") as f:
             if format_ == "csv":
                 df.to_csv(f.name, index=False)
-            if format_ == "excel":
-                df.to_excel(f.name)
+            if format_ == "xlsx":
+                with pd.ExcelWriter(f.name,
+                                    mode='a') as writer:
+                    df.to_excel(writer, sheet_name='export')
+
             if format_ == "json":
                 df.to_json(f.name)
             if format_ == "html":

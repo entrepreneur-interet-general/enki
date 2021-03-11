@@ -21,6 +21,7 @@ class UserService:
     @staticmethod
     def add_user(data: dict,
                  uow: AbstractUnitOfWork):
+        token: str = data.pop("token", None)
         try:
             user: UserEntity = UserService.schema().load(data)
         except ValidationError as ve:

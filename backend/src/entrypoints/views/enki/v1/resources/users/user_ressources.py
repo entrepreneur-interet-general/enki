@@ -68,7 +68,12 @@ class UserListResource(WithUserRepoResource):
 
     def post(self):
         body = request.get_json()
+
+        parser = reqparse.RequestParser()
+        parser.add_argument('token', type=str, required=False)
+        args = parser.parse_args()
         body["uuid"] = g.user_info["id"]
+        body["token"] = args.get("token")
         current_app.logger.info("start creating user")
         command = CreateUser(data=body)
         result = event_bus.publish(command, current_app.context)

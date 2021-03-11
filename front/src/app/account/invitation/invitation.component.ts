@@ -35,4 +35,8 @@ export class InvitationComponent implements OnInit {
     console.log('submit')
   }
 
+  goToSearchLocation(): void {
+    console.log('go to search location')
+  }
+
 }

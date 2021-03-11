@@ -26,7 +26,7 @@ const routes : Routes = [
 @NgModule({
   declarations: [
     AccountComponent,
-    InvitationComponent,
+    InvitationComponent
   ],
   imports: [
     CommonModule,

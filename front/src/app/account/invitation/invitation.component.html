@@ -36,7 +36,8 @@
       <label for="email" class="enkiform__label">Email</label>
     </div>
     <div class="enkiform__group">
-      <input type="submit" id="submit-invitation" class="btn" value="Envoyer l'invitation" [disabled]="!invitationGroupvalid">
+      <input type="submit" id="submit-invitation" class="btn" value="Envoyer l'invitation" [disabled]="!invitationGroup.valid">
     </div>
   </form>
 </div>
+<router-outlet></router-outlet>

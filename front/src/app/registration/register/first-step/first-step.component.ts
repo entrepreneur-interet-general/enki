@@ -29,6 +29,8 @@ export class FirstStepComponent {
   httpOptions: object;
   userTypes: [];
   userPositions: object[];
+  structurePreFilled: boolean;
+  userGroupPreFilled: boolean;
 
   constructor(
     private http: HttpClient,
@@ -37,6 +39,8 @@ export class FirstStepComponent {
     private registerService: RegisterService,
     private route: ActivatedRoute
   ) {
+    this.structurePreFilled = false;
+    this.userGroupPreFilled = false;
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -67,6 +71,9 @@ export class FirstStepComponent {
       if (params['token']) {
         this.validateInvitationToken(params['token']).subscribe(res => {
           this.userGroup.controls.group.setValue(res.group.type.toLowerCase())
+          this.userGroupPreFilled = true;
+          this.structurePreFilled = true;
+          console.log(this.structurePreFilled)
           this.registerService.token = params['token'];
           this.registerService.selectedLocation.next({
             slug: res.group.slug,

@@ -23,6 +23,7 @@ export class InvitationComponent implements OnInit {
     private registerService: RegisterService
   ) {
     this.registerService.getUserTypes().subscribe(response => {
+      console.log(response)
       this.groupTypes = response
     })
   }

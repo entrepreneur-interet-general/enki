@@ -1,27 +1,32 @@
-<div class="title-container">
+<div class="title-container -bottomLine">
   <h1 class="h2-title">Invitation</h1>
   <div class="subtitle">
     Remplissez le formulaire, pour inviter une personne ou un établissement à rejoindre ENKI.
   </div>
 </div>
 <div class="invitation">
-  <h2 class="h3-title">Informations professionnelles</h2>
-  <p class="subtitle">(Champs obligatoires)</p>
+  <div class="title-form">
+    <h2 class="h3-title">Informations professionnelles</h2>
+    <p class="subtitle">(Champs obligatoires)</p>
+  </div>
   <form action="" class="invitationForm" [formGroup]="invitationGroup" (ngSubmit)="onSubmit()">
     <div class="enkiform__group">
       <select class="enkiform__input" id="group" formControlName="group" required>
-        <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option>
+        <option *ngFor="let groupType of groupTypes" value="{{groupType}}">{{groupType | titlecase}}</option>
       </select>
-      <label for="group" class="enkiform__label">Groupe</label>
+      <label for="group" class="enkiform__label">Type d'établissement</label>
       <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
     </div>
     <div class="enkiform__group">
       <input type="text" class="enkiform__input" id="structure" formControlName="structure" required (focus)="goToSearchLocation()" [attr.disabled]="invitationGroup.value.group == '' ? true : null">
-      <label for="structure" class="enkiform__label">Structure</label>
+      <label for="structure" class="enkiform__label">Établissement</label>
       <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
     </div>
-    <h2 class="h3-title">Coordonnées</h2>
-    <p class="subtitle">(Champs obligatoires)</p>
+
+    <div class="title-form">
+      <h2 class="h3-title">Coordonnées</h2>
+      <p class="subtitle">(Champs obligatoires)</p>
+    </div>
     <div class="enkiform__group">
       <input type="text" class="enkiform__input" id="phone" formControlName="phone" required>
       <label for="phone" class="enkiform__label">Téléphone</label>
@@ -29,6 +34,9 @@
     <div class="enkiform__group">
       <input type="text" class="enkiform__input" id="email" formControlName="email" required>
       <label for="email" class="enkiform__label">Email</label>
+    </div>
+    <div class="enkiform__group">
+      <input type="submit" id="submit-invitation" class="btn" value="Envoyer l'invitation" [disabled]="!invitationGroupvalid">
     </div>
   </form>
 </div>

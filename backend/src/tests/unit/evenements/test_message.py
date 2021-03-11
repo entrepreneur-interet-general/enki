@@ -3,7 +3,7 @@ import pytest
 from domain.evenements.entities.evenement_entity import EvenementEntity, EvenementClosedException
 from domain.evenements.entities.message_entity import MessageEntity, TagAlreadyInThisMessage, NotFoundTagInThisMessage
 from domain.evenements.entities.tag_entity import TagEntity
-from domain.evenements.schemas.schema import MessageSchema
+from domain.evenements.schemas.message_tag_schema import MessageSchema
 
 
 def test_message_load(message_data):

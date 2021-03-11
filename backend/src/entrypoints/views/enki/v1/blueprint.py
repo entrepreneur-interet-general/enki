@@ -1,7 +1,7 @@
 from flask import Blueprint, current_app
 from flask_restful import Api
 
-from domain.evenements.schemas.schema import MessageSchema
+from domain.evenements.schemas.message_tag_schema import MessageSchema
 from domain.evenements.schemas.evenement_schema import EvenementSchema
 from entrypoints.extensions import api_spec
 from entrypoints.views.enki.v1.resources.users.user_ressources import UserResource, UserListResource
@@ -13,12 +13,14 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
     ResourceListResource, ResourceResource, \
     MessageResourceResource, MessageResourceListResource, \
     AffairEvenementResource, AffairListEvenementResource
-from .resources.contact_ressources import ContactListResource, ContactResource
-from .resources.envement_invitation_resource import EvenementInviteUserResource
-from .resources.evenement_resource import MeEvenementResource
+from entrypoints.views.enki.v1.resources.users.contact_ressources import ContactListResource, ContactResource
+from entrypoints.views.enki.v1.resources.evenements.envement_invitation_resource import EvenementInviteUserResource
+from entrypoints.views.enki.v1.resources.evenements.evenement_resource import MeEvenementResource
 from .resources.evenements.evenement_export_resource import EvenementExportResource
-from .resources.invitation_ressources import InvitationResource, ValidateInvitationResource
-from .resources.message_resource_resource import MessageMultipleResourceResource
+from entrypoints.views.enki.v1.resources.users.invitation_ressources import InvitationResource, \
+    ValidateInvitationResource
+from entrypoints.views.enki.v1.resources.evenements.message_resource_resource import MessageMultipleResourceResource
+from .resources.evenements.meeting_ressources import MeetingResource
 from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, LocationListResource, \
     PositionGroupTypeListResource
 from .resources.users.me.me_affairs_ressources import UserMeAffairsResource
@@ -28,13 +30,15 @@ from .resources.users.user_favorite_ressources import UserContactListResource, U
 enki_blueprint_v1 = Blueprint(name="enki_blueprint_v1", import_name=__name__, url_prefix="/api/enki/v1")
 
 api = Api(enki_blueprint_v1)
+
+endpoints = {
+    '/affairs/<uuid>': AffairResource
+}
 # Affairs
 api.add_resource(AffairResource, '/affairs/<uuid>', endpoint="affair_by_id")
 api.add_resource(AffairListResource, '/affairs', endpoint="affairs")
 api.add_resource(AffairRandomResource, '/affair/random', endpoint="affair_random")
 api.add_resource(AffairRandomListResource, '/affairs/random', endpoint="affairs_random")
-
-
 
 # Tags
 api.add_resource(TagListResource, '/tags', endpoint="tags")
@@ -51,7 +55,6 @@ api.add_resource(MessageResourceResource, '/messages/<uuid>/resource/<resource_u
 api.add_resource(MessageMultipleResourceResource, '/messages/<uuid>/resource/add',
                  endpoint="message_by_id_resource_by_ids")
 
-
 api.add_resource(MessageResourceListResource, '/messages/<uuid>/resources', endpoint="message_by_id_resources")
 
 # Evenements
@@ -67,6 +70,9 @@ api.add_resource(AffairEvenementResource, '/events/<uuid>/affairs/<affair_uuid>'
 api.add_resource(AffairListEvenementResource, '/events/<uuid>/affairs', endpoint="evenement_affairs_list")
 # Evenement <> Export
 api.add_resource(EvenementExportResource, '/events/<uuid>/export', endpoint="evenement_export")
+# Evenement<> Meeting
+api.add_resource(EvenementExportResource, '/events/<uuid>/meeting', endpoint="evenement_meeting")
+api.add_resource(MeetingResource, '/events/<uuid>/meeting/<meeting_uuid>', endpoint="evenement_meeting_by_uuid")
 
 # User
 api.add_resource(UserListResource, '/users', endpoint="users")
@@ -90,7 +96,6 @@ api.add_resource(UserContactResource, '/users/me/contact/favorites/<contact_uuid
 api.add_resource(UserMeResource, '/users/me', endpoint="me_informations")
 api.add_resource(UserMeAffairsResource, '/users/me/affairs', endpoint="me_affairs")
 api.add_resource(MeEvenementResource, '/users/me/events', endpoint="me_events")
-
 
 # Invitations
 api.add_resource(InvitationResource, '/invitation', endpoint="create_invitation")
@@ -168,4 +173,3 @@ def register_views():
     # Invitation
     api_spec.spec.path(view=InvitationResource, app=current_app)
     api_spec.spec.path(view=ValidateInvitationResource, app=current_app)
-

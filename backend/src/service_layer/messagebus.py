@@ -35,6 +35,9 @@ COMMAND_HANDLERS: Dict[Type[Topic], List[Callable]] = {
     topics.CreateInvitationTopic: [
         commands.create_invitation,
     ],
+    topics.CreateMeetingTopic: [
+        commands.create_meeting,
+    ],
 }
 
 HANDLERS: Dict[Type[Topic], List[Callable]] = {**EVENT_HANDLERS, **COMMAND_HANDLERS}

@@ -3,7 +3,7 @@ import random
 from slugify import slugify
 
 from domain.evenements.entities.tag_entity import TagEntity
-from domain.evenements.schemas.schema import TagSchema
+from domain.evenements.schemas.message_tag_schema import TagSchema
 
 
 def test_tag_load(tag_data):

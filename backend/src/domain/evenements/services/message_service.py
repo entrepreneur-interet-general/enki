@@ -6,7 +6,7 @@ from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage, \
     AlreadyExistingResourceInThisMessage
-from domain.evenements.schemas.schema import MessageSchema, TagSchema
+from domain.evenements.schemas.message_tag_schema import MessageSchema, TagSchema
 from domain.evenements.schemas.resource_schema import ResourceSchema
 from domain.users.entities.user import UserEntity
 from service_layer.unit_of_work import AbstractUnitOfWork

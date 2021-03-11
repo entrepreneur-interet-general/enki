@@ -55,3 +55,7 @@ class CreateContactTopic(Topic):
 @dataclass
 class CreateInvitationTopic(Topic):
     name: str = "CreateInvitation"
+
+@dataclass
+class CreateMeetingTopic(Topic):
+    name: str = "CreateMeeting"

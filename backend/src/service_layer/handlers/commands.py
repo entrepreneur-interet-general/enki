@@ -1,6 +1,7 @@
-from domain.evenements.commands import CreateEvenement
+from domain.evenements.commands import CreateEvenement, CreateMeeting
 from domain.evenements.commands import CreateTag, CreateMessage, CreateResource
 from domain.evenements.services.evenement_service import EvenementService
+from domain.evenements.services.meeting_service import MeetingService
 from domain.evenements.services.message_service import MessageService
 from domain.evenements.services.resource_service import ResourceService
 from domain.evenements.services.tag_service import TagService
@@ -47,6 +48,13 @@ def create_contact(command: CreateContact, uow: AbstractUnitOfWork):
 
 def create_invitation(command: CreateInvitation, uow: AbstractUnitOfWork):
     return InvitationService.create_invitation(
+        data=command.data,
+        uow=uow
+    )
+
+
+def create_meeting(command: CreateMeeting, uow: AbstractUnitOfWork):
+    return MeetingService.add_meeting(
         data=command.data,
         uow=uow
     )

@@ -38,6 +38,8 @@ class AbstractUnitOfWork(abc.ABC):
     contact: AbstractContactRepository
     group: AbstractGroupRepository
     invitation: AbstractInvitationRepository
+    meeting: AbstractMeetingRepository
+
 
     def __init__(self, config):
         self.config = config

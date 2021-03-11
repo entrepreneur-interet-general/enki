@@ -29,7 +29,6 @@ export class FirstStepComponent {
   httpOptions: object;
   userTypes: [];
   userPositions: object[];
-  token: string;
 
   constructor(
     private http: HttpClient,
@@ -63,14 +62,12 @@ export class FirstStepComponent {
   }
 
   ngOnInit(): void {
-    console.log('testttest1')
     this.route.queryParams.subscribe(params => {
-      this.token = params['token'];
 
-      if (this.token) {
-        this.validateInvitationToken(this.token).subscribe(res => {
+      if (params['token']) {
+        this.validateInvitationToken(params['token']).subscribe(res => {
           this.userGroup.controls.group.setValue(res.group.type.toLowerCase())
-          this.userGroup.controls.group.setValue(res.group.type.toLowerCase())
+          this.registerService.token = params['token'];
           this.registerService.selectedLocation.next({
             slug: res.group.slug,
             label: res.group.label,
@@ -110,7 +107,8 @@ export class FirstStepComponent {
   }
 
   httpSubmitForm(bodyForm): Observable<any> {
-    return this.http.post<any>(`${environment.backendUrl}/users`, bodyForm, this.httpOptions)
+    const submitUrl = this.registerService.token ? `${environment.backendUrl}/users?token=${this.registerService.token}` : `${environment.backendUrl}/users`
+    return this.http.post<any>(submitUrl, bodyForm, this.httpOptions)
   }
 
   goToSearchLocation() {

@@ -1,5 +1,6 @@
 from flask import request, current_app, g
 from flask_restful import Resource, reqparse
+from typing import Union, List
 
 from domain.users.command import CreateUser
 from domain.users.services.user_service import UserService
@@ -57,10 +58,14 @@ class UserListResource(WithUserRepoResource):
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('query', type=str, required=True)
+        parser.add_argument('uuids', type=str, required=False, action="append")
 
         args = parser.parse_args()
         query: str = args.get("query")
-        users = UserService.search_users(query=query, uow=current_app.context)
+        uuids: Union[str, List[str]] = args.get("uuids")
+        if isinstance(uuids, str):
+            uuids = [uuids]
+        users = UserService.search_users(query=query, uuids=uuids, uow=current_app.context)
         return {
                    "data": users,
                    "message": "success",

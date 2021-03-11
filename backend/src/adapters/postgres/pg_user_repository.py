@@ -1,5 +1,6 @@
-from typing import List, Union
+from typing import List, Union, Optional
 
+from flask import current_app
 from sqlalchemy import or_
 from sqlalchemy.orm import Session, lazyload
 
@@ -36,8 +37,9 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
     def get_all(self) -> usersList:
         return self.session.query(self.entity_type).all()
 
-    def search(self, query: str) -> usersList:
-        matches = self.session.query(self.entity_type).\
+    def search(self, query: str, uuids: Optional[List[str]] = None) -> usersList:
+        current_app.logger.info(f"uuids {uuids}")
+        query = self.session.query(self.entity_type).\
             join(UserPositionEntity).\
             join(PositionGroupTypeEntity).\
             join(GroupEntity).\
@@ -47,5 +49,8 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
                 PositionGroupTypeEntity.label.match(query),
                 GroupEntity.label.match(query),
             )
-        ).all()
+        )
+        if uuids:
+            query = query.filter(self.entity_type.uuid.notin_(uuids))
+        matches = query.all()
         return matches

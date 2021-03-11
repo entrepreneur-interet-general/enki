@@ -35,7 +35,7 @@ class PgContactRepository(PgRepositoryMixin, AbstractContactRepository):
     def get_all(self) -> contactsList:
         return self.session.query(self.entity_type).all()
 
-    def get_by_query(self, query):
+    def get_by_query(self, query: str) -> contactsList:
         matches = self.session.query(self.entity_type).\
             join(UserPositionEntity).\
             join(PositionGroupTypeEntity).\

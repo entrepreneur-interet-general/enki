@@ -32,7 +32,7 @@ class InvitationEntity(DataClassJsonMixin, Entity):
 
     def __post_init__(self):
         self.token = secrets.token_urlsafe()
-        self.invitation_url = f"http://localhost:1337/invitation?token={self.token}"
+        self.invitation_url = f"http://localhost:1337/register/step1?token={self.token}"
         print()
 
     @property

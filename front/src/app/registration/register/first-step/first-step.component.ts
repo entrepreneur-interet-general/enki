@@ -4,10 +4,11 @@ import { Validators } from '@angular/forms';
 import { Observable} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from '../../../user/user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { RegisterService } from '../../register.service';
-import { REGISTER } from 'src/app/constants';
+import { HTTP_DATA, REGISTER } from 'src/app/constants';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-first-step',
@@ -28,12 +29,14 @@ export class FirstStepComponent {
   httpOptions: object;
   userTypes: [];
   userPositions: object[];
+  token: string;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private userService: UserService,
-    private registerService: RegisterService
+    private registerService: RegisterService,
+    private route: ActivatedRoute
   ) {
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -60,8 +63,31 @@ export class FirstStepComponent {
   }
 
   ngOnInit(): void {
+    console.log('testttest1')
+    this.route.queryParams.subscribe(params => {
+      this.token = params['token'];
+
+      if (this.token) {
+        this.validateInvitationToken(this.token).subscribe(res => {
+          this.userGroup.controls.group.setValue(res.group.type.toLowerCase())
+          this.userGroup.controls.group.setValue(res.group.type.toLowerCase())
+          this.registerService.selectedLocation.next({
+            slug: res.group.slug,
+            label: res.group.label,
+            uuid: res.group.uuid
+          })
+
+        })
+      }
+
+    });
   }
 
+  validateInvitationToken(token: string): Observable<any> {
+    return this.http.post(`${environment.backendUrl}/invitation/validate?token=${token}`, {}).pipe(
+      pluck(HTTP_DATA)
+    )
+  }
 
   onSubmit(): void {
     let bodyForm = {

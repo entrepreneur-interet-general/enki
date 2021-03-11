@@ -1,0 +1,34 @@
+<div class="title-container">
+  <h1 class="h2-title">Invitation</h1>
+  <div class="subtitle">
+    Remplissez le formulaire, pour inviter une personne ou un établissement à rejoindre ENKI.
+  </div>
+</div>
+<div class="invitation">
+  <h2 class="h3-title">Informations professionnelles</h2>
+  <p class="subtitle">(Champs obligatoires)</p>
+  <form action="" class="invitationForm" [formGroup]="invitationGroup" (ngSubmit)="onSubmit()">
+    <div class="enkiform__group">
+      <select class="enkiform__input" id="group" formControlName="group" required>
+        <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option>
+      </select>
+      <label for="group" class="enkiform__label">Groupe</label>
+      <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+    </div>
+    <div class="enkiform__group">
+      <input type="text" class="enkiform__input" id="structure" formControlName="structure" required (focus)="goToSearchLocation()" [attr.disabled]="invitationGroup.value.group == '' ? true : null">
+      <label for="structure" class="enkiform__label">Structure</label>
+      <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
+    </div>
+    <h2 class="h3-title">Coordonnées</h2>
+    <p class="subtitle">(Champs obligatoires)</p>
+    <div class="enkiform__group">
+      <input type="text" class="enkiform__input" id="phone" formControlName="phone" required>
+      <label for="phone" class="enkiform__label">Téléphone</label>
+    </div>
+    <div class="enkiform__group">
+      <input type="text" class="enkiform__input" id="email" formControlName="email" required>
+      <label for="email" class="enkiform__label">Email</label>
+    </div>
+  </form>
+</div>

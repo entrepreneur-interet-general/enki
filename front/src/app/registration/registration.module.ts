@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { RegisterService } from './register.service';
 import { UserInfoGuard } from '../guards/user-info.guard';
+import { SearchEtablissementComponent } from '../search-etablissement/search-etablissement.component';
 
 const routes : Routes = [
   {
@@ -25,7 +26,7 @@ const routes : Routes = [
         children: [
           {
             path: 'searchlocation',
-            component: SearchLocationComponent
+            component: SearchEtablissementComponent
           }
         ]
       },

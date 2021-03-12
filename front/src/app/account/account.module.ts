@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { InvitationComponent } from './invitation/invitation.component';
 import { AccountComponent } from './account.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SearchEtablissementComponent } from '../search-etablissement/search-etablissement.component';
 
 const routes : Routes = [
   {
@@ -17,7 +18,13 @@ const routes : Routes = [
       },
       {
         path: 'invitation',
-        component: InvitationComponent
+        component: InvitationComponent,
+        children: [
+          {
+            path: 'searchetablissement',
+            component: SearchEtablissementComponent
+          }
+        ]
       }
     ]
   }

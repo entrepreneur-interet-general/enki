@@ -13,12 +13,7 @@
   </div>
   <div *ngFor="let etablissementResult of etablissementResults">
     <div class="searchList--element">
-      <a class="searchList--link" (click)="selectLocation(etablissementResult)" id="locationid-{{etablissementResult.location.external_id}}">{{etablissementResult.label}}</a>
-
-<!--       <a routerLink="/annuaire/contactdetail/{{contact.uuid}}" class="searchList--link">{{contact.name}}</a>
-      <a (click)="addRemoveToUserFavs(contact.uuid)" class="searchList--action" [class.isFavorite]="isUserFav(contact.uuid)">
-        <svg class="icon-star icon"><use xlink:href="#icon-star"></use></svg>
-      </a> -->
+      <a class="searchList--link" (click)="selectEtablissement(etablissementResult)" id="locationid-{{etablissementResult.location.external_id}}">{{etablissementResult.label}}</a>
     </div>
   </div>
 </div>

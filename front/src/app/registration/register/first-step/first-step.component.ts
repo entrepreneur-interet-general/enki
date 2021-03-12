@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { RegisterService } from '../../register.service';
 import { HTTP_DATA, REGISTER } from 'src/app/constants';
 import { pluck } from 'rxjs/operators';
+import { SearchEtablissementService } from 'src/app/search-etablissement/search-etablissement.service';
 
 @Component({
   selector: 'app-first-step',
@@ -37,6 +38,7 @@ export class FirstStepComponent {
     private router: Router,
     private userService: UserService,
     private registerService: RegisterService,
+    private etablissementService: SearchEtablissementService,
     private route: ActivatedRoute
   ) {
     this.structurePreFilled = false;
@@ -48,7 +50,7 @@ export class FirstStepComponent {
       })
     }
 
-    this.registerService.selectedLocation.subscribe((structure) => {
+    this.etablissementService.selectedEtablissement.subscribe((structure) => {
       this.userGroup.get('structure').setValue(structure.label)
     })
     
@@ -119,6 +121,8 @@ export class FirstStepComponent {
   }
 
   goToSearchLocation() {
-    this.router.navigate([`${REGISTER}/step1/searchlocation`])
+    // this.router.navigate([`search-etablissement`], { queryParams: { groupType: this.userGroup.controls.group.value }})
+
+    this.router.navigate([`${REGISTER}/step1/searchlocation`], { queryParams: { groupType: this.userGroup.controls.group.value }})
   }
 }

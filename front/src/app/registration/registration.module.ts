@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchLocationComponent } from './register/first-step/search-location/search-location.component';
 import { FirstStepComponent } from './register/first-step/first-step.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -37,7 +36,6 @@ const routes : Routes = [
 @NgModule({
   declarations: [
     FirstStepComponent,
-    SearchLocationComponent,
     RegisterComponent
   ],
   providers: [ RegisterService ],

@@ -97,7 +97,7 @@ fixture `Test as Maire`
         .click(structureOption.withText('Mairie'))
         .click(positionSelect)
         .click(positionOption.withText('Maire'))
-        .click('#structure')
+        .click('#etablissement')
         .typeText('.fullscreen-form--searchInput', 'Chelles')
         .click('#locationid-77108')
 

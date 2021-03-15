@@ -23,7 +23,7 @@ export class FirstStepComponent {
     lastName: new FormControl('', Validators.required),
     group: new FormControl('', Validators.required),
     position: new FormControl('', Validators.required),
-    structure: new FormControl('', Validators.required),
+    etablissement: new FormControl('', Validators.required),
   })
   fonctions: object;
   updateUserUrl: string;
@@ -50,8 +50,8 @@ export class FirstStepComponent {
       })
     }
 
-    this.etablissementService.selectedEtablissement.subscribe((structure) => {
-      this.userGroup.get('structure').setValue(structure.label)
+    this.etablissementService.selectedEtablissement.subscribe((etablissement) => {
+      this.userGroup.get('etablissement').setValue(etablissement.label)
     })
     
     this.registerService.getUserTypes().subscribe(response => {
@@ -75,9 +75,8 @@ export class FirstStepComponent {
           this.userGroup.controls.group.setValue(res.group.type.toLowerCase())
           this.userGroupPreFilled = true;
           this.structurePreFilled = true;
-          console.log(this.structurePreFilled)
           this.registerService.token = params['token'];
-          this.registerService.selectedLocation.next({
+          this.etablissementService.selectedEtablissement.next({
             slug: res.group.slug,
             label: res.group.label,
             uuid: res.group.uuid

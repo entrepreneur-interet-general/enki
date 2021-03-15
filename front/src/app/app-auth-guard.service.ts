@@ -14,8 +14,7 @@ import { UserService } from './user/user.service';
 export class AuthGuard extends KeycloakAuthGuard {
   constructor(
     protected readonly router: Router,
-    protected readonly keycloak: KeycloakService,
-    private userService: UserService
+    protected readonly keycloak: KeycloakService
   ) {
     super(router, keycloak);
   }

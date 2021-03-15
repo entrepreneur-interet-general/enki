@@ -50,7 +50,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     EvenementsModule,
     AnnuaireModule,
-    RegistrationModule
+    RegistrationModule,
   ],
   exports: [ RouterModule ],
   providers: [ AuthGuard ]

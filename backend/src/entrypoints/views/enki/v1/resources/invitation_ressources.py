@@ -1,5 +1,5 @@
 from flask import request, current_app, g
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 
 from domain.users.command import CreateInvitation
 from domain.users.services.invitation_service import InvitationService
@@ -33,8 +33,12 @@ class ValidateInvitationResource(WithInvitationRepoResource):
     """
 
     def post(self):
-        body = request.get_json()
-        result = InvitationService.token_with_email(token=body["token"], email=body["email"], uow=current_app.context)
+        parser = reqparse.RequestParser()
+        parser.add_argument('token', type=str, required=True)
+
+        args = parser.parse_args()
+        token: str = args.get("token")
+        result = InvitationService.get_invitation_info(token=token, uow=current_app.context)
         return {
                    "message": "success",
                    "data": result

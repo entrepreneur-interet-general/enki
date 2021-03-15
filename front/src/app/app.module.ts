@@ -10,7 +10,6 @@ import { MapComponent } from './map/map.component';
 import { environment } from '../environments/environment';
 import { ListeInterventionsComponent } from './interventions/liste-interventions/liste-interventions.component';
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
-import { SvgDefinitionsComponent } from './ui/svg-definitions/svg-definitions.component';
 import { HeaderComponent } from './ui/header/header.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -20,7 +19,9 @@ import { SecondStepComponent } from './registration/second-step/second-step.comp
 import { ReactiveFormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
+import { SearchEtablissementModule } from './search-etablissement/search-etablissement.module'
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
+import { AccountModule } from './account/account.module';
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
 import { SituationsComponent } from './situations/situations.component';
@@ -50,7 +51,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     SecondStepComponent,
     PageNotFoundComponent,
     SituationsComponent,
-    ListeEvenementsComponent
+    ListeEvenementsComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +66,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     UiModule,
     UserDashboardModule,
+    SearchEtablissementModule,
+    AccountModule,
     EvenementsModule,
     AnnuaireModule,
     AppRoutingModule

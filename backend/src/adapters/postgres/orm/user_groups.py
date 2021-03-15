@@ -111,9 +111,13 @@ invitation_table = Table(
     'invitations', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('token', String(100)),
+    Column('email', String(100)),
+    Column('phone_number', String(100)),
     Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
+    Column('group_id', String(60), ForeignKey("groups.uuid")),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
     Column('expire_at', TIMESTAMP(), nullable=True),
+    Column('validated_at', TIMESTAMP(), nullable=True),
     Column('created_at', TIMESTAMP(), nullable=True, default=datetime.now)
 )
 

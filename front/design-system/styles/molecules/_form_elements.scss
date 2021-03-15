@@ -138,10 +138,13 @@
             transition: ease .2s all;
             padding: 0 4px;
         }
-        &:valid + label {
+        &.ng-valid + label {
             top: -7px;
             font-size: 12px;
             padding: 0 4px;
+        }
+        &.ng-valid:disabled + label {
+            display: none;
         }
         &:focus {
             outline: 0;

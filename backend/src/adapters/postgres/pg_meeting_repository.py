@@ -24,6 +24,7 @@ class PgMeetingRepository(PgRepositoryMixin, AbstractMeetingRepository):
         if self._match_uuid(meeting.uuid):
             raise AlreadyExistingMeetingUuid()
         self.session.add(meeting)
+        return meeting
 
     def get_all(self) -> meetingsList:
         return self.session.query(self.entity_type).all()

@@ -12,6 +12,7 @@ from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entities.evenement_entity import EvenementType, EvenementEntity, EvenementRoleType, \
     UserEvenementRole
 from domain.evenements.entities.message_entity import MessageType, Severity, MessageEntity
+from domain.evenements.entities.meeting_entity import MeetingEntity
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.users.entities.user import UserEntity
@@ -97,16 +98,12 @@ affairsTable = Table(
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
 
-created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
-updated_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
-closed_at = fields.DateTime(dump_only=True)
-
 
 meeting_Table = Table(
     'meetings', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('link', String(255), nullable=False),
-    Column('creator_id', String(255), ForeignKey("users.uuid"), nullable=False),
+    Column('creator_id', String(60), ForeignKey("users.uuid")),
     Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
@@ -144,9 +141,10 @@ def start_mappers():
            )
     mapper(MeetingEntity, meeting_Table,
            properties={
-               'participants': relationship(UserEntity, back_populates='meetings', lazy="noload",
+               'participants': relationship(UserEntity, lazy="noload",
                                             secondary=meeting_participant_table),
-               'creator': relationship(UserEntity, back_populates='meetings', lazy="noload"),
+               'creator': relationship(UserEntity, backref='meetings', lazy="noload",
+                                       foreign_keys=meeting_Table.c.creator_id, ),
            }
            )
     mapper(

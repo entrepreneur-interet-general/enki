@@ -1,6 +1,9 @@
 from typing import Any, Dict, List, Union
 
+from flask import current_app
+
 from domain.evenements.entities.evenement_entity import EvenementEntity
+from domain.evenements.entities.meeting_entity import MeetingEntity
 from domain.evenements.entities.message_entity import MessageEntity
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
@@ -113,3 +116,14 @@ class MessageService:
         with uow:
             message = uow.message.get_by_uuid(uuid)
             return MessageService.schema().dump(message)
+
+    @staticmethod
+    def add_message_from_meeting(meeting: MeetingEntity, uow: AbstractUnitOfWork):
+        current_app.logger.info(f"UOW type {type(uow)}")
+        with uow:
+            message: MessageEntity = MessageEntity.from_meeting(meeting=meeting)
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=meeting.evenement_id)
+            uow.message.add(message)
+            evenement.add_message(message=message)
+            user: UserEntity = uow.user.get_by_uuid(uuid=meeting.creator_id)
+            message.set_creator(user=user)

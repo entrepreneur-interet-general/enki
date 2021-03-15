@@ -11,6 +11,7 @@ from adapters.postgres.base_orm import metadata
 from adapters.postgres.pg_contact_repository import PgContactRepository
 from adapters.postgres.pg_group_repository import PgGroupRepository
 from adapters.postgres.pg_invitation_repository import PgInvitationRepository
+from adapters.postgres.pg_meeting_repository import PgMeetingRepository
 from adapters.postgres.pg_resource_repository import PgResourceRepository
 from adapters.postgres.pg_simple_affair_repository import PgSimpleAffairRepository
 from adapters.postgres.pg_user_repository import PgUserRepository
@@ -20,6 +21,7 @@ from domain.evenements.ports import AbstractTagRepository, AbstractMessageReposi
 from domain.evenements.ports.evenement_repository import AbstractEvenementRepository, InMemoryEvenementRepository
 from domain.evenements.ports.message_repository import InMemoryMessageRepository
 from domain.evenements.ports.tag_repository import InMemoryTagRepository
+from domain.evenements.ports.meeting_repository import AbstractMeetingRepository
 from domain.users.ports.contact_repository import AbstractContactRepository
 from domain.users.ports.group_repository import AbstractGroupRepository
 from domain.users.ports.invitation_repository import AbstractInvitationRepository
@@ -39,7 +41,6 @@ class AbstractUnitOfWork(abc.ABC):
     group: AbstractGroupRepository
     invitation: AbstractInvitationRepository
     meeting: AbstractMeetingRepository
-
 
     def __init__(self, config):
         self.config = config
@@ -64,10 +65,6 @@ class AbstractUnitOfWork(abc.ABC):
     def rollback(self):
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def reset(self):
-        raise NotImplementedError
-
 
 def build_engine(sql_engine_uri: str) -> Engine:
     isolation_level = "READ UNCOMMITTED" if "sqlite" in sql_engine_uri else "REPEATABLE READ"
@@ -83,7 +80,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
     def __init__(self, config):
         super().__init__(config)
         self.engine = build_engine(sql_engine_uri=self.config.DATABASE_URI)
-        self.session_factory = sessionmaker(bind=self.engine)
+        self.session_factory = sessionmaker(bind=self.engine, autoflush=True)
         sa.orm.configure_mappers()  # IMPORTANT!
         make_searchable(metadata=metadata)
 
@@ -106,44 +103,15 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.contact = PgContactRepository(self.session)
         self.group = PgGroupRepository(self.session)
         self.invitation = PgInvitationRepository(self.session)
+        self.meeting = PgMeetingRepository(self.session)
         return super().__enter__()
 
     def __exit__(self, *args):
         super().__exit__(*args)
-        self.session.close()  # (3)
+        self.session.close()
 
-    def commit(self):  # (4)
+    def commit(self):
         self.session.commit()
 
-    def rollback(self):  # (4)
+    def rollback(self):
         self.session.rollback()
-
-    def reset(self):
-        self.tag.reset()
-        self.task.reset()
-
-
-class InMemoryUnitOfWork(AbstractUnitOfWork):
-
-    def __init__(self, config):
-        super().__init__(config)
-        self.config = config
-        self.tag = InMemoryTagRepository()
-        self.message = InMemoryMessageRepository()
-        self.evenement = InMemoryEvenementRepository()
-
-    def __enter__(self):
-        return super().__enter__()
-
-    def __exit__(self, *args):
-        super().__exit__(*args)
-
-    def commit(self):  # (4)
-        pass
-
-    def rollback(self):  # (4)
-        pass
-
-    def reset(self):
-        self.tag.reset()
-        self.task.reset()

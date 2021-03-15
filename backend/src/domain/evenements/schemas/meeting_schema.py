@@ -17,9 +17,10 @@ class MeetingSchema(Schema):
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
     evenement_id = fields.Str(required=True)
-    evenement = fields.Nested("EvenementSchema", dump_only=True)
-    link = fields.Str(required=False, dump_only=True)
     creator_id = fields.Str(required=True)
+    evenement = fields.Nested("EvenementSchema", dump_only=True)
+    direct_uri = fields.Method("_build_redirect_uri")
+    link = fields.Str(required=False, dump_only=True)
     creator = fields.Nested("UserSchema", dump_only=True)
     participants = fields.Nested("UserSchema", many=True, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
@@ -32,3 +33,7 @@ class MeetingSchema(Schema):
 
     def handle_error(self, exc, data, **kwargs):
         raise MessageValidationError(description=exc.normalized_messages())
+
+    @staticmethod
+    def _build_redirect_uri(obj):
+        return f"http://localhost:8000/enki/v1/events/{obj.evenement_id}/meeting/{obj.uuid}/join"

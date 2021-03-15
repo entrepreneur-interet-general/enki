@@ -1,4 +1,4 @@
-from flask import request, current_app, g
+from flask import request, current_app, g, redirect
 from flask_restful import Resource
 
 from domain.evenements.commands import CreateMeeting
@@ -83,3 +83,33 @@ class MeetingResource(WithMeetingRepoResource):
                    "data": MeetingService.get_by_uuid(meeting_uuid, current_app.context),
                    "message": "success"
                }, 200
+
+
+class JoinMeetingResource(WithMeetingRepoResource):
+    """Get specific meeting
+    ---
+    get:
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: Meeting id
+      tags:
+        - meetings
+      responses:
+        200:
+          description: Return specific meeting
+          content:
+            application/json:
+              schema: MeetingSchema
+        404:
+            description: Meeting not found
+    """
+
+    method_decorators = [user_info_middleware]
+
+    def get(self, uuid: str, meeting_uuid: str):
+        redirect_url = MeetingService.join_meeting(meeting_uuid, user_uuid=g.user_info["id"], uow=current_app.context)
+        return redirect(redirect_url)

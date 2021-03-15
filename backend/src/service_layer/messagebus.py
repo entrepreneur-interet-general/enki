@@ -11,6 +11,10 @@ EVENT_HANDLERS: Dict[Type[Topic], List[Callable]] = {
     topics.CreateUserTopic: [
         events.create_contact_from_user,
     ],
+    topics.MeetingCreatedTopic: [
+        events.create_message_from_meeting,
+        events.send_email_at_participants,
+    ],
 }
 
 COMMAND_HANDLERS: Dict[Type[Topic], List[Callable]] = {

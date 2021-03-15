@@ -4,7 +4,8 @@ from typing import Any, Callable, Coroutine
 from uuid import uuid4
 
 from domain.affairs.entities.affair_entity import AffairEntity
-from domain.core.topics import AffairCreatedTopic, Topic, CreateUserTopic
+from domain.core.topics import AffairCreatedTopic, Topic, CreateUserTopic, MeetingCreatedTopic
+from domain.evenements.entities.meeting_entity import MeetingEntity
 from domain.users.entities.user import UserEntity
 
 EventCallback = Callable[[Any], Coroutine[Any, Any, Any]]
@@ -30,3 +31,9 @@ class AffairCreatedEvent(Event):
 class UserCreatedEvent(Event):
     data: UserEntity
     topic: Topic = CreateUserTopic
+
+
+@dataclass
+class MeetingCreatedEvent(Event):
+    data: MeetingEntity
+    topic: Topic = MeetingCreatedTopic

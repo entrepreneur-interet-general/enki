@@ -41,6 +41,7 @@ class MessageType(str, Enum):
     DO = "do"
     NEED_INFO = "need_info"
     AFFAIR = "affair"
+    MEETING = "meeting"
     UNKNOWN = "unknown"
 
     def __str__(self):
@@ -76,6 +77,18 @@ class MessageEntity(Entity):
             created_at=affair.created_at,
             updated_at=affair.updated_at,
             type=MessageType.AFFAIR
+        )
+
+    @classmethod
+    def from_meeting(cls, meeting):
+        return cls(
+            uuid=meeting.uuid,
+            description=f"Lien vers la réunion {meeting.link}",
+            title="Nouvelle réunion",
+            started_at=meeting.created_at,
+            created_at=meeting.created_at,
+            updated_at=meeting.updated_at,
+            type=MessageType.MEETING
         )
 
     def add_tag(self, tag: TagEntity) -> TagEntity:

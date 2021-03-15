@@ -18,12 +18,12 @@ class MeetingService:
         with uow:
             try:
                 evenement: EvenementEntity = uow.evenement.get_by_uuid(meeting.evenement_id)
-
                 meeting.evenement_id = evenement.uuid
                 meeting.creator_id = data["creator_id"]
                 uow.meeting.add(meeting)
                 user: UserEntity = uow.user.get_by_uuid(uuid=data["creator_id"])
                 meeting.set_creator(creator=user)
+                uow.commit()
                 return MeetingService.schema().dump(uow.meeting.get_by_uuid(meeting.uuid))
             finally:
                 event_bus.publish(MeetingCreatedEvent(data=meeting), uow=uow)
@@ -31,8 +31,7 @@ class MeetingService:
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
-            meeting = uow.meeting.get_by_uuid(uuid)
-            return MeetingService.schema().dump(meeting)
+            return MeetingService.schema().dump(uow.meeting.get_by_uuid(uuid))
 
     @staticmethod
     def join_meeting(uuid: str, user_uuid: str, uow: AbstractUnitOfWork) -> str:

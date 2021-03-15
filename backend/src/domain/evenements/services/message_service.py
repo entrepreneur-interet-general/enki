@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Union
 
 from flask import current_app
 
+from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entities.evenement_entity import EvenementEntity
 from domain.evenements.entities.meeting_entity import MeetingEntity
 from domain.evenements.entities.message_entity import MessageEntity
@@ -127,3 +128,10 @@ class MessageService:
             evenement.add_message(message=message)
             user: UserEntity = uow.user.get_by_uuid(uuid=meeting.creator_id)
             message.set_creator(user=user)
+
+    @staticmethod
+    def add_message_from_affair(affair: SimpleAffairEntity, evenement: EvenementEntity, uow: AbstractUnitOfWork):
+        with uow:
+            message: MessageEntity = MessageEntity.from_affair(affair=affair)
+            uow.message.add(message)
+            evenement.add_message(message=message)

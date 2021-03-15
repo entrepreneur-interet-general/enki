@@ -1,6 +1,7 @@
 import abc
 
 import sqlalchemy as sa
+from flask import current_app
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
@@ -114,4 +115,5 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.session.commit()
 
     def rollback(self):
+        current_app.logger.info("Rollback start")
         self.session.rollback()

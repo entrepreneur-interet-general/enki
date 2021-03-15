@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
@@ -54,6 +56,7 @@ class MessageEntity(Entity):
     title: str
     description: str
     creator_id: Optional[str] = field(default_factory=lambda: None)
+    external_id: str = field(default_factory=lambda: None)
     creator: Optional[UserEntity] = field(default_factory=lambda: None)
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
     started_at: Union[datetime, None] = field(default_factory=lambda: None)
@@ -71,7 +74,8 @@ class MessageEntity(Entity):
     @classmethod
     def from_affair(cls, affair):
         return cls(
-            uuid=affair.uuid,
+            uuid=str(uuid4()),
+            external_id=affair.uuid,
             description=affair.affair["eventLocation"]["address"],
             title=affair.affair["primaryAlert"]["alertCode"]["whatsHappen"]["label"],
             created_at=affair.created_at,
@@ -82,7 +86,8 @@ class MessageEntity(Entity):
     @classmethod
     def from_meeting(cls, meeting):
         return cls(
-            uuid=meeting.uuid,
+            uuid=str(uuid4()),
+            external_id=meeting.uuid,
             description=f"Lien vers la réunion {meeting.link}",
             title="Nouvelle réunion",
             started_at=meeting.created_at,

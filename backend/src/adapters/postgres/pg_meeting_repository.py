@@ -1,6 +1,6 @@
 from typing import List, Union
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, lazyload
 
 from domain.evenements.entities.meeting_entity import MeetingEntity
 from domain.evenements.ports.meeting_repository import AbstractMeetingRepository, AlreadyExistingMeetingUuid
@@ -15,7 +15,7 @@ class PgMeetingRepository(PgRepositoryMixin, AbstractMeetingRepository):
         AbstractMeetingRepository.__init__(self)
 
     def _match_uuid(self, uuid: str) -> Union[MeetingEntity, None]:
-        matches = self.session.query(MeetingEntity).filter(MeetingEntity.uuid == uuid).all()
+        matches = self.session.query(MeetingEntity).options(lazyload('*')).filter(MeetingEntity.uuid == uuid).all()
         if not matches:
             return None
         return matches[0]

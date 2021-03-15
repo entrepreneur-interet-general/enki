@@ -33,6 +33,7 @@ messagesTable = Table(
     Column('description', String(255)),
     Column('type', Enum(MessageType)),
     Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
+    Column('external_id', String(60)),
     Column('executor_id', String(60), ForeignKey("users.uuid"), nullable=True),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
     Column('done_at', TIMESTAMP()),

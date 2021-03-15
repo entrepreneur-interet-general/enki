@@ -44,9 +44,10 @@ class MeetingListResource(WithMeetingRepoResource):
     method_decorators = [user_info_middleware]
 
     def post(self, uuid: str):
-        body = request.get_json()
-        body["creator_id"] = g.user_info["id"]
-        body["evenement_id"] = uuid
+        body = {
+            "creator_id": g.user_info["id"],
+            "evenement_id": uuid
+        }
         command = CreateMeeting(data=body)
         result = event_bus.publish(command, current_app.context)
         return {

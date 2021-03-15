@@ -40,6 +40,9 @@ def create_contact_from_user(event: events.UserCreatedEvent, uow: AbstractUnitOf
 def create_message_from_meeting(event: events.MeetingCreatedEvent, uow: AbstractUnitOfWork):
     MessageService.add_message_from_meeting(meeting=event.data, uow=uow)
 
+def create_message_from_affair(event: events.AffairCreatedEvent, uow: AbstractUnitOfWork):
+    MessageService.add_message_from_affair(affair=event.data, uow=uow)
+
 
 def send_email_at_participants(event: events.MeetingCreatedEvent, uow: AbstractUnitOfWork):
     raise NotImplementedError

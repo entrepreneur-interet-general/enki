@@ -29,6 +29,17 @@
     </div>
   </div>
 </div>
+<div class="meeting">
+  <p (click)="createMeeting()">
+    Créer un salon
+  </p>
+  <p (click)="joinMeeting()">
+    Rejoindre le salon
+  </p>
+</div>
+<div class="action action--video" >
+  <svg class="icon-video icon"><use xlink:href="#icon-video"></use></svg>
+</div>
 <app-modal (closed)="removeSelectedParticipant($event)">
   <!-- {{selectedParticipant | json}} -->
   <div *ngIf="selectedParticipant">

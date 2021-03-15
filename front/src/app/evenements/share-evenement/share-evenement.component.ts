@@ -30,6 +30,7 @@ export class ShareEvenementComponent implements OnInit {
   roleGroup = new FormGroup({
     role: new FormControl('view', Validators.required)
   })
+  meetingUUID: string;
   // role = new FormControl('')
 
   selectedParticipant: Participant;
@@ -43,6 +44,7 @@ export class ShareEvenementComponent implements OnInit {
   ) {
     this.participants = [];
     this.selectedParticipant = null;
+    this.meetingUUID = null;
     this.evenementsService.selectedEvenement.subscribe((event) => {
       this.participants = event.user_roles
     })
@@ -56,6 +58,17 @@ export class ShareEvenementComponent implements OnInit {
         });
       });
     });
+
+    this.getMeetingData().subscribe(res => {
+      console.log(res)
+      this.meetingUUID = res.data[0].uuid
+    })
+  }
+
+  getMeetingData(): Observable<any> {
+    return this.http.get<any>(
+      `${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/meeting`
+      )
   }
 
   ngOnInit(): void {
@@ -85,4 +98,29 @@ export class ShareEvenementComponent implements OnInit {
     return ROLES[type];
   }
 
+  createMeeting(): void {
+    this.httpCreateMeeting().subscribe(res => {
+      console.log(res)
+      this.meetingUUID = res.data.uuid
+      /* this.httpJoinMeeting().subscribe(res => {
+
+      }) */
+    })
+  }
+  joinMeeting(): void {
+    this.httpJoinMeeting().subscribe(res => {
+      console.log(res)
+    })
+  }
+
+  httpCreateMeeting(): Observable<any> {
+    return this.http.post<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/meeting`, {
+      evenement_id: this.evenementsService.selectedEvenement.getValue().uuid
+    })
+  }
+
+  httpJoinMeeting(): Observable<any> {
+    // console.log("test")
+    return this.http.get<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/meeting/${this.meetingUUID}/join`,)
+  }
 }

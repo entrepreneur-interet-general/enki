@@ -5,11 +5,13 @@ import { InvitationComponent } from './invitation/invitation.component';
 import { AccountComponent } from './account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchEtablissementComponent } from '../search-etablissement/search-etablissement.component';
+import { UserInfoGuard } from '../guards/user-info.guard';
 
 const routes : Routes = [
   {
     path: 'account',
     component: AccountComponent,
+    canActivate: [ UserInfoGuard ],
     children: [
       {
         path: '',

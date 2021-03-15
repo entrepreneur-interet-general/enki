@@ -101,7 +101,7 @@ export class FirstStepComponent {
         first_name: this.userGroup.value.firstName,
         last_name: this.userGroup.value.lastName,
         group_type: this.userGroup.value.group,
-        group_id: this.registerService.selectedLocation.getValue().uuid
+        group_id: this.etablissementService.selectedEtablissement.getValue().uuid
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
 

@@ -7,11 +7,13 @@ import { RegisterComponent } from './register/register.component';
 import { RegisterService } from './register.service';
 import { UserInfoGuard } from '../guards/user-info.guard';
 import { SearchEtablissementComponent } from '../search-etablissement/search-etablissement.component';
+// import { AuthGuard } from '../app-auth-guard.service';
 
 const routes : Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+    // canActivate: [ AuthGuard ],
     canActivate: [ UserInfoGuard ],
     children: [
       {

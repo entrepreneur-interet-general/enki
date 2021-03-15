@@ -43,18 +43,6 @@ export class InvitationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    /* 
-  {
-    "creator_id": "string",
-    "email": "user@example.com",
-    "expire_at": "2021-03-15T08:28:29.367Z",
-    "group_id": "string",
-    "group_type": "string",
-    "phone_number": "string",
-    "uuid": "string",
-    "validated_at": "2021-03-15T08:28:29.367Z"
-  }
- */
     let bodyForm = {
       email: this.invitationGroup.value.email,
       phone_number: this.invitationGroup.value.phone,
@@ -63,6 +51,7 @@ export class InvitationComponent implements OnInit {
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
       console.log('fill out the form', response)
+      this.invitationGroup.reset();
     })
   }
 

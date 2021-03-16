@@ -1,0 +1,26 @@
+version: '3'
+
+networks:
+  default:
+    driver: bridge
+  enki_default:
+    external: true
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "443:443"
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+      -  /etc/letsencrypt/:/etc/letsencrypt
+    networks:
+      - default
+      - enki_default
+  back:
+    image: trinitronx/python-simplehttpserver
+    ports:
+      - "80:8080"
+    networks:
+      - default
+      - enki_default

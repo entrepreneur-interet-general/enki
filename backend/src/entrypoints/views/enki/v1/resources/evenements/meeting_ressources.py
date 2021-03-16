@@ -113,4 +113,9 @@ class JoinMeetingResource(WithMeetingRepoResource):
 
     def get(self, uuid: str, meeting_uuid: str):
         redirect_url = MeetingService.join_meeting(meeting_uuid, user_uuid=g.user_info["id"], uow=current_app.context)
-        return redirect(redirect_url)
+        return {
+          "data": {
+            "direct_uri": redirect_url
+          },
+          "message": "success"
+        }, 200

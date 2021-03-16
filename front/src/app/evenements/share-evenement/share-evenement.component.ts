@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HTTP_DATA } from 'src/app/constants';
-import { pluck } from 'rxjs/operators';
+import { map, pluck, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 const ROLES = {
@@ -99,28 +99,16 @@ export class ShareEvenementComponent implements OnInit {
   }
 
   createMeeting(): void {
-    this.httpCreateMeeting().subscribe(res => {
-      console.log(res)
-      this.meetingUUID = res.data.uuid
-      /* this.httpJoinMeeting().subscribe(res => {
-
-      }) */
+    this.evenementsService.httpCreateMeeting().subscribe(res => {
+      this.meetingUUID = res.uuid
+      this.joinMeeting();
     })
   }
   joinMeeting(): void {
-    this.httpJoinMeeting().subscribe(res => {
-      console.log(res)
-    })
-  }
-
-  httpCreateMeeting(): Observable<any> {
-    return this.http.post<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/meeting`, {
-      evenement_id: this.evenementsService.selectedEvenement.getValue().uuid
-    })
-  }
-
-  httpJoinMeeting(): Observable<any> {
-    // console.log("test")
-    return this.http.get<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/meeting/${this.meetingUUID}/join`,)
+    this.evenementsService.httpJoinMeeting(this.meetingUUID).subscribe(
+      res => {
+        window.open(res.direct_uri, '_blank')
+      }
+    )
   }
 }

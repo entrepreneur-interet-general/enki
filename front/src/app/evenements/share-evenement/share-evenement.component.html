@@ -29,15 +29,7 @@
     </div>
   </div>
 </div>
-<div class="meeting">
-  <p (click)="createMeeting()">
-    Créer un salon
-  </p>
-  <p (click)="joinMeeting()">
-    Rejoindre le salon
-  </p>
-</div>
-<div class="action action--video" >
+<div class="action action--video" (click)="createMeeting()">
   <svg class="icon-video icon"><use xlink:href="#icon-video"></use></svg>
 </div>
 <app-modal (closed)="removeSelectedParticipant($event)">

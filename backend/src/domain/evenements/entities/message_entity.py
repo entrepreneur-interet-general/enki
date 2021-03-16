@@ -88,8 +88,8 @@ class MessageEntity(Entity):
         return cls(
             uuid=str(uuid4()),
             external_id=meeting.uuid,
-            description=f"Lien vers la réunion {meeting.link}",
-            title="Nouvelle réunion",
+            description=f"{meeting.link}",
+            title="Cliquez pour rejoindre la réunion vidéo",
             started_at=meeting.created_at,
             created_at=meeting.created_at,
             updated_at=meeting.updated_at,

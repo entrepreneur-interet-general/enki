@@ -27,7 +27,7 @@
   
   <ul class="">
     <li class="list--element" *ngFor="let message of messages" [ngClass]="message.creator.uuid === user.uuid ? '-right': ''">
-      <a routerLink="../detailmessage/{{message.uuid}}">
+      <a (click)="clickOnMessage(message)" >
         <div class="list--wrapper">
           <div class="secondInfos">
             <div class="badge" [ngClass]="(message.creator.position.group.type === 'PREFECTURE') ? 'badge__blueFill' :'badge__greenFill'">

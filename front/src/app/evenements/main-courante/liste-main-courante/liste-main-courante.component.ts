@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/User';
 import { UserService } from 'src/app/user/user.service';
 import { EvenementsService } from '../../evenements.service';
@@ -19,7 +19,8 @@ export class ListeMainCouranteComponent implements OnInit {
   constructor(
     private messagesService: MessagesService,
     private evenementsService: EvenementsService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
     ) {
     this.messages = []
     this.uuid = this.evenementsService.selectedEvenement.getValue().uuid
@@ -36,8 +37,18 @@ export class ListeMainCouranteComponent implements OnInit {
   }
 
   exportMainCourante(): void {
-    
     this.evenementsService.downloadFile();
+  }
+
+  clickOnMessage(message: Message): void {
+    // routerLink="../detailmessage/{{message.uuid}}"
+    if (message.type === 'meeting') {
+      // TODO
+      // replace window.open by calling joinMeeting in evenementsService and passing meetingID...
+      window.open(message.description, '_blank')
+    } else {
+      this.router.navigate([`../detailmessage/${message.uuid}`])
+    }
   }
 
 }

@@ -6,7 +6,7 @@
   </a> -->
   <router-outlet></router-outlet>
 </div>
-<div class="tabbar prototype">
+<div class="tabbar" [class]="mobilePrototype.getCheckedClass()">
   <a routerLink="./summary" class="tab" routerLinkActive="-active">
     <svg class="icon-note icon"><use xlink:href="#icon-note"></use></svg>
     <span class="tab--label">Résumé</span>

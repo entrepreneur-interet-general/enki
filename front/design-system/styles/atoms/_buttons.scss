@@ -98,3 +98,15 @@
         bottom: 80px;
     }
 }
+.prototype {
+    .action {
+        &--add, &--video {
+            right: auto;
+            bottom: auto;
+        }
+        &--filter {
+            right: auto;
+            bottom: auto;
+        }
+    }
+}

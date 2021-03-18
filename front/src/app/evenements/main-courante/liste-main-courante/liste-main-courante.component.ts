@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/User';
+import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { UserService } from 'src/app/user/user.service';
 import { EvenementsService } from '../../evenements.service';
 import { Message, MessagesService } from '../messages.service';
@@ -20,7 +21,8 @@ export class ListeMainCouranteComponent implements OnInit {
     private messagesService: MessagesService,
     private evenementsService: EvenementsService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    public mobilePrototype: MobilePrototypeService
     ) {
     this.messages = []
     this.uuid = this.evenementsService.selectedEvenement.getValue().uuid

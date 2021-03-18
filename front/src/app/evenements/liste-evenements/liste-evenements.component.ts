@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { EvenementsService } from '../evenements.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { EvenementsService } from '../evenements.service';
 export class ListeEvenementsComponent implements OnInit {
 
   constructor(
-    public evenementsService: EvenementsService
+    public evenementsService: EvenementsService,
+    public mobilePrototype: MobilePrototypeService
   ) {
     this.evenementsService.getEvenements().subscribe(response => {
       this.evenementsService.evenements = response

@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 networks:
   default:
@@ -11,16 +11,12 @@ services:
     image: nginx:latest
     ports:
       - "443:443"
+      - "8000:8000"
+      - "9000:9000"
     volumes:
-      - ./data/nginx:/etc/nginx/conf.d
+      - ./front/dist/:/etc/nginx/html/dist/
+      - ./proxy/data/nginx/:/etc/nginx/conf.d
       -  /etc/letsencrypt/:/etc/letsencrypt
-    networks:
-      - default
-      - enki_default
-  back:
-    image: trinitronx/python-simplehttpserver
-    ports:
-      - "80:8080"
     networks:
       - default
       - enki_default

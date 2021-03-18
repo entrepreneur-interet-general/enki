@@ -27,7 +27,7 @@ class MinioResourceContentRepository:
         try:
             self.client = Minio(minio_uri,
                                 access_key=access_key,
-                                secret_key=secret_key, secure=False)
+                                secret_key=secret_key, secure=True)
             self.initialize()
         except MaxRetryError:
             self.client = None

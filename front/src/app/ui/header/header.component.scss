@@ -44,7 +44,6 @@
 .menu-container {
   position: relative;
 }
-
 .right-menu {
   position: fixed;
   top: 56px;
@@ -55,8 +54,20 @@
   padding: 16px;
   z-index: 8000;
   transition: .3s ease all;
-
   z-index: 8000;
+  
+  &.prototype {
+    top: auto;
+    width: 375px;
+    position: absolute;
+    box-sizing: border-box;
+    transform: none;
+    left: 0;
+    &.-active {
+      left: 375px;
+      transform: none;
+    }
+  }
   &.-active {
     transform: translate(100%, 0);
     transition: .3s ease all;

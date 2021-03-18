@@ -1,5 +1,15 @@
 @import "../../design-system/styles/variables";
-
+.prototype {
+  background: $white;
+  width: 375px;
+  height: 657px;
+  margin-top: 20px;
+  overflow: scroll;
+}
+:host {
+  display: flex;
+  justify-content: center;
+}
 :focus {
   outline: 0;
 }

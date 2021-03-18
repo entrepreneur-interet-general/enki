@@ -137,4 +137,22 @@ export class EvenementsService {
   closeEvenement(uuid: string): Observable<any> {
     return this.http.put<any>(`${environment.backendUrl}/events/${uuid}/close`, {})
   }
+
+  httpCreateMeeting(): Observable<any> {
+    return this.http.post<any>(`${environment.backendUrl}/events/${this.selectedEvenement.getValue().uuid}/meeting`, {
+      evenement_id: this.selectedEvenement.getValue().uuid
+    }).pipe(
+      pluck(HTTP_DATA)
+    )
+  }
+  joinMeeting(meetingUUID: string): void {
+    this.httpJoinMeeting(meetingUUID).subscribe(res => {
+      window.open(res.direct_uri, '_blank')
+    })
+  }
+  httpJoinMeeting(meetingUUID: string): Observable<any> {
+    return this.http.get<any>(`${environment.backendUrl}/events/${this.selectedEvenement.getValue().uuid}/meeting/${meetingUUID}/join`).pipe(
+      pluck(HTTP_DATA)
+    )
+  }
 }

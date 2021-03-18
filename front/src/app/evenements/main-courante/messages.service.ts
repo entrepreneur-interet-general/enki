@@ -14,6 +14,7 @@ export interface Message {
   tags: [];
   resources: [];
   evenement_id: string;
+  type: string;
 }
 
 

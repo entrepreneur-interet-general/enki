@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from domain.core.commands import Command
 from domain.core.topics import Topic, CreateMessageTopic, CreateTagTopic, \
-    CreateResourceTopic, CreateEvenementTopic
+    CreateResourceTopic, CreateEvenementTopic, CreateMeetingTopic
 
 
 @dataclass
@@ -27,3 +27,8 @@ class CreateResource(Command):
 class CreateEvenement(Command):
     data: dict
     topic: Topic = CreateEvenementTopic
+
+@dataclass
+class CreateMeeting(Command):
+    data: dict
+    topic: Topic = CreateMeetingTopic

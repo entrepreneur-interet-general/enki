@@ -46,8 +46,8 @@ export class ListeMainCouranteComponent implements OnInit {
   testFilter(): void {
     let filter: Filter = {
       typeEtablissement: '',
-      auteur: '',
-      type: 'meeting',
+      auteur: '75d9bc1d-207f-4cc2-8d40-ef420739d128',
+      type: '',
       fromDatetime: '',
       toDatetime: '',
     }

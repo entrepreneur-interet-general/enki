@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EvenementsService } from '../../evenements.service';
 import { MessagesService } from '../messages.service';
@@ -30,6 +30,11 @@ export class FilterMessagesComponent implements OnInit {
     this.etablissementOptions = [];
     this.auteursOptions = [];
     this.messageTypeOptions = [];
+    this.evenementsService.getEvenementByID(this.evenementUUID).subscribe(evenement => {
+      this.filterGroup.controls.etablissement.setValue(evenement.filter.etablissement)
+      this.filterGroup.controls.auteur.setValue(evenement.filter.auteur)
+      this.filterGroup.controls.type.setValue(evenement.filter.type)
+    })
     this.messagesService.getMessagesByEvenementID(this.evenementUUID).subscribe(messages => {
       messages.forEach(message => {
         if (!this.etablissementOptions.some(item => item.group_id === message.creator.position.group_id)) {

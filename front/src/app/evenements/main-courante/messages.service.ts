@@ -50,14 +50,19 @@ export class MessagesService {
     this._messagesSource.next(messages)
   }
 
-  private addMessages(messages: Message[]): void {
+  private addMessages(messages: Message[], evenement_id: string): void {
+    messages.map(message => {
+      message.evenement_id = evenement_id
+    })
     const messagesConcat = [...this.getMessages(), ...messages]
     this._setMessages(messagesConcat)
   }
 
   private containsEvenementMessages(evenementUUID: string): boolean {
+    console.log(this.getMessages().some(message => message.evenement_id === evenementUUID))
     return this.getMessages().some(message => message.evenement_id === evenementUUID)
   }
+
 
   getMessagesByEvenementID(evenementUUID: string): Observable<Message[]> {
     const messages = this.getMessages().filter(message => message.evenement_id === evenementUUID)
@@ -69,7 +74,7 @@ export class MessagesService {
       .pipe(
         map(messages => {
           if (!this.containsEvenementMessages(evenementUUID)) {
-            this.addMessages(messages.data)
+            this.addMessages(messages.data, evenementUUID)
           }
           return messages.data
         })

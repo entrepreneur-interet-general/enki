@@ -18,6 +18,7 @@ import { UiModule } from '../ui/ui.module';
 import { UserInfoGuard } from '../guards/user-info.guard';
 import { ShareEvenementComponent } from './share-evenement/share-evenement.component';
 import { SearchUserComponent } from './share-evenement/search-user/search-user.component';
+import { FilterMessagesPipe } from './main-courante/filter-messages.pipe';
 
 
 const routes : Routes = [
@@ -109,7 +110,8 @@ const routes : Routes = [
     SummaryEvenementComponent,
     ListeMainCouranteComponent,
     ShareEvenementComponent,
-    SearchUserComponent
+    SearchUserComponent,
+    FilterMessagesPipe
   ],
   providers: [MessagesService],
   imports: [

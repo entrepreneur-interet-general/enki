@@ -2,10 +2,11 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, pluck } from 'rxjs/operators';
+import { map, pluck, tap } from 'rxjs/operators';
 import { Intervention, InterventionsService } from '../interventions/interventions.service';
 import { Participant } from '../interfaces/Participant';
 import { HTTP_DATA } from '../constants';
+import { Message } from './main-courante/messages.service';
 
 export interface Evenement {
   uuid: string;
@@ -14,6 +15,21 @@ export interface Evenement {
   created_at: string;
   closed: boolean;
   user_roles: Participant[];
+  messages: Message[];
+  filters: Filters;
+}
+
+export interface Filters {
+  typeEtablissement: string;
+  auteur: string;
+  type: string;
+  fromDatetime: string;
+  toDatetime: string;
+} 
+
+export interface EvenementsHTTP {
+  data: Evenement[];
+  message: string;
 }
 
 @Injectable({
@@ -21,7 +37,7 @@ export interface Evenement {
 })
 export class EvenementsService {
 
-  evenements: Array<Evenement>
+  private readonly _evenements = new BehaviorSubject<Evenement[]>([]);
   evenementsUrl: string;
   selectedEvenement = new BehaviorSubject<Evenement>({
     uuid: '',
@@ -29,14 +45,22 @@ export class EvenementsService {
     description: '',
     created_at: '',
     closed: false,
-    user_roles: []
+    user_roles: [],
+    messages: [],
+    filters: {
+      typeEtablissement: '',
+      auteur: '',
+      type: '',
+      fromDatetime: '',
+      toDatetime: '',
+    }
   });
   httpOptions: object;
   constructor(
     private http: HttpClient,
-    private interventionsService: InterventionsService
+    private interventionsService: InterventionsService,
+    // private messagesService: MessagesService
     ) {
-      this.evenements = []
       this.evenementsUrl = `${environment.backendUrl}/events`
       this.httpOptions = {
         headers: new HttpHeaders({
@@ -45,28 +69,66 @@ export class EvenementsService {
       }
   }
 
-  getEvenements(): Observable<Evenement[]> {
-    return this.http.get<any>(`${environment.backendUrl}/users/me/events`)
+  getEvenements(): Evenement[] {
+    return this._evenements.getValue();
+  }
+
+  private _setEvenements(evenements: Evenement[]): void {
+    this._evenements.next(evenements)
+  }
+
+  private _addEvenement(evenementToAdd: Evenement): void {
+    let evenements = this.getEvenements()
+    // if it already exist, then update it
+    if (evenements.some(event => event.uuid === evenementToAdd.uuid)) {
+      evenements.map(evenement => {
+        return evenement.uuid === evenement.uuid ? evenement = evenementToAdd : evenement
+      })
+    } {
+      // if it doesn't exist, just add it
+      evenements = evenements.concat(evenementToAdd)
+    }
+    this._setEvenements(evenements)
+  }
+
+  setMessages(evenement_id: string, messages: Message[]): void {
+    let events = this.getEvenements() // Evenement[]
+    events.map(event => {
+      return event.uuid === evenement_id ? event.messages = messages : event
+    })
+    this._setEvenements(events)
+  }
+
+  getEvenementsByHTTP(): Observable<Evenement[]> {
+    return this.http.get<EvenementsHTTP>(`${environment.backendUrl}/users/me/events`)
       .pipe(
-        map(response => {
-          return response.data.map(event => {
-            return {
-              uuid: event.uuid,
-              title: event.title,
-              description: event.description,
-              created_at: event.created_at,
-              closed: event.closed,
-              user_roles: event.user_roles
-            }
-          })
-        })
+        map(
+          response => {
+            const evenementsList = response.data.map((event: Evenement) => {
+              return {
+                uuid: event.uuid,
+                title: event.title,
+                description: event.description,
+                created_at: event.created_at,
+                closed: event.closed,
+                user_roles: event.user_roles,
+                messages: []
+              }
+            });
+            this._setEvenements(evenementsList);
+            return evenementsList;
+          }
+        )
       )
   }
 
-  getEvenement(uuid): Observable<Evenement> {
+  getEvenement(uuid: string): Observable<Evenement> {
     return this.http.get<any>(`${this.evenementsUrl}/${uuid}`, this.httpOptions)
       .pipe(
-        map(response => response.data)
+        map(response => {
+          this._addEvenement(response.data)
+          return response.data
+        })
       )
   }
   addParticipantsToEvenement(participant: Participant): void {

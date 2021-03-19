@@ -6,6 +6,8 @@ import { UserService } from 'src/app/user/user.service';
 import { EvenementsService } from '../../evenements.service';
 import { Message, MessagesService } from '../messages.service';
 
+
+
 @Component({
   selector: 'app-liste-main-courante',
   templateUrl: './liste-main-courante.component.html',
@@ -17,6 +19,7 @@ export class ListeMainCouranteComponent implements OnInit {
   uuid: string;
   fetchedMessages: boolean;
   user: User;
+
   constructor(
     private messagesService: MessagesService,
     private evenementsService: EvenementsService,
@@ -34,8 +37,9 @@ export class ListeMainCouranteComponent implements OnInit {
     this.messagesService.getMessagesByEvenementID(this.uuid).subscribe(messages => {
       this.messages = messages.sort((a, b) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      })
-      this.fetchedMessages = true
+      });
+      this.evenementsService.setMessages(this.uuid, this.messages);
+      this.fetchedMessages = true;
     })
   }
 

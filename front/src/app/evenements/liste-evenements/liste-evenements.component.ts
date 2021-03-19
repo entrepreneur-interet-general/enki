@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
-import { EvenementsService } from '../evenements.service';
+import { Evenement, EvenementsService } from '../evenements.service';
 
 @Component({
   selector: 'app-liste-evenements',
@@ -9,12 +9,13 @@ import { EvenementsService } from '../evenements.service';
 })
 export class ListeEvenementsComponent implements OnInit {
 
+  evenements: Evenement[]
   constructor(
-    public evenementsService: EvenementsService,
+    private evenementsService: EvenementsService,
     public mobilePrototype: MobilePrototypeService
   ) {
-    this.evenementsService.getEvenements().subscribe(response => {
-      this.evenementsService.evenements = response
+    this.evenementsService.getEvenementsByHTTP().subscribe(evenements => {
+      this.evenements = evenements
     })
   }
 

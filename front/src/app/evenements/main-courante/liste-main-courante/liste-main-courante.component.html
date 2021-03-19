@@ -27,7 +27,7 @@
     </div>
     
     <ul>
-      <li class="list--element" *ngFor="let message of messages" [ngClass]="message.creator.uuid === user.uuid ? '-right': ''">
+      <li class="list--element" *ngFor="let message of messages | filterMessages" [ngClass]="message.creator.uuid === user.uuid ? '-right': ''">
         <a (click)="clickOnMessage(message)">
           <div class="list--wrapper">
             <div class="secondInfos">

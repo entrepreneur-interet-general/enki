@@ -9,6 +9,12 @@ import { EvenementsService } from '../evenements.service';
 export interface Message {
   title: string;
   description: string;
+  creator: {
+    position: {
+      group_id: string;
+    },
+    uuid: string;
+  };
   created_at: string;
   uuid: string;
   tags: [];
@@ -107,7 +113,7 @@ export class MessagesService {
     return this.http.post<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/messages`, message, this.httpHeaders)
       .pipe(
         map(message => {
-          this.addMessages([message.data])
+          this.addMessages([message.data], event_id)
           return message.data
         })
       )

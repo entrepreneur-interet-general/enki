@@ -26,6 +26,7 @@ import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
 import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
+import { MobilePrototypeComponent } from './mobile-prototype/mobile-prototype.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -52,6 +53,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PageNotFoundComponent,
     SituationsComponent,
     ListeEvenementsComponent,
+    MobilePrototypeComponent,
   ],
   imports: [
     BrowserModule,

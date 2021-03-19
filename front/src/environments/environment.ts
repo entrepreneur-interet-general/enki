@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  prototype: false,
   production: false,
   backendUrl: `http://localhost:8000/enki/v1`,
   HTTPClientInMemory: false

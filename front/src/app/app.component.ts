@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { environment } from '../environments/environment';
 import { UserService } from './user/user.service';
-import jwt_decode from 'jwt-decode';
-import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { MobilePrototypeService } from './mobile-prototype/mobile-prototype.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +21,8 @@ export class AppComponent {
   constructor(
     private keycloakService: KeycloakService,
     public userService: UserService,
-    private titleService: Title
+    private titleService: Title,
+    public mobilePrototype: MobilePrototypeService
     ) {
 
       this.titleService.setTitle('Gestion de crise | ENKI')

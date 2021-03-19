@@ -6,7 +6,18 @@
   right: 16px;
 }
 .mc {
-  margin-bottom: 104px;
+  &.prototype .action {
+    margin-top: -70px;
+    margin-left: 306px;
+    &--filter {
+      margin-left: 240px;
+    }
+  }
+  // margin-bottom: 104px;
+  &--content {
+    height: 340px;
+  }
+
   &--empty {
     padding: 0 16px;
     text-align: center;

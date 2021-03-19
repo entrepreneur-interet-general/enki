@@ -47,7 +47,7 @@ export class ShareEvenementComponent implements OnInit {
     this.participants = [];
     this.selectedParticipant = null;
     this.meetingUUID = null;
-    this.evenementsService.selectedEvenement.subscribe((event) => {
+    this.evenementsService.getEvenementByID(this.evenementsService.selectedEvenementUUID.getValue()).subscribe((event) => {
       this.participants = event.user_roles
     })
     this.roles = ROLES;
@@ -69,7 +69,7 @@ export class ShareEvenementComponent implements OnInit {
 
   getMeetingData(): Observable<any> {
     return this.http.get<any>(
-      `${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/meeting`
+      `${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/meeting`
       )
   }
 
@@ -77,7 +77,7 @@ export class ShareEvenementComponent implements OnInit {
   }
   updateParticipantRole(value): Observable<User> {
     return this.http.put<any>(
-      `${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/invite/${this.selectedParticipant.user.uuid}?role_type=${value}`, {}
+      `${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/invite/${this.selectedParticipant.user.uuid}?role_type=${value}`, {}
       ).pipe(
       pluck(HTTP_DATA)
     )

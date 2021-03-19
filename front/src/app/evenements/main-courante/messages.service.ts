@@ -97,7 +97,7 @@ export class MessagesService {
   }
 
   httpGetMessageByID(messageUUID: string): Observable<Message> {
-    return this.http.get<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/messages/${messageUUID}`)
+    return this.http.get<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/messages/${messageUUID}`)
       .pipe(
         map(response => {
           return response.data
@@ -115,7 +115,7 @@ export class MessagesService {
       "evenement_id": event_id,
       "resources": resources
     }
-    return this.http.post<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/messages`, message, this.httpHeaders)
+    return this.http.post<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/messages`, message, this.httpHeaders)
       .pipe(
         map(message => {
           this.addMessages([message.data], event_id)

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { Intervention } from 'src/app/interventions/interventions.service';
-import { EvenementsService } from '../evenements.service';
+import { Evenement, EvenementsService } from '../evenements.service';
 
 @Component({
   selector: 'app-summary-evenement',
@@ -12,7 +12,8 @@ import { EvenementsService } from '../evenements.service';
 export class SummaryEvenementComponent implements OnInit {
   map;
   icon;
-  evenement;
+  evenementUUID: string;
+  evenement: Evenement;
   interventions: Intervention[];
   uuid;
 
@@ -20,7 +21,10 @@ export class SummaryEvenementComponent implements OnInit {
     private evenementsService: EvenementsService,
     private router: Router
   ) {
-    this.evenement = this.evenementsService.selectedEvenement.getValue()
+    this.evenementUUID = this.evenementsService.selectedEvenementUUID.getValue()
+    this.evenementsService.getEvenementByID(this.evenementUUID).subscribe(evenement => {
+      this.evenement = evenement;
+    })
     this.interventions = []
   }
 

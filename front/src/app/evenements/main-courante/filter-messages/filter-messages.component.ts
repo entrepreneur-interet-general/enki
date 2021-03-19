@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EvenementsService } from '../../evenements.service';
 import { MessagesService } from '../messages.service';
 
@@ -13,7 +14,7 @@ export class FilterMessagesComponent implements OnInit {
   filterGroup = new FormGroup({
     etablissement: new FormControl(''),
     auteur: new FormControl(''),
-    messageType: new FormControl(''),
+    type: new FormControl(''),
   })
   evenementUUID: string;
   etablissementOptions: any[];
@@ -21,7 +22,9 @@ export class FilterMessagesComponent implements OnInit {
   messageTypeOptions: any[];
   constructor(
     private evenementsService: EvenementsService,
-    private messagesService: MessagesService
+    private messagesService: MessagesService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.evenementUUID = this.evenementsService.selectedEvenementUUID.getValue()
     this.etablissementOptions = [];
@@ -52,6 +55,12 @@ export class FilterMessagesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  onSubmit(): void {
+    this.evenementsService.updateEvenementFilter(this.evenementUUID, this.filterGroup.getRawValue()).subscribe(() => {
+      this.router.navigate(['../liste'], { relativeTo: this.route})
+    })
   }
 
 }

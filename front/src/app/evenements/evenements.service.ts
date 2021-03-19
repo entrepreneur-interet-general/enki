@@ -20,7 +20,7 @@ export interface Evenement {
 }
 
 export interface Filter {
-  typeEtablissement: string;
+  etablissement: string;
   auteur: string;
   type: string;
   fromDatetime: string;
@@ -49,7 +49,7 @@ export class EvenementsService {
     user_roles: [],
     messages: [],
     filter: {
-      typeEtablissement: '',
+      etablissement: '',
       auteur: '',
       type: '',
       fromDatetime: '',
@@ -123,7 +123,7 @@ export class EvenementsService {
                 user_roles: event.user_roles,
                 messages: [],
                 filter: {
-                  typeEtablissement: '',
+                  etablissement: '',
                   auteur: '',
                   type: '',
                   fromDatetime: '',
@@ -149,7 +149,7 @@ export class EvenementsService {
         map(response => {
           let event: Evenement = response.data as Evenement
           event.filter = {
-            typeEtablissement: '',
+            etablissement: '',
             auteur: '',
             type: '',
             fromDatetime: '',

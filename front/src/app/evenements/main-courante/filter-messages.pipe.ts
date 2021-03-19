@@ -18,7 +18,7 @@ export class FilterMessagesPipe implements PipeTransform {
 
     return isEmpty ? messages : messages.filter(message => {
       return (
-        filter.typeEtablissement && filter.typeEtablissement === message.creator.position.group_id
+        filter.etablissement && filter.etablissement === message.creator.position.group_id
         || filter.auteur && filter.auteur === message.creator.uuid
         || filter.type && filter.type === message.type
       )

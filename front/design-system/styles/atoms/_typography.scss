@@ -54,16 +54,16 @@
 .h1-title  {
     display: flex;
     align-items: flex-end;
-    font-size: rem-calc(32);
+    font-size: rem-calc(30);
     font-weight: 500;
     position: relative;
-    line-height: 35px;
+    line-height: 28px;
     letter-spacing: 1px;
     margin-bottom: 8px;
-    @media #{$mediaMobile} {
+    /* @media #{$mediaMobile} {
         font-size: rem-calc(30);
         line-height: 28px;
-    }
+    } */
     svg {
         margin: 0 12px;
     }
@@ -83,14 +83,14 @@
 
 .h2-title  {
     font-weight: 500;
-    font-size: rem-calc(26);
-    line-height: 45px;
+    font-size: rem-calc(24);
+    line-height: 28px;
     letter-spacing: 0.5px;
 
-    @media #{$mediaMobile} {
+    /* @media #{$mediaMobile} {
         font-size: rem-calc(24);
         line-height: 28px;
-    }
+    } */
 }
 
 .h3-title  {

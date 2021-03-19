@@ -106,6 +106,8 @@ export class EvenementsService {
                 description: event.description,
                 created_at: event.created_at,
                 closed: event.closed,
+                started_at: event.started_at,
+                ended_at: event.ended_at,
                 user_roles: event.user_roles,
                 messages: [],
                 filter: {

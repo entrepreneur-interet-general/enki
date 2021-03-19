@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/interfaces/User';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { UserService } from 'src/app/user/user.service';
@@ -22,7 +22,8 @@ export class ListeMainCouranteComponent implements OnInit {
     private evenementsService: EvenementsService,
     private userService: UserService,
     private router: Router,
-    public mobilePrototype: MobilePrototypeService
+    public mobilePrototype: MobilePrototypeService,
+    private route: ActivatedRoute,
     ) {
     this.messages = []
     this.uuid = this.evenementsService.selectedEvenement.getValue().uuid
@@ -49,7 +50,7 @@ export class ListeMainCouranteComponent implements OnInit {
       // replace window.open by calling joinMeeting in evenementsService and passing meetingID...
       window.open(message.description, '_blank')
     } else {
-      this.router.navigate([`../detailmessage/${message.uuid}`])
+      this.router.navigate([`../detailmessage/${message.uuid}`], { relativeTo: this.route })
     }
   }
 

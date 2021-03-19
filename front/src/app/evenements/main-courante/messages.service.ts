@@ -59,7 +59,6 @@ export class MessagesService {
   }
 
   private containsEvenementMessages(evenementUUID: string): boolean {
-    console.log(this.getMessages().some(message => message.evenement_id === evenementUUID))
     return this.getMessages().some(message => message.evenement_id === evenementUUID)
   }
 

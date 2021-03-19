@@ -1,5 +1,5 @@
 <div class="evenements list" [class]="mobilePrototype.getCheckedClass()">
-  <div class="evenement--element list--element" *ngFor="let evenement of evenementsService.evenements">
+  <div class="evenement--element list--element" *ngFor="let evenement of evenements">
     <a [routerLink]="['/evenements/', evenement.uuid]" class="list--wrapper">
       <div class="secondInfos">
         <div class="secondInfos--dateTime">

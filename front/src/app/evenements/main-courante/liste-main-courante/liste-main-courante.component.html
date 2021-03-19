@@ -25,9 +25,8 @@
       Le dossier est vide, créez une nouvelle main courante pour démarrer le partage.
       <button class="btn" routerLink="../addmessage">Ajouter un nouveau message</button>
     </div>
-    
-    <ul>
-      <li class="list--element" *ngFor="let message of messages" [ngClass]="message.creator.uuid === user.uuid ? '-right': ''">
+    <ul class="list">
+      <li class="list--element" *ngFor="let message of messages | filterMessages:currentEventFilter" [ngClass]="message.creator.uuid === user.uuid ? '-right': ''">
         <a (click)="clickOnMessage(message)">
           <div class="list--wrapper">
             <div class="secondInfos">
@@ -61,7 +60,7 @@
       </li>
     </ul>
   </div>
-  <div class="action action--filter">
+  <div class="action action--filter" routerLink="../filters">
     <svg class="icon-filter icon"><use xlink:href="#icon-filter"></use></svg>
   </div>
   <div class="action action--add" routerLink="../addmessage" *ngIf="messages.length > 0">

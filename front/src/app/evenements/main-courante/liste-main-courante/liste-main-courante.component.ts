@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/interfaces/User';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { UserService } from 'src/app/user/user.service';
-import { EvenementsService } from '../../evenements.service';
+import { EvenementsService, Filter } from '../../evenements.service';
 import { Message, MessagesService } from '../messages.service';
+
+
 
 @Component({
   selector: 'app-liste-main-courante',
@@ -17,15 +19,21 @@ export class ListeMainCouranteComponent implements OnInit {
   uuid: string;
   fetchedMessages: boolean;
   user: User;
+  currentEventFilter: Filter;
+
   constructor(
     private messagesService: MessagesService,
     private evenementsService: EvenementsService,
     private userService: UserService,
     private router: Router,
-    public mobilePrototype: MobilePrototypeService
+    public mobilePrototype: MobilePrototypeService,
+    private route: ActivatedRoute,
     ) {
     this.messages = []
-    this.uuid = this.evenementsService.selectedEvenement.getValue().uuid
+    this.uuid = this.evenementsService.selectedEvenementUUID.getValue()
+    this.evenementsService.getEvenementByID(this.uuid).subscribe(evenement => {
+      this.currentEventFilter = evenement.filter
+    })
     this.user = this.userService.user
   }
 
@@ -33,8 +41,9 @@ export class ListeMainCouranteComponent implements OnInit {
     this.messagesService.getMessagesByEvenementID(this.uuid).subscribe(messages => {
       this.messages = messages.sort((a, b) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      })
-      this.fetchedMessages = true
+      });
+      this.evenementsService.setMessages(this.uuid, this.messages);
+      this.fetchedMessages = true;
     })
   }
 
@@ -49,7 +58,7 @@ export class ListeMainCouranteComponent implements OnInit {
       // replace window.open by calling joinMeeting in evenementsService and passing meetingID...
       window.open(message.description, '_blank')
     } else {
-      this.router.navigate([`../detailmessage/${message.uuid}`])
+      this.router.navigate([`../detailmessage/${message.uuid}`], { relativeTo: this.route })
     }
   }
 

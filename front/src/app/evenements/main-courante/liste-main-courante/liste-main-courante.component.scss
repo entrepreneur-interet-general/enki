@@ -26,8 +26,10 @@
     }
   }
   .list {
+    padding-bottom: 120px;
     &--element {
       border: 0;
+      cursor: pointer;
       &.-right {
         .contentInfos {
           background-color: $blueGrey;

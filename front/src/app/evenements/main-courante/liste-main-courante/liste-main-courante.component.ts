@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/interfaces/User';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { UserService } from 'src/app/user/user.service';
-import { EvenementsService } from '../../evenements.service';
+import { EvenementsService, Filter } from '../../evenements.service';
 import { Message, MessagesService } from '../messages.service';
 
 
@@ -19,6 +19,7 @@ export class ListeMainCouranteComponent implements OnInit {
   uuid: string;
   fetchedMessages: boolean;
   user: User;
+  currentEventFilter: Filter;
 
   constructor(
     private messagesService: MessagesService,
@@ -29,8 +30,31 @@ export class ListeMainCouranteComponent implements OnInit {
     private route: ActivatedRoute,
     ) {
     this.messages = []
-    this.uuid = this.evenementsService.selectedEvenement.getValue().uuid
+    this.uuid = this.evenementsService.selectedEvenementUUID.getValue()
+    // this.uuid = this.evenementsService.selectedEvenement.getValue().uuid
+
+    // this.currentEventFilter = this.evenementsService.selectedEvenement.getValue().filter
+    this.evenementsService.getEvenementByID(this.uuid).subscribe(evenement => {
+      this.currentEventFilter = evenement.filter
+    })
+    /* this.evenementsService.evenements.subscribe(() => {
+      this.currentEventFilter = this.evenementsService.getEvenementByID(this.uuid).filter
+    }) */
     this.user = this.userService.user
+  }
+
+  testFilter(): void {
+    let filter: Filter = {
+      typeEtablissement: '',
+      auteur: '',
+      type: 'meeting',
+      fromDatetime: '',
+      toDatetime: '',
+    }
+
+    this.evenementsService.updateEvenementFilter(this.uuid, filter).subscribe(filter => {
+      this.currentEventFilter = filter
+    })
   }
 
   ngOnInit(): void {

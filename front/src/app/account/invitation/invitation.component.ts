@@ -50,7 +50,6 @@ export class InvitationComponent implements OnInit {
       group_id: this.etablissementService.selectedEtablissement.getValue().uuid
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
-      console.log('fill out the form', response)
       this.invitationGroup.reset();
     })
   }

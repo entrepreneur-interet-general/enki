@@ -1,7 +1,7 @@
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, pluck, tap } from 'rxjs/operators';
 import { Intervention, InterventionsService } from '../interventions/interventions.service';
 import { Participant } from '../interfaces/Participant';
@@ -16,10 +16,10 @@ export interface Evenement {
   closed: boolean;
   user_roles: Participant[];
   messages: Message[];
-  filters: Filters;
+  filter: Filter;
 }
 
-export interface Filters {
+export interface Filter {
   typeEtablissement: string;
   auteur: string;
   type: string;
@@ -39,6 +39,7 @@ export class EvenementsService {
 
   private readonly _evenements = new BehaviorSubject<Evenement[]>([]);
   evenementsUrl: string;
+  selectedEvenementUUID = new BehaviorSubject<string>('');
   selectedEvenement = new BehaviorSubject<Evenement>({
     uuid: '',
     title: '',
@@ -47,7 +48,7 @@ export class EvenementsService {
     closed: false,
     user_roles: [],
     messages: [],
-    filters: {
+    filter: {
       typeEtablissement: '',
       auteur: '',
       type: '',
@@ -77,7 +78,8 @@ export class EvenementsService {
     this._evenements.next(evenements)
   }
 
-  private _addEvenement(evenementToAdd: Evenement): void {
+
+  addOrUpdateEvenement(evenementToAdd: Evenement): void {
     let evenements = this.getEvenements()
     // if it already exist, then update it
     if (evenements.some(event => event.uuid === evenementToAdd.uuid)) {
@@ -91,8 +93,15 @@ export class EvenementsService {
     this._setEvenements(evenements)
   }
 
+  updateEvenementFilter(evenement_id: string, filter: Filter): Observable<Filter> {
+    let evenementToFilter = this.getEvenements().filter(evenement => evenement.uuid === evenement_id)
+    evenementToFilter[0].filter = filter
+    this.addOrUpdateEvenement(evenementToFilter[0])
+    return of(filter)
+  }
+
   setMessages(evenement_id: string, messages: Message[]): void {
-    let events = this.getEvenements() // Evenement[]
+    let events = this.getEvenements()
     events.map(event => {
       return event.uuid === evenement_id ? event.messages = messages : event
     })
@@ -112,7 +121,14 @@ export class EvenementsService {
                 created_at: event.created_at,
                 closed: event.closed,
                 user_roles: event.user_roles,
-                messages: []
+                messages: [],
+                filter: {
+                  typeEtablissement: '',
+                  auteur: '',
+                  type: '',
+                  fromDatetime: '',
+                  toDatetime: '',
+                }
               }
             });
             this._setEvenements(evenementsList);
@@ -121,20 +137,35 @@ export class EvenementsService {
         )
       )
   }
-
-  getEvenement(uuid: string): Observable<Evenement> {
+  getEvenementByID(uuid: string): Observable<Evenement> {
+    return this.evenementIsInMemory ? of(this.getEvenements().filter(evenement => evenement.uuid === uuid)[0]) : this.httpGetEvenementById(uuid)
+  }
+  private evenementIsInMemory(evenementUUID: string): boolean {
+    return this.getEvenements().some(evenement => evenement.uuid === evenementUUID)
+  }
+  httpGetEvenementById(uuid: string): Observable<Evenement> {
     return this.http.get<any>(`${this.evenementsUrl}/${uuid}`, this.httpOptions)
       .pipe(
         map(response => {
-          this._addEvenement(response.data)
-          return response.data
+          let event: Evenement = response.data as Evenement
+          event.filter = {
+            typeEtablissement: '',
+            auteur: '',
+            type: '',
+            fromDatetime: '',
+            toDatetime: '',
+          } 
+          this.addOrUpdateEvenement(event)
+          return event
         })
       )
   }
   addParticipantsToEvenement(participant: Participant): void {
-    const copyEvent = this.selectedEvenement.getValue()
-    copyEvent.user_roles = copyEvent.user_roles.concat(participant)
-    this.selectedEvenement.next(copyEvent);
+    this.getEvenementByID(this.selectedEvenementUUID.getValue()).subscribe(evenement => {
+      const copyEvent = evenement
+      copyEvent.user_roles = copyEvent.user_roles.concat(participant)
+      this.selectedEvenement.next(copyEvent);
+    })
   }
   changeParticipantRole(participant: Participant): void {
     const copyEvent = this.selectedEvenement.getValue();
@@ -151,7 +182,7 @@ export class EvenementsService {
     this.selectedEvenement.next(copyEvent)
   }
   selectEvenement(event: Evenement): void {
-    this.selectedEvenement.next(event);
+    this.selectedEvenementUUID.next(event.uuid);
   }
   getSignalementsForEvenement(uuid): Observable<Intervention[]> {
     return this.http.get<any>(`${this.evenementsUrl}/${uuid}/affairs`, this.httpOptions)

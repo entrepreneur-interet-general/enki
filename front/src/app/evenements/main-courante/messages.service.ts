@@ -10,8 +10,13 @@ export interface Message {
   title: string;
   description: string;
   creator: {
+    last_name: string;
+    first_name: string;
     position: {
       group_id: string;
+      group: {
+        label: string;
+      },
     },
     uuid: string;
   };

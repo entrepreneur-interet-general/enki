@@ -5,23 +5,24 @@
 <div class="filter-messages">
   <form class="filterForm" [formGroup]="filterGroup" (ngSubmit)="onSubmit()">
     <div class="enkiform__group">
-      <select class="enkiform__input" id="etablissement" formControlName="etablissement">
-        <option>Toto</option>
+      <select class="enkiform__input" id="etablissement" formControlName="etablissement" required>
+        <option value=""></option>
+        <option *ngFor="let option of etablissementOptions" [value]="option.group_id">{{option.group_label}}</option>
         <!-- <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option> -->
       </select>
       <label for="etablissement" class="enkiform__label">Établissement</label>
       <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
     </div>
     <div class="enkiform__group">
-      <select class="enkiform__input" id="auteur" formControlName="auteur">
-        <option>Toto</option>
+      <select class="enkiform__input" id="auteur" formControlName="auteur" required>
+        <option *ngFor="let option of auteursOptions" [value]="option.auteur_id">{{option.auteur_label}}</option>
         <!-- <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option> -->
       </select>
       <label for="auteur" class="enkiform__label">Auteur</label>
       <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
     </div>
     <div class="enkiform__group">
-      <select class="enkiform__input" id="messageType" formControlName="messageType">
+      <select class="enkiform__input" id="messageType" formControlName="messageType" required>
         <option>Toto</option>
         <!-- <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option> -->
       </select>

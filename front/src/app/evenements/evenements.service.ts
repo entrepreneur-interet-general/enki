@@ -1,8 +1,8 @@
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, pluck, tap } from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
 import { Intervention, InterventionsService } from '../interventions/interventions.service';
 import { Participant } from '../interfaces/Participant';
 import { HTTP_DATA } from '../constants';

@@ -11,6 +11,8 @@ import { Message } from './main-courante/messages.service';
 export interface Evenement {
   uuid: string;
   title: string;
+  started_at: string;
+  ended_at: string;
   description: string;
   created_at: string;
   closed: boolean;
@@ -40,22 +42,6 @@ export class EvenementsService {
   private readonly _evenements = new BehaviorSubject<Evenement[]>([]);
   evenementsUrl: string;
   selectedEvenementUUID = new BehaviorSubject<string>('');
-  selectedEvenement = new BehaviorSubject<Evenement>({
-    uuid: '',
-    title: '',
-    description: '',
-    created_at: '',
-    closed: false,
-    user_roles: [],
-    messages: [],
-    filter: {
-      etablissement: '',
-      auteur: '',
-      type: '',
-      fromDatetime: '',
-      toDatetime: '',
-    }
-  });
   httpOptions: object;
   constructor(
     private http: HttpClient,
@@ -162,24 +148,26 @@ export class EvenementsService {
   }
   addParticipantsToEvenement(participant: Participant): void {
     this.getEvenementByID(this.selectedEvenementUUID.getValue()).subscribe(evenement => {
-      const copyEvent = evenement
-      copyEvent.user_roles = copyEvent.user_roles.concat(participant)
-      this.selectedEvenement.next(copyEvent);
+      const copyEvent = evenement;
+      copyEvent.user_roles = copyEvent.user_roles.concat(participant);
+      this.addOrUpdateEvenement(copyEvent);
     })
   }
   changeParticipantRole(participant: Participant): void {
-    const copyEvent = this.selectedEvenement.getValue();
-
-    // Replace the right participant by the received one
-    const newUserRoles = copyEvent.user_roles.map(user_role => {
-      if (user_role.user.uuid === participant.user.uuid) {
-        return participant
-      } else {
-        return user_role
-      }
+    this.getEvenementByID(this.selectedEvenementUUID.getValue()).subscribe(evenement => {
+      const copyEvent = evenement;
+      // Replace the right participant by the received one
+      const newUserRoles = copyEvent.user_roles.map(user_role => {
+        if (user_role.user.uuid === participant.user.uuid) {
+          return participant
+        } else {
+          return user_role
+        }
+      });
+      copyEvent.user_roles = newUserRoles;
+      this.addOrUpdateEvenement(copyEvent);
     })
-    copyEvent.user_roles = newUserRoles
-    this.selectedEvenement.next(copyEvent)
+
   }
   selectEvenement(event: Evenement): void {
     this.selectedEvenementUUID.next(event.uuid);
@@ -195,7 +183,7 @@ export class EvenementsService {
 
   callMainCouranteData(): Observable<any> {
     return this.http.get<any>(
-        `${environment.backendUrl}/events/${this.selectedEvenement.getValue().uuid}/export?format=csv`,
+        `${environment.backendUrl}/events/${this.selectedEvenementUUID.getValue()}/export?format=csv`,
         { responseType: "arraybuffer" as "json" }
       ).pipe(
       map((file: ArrayBuffer) => {
@@ -216,7 +204,7 @@ export class EvenementsService {
       );
     
       // Use download attribute to set set desired file name
-      a.setAttribute("download", `${this.selectedEvenement.getValue().uuid}-${(new Date()).toISOString()}`);
+      a.setAttribute("download", `${this.selectedEvenementUUID.getValue()}-${(new Date()).toISOString()}`);
     
       // Trigger the download by simulating click
       a.click();
@@ -232,8 +220,8 @@ export class EvenementsService {
   }
 
   httpCreateMeeting(): Observable<any> {
-    return this.http.post<any>(`${environment.backendUrl}/events/${this.selectedEvenement.getValue().uuid}/meeting`, {
-      evenement_id: this.selectedEvenement.getValue().uuid
+    return this.http.post<any>(`${environment.backendUrl}/events/${this.selectedEvenementUUID.getValue()}/meeting`, {
+      evenement_id: this.selectedEvenementUUID.getValue()
     }).pipe(
       pluck(HTTP_DATA)
     )
@@ -244,7 +232,7 @@ export class EvenementsService {
     })
   }
   httpJoinMeeting(meetingUUID: string): Observable<any> {
-    return this.http.get<any>(`${environment.backendUrl}/events/${this.selectedEvenement.getValue().uuid}/meeting/${meetingUUID}/join`).pipe(
+    return this.http.get<any>(`${environment.backendUrl}/events/${this.selectedEvenementUUID.getValue()}/meeting/${meetingUUID}/join`).pipe(
       pluck(HTTP_DATA)
     )
   }

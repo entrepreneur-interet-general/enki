@@ -18,6 +18,7 @@ export class FilterMessagesComponent implements OnInit {
   evenementUUID: string;
   etablissementOptions: any[];
   auteursOptions: any[];
+  messageTypeOptions: any[];
   constructor(
     private evenementsService: EvenementsService,
     private messagesService: MessagesService
@@ -25,6 +26,7 @@ export class FilterMessagesComponent implements OnInit {
     this.evenementUUID = this.evenementsService.selectedEvenementUUID.getValue()
     this.etablissementOptions = [];
     this.auteursOptions = [];
+    this.messageTypeOptions = [];
     this.messagesService.getMessagesByEvenementID(this.evenementUUID).subscribe(messages => {
       messages.forEach(message => {
         if (!this.etablissementOptions.some(item => item.group_id === message.creator.position.group_id)) {
@@ -39,6 +41,10 @@ export class FilterMessagesComponent implements OnInit {
             auteur_id: message.creator.uuid,
             auteur_label: `${message.creator.first_name} ${message.creator.last_name}`
           })
+        }
+
+        if(!this.messageTypeOptions.includes(message.type)) {
+          this.messageTypeOptions.push(message.type)
         }
       })
       

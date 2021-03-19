@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { HTTP_DATA } from 'src/app/constants';
 import { map, pluck, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 
 const ROLES = {
   admin: 'Administrateur',
@@ -40,7 +41,8 @@ export class ShareEvenementComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public evenementsService: EvenementsService,
-    private http: HttpClient
+    private http: HttpClient,
+    public mobilePrototype: MobilePrototypeService
   ) {
     this.participants = [];
     this.selectedParticipant = null;

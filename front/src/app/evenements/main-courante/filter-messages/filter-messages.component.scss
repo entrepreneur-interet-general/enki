@@ -1,3 +1,16 @@
+@import "../../../../../design-system/styles/variables";
+
 .filter-messages {
   padding: 0 16px;
+}
+.removeFilters {
+  color: $red;
+  text-align: center;
+  font-size: rem-calc(16);
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 1px;
+  font-family: $secondaryFont;
+  text-transform: uppercase;
+  margin-top: 8px;
 }

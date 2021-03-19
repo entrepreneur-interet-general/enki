@@ -68,4 +68,8 @@ export class FilterMessagesComponent implements OnInit {
     })
   }
 
+  resetFilters(): void {
+    this.filterGroup.reset();
+  }
+
 }

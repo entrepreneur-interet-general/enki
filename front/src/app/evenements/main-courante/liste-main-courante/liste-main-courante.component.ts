@@ -31,30 +31,10 @@ export class ListeMainCouranteComponent implements OnInit {
     ) {
     this.messages = []
     this.uuid = this.evenementsService.selectedEvenementUUID.getValue()
-    // this.uuid = this.evenementsService.selectedEvenement.getValue().uuid
-
-    // this.currentEventFilter = this.evenementsService.selectedEvenement.getValue().filter
     this.evenementsService.getEvenementByID(this.uuid).subscribe(evenement => {
       this.currentEventFilter = evenement.filter
     })
-    /* this.evenementsService.evenements.subscribe(() => {
-      this.currentEventFilter = this.evenementsService.getEvenementByID(this.uuid).filter
-    }) */
     this.user = this.userService.user
-  }
-
-  testFilter(): void {
-    let filter: Filter = {
-      etablissement: '',
-      auteur: '',
-      type: '',
-      fromDatetime: '',
-      toDatetime: '',
-    }
-
-    this.evenementsService.updateEvenementFilter(this.uuid, filter).subscribe(filter => {
-      this.currentEventFilter = filter
-    })
   }
 
   ngOnInit(): void {

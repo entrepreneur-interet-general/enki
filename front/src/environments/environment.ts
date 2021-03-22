@@ -5,7 +5,7 @@
 export const environment = {
   prototype: false,
   production: false,
-  backendUrl: `http://localhost:8000/enki/v1`,
+  backendUrl: `http://api.enki-crise.fr:8000/enki/v1`,
   HTTPClientInMemory: false
 };
 

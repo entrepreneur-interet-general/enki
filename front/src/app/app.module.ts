@@ -34,13 +34,13 @@ function initializeKeycloak(keycloak: KeycloakService) {
     keycloak.init({
       config: {
         "realm": "enki",
-        "url": "http://keycloak:8080/auth/",
+        "url": "https://api.enki-crise.fr/auth/",
         "clientId": "angular_frontend",
       },
       initOptions: {
         onLoad: 'login-required'
       },
-      bearerExcludedUrls: ['minio:9000', 'https://yesno.wtf/'],
+      bearerExcludedUrls: ['api.enki-crise.fr:9000', 'minio:9000', 'https://yesno.wtf/'],
     });
 }
 @NgModule({

@@ -9,7 +9,7 @@ import { HTTP_DATA } from '../constants';
 import { Message } from './main-courante/messages.service';
 
 
-export enum Status {
+export enum EvenementStatus {
   ongoing = "En cours",
   tobegoing = "À venir",
   over = "Terminé"
@@ -32,7 +32,7 @@ export interface Evenement {
   user_roles: Participant[];
   messages: Message[];
   filter: Filter;
-  status: Status;
+  status: EvenementStatus;
 }
 
 export interface Filter {
@@ -108,11 +108,11 @@ export class EvenementsService {
     this._setEvenements(events)
   }
 
-  checkStatus(event: Evenement): Status {
+  checkStatus(event: Evenement): EvenementStatus {
     if (event.ended_at) {
-      return Status.over;
+      return EvenementStatus.over;
     }
-    return new Date(event.started_at) < new Date() ? Status.ongoing : Status.tobegoing
+    return new Date(event.started_at) < new Date() ? EvenementStatus.ongoing : EvenementStatus.tobegoing
   }
 
   getEvenementsByHTTP(): Observable<Evenement[]> {

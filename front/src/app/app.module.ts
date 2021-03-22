@@ -24,7 +24,7 @@ import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
 import { AccountModule } from './account/account.module';
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
-import { SituationsComponent } from './situations/situations.component';
+// import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
 import { MobilePrototypeComponent } from './mobile-prototype/mobile-prototype.component';
 
@@ -51,7 +51,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DetailInterventionComponent,
     SecondStepComponent,
     PageNotFoundComponent,
-    SituationsComponent,
+    // SituationsComponent,
     ListeEvenementsComponent,
     MobilePrototypeComponent,
   ],

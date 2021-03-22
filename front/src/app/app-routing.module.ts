@@ -6,7 +6,7 @@ import { ListeInterventionsComponent } from './interventions/liste-interventions
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard/user-dashboard.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { SituationsComponent } from './situations/situations.component';
+// import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';

@@ -60,7 +60,7 @@ export class SummaryEvenementComponent implements OnInit {
 
   closeEvenement(): void {
     this.evenementsService.closeEvenement(this.evenement.uuid).subscribe((res) => {
-      this.router.navigate(['/situations/evenements'])
+      this.router.navigate(['/evenements'])
     })
   }
 

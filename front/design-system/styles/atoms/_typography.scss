@@ -3,7 +3,7 @@
     position: relative;
     &.-reversed {
         background: $primary;
-        padding: 16px;
+        padding: 32px 16px 16px;
         color: $white;
         .subtitle {
             color: $white;

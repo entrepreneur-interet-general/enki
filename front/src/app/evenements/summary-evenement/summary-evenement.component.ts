@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
+
 import { Intervention } from 'src/app/interventions/interventions.service';
 import { Evenement, EvenementsService } from '../evenements.service';
 
@@ -33,13 +34,13 @@ export class SummaryEvenementComponent implements OnInit {
       this.interventions = response
     })
   }
-  initMap(): void {
+  private initMap(): void {
     this.icon = L.icon({
       iconUrl: 'assets/marker-icon-2x.png',
       iconSize: [32, 32],
       iconAnchor: [16, 32],
     })
-    this.map = L.map('mapid', {
+    this.map = L.map('map', {
       center: [ 39, -98 ],
       zoom: 10
     })
@@ -49,13 +50,17 @@ export class SummaryEvenementComponent implements OnInit {
     });
 
     tiles.addTo(this.map);
-
-    this.map.panTo([48.886622, 2.598313])
-      // const marker = L.marker([affaires[0].location.lat, affaires[0].location.lon], {icon: this.icon}).addTo(this.map);
-      L.marker([48.886622, 2.598313], {icon: this.icon}).addTo(this.map);
+    console.log(this.interventions)
+    this.map.panTo([this.interventions[0].coord.lat, this.interventions[0].coord.long])
+    // const marker = L.marker([affaires[0].location.lat, affaires[0].location.lon], {icon: this.icon}).addTo(this.map);
+    this.interventions.forEach(inter => {
+      L.marker([inter.coord.lat, inter.coord.long], {icon: this.icon}).addTo(this.map);
+    })
   }
   ngAfterViewInit(): void {
-    // this.initMap()
+    if(this.interventions.length > 0) {
+      this.initMap();
+    }
   }
 
   closeEvenement(): void {

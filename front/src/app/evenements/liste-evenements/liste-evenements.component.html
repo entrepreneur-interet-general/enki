@@ -1,20 +1,20 @@
-<div class="title-container">
+<div class="title-container -bottomLine">
   <h1 class="h1-title">Événements</h1>
   <div class="subtitle">
     Mise à jour il y a ... minutes
   </div>
 </div>
-<div class="head-tab">
-  <div class="head-tab--element" routerLinkActive="-active">
+<!-- <div class="head-tab">
+  <div class="head-tab--element" >
     En cours
   </div>
-  <div class="head-tab--element" routerLinkActive="-active">
+  <div class="head-tab--element" >
     À venir
   </div>
-  <div class="head-tab--element" routerLinkActive="-active">
+  <div class="head-tab--element" >
     Terminé
   </div>
-</div>
+</div> -->
 <div class="evenements list" [class]="mobilePrototype.getCheckedClass()">
   <div class="evenement--element list--element" *ngFor="let evenement of evenements">
     <a [routerLink]="['/evenements/', evenement.uuid]" class="list--wrapper">

@@ -8,6 +8,12 @@ import { Participant } from '../interfaces/Participant';
 import { HTTP_DATA } from '../constants';
 import { Message } from './main-courante/messages.service';
 
+
+export enum Status {
+  ongoing = "En cours",
+  tobegoing = "À venir",
+  over = "Terminé"
+};
 export interface Evenement {
   uuid: string;
   title: string;
@@ -19,6 +25,7 @@ export interface Evenement {
   user_roles: Participant[];
   messages: Message[];
   filter: Filter;
+  status: Status;
 }
 
 export interface Filter {
@@ -94,12 +101,20 @@ export class EvenementsService {
     this._setEvenements(events)
   }
 
+  checkStatus(event: Evenement): Status {
+    if (event.ended_at) {
+      return Status.over;
+    }
+    return new Date(event.started_at) < new Date() ? Status.ongoing : Status.tobegoing
+  }
+
   getEvenementsByHTTP(): Observable<Evenement[]> {
     return this.http.get<EvenementsHTTP>(`${environment.backendUrl}/users/me/events`)
       .pipe(
         map(
           response => {
             const evenementsList = response.data.map((event: Evenement) => {
+              const currentStatus = this.checkStatus(event);
               return {
                 uuid: event.uuid,
                 title: event.title,
@@ -116,7 +131,8 @@ export class EvenementsService {
                   type: '',
                   fromDatetime: '',
                   toDatetime: '',
-                }
+                },
+                status: currentStatus
               }
             });
             this._setEvenements(evenementsList);

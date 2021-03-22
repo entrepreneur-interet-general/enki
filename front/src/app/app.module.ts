@@ -27,6 +27,7 @@ import { AnnuaireModule } from './annuaire/annuaire.module';
 // import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
 import { MobilePrototypeComponent } from './mobile-prototype/mobile-prototype.component';
+import { FilterStatusPipe } from './evenements/liste-evenements/filter-status.pipe';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -54,6 +55,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     // SituationsComponent,
     ListeEvenementsComponent,
     MobilePrototypeComponent,
+    FilterStatusPipe,
   ],
   imports: [
     BrowserModule,

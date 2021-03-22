@@ -1,30 +1,30 @@
-<div class="title-container -bottomLine">
+<div class="title-container">
   <h1 class="h1-title">Événements</h1>
   <div class="subtitle">
     Mise à jour il y a ... minutes
   </div>
 </div>
-<!-- <div class="head-tab">
-  <div class="head-tab--element" >
+<div class="head-tab">
+  <div class="head-tab--element" (click)="setActiveFilter(StatusEnum.ongoing)" [class.-active]="activeFilter === StatusEnum.ongoing">
     En cours
   </div>
-  <div class="head-tab--element" >
+  <div class="head-tab--element" (click)="setActiveFilter(StatusEnum.tobegoing)" [class.-active]="activeFilter === StatusEnum.tobegoing">
     À venir
   </div>
-  <div class="head-tab--element" >
+  <div class="head-tab--element" (click)="setActiveFilter(StatusEnum.over)" [class.-active]="activeFilter === StatusEnum.over">
     Terminé
   </div>
-</div> -->
+</div>
 <div class="evenements list" [class]="mobilePrototype.getCheckedClass()">
-  <div class="evenement--element list--element" *ngFor="let evenement of evenements">
+  <div class="evenement--element list--element" *ngFor="let evenement of evenements | filterStatus:activeFilter">
     <a [routerLink]="['/evenements/', evenement.uuid]" class="list--wrapper">
       <div class="secondInfos">
         <div class="secondInfos--dateTime">
           {{evenement.created_at | date:"dd/MM/yyyy à HH:mm"}}
         </div>
-        <div class="badge" *ngIf="evenement.closed === null">
+        <!-- <div class="badge" *ngIf="evenement.closed === null">
           En cours
-        </div>
+        </div> -->
       </div>
       <div class="mainInfos">
         <div class="mainInfos--title">

@@ -117,7 +117,7 @@ const routes : Routes = [
     ShareEvenementComponent,
     SearchUserComponent,
     FilterMessagesPipe,
-    FilterMessagesComponent
+    FilterMessagesComponent,
   ],
   providers: [MessagesService],
   imports: [

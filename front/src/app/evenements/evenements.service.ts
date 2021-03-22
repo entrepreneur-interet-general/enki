@@ -17,6 +17,13 @@ export enum Status {
 export interface Evenement {
   uuid: string;
   title: string;
+  creator: {
+    position: {
+      group: {
+        label: string;
+      }
+    }
+  };
   started_at: string;
   ended_at: string;
   description: string;
@@ -125,6 +132,13 @@ export class EvenementsService {
                 ended_at: event.ended_at,
                 user_roles: event.user_roles,
                 messages: [],
+                creator: {
+                  position: {
+                    group: {
+                      label: event.creator.position.group.label
+                    }
+                  }
+                },
                 filter: {
                   etablissement: '',
                   auteur: '',

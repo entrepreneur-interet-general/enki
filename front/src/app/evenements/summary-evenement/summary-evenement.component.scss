@@ -4,6 +4,10 @@
   .title-with-icon {
     padding: 16px 16px 0;
   }
+  &--over {
+    position: absolute;
+    top: -10px;
+  }
   &--title {
     color: $white;
   }

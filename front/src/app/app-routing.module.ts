@@ -22,19 +22,19 @@ const routes: Routes = [
         component: UserDashboardComponent,
       },
       {
+        path: 'interventions',
+        component: ListeInterventionsComponent
+      },
+      {
+        path: 'evenements',
+        component: ListeEvenementsComponent
+      },
+      /* {
         path: 'situations',
         component: SituationsComponent,
         children: [
-          {
-            path: 'interventions',
-            component: ListeInterventionsComponent
-          },
-          {
-            path: 'evenements',
-            component: ListeEvenementsComponent
-          }
         ]
-      },
+      }, */
       {
         path: 'detail-intervention/:uuid',
         component: DetailInterventionComponent

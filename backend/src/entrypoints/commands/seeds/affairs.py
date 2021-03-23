@@ -29,6 +29,7 @@ def generate_random(number: int, polygon: Polygon):
             points.append(pnt)
     return points
 
+
 @click.command("create-affairs")
 @click.option('--number', type=int, default=10)
 @click.option('--insee_code', type=str)

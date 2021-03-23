@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
+import { BehaviorSubject } from 'rxjs';
 
 import { Intervention } from 'src/app/interventions/interventions.service';
 import { Evenement, EvenementsService } from '../evenements.service';
@@ -15,7 +16,7 @@ export class SummaryEvenementComponent implements OnInit {
   icon;
   evenementUUID: string;
   evenement: Evenement;
-  interventions: Intervention[];
+  interventions = new BehaviorSubject<Intervention[]>([]);
   uuid;
 
   constructor(
@@ -26,12 +27,16 @@ export class SummaryEvenementComponent implements OnInit {
     this.evenementsService.getEvenementByID(this.evenementUUID).subscribe(evenement => {
       this.evenement = evenement;
     })
-    this.interventions = []
   }
 
+  getInterventions(): Intervention[] {
+    return this.interventions.getValue();
+  }
   ngOnInit(): void {
-    this.evenementsService.getSignalementsForEvenement(this.evenement.uuid).subscribe(response => {
-      this.interventions = response
+    this.interventions.subscribe((interventions) => {
+      if (interventions.length > 0) {
+        this.initMap()
+      }
     })
   }
   private initMap(): void {
@@ -50,17 +55,20 @@ export class SummaryEvenementComponent implements OnInit {
     });
 
     tiles.addTo(this.map);
-    console.log(this.interventions)
-    this.map.panTo([this.interventions[0].coord.lat, this.interventions[0].coord.long])
+    this.map.panTo([this.getInterventions()[0].coord.lat, this.getInterventions()[0].coord.long])
     // const marker = L.marker([affaires[0].location.lat, affaires[0].location.lon], {icon: this.icon}).addTo(this.map);
-    this.interventions.forEach(inter => {
+    
+    this.interventions.getValue().forEach(inter => {
       L.marker([inter.coord.lat, inter.coord.long], {icon: this.icon}).addTo(this.map);
     })
   }
+
+
+
   ngAfterViewInit(): void {
-    if(this.interventions.length > 0) {
-      this.initMap();
-    }
+    this.evenementsService.getSignalementsForEvenement(this.evenement.uuid).subscribe(response => {
+      this.interventions.next(response)
+    })
   }
 
   closeEvenement(): void {

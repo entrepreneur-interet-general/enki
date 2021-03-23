@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <div class="map" *ngIf="this.interventions.length > 0">
+  <div class="map">
     <div class="map-container">
       <div class="map-frame">
         <div id="map"></div>
@@ -41,10 +41,10 @@
       <div class="signalements--list">
         <h2 class="title-with-icon">
           <svg class="icon-signalements icon"><use xlink:href="#icon-signalements"></use></svg>
-          ({{interventions.length}}) Appels de secours
+          ({{getInterventions().length}}) Appels de secours
         </h2>
         <ul class="interventions list">
-          <li class="list--element" *ngFor="let intervention of interventions">
+          <li class="list--element" *ngFor="let intervention of interventions | async">
             <a class="list--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
               <div class="secondInfos">
                 <div class="badge">

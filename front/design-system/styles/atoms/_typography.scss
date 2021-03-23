@@ -3,11 +3,15 @@
     position: relative;
     &.-reversed {
         background: $primary;
-        padding: 32px 16px 16px;
+        padding: 16px;
         color: $white;
         .subtitle {
             color: $white;
             font-family: $primaryFont;
+        }
+        .badge {
+            background-color: $white;
+            color: $primary;
         }
     }
     &.-bottomLine {
@@ -21,6 +25,9 @@
             height: 1px;
             background: $lightGrey;
         }
+    }
+    .badge {
+        margin-bottom: 24px;
     }
 }
 

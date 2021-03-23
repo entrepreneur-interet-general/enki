@@ -5,15 +5,16 @@
     padding: 16px 16px 0;
   }
   &--over {
-    position: absolute;
-    top: -10px;
+    
   }
   &--title {
     color: $white;
   }
   &--dateTime {
+    font-weight: 300;
     display: flex;
     font-family: $secondaryFont;
+    letter-spacing: 0.5px;
     .icon-arrow {
       transform: rotate(180deg);
       margin: 0 4px;

@@ -38,7 +38,7 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
         return self.session.query(self.entity_type).all()
 
     def search(self, query: str, uuids: Optional[List[str]] = None, limit=10) -> usersList:
-        matches = self.session.query(self.entity_type).\
+        match_query = self.session.query(self.entity_type).\
             join(UserPositionEntity).\
             join(PositionGroupTypeEntity).\
             join(GroupEntity).\
@@ -50,6 +50,6 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
             )
         )
         if uuids:
-            query = query.filter(self.entity_type.uuid.notin_(uuids))
-        matches = query.limit(limit).all()
+            match_query = match_query.filter(self.entity_type.uuid.notin_(uuids))
+        matches = match_query.limit(limit).all()
         return matches

@@ -13,7 +13,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./realms/enki-realm-export.json:/tmp/enki-realm-export.json
+      - ./realms/enki-realm-export.json:/tmp/enki-realm-export-prod.json
       - ./enki-theme/:/opt/jboss/keycloak/themes/enki-theme
       # surcharge de config pour que le theme n'ait pas de cache et qu'on puisse bosser dessus
       - ./standalone-ha.xml:/opt/jboss/keycloak/standalone/configuration/standalone-ha.xml

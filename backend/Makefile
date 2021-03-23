@@ -38,3 +38,10 @@ test-resource-up:
 
 test-resource-down:
 	docker-compose -f docker-compose.test.yml down -v --remove-orphans
+
+# Migrations
+create-migration:
+	docker-compose -f docker-compose.yml exec enki-api alembic revision --autogenerate -m "test"
+# Migrations
+run-migration:
+	docker-compose -f docker-compose.yml exec enki-api alembic upgrade head

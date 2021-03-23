@@ -43,8 +43,9 @@ class MessageSchema(Schema):
     uuid = fields.Str(missing=lambda: str(uuid4()))
     title = fields.Str(required=True, validate=validate.Length(min=5))
     description = fields.Str(required=True, validate=validate.Length(min=5))
-    severity = EnumField(Severity, validate=validate.OneOf([e.value for e in Severity]))
-    type = fields.Str(validate=validate.OneOf([e.value for e in MessageType]))
+    severity = EnumField(Severity, missing=Severity.UNKNOWN, validate=validate.OneOf([e.value for e in Severity]))
+    type = fields.Str(missing=MessageType.INFORMATION.value, validate=validate.OneOf([e.value for e in MessageType]))
+    type_label = fields.Method("_build_type_label")
     creator_id = fields.Str(required=False, dump_only=True)
     creator = fields.Nested(UserSchema, dump_only=True)
     started_at = fields.DateTime(required=False)
@@ -62,7 +63,11 @@ class MessageSchema(Schema):
         entity = MessageEntity.from_dict(data)
         return entity
 
+    def _build_type_label(self, obj) -> str:
+        return MessageType.get_label(message_type=obj.type)
+
     def handle_error(self, exc, data, **kwargs):
         error_data = exc.normalized_messages()
         error_data["valid"] = [e for e in MessageType]
         raise MessageValidationError(description=error_data)
+

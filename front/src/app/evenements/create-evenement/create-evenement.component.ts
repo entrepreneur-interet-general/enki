@@ -52,7 +52,7 @@ export class CreateEvenementComponent implements OnInit {
       "type": "natural"
     }
     this.httpFormSubmit(formBody).subscribe(response => {
-      this.evenementsService.evenements.push(response.data)
+      this.evenementsService.addOrUpdateEvenement(response.data)
       this.router.navigate([`evenements/${response.data.uuid}`])
     })
   }

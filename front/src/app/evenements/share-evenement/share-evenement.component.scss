@@ -1,5 +1,12 @@
 @import '../../../../design-system/styles/variables';
 
+.prototype.share--content {
+  height: 526px;
+  + .action {
+    margin-top: -70px;
+    margin-left: 304px;
+  }
+}
 .share {
   padding: 0 16px;
   &--description {

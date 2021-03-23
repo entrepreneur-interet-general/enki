@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Contact } from 'src/app/interfaces/Contact';
 import { RegisterService } from 'src/app/registration/register.service';
+import { SearchEtablissementService } from 'src/app/search-etablissement/search-etablissement.service';
 import { AnnuaireService } from '../annuaire.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class ContactAddComponent implements OnInit {
     lastName: new FormControl('', Validators.required),
     firstName: new FormControl('', Validators.required),
     group: new FormControl('', Validators.required),
-    structure: new FormControl('', Validators.required),
+    etablissement: new FormControl('', Validators.required),
     position: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
@@ -28,6 +29,7 @@ export class ContactAddComponent implements OnInit {
   constructor(
     private annuaireService: AnnuaireService,
     private registerService: RegisterService,
+    private searchEtablissementService: SearchEtablissementService,
     private router: Router
   ) {
     this.registerService.getUserTypes().subscribe(response => {
@@ -40,8 +42,8 @@ export class ContactAddComponent implements OnInit {
       })
     })
 
-    this.registerService.selectedLocation.subscribe((structure) => {
-      this.contactGroup.get('structure').setValue(structure.label)
+    this.searchEtablissementService.selectedEtablissement.subscribe((etablissement) => {
+      this.contactGroup.get('etablissement').setValue(etablissement.label)
     })
   }
 
@@ -52,7 +54,7 @@ export class ContactAddComponent implements OnInit {
       first_name: this.contactGroup.value.firstName,
       last_name: this.contactGroup.value.lastName,
       group_type: this.contactGroup.value.group,
-      group_id: this.registerService.selectedLocation.getValue().uuid,
+      group_id: this.searchEtablissementService.selectedEtablissement.getValue().uuid,
       position_id: this.contactGroup.value.position,
       tel: {
         mobile: this.contactGroup.value.phone
@@ -65,8 +67,8 @@ export class ContactAddComponent implements OnInit {
     })
   }
 
-  goToSearchLocation() {
-    this.router.navigate([`contactadd/searchstructure`])
+  goToSearchEtablissement() {
+    this.router.navigate([`contactadd/searchstructure`], { queryParams: { groupType: this.contactGroup.controls.group.value }})
   }
 
 }

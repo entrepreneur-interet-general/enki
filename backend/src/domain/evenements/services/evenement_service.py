@@ -10,7 +10,7 @@ from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.affairs.schema.simple_affair import SimpleAffairSchema
 from domain.evenements.entities.evenement_entity import EvenementEntity, EvenementRoleType, UserEvenementRole
 from domain.evenements.entities.message_entity import MessageEntity
-from domain.evenements.schemas.schema import MessageSchema
+from domain.evenements.schemas.message_tag_schema import MessageSchema
 from domain.evenements.schemas.evenement_schema import EvenementSchema
 from domain.evenements.services.message_service import MessageService
 from domain.users.entities.user import UserEntity

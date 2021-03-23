@@ -19,12 +19,12 @@
       <select class="enkiform__input" id="group" formControlName="group" required>
         <option *ngFor="let userType of userTypes" value="{{userType}}">{{userType | titlecase}}</option>
       </select>
-      <label for="group" class="enkiform__label">Groupe</label>
+      <label for="group" class="enkiform__label">Type d'établissement</label>
       <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
     </div>
     <div class="enkiform__group">
-      <input type="text" class="enkiform__input" id="structure" formControlName="structure" required (focus)="goToSearchLocation()" [attr.disabled]="contactGroup.value.group == '' ? true : null">
-      <label for="structure" class="enkiform__label">Structure</label>
+      <input type="text" class="enkiform__input" id="etablissement" formControlName="etablissement" required (focus)="goToSearchEtablissement()" [attr.disabled]="contactGroup.value.group == '' ? true : null">
+      <label for="etablissement" class="enkiform__label">Établissement</label>
       <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg>
     </div>
     <div class="enkiform__group">

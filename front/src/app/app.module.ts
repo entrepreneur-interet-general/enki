@@ -10,7 +10,6 @@ import { MapComponent } from './map/map.component';
 import { environment } from '../environments/environment';
 import { ListeInterventionsComponent } from './interventions/liste-interventions/liste-interventions.component';
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
-import { SvgDefinitionsComponent } from './ui/svg-definitions/svg-definitions.component';
 import { HeaderComponent } from './ui/header/header.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -20,24 +19,28 @@ import { SecondStepComponent } from './registration/second-step/second-step.comp
 import { ReactiveFormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
+import { SearchEtablissementModule } from './search-etablissement/search-etablissement.module'
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
+import { AccountModule } from './account/account.module';
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
-import { SituationsComponent } from './situations/situations.component';
+// import { SituationsComponent } from './situations/situations.component';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
+import { MobilePrototypeComponent } from './mobile-prototype/mobile-prototype.component';
+import { FilterStatusPipe } from './evenements/liste-evenements/filter-status.pipe';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
         "realm": "enki",
-        "url": "http://keycloak:8080/auth/",
+        "url": "https://api.enki-crise.fr/auth/",
         "clientId": "angular_frontend",
       },
       initOptions: {
         onLoad: 'login-required'
       },
-      bearerExcludedUrls: ['minio:9000', 'https://yesno.wtf/'],
+      bearerExcludedUrls: ['api.enki-crise.fr:9000', 'minio:9000', 'https://yesno.wtf/'],
     });
 }
 @NgModule({
@@ -49,8 +52,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DetailInterventionComponent,
     SecondStepComponent,
     PageNotFoundComponent,
-    SituationsComponent,
-    ListeEvenementsComponent
+    // SituationsComponent,
+    ListeEvenementsComponent,
+    MobilePrototypeComponent,
+    FilterStatusPipe,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +70,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     UiModule,
     UserDashboardModule,
+    SearchEtablissementModule,
+    AccountModule,
     EvenementsModule,
     AnnuaireModule,
     AppRoutingModule

@@ -6,7 +6,7 @@ import pytest
 from domain.evenements.entities.evenement_entity import EvenementEntity
 from domain.evenements.entities.message_entity import MessageEntity
 from domain.evenements.entities.tag_entity import TagEntity
-from domain.evenements.schemas.schema import TagSchema, MessageSchema
+from domain.evenements.schemas.message_tag_schema import TagSchema, MessageSchema
 from domain.evenements.schemas.evenement_schema import EvenementSchema
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.user import UserSchema

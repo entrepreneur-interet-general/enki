@@ -16,7 +16,7 @@ export class EvenementDetailResolverService implements Resolve<Evenement> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Evenement> | Observable<never> {
     const id = route.paramMap.get('uuid')
     
-    return this.evenementsService.getEvenement(id).pipe(
+    return this.evenementsService.httpGetEvenementById(id).pipe(
       take(1),
       mergeMap(event => {
         if(event) {

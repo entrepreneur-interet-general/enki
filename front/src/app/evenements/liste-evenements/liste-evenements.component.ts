@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EvenementsService } from '../evenements.service';
+import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
+import { Evenement, EvenementsService, Status } from '../evenements.service';
 
 @Component({
   selector: 'app-liste-evenements',
@@ -8,12 +9,23 @@ import { EvenementsService } from '../evenements.service';
 })
 export class ListeEvenementsComponent implements OnInit {
 
+  evenements: Evenement[];
+  activeFilter: Status;
+  public StatusEnum = Status;
+
   constructor(
-    public evenementsService: EvenementsService
+    private evenementsService: EvenementsService,
+    public mobilePrototype: MobilePrototypeService
   ) {
-    this.evenementsService.getEvenements().subscribe(response => {
-      this.evenementsService.evenements = response
+    this.evenements = [];
+    this.activeFilter = Status.ongoing;
+    this.evenementsService.getEvenementsByHTTP().subscribe(evenements => {
+      this.evenements = evenements
     })
+  }
+
+  setActiveFilter(status: Status): void {
+    this.activeFilter = status;
   }
 
   ngOnInit(): void {

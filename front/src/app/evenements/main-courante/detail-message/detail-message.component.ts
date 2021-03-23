@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { UserService } from 'src/app/user/user.service';
 import { Message, MessagesService } from '../messages.service';
 
@@ -15,7 +16,8 @@ export class DetailMessageComponent implements OnInit {
 
   constructor(
     private messagesService: MessagesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public mobilePrototype: MobilePrototypeService
   ) {
     /* this.message = {
       title: '',

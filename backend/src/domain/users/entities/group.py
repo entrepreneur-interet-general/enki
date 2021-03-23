@@ -4,6 +4,7 @@ from typing import Optional
 
 from dataclasses_json import dataclass_json
 from slugify import slugify
+from werkzeug.exceptions import HTTPException
 
 from domain.core.entity import Entity
 
@@ -24,6 +25,10 @@ class LocationType(str, Enum):
     ZONE = "zone"
     OTHER = "other"
 
+
+class GroupTypeNotMatchException(HTTPException):
+    code = 404
+    description = "Group type provided not match"
 
 @dataclass_json
 @dataclass

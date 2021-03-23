@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { Evenement, EvenementsService } from '../evenements.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class DetailEvenementComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    public mobilePrototype: MobilePrototypeService
   ) { }
 
   ngOnInit(): void {

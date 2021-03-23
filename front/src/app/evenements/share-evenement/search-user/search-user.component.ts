@@ -74,7 +74,7 @@ export class SearchUserComponent implements OnInit {
   }
   
   addParticipantsToEvenement(userUUID: string): Observable<User> {
-    return this.http.put<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/invite/${userUUID}`, {}).pipe(
+    return this.http.put<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/invite/${userUUID}`, {}).pipe(
       pluck(HTTP_DATA)
     )
   }

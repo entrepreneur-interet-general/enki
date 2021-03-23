@@ -13,6 +13,7 @@ COPY requirements.txt ./
 RUN  pip install --upgrade pip && pip install -r requirements.txt
 
 COPY src src/
+ADD alembic.ini /code
 #RUN apt-get install libgeos-c1v5 libgeos-3.7.1
 
 # COPY tests/ /tests/

@@ -6,6 +6,9 @@
     padding: 16px;
   }
 }
+.evenement-container {
+  height: 526px;
+}
 .signalements {
   margin-bottom: 20px;
   .icon {
@@ -21,6 +24,11 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+  &.prototype {
+    bottom: auto;
+    width: 375px;
+    // margin-top: 255px;
+  }
 }
 .tab {
   display: block;

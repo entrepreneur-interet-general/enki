@@ -9,6 +9,7 @@
     margin: 0 16px;
     padding: 6px 16px;
     border-radius: 26px;
+    cursor: pointer;
     &.-active {
       background-color: $lighterPrimary;
     }

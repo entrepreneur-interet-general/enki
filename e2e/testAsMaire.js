@@ -97,7 +97,7 @@ fixture `Test as Maire`
         .click(structureOption.withText('Mairie'))
         .click(positionSelect)
         .click(positionOption.withText('Maire'))
-        .click('#structure')
+        .click('#etablissement')
         .typeText('.fullscreen-form--searchInput', 'Chelles')
         .click('#locationid-77108')
 
@@ -113,7 +113,6 @@ fixture `Test as Maire`
       let containsPreviouslyCreatedContact = false;
       let indexOfPreviouslyCreatedContact = 0;
       for (let index = 0; index <= contactsNb - 1; index++) {
-        console.log('nb of results')
         if (await Selector('.searchList--link').nth(index).innerText === INPUT_INFOS) {
           containsPreviouslyCreatedContact = true;
           indexOfPreviouslyCreatedContact = index;

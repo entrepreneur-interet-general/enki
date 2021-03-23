@@ -37,9 +37,8 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
     def get_all(self) -> usersList:
         return self.session.query(self.entity_type).all()
 
-    def search(self, query: str, uuids: Optional[List[str]] = None) -> usersList:
-        current_app.logger.info(f"uuids {uuids}")
-        query = self.session.query(self.entity_type).\
+    def search(self, query: str, uuids: Optional[List[str]] = None, limit=10) -> usersList:
+        matches = self.session.query(self.entity_type).\
             join(UserPositionEntity).\
             join(PositionGroupTypeEntity).\
             join(GroupEntity).\
@@ -52,5 +51,5 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
         )
         if uuids:
             query = query.filter(self.entity_type.uuid.notin_(uuids))
-        matches = query.all()
+        matches = query.limit(limit).all()
         return matches

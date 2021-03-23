@@ -12,6 +12,7 @@ from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entities.evenement_entity import EvenementType, EvenementEntity, EvenementRoleType, \
     UserEvenementRole
 from domain.evenements.entities.message_entity import MessageType, Severity, MessageEntity
+from domain.evenements.entities.meeting_entity import MeetingEntity
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.users.entities.user import UserEntity
@@ -32,6 +33,7 @@ messagesTable = Table(
     Column('description', String(255)),
     Column('type', Enum(MessageType)),
     Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
+    Column('external_id', String(60)),
     Column('executor_id', String(60), ForeignKey("users.uuid"), nullable=True),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
     Column('done_at', TIMESTAMP()),
@@ -79,7 +81,8 @@ evenementsTable = Table(
     Column('title', String(255), nullable=False),
     Column('description', String(255)),
     Column('type', Enum(EvenementType)),
-    Column('creator_id', String(255), ForeignKey("users.uuid")),
+    Column('creator_id', String(60), ForeignKey("users.uuid")),
+    Column('location_id', String(60), ForeignKey("locations.uuid")),
     Column('started_at', TIMESTAMP(), nullable=False, default=datetime.now),
     Column('ended_at', TIMESTAMP(), nullable=True, default=None),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
@@ -97,6 +100,24 @@ affairsTable = Table(
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
 )
 
+
+meeting_Table = Table(
+    'meetings', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('link', String(255), nullable=False),
+    Column('creator_id', String(60), ForeignKey("users.uuid")),
+    Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
+    Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
+    Column('closed_at', TIMESTAMP(), nullable=True)
+)
+
+meeting_participant_table = Table(
+    'meeting_participants', metadata,
+    Column('meeting_uuid', String(60), ForeignKey("meetings.uuid")),
+    Column('user_uuid', String(60), ForeignKey("users.uuid")),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
+)
 
 def start_mappers():
     mapper(TagEntity, tagTable)
@@ -118,6 +139,14 @@ def start_mappers():
     mapper(SimpleAffairEntity, affairsTable,
            properties={
                'evenement': relationship(EvenementEntity, back_populates='affairs', lazy="noload"),
+           }
+           )
+    mapper(MeetingEntity, meeting_Table,
+           properties={
+               'participants': relationship(UserEntity, lazy="noload",
+                                            secondary=meeting_participant_table),
+               'creator': relationship(UserEntity, backref='meetings', lazy="noload",
+                                       foreign_keys=meeting_Table.c.creator_id, ),
            }
            )
     mapper(

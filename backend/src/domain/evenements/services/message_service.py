@@ -1,12 +1,16 @@
 from typing import Any, Dict, List, Union
 
+from flask import current_app
+
+from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entities.evenement_entity import EvenementEntity
+from domain.evenements.entities.meeting_entity import MeetingEntity
 from domain.evenements.entities.message_entity import MessageEntity
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage, \
     AlreadyExistingResourceInThisMessage
-from domain.evenements.schemas.schema import MessageSchema, TagSchema
+from domain.evenements.schemas.message_tag_schema import MessageSchema, TagSchema
 from domain.evenements.schemas.resource_schema import ResourceSchema
 from domain.users.entities.user import UserEntity
 from service_layer.unit_of_work import AbstractUnitOfWork
@@ -113,3 +117,21 @@ class MessageService:
         with uow:
             message = uow.message.get_by_uuid(uuid)
             return MessageService.schema().dump(message)
+
+    @staticmethod
+    def add_message_from_meeting(meeting: MeetingEntity, uow: AbstractUnitOfWork):
+        current_app.logger.info(f"UOW type {type(uow)}")
+        with uow:
+            message: MessageEntity = MessageEntity.from_meeting(meeting=meeting)
+            evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=meeting.evenement_id)
+            uow.message.add(message)
+            evenement.add_message(message=message)
+            user: UserEntity = uow.user.get_by_uuid(uuid=meeting.creator_id)
+            message.set_creator(user=user)
+
+    @staticmethod
+    def add_message_from_affair(affair: SimpleAffairEntity, evenement: EvenementEntity, uow: AbstractUnitOfWork):
+        with uow:
+            message: MessageEntity = MessageEntity.from_affair(affair=affair)
+            uow.message.add(message)
+            evenement.add_message(message=message)

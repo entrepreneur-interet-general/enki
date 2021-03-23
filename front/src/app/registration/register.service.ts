@@ -38,9 +38,12 @@ export class RegisterService {
     }
   ];
 
+  token: string;
+
   constructor(
     private http: HttpClient,
   ) {
+    this.token = '';
   }
 
   setSelectedLocation(location: Location): void {

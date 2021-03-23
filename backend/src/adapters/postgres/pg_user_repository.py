@@ -36,7 +36,7 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
     def get_all(self) -> usersList:
         return self.session.query(self.entity_type).all()
 
-    def search(self, query: str) -> usersList:
+    def search(self, query: str, limit=10) -> usersList:
         matches = self.session.query(self.entity_type).\
             join(UserPositionEntity).\
             join(PositionGroupTypeEntity).\
@@ -47,5 +47,5 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
                 PositionGroupTypeEntity.label.match(query),
                 GroupEntity.label.match(query),
             )
-        ).all()
+        ).limit(limit).all()
         return matches

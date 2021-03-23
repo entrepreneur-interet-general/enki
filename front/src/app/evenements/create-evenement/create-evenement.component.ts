@@ -61,6 +61,12 @@ export class CreateEvenementComponent implements OnInit {
     })
   }
 
+  goToSearchLocation(): void {
+    // this.router.navigate([''])
+    this.router.navigate([`evenements/create/searchlocation`])
+
+  }
+
   httpFormSubmit(formBody): Observable<any> {
     return this.http.post(this.evenementUrl, formBody, this.httpOptions)
   }

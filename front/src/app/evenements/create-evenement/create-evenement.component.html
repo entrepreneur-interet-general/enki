@@ -12,7 +12,7 @@
     <label for="descriptionEvenement" class="enkiform__label">Description</label>
   </div>
   <div class="enkiform__group">
-    <input type="text" class="enkiform__input" id="location" formControlName="location" required>
+    <input type="text" class="enkiform__input" id="location" formControlName="location" required (focus)="goToSearchLocation()">
     <label for="location" class="enkiform__label">Localisation</label>
   </div>
   <div class="enkiform__group">
@@ -33,3 +33,4 @@
   </div> -->
   <input type="submit" class="btn" value="Valider">
 </form>
+<router-outlet></router-outlet>

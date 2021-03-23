@@ -51,8 +51,11 @@ export class FilterMessagesComponent implements OnInit {
           })
         }
 
-        if(!this.messageTypeOptions.includes(message.type)) {
-          this.messageTypeOptions.push(message.type)
+        if(!this.messageTypeOptions.some(item => item.type_id === message.type)) {
+          this.messageTypeOptions.push({
+            type_id: message.type,
+            type_label: message.type_label
+          })
         }
       })
       

@@ -46,9 +46,7 @@ export class CreateEvenementComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.evenementGroup.controls.startNow)
     const startDate = !this.evenementGroup.controls.startNow.value ? (new Date(this.evenementGroup.controls.startDate.value)).toISOString() : (new Date()).toISOString()
-    console.log(startDate)
     let formBody = {
       "creator_id": "my_id",
       "title": this.evenementGroup.value.nomEvenement,

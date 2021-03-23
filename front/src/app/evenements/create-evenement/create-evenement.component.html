@@ -12,8 +12,20 @@
     <label for="descriptionEvenement" class="enkiform__label">Description</label>
   </div>
   <div class="enkiform__group">
-    <input type="datetime-local" placeholder="Format : 14/12/2021" class="enkiform__input" id="startDate" formControlName="startDate" required pattern="\d{2}-\d{2}-\d{4}" min="{{todayDay | date:'yyyy-MM-dd'}}">
+    <input type="text" class="enkiform__input" id="location" formControlName="location" required>
+    <label for="location" class="enkiform__label">Localisation</label>
+  </div>
+  <div class="enkiform__group">
+    <input type="text" class="enkiform__input" id="eventType" formControlName="eventType" required>
+    <label for="eventType" class="enkiform__label">Type d'événement</label>
+  </div>
+  <div class="enkiform__group">
+    <input type="datetime-local" placeholder="Format : 14/12/2021" class="enkiform__input" id="startDate" formControlName="startDate" required pattern="\d{2}-\d{2}-\d{4}" [attr.disabled]="evenementGroup.value.startNow ? true : null">
     <label for="startDate" class="enkiform__label">Date de début</label>
+  </div>
+  <div class="enkiform__group">
+    <input type="checkbox" class="enkiform__checkbox" id="startNow" formControlName="startNow" required>
+    <label for="startNow" class="enkiform__label">Démarrer l'événement maintenant</label>
   </div>
 <!--   <div class="enkiform__group">
     <input type="datetime-local" placeholder="Format : 31/12/2021" class="enkiform__input" id="endDate" formControlName="endDate" required pattern="\d{2}-\d{2}-\d{4}">

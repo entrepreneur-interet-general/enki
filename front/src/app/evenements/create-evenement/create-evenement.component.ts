@@ -17,6 +17,9 @@ export class CreateEvenementComponent implements OnInit {
     nomEvenement: new FormControl('', Validators.required),
     descriptionEvenement: new FormControl('', Validators.required),
     startDate: new FormControl('', Validators.required),
+    startNow: new FormControl(true),
+    location: new FormControl('', Validators.required),
+    eventType: new FormControl('', Validators.required)
     // endDate: new FormControl('', Validators.required)
   })
 

@@ -15,11 +15,11 @@
     </div>
     <div class="evenement--dateTime">
       <div class="evenement--startDateTime">
-        {{evenement.started_at | date:"dd/MM/yyyy à HH:mm":"UTC/GMT+2"}}
+        {{evenement.started_at | date:"dd/MM/yyyy à HH:mm":timedifference}}
       </div>
       <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
       <div class="evenement--endDateTime">
-        <div *ngIf="evenement.ended_at; else inprogress">{{evenement.ended_at | date:"dd/MM/yyyy à HH:mm":"UTC/GMT+2"}}</div>
+        <div *ngIf="evenement.ended_at; else inprogress">{{evenement.ended_at | date:"dd/MM/yyyy à HH:mm":timedifference}}</div>
         <ng-template #inprogress>En cours</ng-template>
       </div>
     </div>

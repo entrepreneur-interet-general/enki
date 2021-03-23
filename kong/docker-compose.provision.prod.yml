@@ -12,7 +12,7 @@ services:
       context: ./docker
       dockerfile: Dockerfile.provision
     env_file:
-      - example.env.prod
+      - .env
     networks:
       - default
       - enki_default

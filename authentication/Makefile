@@ -15,9 +15,9 @@ setup:
 	sleep 10
 
 provision:
-	docker-compose -f docker-compose.provision.yml run --rm kong-provision
+	docker-compose -f docker-compose.provision.yml run --rm keycloak-provision
 provision-prod:
-	docker-compose -f docker-compose.prod.provision.yml run --rm kong-provision
+	docker-compose -f docker-compose.prod.provision.yml run --rm keycloak-provision
 
 up:
 	docker-compose -f docker-compose.yml up

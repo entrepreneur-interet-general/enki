@@ -49,6 +49,19 @@ class MessageType(str, Enum):
     def __str__(self):
         return self.value
 
+    @staticmethod
+    def get_mapping() -> dict:
+        return {
+            "info": "Information",
+            "ask": "Demande",
+            "affair": "Intervention",
+            "meeting": "Conversation vidéo"
+        }
+
+    @staticmethod
+    def get_label(message_type) -> str:
+        return MessageType.get_mapping().get(message_type, "Message")
+
 
 @dataclass_json
 @dataclass

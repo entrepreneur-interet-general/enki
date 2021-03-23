@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EvenementsService } from '../evenements.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { SearchLocationService } from 'src/app/search-location/search-location.service';
 
 @Component({
   selector: 'app-create-evenement',
@@ -20,7 +21,6 @@ export class CreateEvenementComponent implements OnInit {
     startNow: new FormControl(true),
     location: new FormControl('', Validators.required),
     eventType: new FormControl('', Validators.required)
-    // endDate: new FormControl('', Validators.required)
   })
 
   evenementUrl: string;
@@ -31,7 +31,8 @@ export class CreateEvenementComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private evenementsService: EvenementsService,
-    private router: Router
+    private router: Router,
+    private searchLocationService: SearchLocationService
   ) {
     this.todayDay = new Date();
     this.evenementUrl = `${environment.backendUrl}/events`
@@ -40,6 +41,9 @@ export class CreateEvenementComponent implements OnInit {
         'Content-Type':  'application/json',
       })
     }
+    this.searchLocationService.selectedEtablissement.subscribe(location => {
+      this.evenementGroup.controls.location.setValue(location.label)
+    })
   }
 
   ngOnInit(): void {
@@ -52,8 +56,8 @@ export class CreateEvenementComponent implements OnInit {
       "title": this.evenementGroup.value.nomEvenement,
       "description": this.evenementGroup.value.descriptionEvenement,
       "started_at": startDate,
-      // "ended_at": (new Date(this.evenementGroup.controls.endDate.value)).toISOString(),
-      "type": "natural"
+      "location": this.searchLocationService.selectedEtablissement.getValue().uuid,
+      "event_type": this.evenementGroup.value.eventType
     }
     this.httpFormSubmit(formBody).subscribe(response => {
       this.evenementsService.addOrUpdateEvenement(response.data)

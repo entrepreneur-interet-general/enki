@@ -13,6 +13,7 @@ from domain.evenements.entities.message_entity import MessageEntity
 from domain.evenements.schemas.message_tag_schema import MessageSchema
 from domain.evenements.schemas.evenement_schema import EvenementSchema
 from domain.evenements.services.message_service import MessageService
+from domain.users.entities.group import LocationEntity
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.user import UserSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
@@ -26,13 +27,19 @@ class EvenementService:
                       uow: AbstractUnitOfWork):
         creator_id = data.pop("creator_id")
         try:
+            current_app.logger.info(f"data {data}")
             evenement: EvenementEntity = EvenementService.schema().load(data)
+            current_app.logger.info(f"evenement.location_id {evenement.location_id}")
         except ValidationError as ve:
             raise ve
 
         with uow:
+
             user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
+            if evenement.uuid:
+                location: LocationEntity = uow.group.get_location_by_uuid(evenement.location_id)
             _ = uow.evenement.add(evenement)
+            evenement.set_location(location)
             evenement.creator = user
             final_evenement: UserEntity = uow.evenement.get_by_uuid(uuid=evenement.uuid)
             return EvenementService.schema().dump(final_evenement)

@@ -75,8 +75,8 @@ class EvenementEntity(Entity):
     description: Union[str, None]
     type: EvenementType
     started_at: datetime
-    location_id: Optional[str] = None
-    location: Optional[LocationEntity] = None
+    location_id: Optional[str] = field(default_factory=lambda: None)
+    location: Optional[LocationEntity] = field(default_factory=lambda: None)
     creator_id: Optional[str] = field(default_factory=lambda: None)
     creator: Optional[UserEntity] = field(default_factory=lambda: None)
     messages: List[MessageEntity] = field(default_factory=lambda: [])
@@ -146,6 +146,10 @@ class EvenementEntity(Entity):
         entries: List[MessageEntity] = self.messages + \
             [MessageEntity.from_affair(affair=affair) for affair in self.affairs]
         return entries
+
+    def set_location(self, location: LocationEntity):
+        self.location_id = location.uuid
+        self.location = location
 
 
 

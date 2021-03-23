@@ -39,6 +39,10 @@ class AbstractGroupRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_location_by_uuid(self, uuid: str) -> LocationEntity:
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def _match_uuid(self, uuid: str) -> Union[GroupEntity, None]:
         raise NotImplementedError
 

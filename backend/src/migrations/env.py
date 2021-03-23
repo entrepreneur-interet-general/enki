@@ -6,17 +6,23 @@ from sqlalchemy import pool
 from alembic import context
 import sys
 from os.path import abspath, dirname
+
+
 print(dirname(dirname(abspath(__file__))))
 sys.path.insert(0, dirname(dirname(abspath(__file__)))) #
 
+from adapters.postgres.base_orm import start_mappers
 from adapters.postgres.orm.user_groups import metadata
 from adapters.postgres.orm.evenements import metadata
+from adapters.postgres.orm.metadata import metadata
+import sqlalchemy as sa
 
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 from entrypoints.config import EnkiConfig
-
+start_mappers()
+sa.orm.configure_mappers()
 config = context.config
 
 # Interpret the config file for Python logging.
@@ -27,7 +33,7 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = metadata
+target_metadata = [metadata]
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

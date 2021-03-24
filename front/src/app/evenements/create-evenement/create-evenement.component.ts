@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EvenementsService } from '../evenements.service';
+import { EvenementsService, EvenementType } from '../evenements.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SearchLocationService } from 'src/app/search-location/search-location.service';
@@ -27,12 +27,13 @@ export class CreateEvenementComponent implements OnInit {
   evenement: object;
   httpOptions: object;
   todayDay: Date;
+  public EvenementTypeEnum = EvenementType;
 
   constructor(
     private http: HttpClient,
     private evenementsService: EvenementsService,
     private router: Router,
-    private searchLocationService: SearchLocationService
+    private searchLocationService: SearchLocationService,
   ) {
     this.todayDay = new Date();
     this.evenementUrl = `${environment.backendUrl}/events`
@@ -56,8 +57,8 @@ export class CreateEvenementComponent implements OnInit {
       "title": this.evenementGroup.value.nomEvenement,
       "description": this.evenementGroup.value.descriptionEvenement,
       "started_at": startDate,
-      "location": this.searchLocationService.selectedEtablissement.getValue().uuid,
-      "event_type": this.evenementGroup.value.eventType
+      "location_id": this.searchLocationService.selectedEtablissement.getValue().uuid,
+      "type": this.evenementGroup.value.eventType
     }
     this.httpFormSubmit(formBody).subscribe(response => {
       this.evenementsService.addOrUpdateEvenement(response.data)

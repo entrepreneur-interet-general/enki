@@ -49,7 +49,9 @@ export class EvenementsService {
   private readonly _evenements = new BehaviorSubject<Evenement[]>([]);
   evenementsUrl: string;
   selectedEvenementUUID = new BehaviorSubject<string>('');
+  selectedEvenementParticipants = new BehaviorSubject<Participant[]>([]);
   httpOptions: object;
+  
   constructor(
     private http: HttpClient,
     private interventionsService: InterventionsService,
@@ -141,6 +143,9 @@ export class EvenementsService {
         )
       )
   }
+  getSelectedEvenementsParticipants(): Participant[] {
+    return this.selectedEvenementParticipants.getValue();
+  }
   getEvenementByID(uuid: string): Observable<Evenement> {
     return this.evenementIsInMemory ? of(this.getEvenements().filter(evenement => evenement.uuid === uuid)[0]) : this.httpGetEvenementById(uuid)
   }
@@ -189,6 +194,7 @@ export class EvenementsService {
   }
   selectEvenement(event: Evenement): void {
     this.selectedEvenementUUID.next(event.uuid);
+    this.selectedEvenementParticipants.next(event.user_roles);
   }
   getSignalementsForEvenement(uuid): Observable<Intervention[]> {
     return this.http.get<any>(`${this.evenementsUrl}/${uuid}/affairs`, this.httpOptions)

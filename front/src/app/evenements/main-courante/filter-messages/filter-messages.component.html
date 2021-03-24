@@ -23,7 +23,7 @@
     <div class="enkiform__group">
       <select class="enkiform__input" id="type" formControlName="type" required>
         <option value=""></option>
-        <option *ngFor="let option of messageTypeOptions" [value]="option">{{option}}</option>
+        <option *ngFor="let option of messageTypeOptions" [value]="option.type_id">{{option.type_label}}</option>
       </select>
       <label for="type" class="enkiform__label">Type de message</label>
       <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>

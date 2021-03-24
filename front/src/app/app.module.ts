@@ -34,7 +34,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     keycloak.init({
       config: {
         "realm": "enki",
-        "url": "https://api.enki-crise.fr/auth/",
+        "url": environment.keycloakUrl,
         "clientId": "angular_frontend",
       },
       initOptions: {

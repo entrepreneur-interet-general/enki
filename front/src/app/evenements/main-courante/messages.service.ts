@@ -26,6 +26,7 @@ export interface Message {
   resources: [];
   evenement_id: string;
   type: string;
+  type_label: string;
 }
 
 

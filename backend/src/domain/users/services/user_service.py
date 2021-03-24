@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from uuid import uuid4
 
 from flask import current_app
@@ -79,9 +79,9 @@ class UserService:
             return UserService.schema(many=True).dump(users)
 
     @staticmethod
-    def search_users(query: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+    def search_users(query: str, uow: AbstractUnitOfWork, uuids: Optional[List[str]] = None) -> List[Dict[str, Any]]:
         with uow:
-            users: List[UserEntity] = uow.user.search(query=query)
+            users: List[UserEntity] = uow.user.search(query=query, uuids=uuids)
             return UserService.schema(many=True).dump(users)
 
     @staticmethod

@@ -37,7 +37,7 @@ class AbstractContactRepository(abc.ABC):
         return matches
 
     @abc.abstractmethod
-    def get_by_query(self, query):
+    def get_by_query(self, query: str) -> ContactsList:
         raise NotImplementedError
 
     @abc.abstractmethod

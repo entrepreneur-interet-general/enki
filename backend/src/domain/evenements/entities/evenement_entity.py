@@ -9,6 +9,7 @@ from werkzeug.exceptions import HTTPException
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.core.entity import Entity
 from domain.evenements.entities.message_entity import MessageEntity
+from domain.users.entities.group import LocationEntity
 from domain.users.entities.user import UserEntity
 
 
@@ -28,8 +29,9 @@ class UserHasNoAccessEvenement(HTTPException):
 
 
 class EvenementType(str, Enum):
-    NATURAL = "natural"
-    RASSEMBLEMENT = "rassemblement"
+    INCENDIE = "incendie"
+    INONDATION = "inondation"
+    ATTENTAT = "attentat"
 
 
 class EvenementRoleType(str, Enum):
@@ -73,6 +75,8 @@ class EvenementEntity(Entity):
     description: Union[str, None]
     type: EvenementType
     started_at: datetime
+    location_id: Optional[str] = field(default_factory=lambda: None)
+    location: Optional[LocationEntity] = field(default_factory=lambda: None)
     creator_id: Optional[str] = field(default_factory=lambda: None)
     creator: Optional[UserEntity] = field(default_factory=lambda: None)
     messages: List[MessageEntity] = field(default_factory=lambda: [])
@@ -142,6 +146,10 @@ class EvenementEntity(Entity):
         entries: List[MessageEntity] = self.messages + \
             [MessageEntity.from_affair(affair=affair) for affair in self.affairs]
         return entries
+
+    def set_location(self, location: LocationEntity):
+        self.location_id = location.uuid
+        self.location = location
 
 
 

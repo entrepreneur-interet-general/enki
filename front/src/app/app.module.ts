@@ -19,6 +19,7 @@ import { SecondStepComponent } from './registration/second-step/second-step.comp
 import { ReactiveFormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
+import { SearchLocationModule } from './search-location/search-location.module'
 import { SearchEtablissementModule } from './search-etablissement/search-etablissement.module'
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
 import { AccountModule } from './account/account.module';
@@ -70,6 +71,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     UiModule,
     UserDashboardModule,
+    SearchLocationModule,
     SearchEtablissementModule,
     AccountModule,
     EvenementsModule,

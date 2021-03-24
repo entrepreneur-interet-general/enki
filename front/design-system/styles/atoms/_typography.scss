@@ -9,6 +9,10 @@
             color: $white;
             font-family: $primaryFont;
         }
+        .badge {
+            background-color: $white;
+            color: $primary;
+        }
     }
     &.-bottomLine {
         margin-bottom: 16px;
@@ -21,6 +25,9 @@
             height: 1px;
             background: $lightGrey;
         }
+    }
+    .badge {
+        margin-bottom: 24px;
     }
 }
 

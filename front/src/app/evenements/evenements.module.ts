@@ -20,6 +20,7 @@ import { ShareEvenementComponent } from './share-evenement/share-evenement.compo
 import { SearchUserComponent } from './share-evenement/search-user/search-user.component';
 import { FilterMessagesPipe } from './main-courante/filter-messages.pipe';
 import { FilterMessagesComponent } from './main-courante/filter-messages/filter-messages.component';
+import { SearchLocationComponent } from '../search-location/search-location.component';
 
 
 const routes : Routes = [
@@ -35,7 +36,13 @@ const routes : Routes = [
       {
         path: 'evenements/create',
         canActivate: [ AuthGuard ],
-        component: CreateEvenementComponent
+        component: CreateEvenementComponent,
+        children: [
+          {
+            path: 'searchlocation',
+            component: SearchLocationComponent
+          }
+        ]
       },
       {
         path: 'evenements/:uuid',

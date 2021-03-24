@@ -67,11 +67,6 @@ export class RegisterService {
         }
       })
     )
-      
-    // return of(this.mockLocations as Location[])
-    /* return this.http.get<any>(`${environment.backendUrl}/groups/locations?query=${query}`).pipe(
-      pluck(HTTP_DATA)
-    ) */
   }
 
 

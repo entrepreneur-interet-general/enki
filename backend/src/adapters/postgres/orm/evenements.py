@@ -11,6 +11,7 @@ from adapters.postgres.orm.metadata import metadata
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entities.evenement_entity import EvenementType, EvenementEntity, EvenementRoleType, \
     UserEvenementRole
+from domain.users.entities.group import LocationEntity
 from domain.evenements.entities.message_entity import MessageType, Severity, MessageEntity
 from domain.evenements.entities.meeting_entity import MeetingEntity
 from domain.evenements.entities.resource import ResourceEntity
@@ -127,7 +128,8 @@ def start_mappers():
                                        lazy='noload'),
                'user_roles': relationship(UserEvenementRole, backref='evenements', lazy='noload'),
                'affairs': relationship(SimpleAffairEntity, back_populates='evenement', lazy='noload'),
-               'messages': relationship(MessageEntity, backref='evenements', lazy='noload')
+               'messages': relationship(MessageEntity, backref='evenements', lazy='noload'),
+               'location': relationship(LocationEntity, backref='evenements')
            }
            )
     mapper(ResourceEntity, resourceTable)

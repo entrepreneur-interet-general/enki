@@ -1,5 +1,6 @@
 from typing import List, Union
 
+from flask import current_app
 from sqlalchemy.orm import Session
 from werkzeug.exceptions import HTTPException
 
@@ -19,6 +20,10 @@ class NotFoundGroup(HTTPException):
 class NotFoundPosition(HTTPException):
     code = 404
     description = "Cette fonction n'existe pas"
+
+class LocationNotFound(HTTPException):
+    code = 404
+    description = "Cette localisation n'existe pas"
 
 
 class PgGroupRepository(PgRepositoryMixin, AbstractGroupRepository):
@@ -45,6 +50,14 @@ class PgGroupRepository(PgRepositoryMixin, AbstractGroupRepository):
         matches = self.session.query(LocationEntity).filter(
             LocationEntity.search_label.match(query)).limit(limit).all()
         return matches
+
+    def get_location_by_uuid(self, uuid: str) -> LocationEntity:
+        current_app.logger.info(f"Location uuid {uuid}")
+        matches = self.session.query(LocationEntity).filter(
+            LocationEntity.uuid == uuid).all()
+        if not matches:
+            raise LocationNotFound()
+        return matches[0]
 
     def get_from_group_type_and_location_id(self, group_type: GroupType, location_id: str) -> Union[GroupEntity, None]:
         matches = self.session.query(GroupEntity).filter(GroupEntity.location_id == location_id). \

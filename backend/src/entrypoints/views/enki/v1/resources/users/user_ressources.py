@@ -62,10 +62,12 @@ class UserListResource(WithUserRepoResource):
 
         args = parser.parse_args()
         query: str = args.get("query")
-        uuids: Union[str, List[str]] = args.get("uuids")
-        if isinstance(uuids, str):
-            uuids = [uuids]
-        users = UserService.search_users(query=query, uuids=uuids, uow=current_app.context)
+        uuids: List[str] = args.get("uuids")
+        uuids_list: List[str] = uuids[0].split(',')
+
+        if isinstance(uuids_list, str):
+            uuids_list = [uuids_list]
+        users = UserService.search_users(query=query, uuids=uuids_list, uow=current_app.context)
         return {
                    "data": users,
                    "message": "success",

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { interval, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, debounce, pluck, switchMap } from 'rxjs/operators';
 import { HTTP_DATA } from 'src/app/constants';
+import { Participant } from 'src/app/interfaces/Participant';
 import { User } from 'src/app/interfaces/User';
 import { UserService } from 'src/app/user/user.service';
 import { environment } from 'src/environments/environment';
@@ -53,10 +54,12 @@ export class SearchUserComponent implements OnInit {
   }
 
   searchUsersHttp(query: string): Observable<User[]> {
-    const participants: any[] = this.evenementsService.getSelectedEvenementsParticipants().map(participant => participant.user.uuid)
+    // exclude current `Participants` from being retrieved by search
+    const participants: string[] = this.evenementsService.getSelectedEvenementsParticipants().map(participant => participant.user.uuid)
+    // exclude current user from being retrieved by search
     participants.push(this.userService.user.uuid)
     const participantsParam = participants.toString()
-    const user_ids = participantsParam ? `&user_ids=${participants}` : ``;
+    const user_ids = participantsParam ? `&uuids=${participants}` : ``;
     return this.http.get<any>(`${environment.backendUrl}/users?query=${query}${user_ids}`).pipe(
       pluck(HTTP_DATA),
       catchError((error) => {

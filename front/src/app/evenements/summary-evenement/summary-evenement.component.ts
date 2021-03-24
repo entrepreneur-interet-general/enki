@@ -28,18 +28,32 @@ export class SummaryEvenementComponent implements OnInit {
     this.evenementUUID = this.evenementsService.selectedEvenementUUID.getValue()
     this.evenementsService.getEvenementByID(this.evenementUUID).subscribe(evenement => {
       this.evenement = evenement;
+      this.evenementsService.getEvenementLocationPolygon(this.evenement.location_id).subscribe(data => {
+        let eventPolygon = L.polygon(data.geometry.coordinates[0]).addTo(this.map);
+        const bounds = eventPolygon.getBounds();
+        this.map.fitBounds(bounds);
+        this.map.panTo([data.centroid[0], data.centroid[1]])
+      })
     })
+
   }
 
   getInterventions(): Intervention[] {
     return this.interventions.getValue();
   }
   ngOnInit(): void {
+    this.initMap()
     this.interventions.subscribe((interventions) => {
-      if (interventions.length > 0) {
-        this.initMap()
-      }
+      this.addMarker()
     })
+  }
+
+  addMarker(): void {
+    if (this.interventions.getValue().length > 0) {
+      this.interventions.getValue().forEach(inter => {
+        L.marker([inter.coord.lat, inter.coord.long], {icon: this.icon}).addTo(this.map);
+      })
+    }
   }
   private initMap(): void {
     this.icon = L.icon({
@@ -57,12 +71,6 @@ export class SummaryEvenementComponent implements OnInit {
     });
 
     tiles.addTo(this.map);
-    this.map.panTo([this.getInterventions()[0].coord.lat, this.getInterventions()[0].coord.long])
-    // const marker = L.marker([affaires[0].location.lat, affaires[0].location.lon], {icon: this.icon}).addTo(this.map);
-    
-    this.interventions.getValue().forEach(inter => {
-      L.marker([inter.coord.lat, inter.coord.long], {icon: this.icon}).addTo(this.map);
-    })
   }
 
 

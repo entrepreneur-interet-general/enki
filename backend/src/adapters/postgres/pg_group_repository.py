@@ -16,6 +16,10 @@ class NotFoundGroup(HTTPException):
     code = 404
     description = "Aucun groupe correspondant à ces critères n'a été trouvé"
 
+class NotFoundLocation(HTTPException):
+    code = 404
+    description = "Aucune localisation correspondant à ces critères n'a été trouvé"
+
 
 class NotFoundPosition(HTTPException):
     code = 404
@@ -77,8 +81,15 @@ class PgGroupRepository(PgRepositoryMixin, AbstractGroupRepository):
     def add_position(self, position: UserPositionEntity):
         self.session.add(position)
 
-    def get_position(self, position_id: str) -> Union[PositionGroupTypeEntity, None]:
+    def get_position(self, position_id: str) -> PositionGroupTypeEntity:
         matches = self.session.query(PositionGroupTypeEntity).filter(PositionGroupTypeEntity.uuid == position_id).all()
         if not matches:
             raise NotFoundPosition
         return matches[0]
+
+    def get_location_by_uuid(self, uuid: str) -> LocationEntity:
+        matches = self.session.query(LocationEntity).filter(LocationEntity.uuid == uuid).all()
+        if not matches:
+            raise NotFoundLocation
+        return matches[0]
+

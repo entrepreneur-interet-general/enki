@@ -22,8 +22,9 @@ from entrypoints.views.enki.v1.resources.users.invitation_ressources import Invi
     ValidateInvitationResource
 from entrypoints.views.enki.v1.resources.evenements.message_resource_resource import MessageMultipleResourceResource
 from .resources.evenements.meeting_ressources import MeetingResource, MeetingListResource, JoinMeetingResource
-from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, LocationListResource, \
+from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, \
     PositionGroupTypeListResource
+from .resources.users.location_ressources import LocationListResource, LocationResource
 from .resources.users.me.me_affairs_ressources import UserMeAffairsResource
 from .resources.users.me.me_ressources import UserMeResource
 from .resources.users.user_favorite_ressources import UserContactListResource, UserContactResource
@@ -77,7 +78,9 @@ endpoints = {
     GroupListResource: '/groups',
     GroupTypeListResource: '/groups/types',
     PositionGroupTypeListResource: '/groups/positions',
-    LocationListResource: '/groups/locations',
+    # Location
+    LocationListResource: '/locations',
+    LocationResource: '/locations/<uuid>',
     # User <> Contacts
     UserContactListResource: '/users/me/contact/favorites',
     UserContactResource: '/users/me/contact/favorites/<contact_uuid>',

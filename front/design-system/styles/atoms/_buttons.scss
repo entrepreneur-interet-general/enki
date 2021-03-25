@@ -34,6 +34,10 @@
         }
        
     }
+    &.-white {
+        background-color: $white;
+        color: $primary;
+    }
     &.-small {
         font-size: 11px;
     }

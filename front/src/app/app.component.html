@@ -3,7 +3,22 @@
   
   <app-svg-definitions></app-svg-definitions>
   <app-header></app-header>
-  
+  <div class="onboarding" *ngIf="showOnboarding | async">
+    <h1 class="h1-title">Bienvenue sur ENKI !</h1>
+    <p>
+      Cette version de l'application Enki est un prototype. Toute action prise ici n'aura pas d'impact dans la vie réelle.
+    </p>
+    <h2 class="h2-title">Que faire avec Enki ?</h2>
+    <p>
+      <i>Un feu se déclare sur votre commune et des vapeurs de couleurs étrange s'échappent de l'usine ?</i>
+      <br/>Enki vous envoie une notification pour vous informer qu'un appel a été passé aux services de secours concernant cette incendie.
+      Enki vous permet de créer un <i>événement</i>, puis d'inviter les communes voisines, la préfecture, et tout autre acteur qui aurait besoin d'être tenu informé de la gestion de cette crise.
+      <br />Le SDIS de votre département est automatiquement invité à cet événement (il reçoit une notification le prévenant que vous avez créé un événement).
+      <br/>Les opérations menées par les secours se retrouveront dans la main courante de l'événement.
+      <br/>Vous pouvez aussi écrire un message pour prévenir les participants d'une action ou demander une action de la part d'un autre participant.
+    </p>
+    <button class="btn -white" (click)="hideOnboarding()">J'ai compris.</button>
+  </div>
   <main>
   
     <router-outlet></router-outlet>

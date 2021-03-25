@@ -13,7 +13,7 @@
   </div>
   <div *ngFor="let locationResult of locationResults">
     <div class="searchList--element">
-      <a class="searchList--link" (click)="selectLocation(locationResult)" id="locationid-{{locationResult.external_id}}">{{locationResult.label}}</a>
+      <a class="searchList--link" (click)="selectLocation(locationResult)" id="locationid-{{locationResult.external_id}}">{{locationResult.label}} ({{locationResult.external_id}})</a>
     </div>
   </div>
 </div>

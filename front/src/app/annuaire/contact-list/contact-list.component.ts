@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from 'src/app/interfaces/Contact';
+import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { UserService } from 'src/app/user/user.service';
-import { AnnuaireService } from '../annuaire.service';
 
 @Component({
   selector: 'app-contact-list',
@@ -11,7 +11,8 @@ import { AnnuaireService } from '../annuaire.service';
 export class ContactListComponent implements OnInit {
   contacts: Contact[];
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    public mobilePrototype: MobilePrototypeService
   ) {
     this.contacts = [];
   }

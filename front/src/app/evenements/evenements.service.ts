@@ -8,6 +8,11 @@ import { Participant } from '../interfaces/Participant';
 import { HTTP_DATA } from '../constants';
 import { Message } from './main-courante/messages.service';
 
+export enum EvenementType {
+  INCENDIE = "incendie",
+  INONDATION = "inondation",
+  ATTENTAT = "attentat"
+}
 
 export enum EvenementStatus {
   ongoing = "En cours",

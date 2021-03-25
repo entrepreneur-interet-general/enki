@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { Intervention, InterventionsService } from '../interventions/interventions.service';
+import { Location } from '../interfaces/Location';
 import { Participant } from '../interfaces/Participant';
 import { HTTP_DATA } from '../constants';
 import { Message } from './main-courante/messages.service';
@@ -29,6 +30,7 @@ export interface Evenement {
       }
     }
   };
+  location_id: string;
   started_at: string;
   ended_at: string;
   description: string;
@@ -122,6 +124,14 @@ export class EvenementsService {
     return new Date(event.started_at) < new Date() ? EvenementStatus.ongoing : EvenementStatus.tobegoing
   }
 
+  getEvenementLocationPolygon(location_id: string): Observable<Location> {
+    this.getEvenementByID(this.selectedEvenementUUID.getValue())
+    return this.http.get<any>(`${environment.backendUrl}/locations/${location_id}`)
+      .pipe(
+        pluck(HTTP_DATA)
+      )
+  }
+
   getEvenementsByHTTP(): Observable<Evenement[]> {
     return this.http.get<EvenementsHTTP>(`${environment.backendUrl}/users/me/events`)
       .pipe(
@@ -138,6 +148,7 @@ export class EvenementsService {
                 started_at: event.started_at,
                 ended_at: event.ended_at,
                 user_roles: event.user_roles,
+                location_id: event.location_id,
                 messages: [],
                 creator: {
                   position: {

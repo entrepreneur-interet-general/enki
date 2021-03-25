@@ -3,22 +3,22 @@
   Retour à la liste des événements
 </a>
 <div class="title-container">
-  <h1 class="h2-title">Dossiers partagés</h1>
+  <h1 class="h2-title">Main courante</h1>
   <div class="subtitle">
     Mis à jour il y a une minute
   </div>
-  <div class="action action--export" (click)="exportMainCourante()">
+  <div *ngIf="messages.length > 0" class="action action--export" (click)="exportMainCourante()">
     <svg class="icon-download icon"><use xlink:href="#icon-download"></use></svg>
   </div>
 </div>
 <div class="mc" [class]="mobilePrototype.getCheckedClass()">
   <div class="head-tab">
     <div class="head-tab--element -active">
-      Main courante
+      Messages
     </div>
-    <div class="head-tab--element">
+    <!-- <div class="head-tab--element">
       Liste des actions
-    </div>
+    </div> -->
   </div>
   <div class="mc--content">
     <div class="mc--empty" *ngIf="!(messages.length > 0) ">
@@ -60,7 +60,7 @@
       </li>
     </ul>
   </div>
-  <div class="action action--filter" routerLink="../filters">
+  <div class="action action--filter" routerLink="../filters" *ngIf="messages.length > 0">
     <svg class="icon-filter icon"><use xlink:href="#icon-filter"></use></svg>
   </div>
   <div class="action action--add" routerLink="../addmessage" *ngIf="messages.length > 0">

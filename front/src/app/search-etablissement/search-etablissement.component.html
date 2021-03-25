@@ -13,7 +13,7 @@
   </div>
   <div *ngFor="let etablissementResult of etablissementResults">
     <div class="searchList--element">
-      <a class="searchList--link" (click)="selectEtablissement(etablissementResult)" id="locationid-{{etablissementResult.location.external_id}}">{{etablissementResult.label}}</a>
+      <a class="searchList--link" (click)="selectEtablissement(etablissementResult)" id="locationid-{{etablissementResult.location.external_id}}">{{etablissementResult.label}} ({{etablissementResult.location.external_id}})</a>
     </div>
   </div>
 </div>

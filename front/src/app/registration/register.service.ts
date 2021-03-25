@@ -15,28 +15,13 @@ export class RegisterService {
   selectedLocation = new BehaviorSubject<Location>({
     slug: '',
     label: '',
-    uuid: ''
+    uuid: '',
+    location: {
+      external_id: ''
+    },
   });
 
   selectedGroupType = new BehaviorSubject<string>('');
-
-  mockLocations: Location[] = [
-    {
-      slug: '77108',
-      label: 'Chelles',
-      uuid: ''
-    },
-    {
-      slug: '51571',
-      label: 'Val de Vesle',
-      uuid: ''
-    },
-    {
-      slug: '77',
-      label: 'Seine et Marne',
-      uuid: ''
-    }
-  ];
 
   token: string;
 

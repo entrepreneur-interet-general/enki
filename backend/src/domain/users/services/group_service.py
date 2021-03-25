@@ -3,7 +3,8 @@ from typing import Any, Dict, List
 from flask import current_app
 
 from domain.users.entities.group import GroupEntity, GroupType, PositionGroupTypeEntity, LocationEntity
-from domain.users.schemas.group import GroupSchema, PositionGroupTypeEntitySchema, LocationSchema
+from domain.users.schemas.group import GroupSchema, PositionGroupTypeEntitySchema, LocationSchema, \
+    LocationExtendedSchema
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
@@ -39,3 +40,9 @@ class GroupService:
         with uow:
             locations: List[LocationEntity] = uow.group.get_location_by_query(query=query)
             return LocationSchema(many=True).dump(locations)
+
+    @staticmethod
+    def get_location_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
+        with uow:
+            location: List[LocationEntity] = uow.group.get_location_by_uuid(uuid=uuid)
+            return LocationExtendedSchema().dump(location)

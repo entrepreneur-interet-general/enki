@@ -38,6 +38,7 @@ class PgUserRepository(PgRepositoryMixin, AbstractUserRepository):
         return self.session.query(self.entity_type).all()
 
     def search(self, query: str, uuids: Optional[List[str]] = None, limit=10) -> usersList:
+        current_app.logger.info(f"Uuids in search user query {uuids}")
         match_query = self.session.query(self.entity_type).\
             join(UserPositionEntity).\
             join(PositionGroupTypeEntity).\

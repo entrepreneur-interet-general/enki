@@ -10,7 +10,10 @@ export class SearchEtablissementService {
   selectedEtablissement = new BehaviorSubject<Location>({
     slug: '',
     label: '',
-    uuid: ''
+    uuid: '',
+    location: {
+      external_id: ''
+    },
   });
   constructor() { }
 

@@ -59,7 +59,11 @@ class AbstractGroupRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_position(self, position_id: str):
+    def get_position(self, position_id: str) -> UserPositionEntity:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_location_by_uuid(self, uuid: str) -> LocationEntity:
         raise NotImplementedError
 
 

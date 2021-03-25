@@ -58,7 +58,7 @@ class UserListResource(WithUserRepoResource):
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('query', type=str, required=True)
-        parser.add_argument('uuids', type=str, required=False, action="append")
+        parser.add_argument('uuids', type=str, required=False, )
 
         args = parser.parse_args()
         query: str = args.get("query")
@@ -68,6 +68,7 @@ class UserListResource(WithUserRepoResource):
         if isinstance(uuids_list, str):
             uuids_list = [uuids_list]
         users = UserService.search_users(query=query, uuids=uuids_list, uow=current_app.context)
+
         return {
                    "data": users,
                    "message": "success",

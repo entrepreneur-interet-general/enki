@@ -34,7 +34,7 @@ export class SearchLocationComponent implements OnInit {
     this.locationResults$ = this.subject.pipe(
       debounce(() => interval(500)),
       switchMap((inputValue: string) => {
-        return this.http.get<any>(`${environment.backendUrl}/groups/locations?query=${inputValue}`).pipe(
+        return this.http.get<any>(`${environment.backendUrl}/locations?query=${inputValue}`).pipe(
           pluck(HTTP_DATA),
           catchError((error) => {
             if (error.status === 404) {

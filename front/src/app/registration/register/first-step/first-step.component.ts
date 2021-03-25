@@ -79,7 +79,10 @@ export class FirstStepComponent {
           this.etablissementService.selectedEtablissement.next({
             slug: res.group.slug,
             label: res.group.label,
-            uuid: res.group.uuid
+            uuid: res.group.uuid,
+            location: {
+              external_id: res.group.location.external_id
+            },
           })
 
         })

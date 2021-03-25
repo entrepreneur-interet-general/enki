@@ -16,6 +16,9 @@
   </div>
 </div>
 <div class="evenements list" [class]="mobilePrototype.getCheckedClass()">
+  <div class="evenements--empty" *ngIf="(evenements | filterStatus:activeFilter).length == 0">
+     Pas d'événements "{{activeFilter}}" pour le moment...
+  </div>
   <div class="evenement--element list--element" *ngFor="let evenement of evenements | filterStatus:activeFilter">
     <a [routerLink]="['/evenements/', evenement.uuid]" class="list--wrapper">
       <div class="secondInfos">

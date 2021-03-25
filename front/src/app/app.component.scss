@@ -12,6 +12,25 @@
     overflow-x: hidden;
   }
 }
+.prototype .onboarding {
+  position: fixed;
+  z-index: 6000;
+  width: 375px;
+  height: 610px;
+}
+.onboarding {
+  background: $primary;
+  color: $white;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow: scroll;
+  p {
+    margin-bottom: 16px;
+  }
+  .h2-title {
+    margin-bottom: 16px;
+  }
+}
 :host {
   display: flex;
   justify-content: center;

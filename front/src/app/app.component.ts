@@ -4,6 +4,7 @@ import { environment } from '../environments/environment';
 import { UserService } from './user/user.service';
 import { Title } from '@angular/platform-browser';
 import { MobilePrototypeService } from './mobile-prototype/mobile-prototype.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ export class AppComponent {
   token;
   environment;
   user;
+  showOnboarding = new BehaviorSubject<boolean>(true);
 
   constructor(
     private keycloakService: KeycloakService,
@@ -31,7 +33,7 @@ export class AppComponent {
         this.token = res;
         window.localStorage.setItem('token', res);
       })
-      
+      this.showOnboarding.next(window.localStorage.getItem('showOnboarding') === 'true' || window.localStorage.getItem('showOnboarding') === null ? true : false)
       this.fetchedAffaire = false;
 
   }
@@ -42,6 +44,11 @@ Bienvenue sur 🅴🅽🅺🅸 !
 Un petit 🅱🅱🆃🅴🅰 ?
 ---
 `)
+  }
+
+  hideOnboarding(): void {
+    window.localStorage.setItem('showOnboarding', 'false')
+    this.showOnboarding.next(false)
   }
 
   canSeeEvents(): boolean {

@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/interfaces/User';
 import { Participant } from 'src/app/interfaces/Participant';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
-import { EvenementsService } from '../evenements.service';
+import { Evenement, EvenementsService } from '../evenements.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Observer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HTTP_DATA } from 'src/app/constants';
-import { map, pluck, tap } from 'rxjs/operators';
+import { pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 
@@ -25,7 +25,7 @@ const ROLES = {
 })
 export class ShareEvenementComponent implements OnInit {
 
-  participants: Participant[];
+  participants = new BehaviorSubject<Participant[]>([]);
   @ViewChild(ModalComponent)
   modal: ModalComponent;
   roleGroup = new FormGroup({
@@ -37,6 +37,8 @@ export class ShareEvenementComponent implements OnInit {
   selectedParticipant: Participant;
   roles: object;
 
+  evenementSubscriber: any;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -44,11 +46,16 @@ export class ShareEvenementComponent implements OnInit {
     private http: HttpClient,
     public mobilePrototype: MobilePrototypeService
   ) {
-    this.participants = [];
     this.selectedParticipant = null;
     this.meetingUUID = null;
+
+    this.evenementSubscriber = this.evenementsService._evenements.subscribe((events) => {
+      const currentEvents: Evenement[] = events.filter(event => event.uuid === this.evenementsService.selectedEvenementUUID.getValue())
+      this.participants.next(currentEvents[0].user_roles)
+    })
+
     this.evenementsService.getEvenementByID(this.evenementsService.selectedEvenementUUID.getValue()).subscribe((event) => {
-      this.participants = event.user_roles
+      this.participants.next(event.user_roles)
     })
     this.roles = ROLES;
 
@@ -62,7 +69,6 @@ export class ShareEvenementComponent implements OnInit {
     });
 
     this.getMeetingData().subscribe(res => {
-      console.log(res)
       this.meetingUUID = res.data[0].uuid
     })
   }
@@ -75,7 +81,7 @@ export class ShareEvenementComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  updateParticipantRole(value): Observable<User> {
+  updateParticipantRole(value: string): Observable<User> {
     return this.http.put<any>(
       `${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/invite/${this.selectedParticipant.user.uuid}?role_type=${value}`, {}
       ).pipe(
@@ -112,5 +118,9 @@ export class ShareEvenementComponent implements OnInit {
         window.open(res.direct_uri, '_blank')
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    this.evenementSubscriber.unsubscribe();
   }
 }

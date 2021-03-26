@@ -16,6 +16,9 @@ clean:
 logs:
 	docker-compose -f docker-compose.yml logs --follow --tail=50
 
+restart:
+	make down && make upd && sleep 8 && make seed
+
 seed:
 	docker exec backend_enki-api_1 flask create-position-groups
 	docker exec backend_enki-api_1 flask create-groups-and-locations

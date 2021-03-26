@@ -25,7 +25,7 @@ import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
 import { AccountModule } from './account/account.module';
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
-// import { SituationsComponent } from './situations/situations.component';
+import { DirectivesModule } from './directives.module';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
 import { MobilePrototypeComponent } from './mobile-prototype/mobile-prototype.component';
 import { FilterStatusPipe } from './evenements/liste-evenements/filter-status.pipe';
@@ -53,7 +53,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DetailInterventionComponent,
     SecondStepComponent,
     PageNotFoundComponent,
-    // SituationsComponent,
     ListeEvenementsComponent,
     MobilePrototypeComponent,
     FilterStatusPipe,
@@ -62,6 +61,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    DirectivesModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
@@ -76,7 +76,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AccountModule,
     EvenementsModule,
     AnnuaireModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [{
     provide: APP_INITIALIZER,

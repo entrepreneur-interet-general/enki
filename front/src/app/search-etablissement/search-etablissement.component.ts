@@ -27,7 +27,7 @@ export class SearchEtablissementComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private etablissementService: SearchEtablissementService
+    private etablissementService: SearchEtablissementService,
   ) {
     this.groupType = this.route.snapshot.queryParams.groupType
 

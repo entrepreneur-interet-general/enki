@@ -20,7 +20,9 @@ export class ListeEvenementsComponent implements OnInit {
     this.evenements = [];
     this.activeFilter = EvenementStatus.ongoing;
     this.evenementsService.getEvenementsByHTTP().subscribe(evenements => {
-      this.evenements = evenements
+      this.evenements = evenements.sort((a, b) => {
+        return new Date(b.started_at).getTime() - new Date(a.started_at).getTime()
+      });
     })
   }
 

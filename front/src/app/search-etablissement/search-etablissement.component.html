@@ -3,7 +3,7 @@
     <a class="fullscreen-form--cancel" routerLink="..">
       <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
     </a>
-    <input type="text" class="fullscreen-form--searchInput" [formControl]="etablissementSearch" placeholder="Département, commune ou code postal">
+    <input type="text" appFocusFormInput class="fullscreen-form--searchInput" [formControl]="etablissementSearch" placeholder="Département, commune ou code postal">
   </div>
   <div class="searchResults--title">
     Résultats de votre recherche

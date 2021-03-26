@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EvenementsService, EvenementType } from '../evenements.service';
+import { Evenement, EvenementsService, EvenementType } from '../evenements.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SearchLocationService } from 'src/app/search-location/search-location.service';
+import { HTTP_DATA } from 'src/app/constants';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-evenement',
@@ -61,8 +63,8 @@ export class CreateEvenementComponent implements OnInit {
       "type": this.evenementGroup.value.eventType
     }
     this.httpFormSubmit(formBody).subscribe(response => {
-      this.evenementsService.addOrUpdateEvenement(response.data)
-      this.router.navigate([`evenements/${response.data.uuid}`])
+      this.evenementsService.addOrUpdateEvenement(response)
+      this.router.navigate([`evenements/${response.uuid}`])
     })
   }
 
@@ -72,8 +74,10 @@ export class CreateEvenementComponent implements OnInit {
 
   }
 
-  httpFormSubmit(formBody): Observable<any> {
-    return this.http.post(this.evenementUrl, formBody, this.httpOptions)
+  httpFormSubmit(formBody): Observable<Evenement> {
+    return this.http.post<any>(this.evenementUrl, formBody, this.httpOptions).pipe(
+      pluck(HTTP_DATA)
+    )
   }
 
 }

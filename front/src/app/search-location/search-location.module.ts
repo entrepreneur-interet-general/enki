@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SearchLocationComponent } from './search-location.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { DirectivesModule } from '../directives.module';
 
 const routes: Routes = [
   {
@@ -12,11 +13,14 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [SearchLocationComponent],
+  declarations: [
+    SearchLocationComponent,
+  ],
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    RouterModule.forChild(routes)
+    DirectivesModule,
+    RouterModule.forChild(routes),
   ]
 })
 export class SearchLocationModule { }

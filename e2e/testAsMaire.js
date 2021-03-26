@@ -16,22 +16,30 @@ fixture `Test as Maire`
       .typeText('#username', 'mairie@chelles.fr')
       .typeText('#password', 'azeRTY123#')
       .click('#kc-login')
-
+      .click('#hideOnboarding')
+      .click('.burger')
+      .click('#mobile-prototype')
+      .click('.burger')
       await Selector('.dashboard')
     })
 
     const EVENT_TITLE = 'Test auto événement'
     const EVENT_DESCRIPTION = 'Test auto événement'
+    const EVENT_TYPE_SELECT = Selector('#eventType')
+    const EVENT_TYPE_OPTIONS = EVENT_TYPE_SELECT.find('option')
 
     test('Create `événement`', async t => {
       await t
       .click('.burger')
-      .click('#test--link-situation')
-      .click('#test--evenements')
+      .click('#test--link-evenements')
       .click('.action--add')
       .typeText('#nomEvenement', EVENT_TITLE)
       .typeText('#descriptionEvenement', EVENT_DESCRIPTION)
-      .typeText('#startDate', `2021-03-09T19:37`)
+      .click('#location')
+      .typeText('.fullscreen-form--searchInput', 'Chelles')
+      .click('#locationid-77108')
+      .click(EVENT_TYPE_SELECT)
+      .click(EVENT_TYPE_OPTIONS.withText('incendie'))
       .click('.createEvenement--form input[type="submit"]')
       .expect(Selector('.evenement--title').innerText).eql(EVENT_TITLE)
       .click('#test--maincourante')
@@ -45,9 +53,8 @@ fixture `Test as Maire`
       await t
       // go to the previously created event
       .click('.burger')
-      .click('#test--link-situation')
-      .click('#test--evenements')
-      .click('.evenement--element:last-child')
+      .click('#test--link-evenements')
+      .click('.evenement--element:first-child')
       .click('#test--maincourante')
       // the main courante should be empty
       // create a new message
@@ -150,9 +157,8 @@ fixture `Test as Maire`
     test('Share event with other user', async t => {
       await t
       .click('.burger')
-      .click('#test--link-situation')
-      .click('#test--evenements')
-      .click('.evenement--element:last-child')
+      .click('#test--link-evenements')
+      .click('.evenement--element:first-child')
       .click('#test--share')
       .click('.test--shareWithUser')
       .typeText('.fullscreen-form--searchInput', 'Benjamin')

@@ -126,7 +126,9 @@ const routes : Routes = [
     FilterMessagesPipe,
     FilterMessagesComponent,
   ],
-  providers: [MessagesService],
+  providers: [
+    MessagesService,
+  ],
   imports: [
     UiModule,
     CommonModule,

@@ -60,7 +60,7 @@ export interface EvenementsHTTP {
 })
 export class EvenementsService {
 
-  private readonly _evenements = new BehaviorSubject<Evenement[]>([]);
+  readonly _evenements = new BehaviorSubject<Evenement[]>([]);
   evenementsUrl: string;
   selectedEvenementUUID = new BehaviorSubject<string>('');
   selectedEvenementParticipants = new BehaviorSubject<Participant[]>([]);
@@ -89,11 +89,18 @@ export class EvenementsService {
 
 
   addOrUpdateEvenement(evenementToAdd: Evenement): void {
-    let evenements = this.getEvenements()
+    let evenements: Evenement[] = this.getEvenements()
+    evenementToAdd.filter = {
+      etablissement: '',
+      auteur: '',
+      type: '',
+      fromDatetime: '',
+      toDatetime: '',
+    };
     // if it already exist, then update it
     if (evenements.some(event => event.uuid === evenementToAdd.uuid)) {
       evenements.map(evenement => {
-        return evenement.uuid === evenement.uuid ? evenement = evenementToAdd : evenement
+        return evenementToAdd.uuid === evenement.uuid ? evenementToAdd : evenement
       })
     } {
       // if it doesn't exist, just add it
@@ -125,7 +132,6 @@ export class EvenementsService {
   }
 
   getEvenementLocationPolygon(location_id: string): Observable<Location> {
-    this.getEvenementByID(this.selectedEvenementUUID.getValue())
     return this.http.get<any>(`${environment.backendUrl}/locations/${location_id}`)
       .pipe(
         pluck(HTTP_DATA)

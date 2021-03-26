@@ -17,6 +17,9 @@ fixture `Test as Maire`
       .typeText('#password', 'azeRTY123#')
       .click('#kc-login')
       .click('#hideOnboarding')
+      .click('.burger')
+      .click('#mobile-prototype')
+      .click('.burger')
       await Selector('.dashboard')
     })
 
@@ -51,7 +54,7 @@ fixture `Test as Maire`
       // go to the previously created event
       .click('.burger')
       .click('#test--link-evenements')
-      .click('.evenement--element:last-child')
+      .click('.evenement--element:first-child')
       .click('#test--maincourante')
       // the main courante should be empty
       // create a new message
@@ -155,7 +158,7 @@ fixture `Test as Maire`
       await t
       .click('.burger')
       .click('#test--link-evenements')
-      .click('.evenement--element:last-child')
+      .click('.evenement--element:first-child')
       .click('#test--share')
       .click('.test--shareWithUser')
       .typeText('.fullscreen-form--searchInput', 'Benjamin')

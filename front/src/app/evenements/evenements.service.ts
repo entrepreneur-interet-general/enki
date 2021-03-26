@@ -60,7 +60,7 @@ export interface EvenementsHTTP {
 })
 export class EvenementsService {
 
-  private readonly _evenements = new BehaviorSubject<Evenement[]>([]);
+  readonly _evenements = new BehaviorSubject<Evenement[]>([]);
   evenementsUrl: string;
   selectedEvenementUUID = new BehaviorSubject<string>('');
   selectedEvenementParticipants = new BehaviorSubject<Participant[]>([]);
@@ -132,7 +132,6 @@ export class EvenementsService {
   }
 
   getEvenementLocationPolygon(location_id: string): Observable<Location> {
-    this.getEvenementByID(this.selectedEvenementUUID.getValue())
     return this.http.get<any>(`${environment.backendUrl}/locations/${location_id}`)
       .pipe(
         pluck(HTTP_DATA)

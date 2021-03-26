@@ -12,12 +12,12 @@
       <!-- <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg> -->
     </div>
   </div>
-  <div class="participants" *ngIf="participants.length">
+  <div class="participants" *ngIf="(participants | async).length">
     <h2 class="participants--title title-with-icon">
       <svg class="icon-user icon"><use xlink:href="#icon-user"></use></svg>
       {{participants.length}} PARTICIPANTS
     </h2>
-    <div class="participants--user" *ngFor="let participant of participants">
+    <div class="participants--user" *ngFor="let participant of participants | async">
       <div class="list-participants--primaryInfos">
         {{participant.user.position.group.label}} - {{participant.user.position.position.label}}
       </div>

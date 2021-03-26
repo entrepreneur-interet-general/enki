@@ -28,7 +28,7 @@ class AbstractEvenementRepository(abc.ABC):
     def get_by_uuid(self, uuid: str) -> EvenementEntity:
         matches = self._match_uuid(uuid)
         if not matches:
-            raise NotFoundEvenement
+            raise NotFoundEvenement()
         return matches
 
     @abc.abstractmethod

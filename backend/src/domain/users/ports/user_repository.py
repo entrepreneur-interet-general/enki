@@ -1,5 +1,5 @@
 import abc
-from typing import List, Union
+from typing import List, Union, Optional
 
 from werkzeug.exceptions import HTTPException
 
@@ -48,7 +48,7 @@ class AbstractUserRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def search(self, query: str) -> UsersList:
+    def search(self, query: str, uuids: Optional[List[str]] = None) -> UsersList:
         raise NotImplementedError
 
     @abc.abstractmethod

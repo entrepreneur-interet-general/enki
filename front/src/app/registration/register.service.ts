@@ -15,32 +15,20 @@ export class RegisterService {
   selectedLocation = new BehaviorSubject<Location>({
     slug: '',
     label: '',
-    uuid: ''
+    uuid: '',
+    location: {
+      external_id: ''
+    },
   });
 
   selectedGroupType = new BehaviorSubject<string>('');
 
-  mockLocations: Location[] = [
-    {
-      slug: '77108',
-      label: 'Chelles',
-      uuid: ''
-    },
-    {
-      slug: '51571',
-      label: 'Val de Vesle',
-      uuid: ''
-    },
-    {
-      slug: '77',
-      label: 'Seine et Marne',
-      uuid: ''
-    }
-  ];
+  token: string;
 
   constructor(
     private http: HttpClient,
   ) {
+    this.token = '';
   }
 
   setSelectedLocation(location: Location): void {
@@ -64,11 +52,6 @@ export class RegisterService {
         }
       })
     )
-      
-    // return of(this.mockLocations as Location[])
-    /* return this.http.get<any>(`${environment.backendUrl}/groups/locations?query=${query}`).pipe(
-      pluck(HTTP_DATA)
-    ) */
   }
 
 

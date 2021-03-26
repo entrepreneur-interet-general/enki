@@ -10,7 +10,26 @@
       <svg class="icon-sun icon"><use xlink:href="#icon-sun"></use></svg>
       Événements
     </h2>
-    <button routerLink="/maincourante" class="btn">Voir l'événement en cours</button>
+    <li class="intervention list--element" *ngFor="let intervention of interventions | slice:0:3">
+      <a class="intervention--wrapper list--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
+        <div class="secondInfos">
+          <div class="secondInfos--dateTime">
+            {{intervention.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
+          </div>
+          <div class="badge">
+            En cours
+          </div>
+        </div>
+        <div class="mainInfos -hasIcon">
+          <div class="mainInfos--title">
+            {{intervention.natureDeFait}}
+          </div>
+          <div class="mainInfos--icon">
+            <img src="assets/natureDeFaits/Incendies.png" alt="">
+          </div>
+        </div>
+      </a>
+    </li>
   </div> -->
   <div class="meteo dashboard--widget">
     <h2 class="meteo--title title-with-icon">
@@ -50,7 +69,7 @@
       </a>
     </li>
     <div class="interventions--seeMore" *ngIf="interventions.length > 0">
-      <a routerLink="/situations/interventions">
+      <a routerLink="/interventions">
         <svg class="icon-add title-icon"><use xlink:href="#icon-add"></use></svg>
         <span>Voir plus d'appels de secours</span>
       </a>

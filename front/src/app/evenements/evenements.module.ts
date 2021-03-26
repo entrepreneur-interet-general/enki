@@ -18,6 +18,9 @@ import { UiModule } from '../ui/ui.module';
 import { UserInfoGuard } from '../guards/user-info.guard';
 import { ShareEvenementComponent } from './share-evenement/share-evenement.component';
 import { SearchUserComponent } from './share-evenement/search-user/search-user.component';
+import { FilterMessagesPipe } from './main-courante/filter-messages.pipe';
+import { FilterMessagesComponent } from './main-courante/filter-messages/filter-messages.component';
+import { SearchLocationComponent } from '../search-location/search-location.component';
 
 
 const routes : Routes = [
@@ -33,7 +36,13 @@ const routes : Routes = [
       {
         path: 'evenements/create',
         canActivate: [ AuthGuard ],
-        component: CreateEvenementComponent
+        component: CreateEvenementComponent,
+        children: [
+          {
+            path: 'searchlocation',
+            component: SearchLocationComponent
+          }
+        ]
       },
       {
         path: 'evenements/:uuid',
@@ -64,6 +73,10 @@ const routes : Routes = [
               {
                 path: 'liste',
                 component: ListeMainCouranteComponent
+              },
+              {
+                path: 'filters',
+                component: FilterMessagesComponent
               },
               {
                 path: 'detailmessage/:uuid',
@@ -109,9 +122,13 @@ const routes : Routes = [
     SummaryEvenementComponent,
     ListeMainCouranteComponent,
     ShareEvenementComponent,
-    SearchUserComponent
+    SearchUserComponent,
+    FilterMessagesPipe,
+    FilterMessagesComponent,
   ],
-  providers: [MessagesService],
+  providers: [
+    MessagesService,
+  ],
   imports: [
     UiModule,
     CommonModule,

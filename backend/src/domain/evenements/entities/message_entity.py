@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
@@ -41,10 +43,24 @@ class MessageType(str, Enum):
     DO = "do"
     NEED_INFO = "need_info"
     AFFAIR = "affair"
+    MEETING = "meeting"
     UNKNOWN = "unknown"
 
     def __str__(self):
         return self.value
+
+    @staticmethod
+    def get_mapping() -> dict:
+        return {
+            "info": "Information",
+            "ask": "Demande",
+            "affair": "Intervention",
+            "meeting": "Conversation vidéo"
+        }
+
+    @staticmethod
+    def get_label(message_type) -> str:
+        return MessageType.get_mapping().get(message_type, "Message")
 
 
 @dataclass_json
@@ -53,6 +69,7 @@ class MessageEntity(Entity):
     title: str
     description: str
     creator_id: Optional[str] = field(default_factory=lambda: None)
+    external_id: str = field(default_factory=lambda: None)
     creator: Optional[UserEntity] = field(default_factory=lambda: None)
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
     started_at: Union[datetime, None] = field(default_factory=lambda: None)
@@ -70,12 +87,26 @@ class MessageEntity(Entity):
     @classmethod
     def from_affair(cls, affair):
         return cls(
-            uuid=affair.uuid,
+            uuid=str(uuid4()),
+            external_id=affair.uuid,
             description=affair.affair["eventLocation"]["address"],
             title=affair.affair["primaryAlert"]["alertCode"]["whatsHappen"]["label"],
             created_at=affair.created_at,
             updated_at=affair.updated_at,
             type=MessageType.AFFAIR
+        )
+
+    @classmethod
+    def from_meeting(cls, meeting):
+        return cls(
+            uuid=str(uuid4()),
+            external_id=meeting.uuid,
+            description=f"{meeting.link}",
+            title="Cliquez pour rejoindre la réunion vidéo",
+            started_at=meeting.created_at,
+            created_at=meeting.created_at,
+            updated_at=meeting.updated_at,
+            type=MessageType.MEETING
         )
 
     def add_tag(self, tag: TagEntity) -> TagEntity:

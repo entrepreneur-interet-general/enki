@@ -1,0 +1,19 @@
+<div class="seachLocation fullscreen-form">
+  <div class="fullscreen-form--heading">
+    <a class="fullscreen-form--cancel" routerLink="..">
+      <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
+    </a>
+    <input type="text" appFocusFormInput class="fullscreen-form--searchInput" [formControl]="locationSearch" placeholder="Département, commune ou code postal">
+  </div>
+  <div class="searchResults--title">
+    Résultats de votre recherche
+  </div>
+  <div class="searchResults--noResults" *ngIf="locationResults && locationResults.length === 0">
+    Pas de résultats... ¯\_(ツ)_/¯
+  </div>
+  <div *ngFor="let locationResult of locationResults">
+    <div class="searchList--element">
+      <a class="searchList--link" (click)="selectLocation(locationResult)" id="locationid-{{locationResult.external_id}}">{{locationResult.label}} ({{locationResult.external_id}})</a>
+    </div>
+  </div>
+</div>

@@ -16,7 +16,7 @@
         opacity: .5;
     }
     @media screen and (min-width: 768px) {
-        max-width: 300px;
+        max-width: 400px;
     }
 
     &.-center {
@@ -33,6 +33,10 @@
             max-width: none;
         }
        
+    }
+    &.-white {
+        background-color: $white;
+        color: $primary;
     }
     &.-small {
         font-size: 11px;
@@ -89,12 +93,24 @@
     .icon {
         fill: white;
     }
-    &--add {
+    &--add, &--video {
         right: 16px;
         bottom: 80px;
     }
     &--filter {
         right: 85px;
         bottom: 80px;
+    }
+}
+.prototype {
+    .action {
+        &--add, &--video {
+            right: auto;
+            bottom: auto;
+        }
+        &--filter {
+            right: auto;
+            bottom: auto;
+        }
     }
 }

@@ -1,0 +1,13 @@
+.prototype.evenements {
+  height: 452px;
+  + .action {
+    margin-top: -110px;
+    margin-left: 304px;
+  }
+}
+
+.evenements {
+  &--empty {
+    padding: 0 16px;
+  }
+}

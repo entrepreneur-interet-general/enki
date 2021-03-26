@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
+import { BehaviorSubject } from 'rxjs';
+
 import { Intervention } from 'src/app/interventions/interventions.service';
-import { EvenementsService } from '../evenements.service';
+import { Evenement, EvenementsService } from '../evenements.service';
 
 @Component({
   selector: 'app-summary-evenement',
@@ -12,30 +14,54 @@ import { EvenementsService } from '../evenements.service';
 export class SummaryEvenementComponent implements OnInit {
   map;
   icon;
-  evenement;
-  interventions: Intervention[];
+  evenementUUID: string;
+  evenement: Evenement;
+  interventions = new BehaviorSubject<Intervention[]>([]);
   uuid;
+  timedifference: string;
 
   constructor(
     private evenementsService: EvenementsService,
     private router: Router
   ) {
-    this.evenement = this.evenementsService.selectedEvenement.getValue()
-    this.interventions = []
+    this.timedifference = ((new Date()).getTimezoneOffset() / 60 * -1).toString();
+    this.evenementUUID = this.evenementsService.selectedEvenementUUID.getValue()
+    this.evenementsService.getEvenementByID(this.evenementUUID).subscribe(evenement => {
+      this.evenement = evenement;
+      this.evenementsService.getEvenementLocationPolygon(this.evenement.location_id).subscribe(data => {
+        let eventPolygon = L.polygon(data.geometry.coordinates[0]).addTo(this.map);
+        const bounds = eventPolygon.getBounds();
+        this.map.fitBounds(bounds);
+        this.map.panTo([data.centroid[0], data.centroid[1]])
+      })
+    })
+
   }
 
+  getInterventions(): Intervention[] {
+    return this.interventions.getValue();
+  }
   ngOnInit(): void {
-    this.evenementsService.getSignalementsForEvenement(this.evenement.uuid).subscribe(response => {
-      this.interventions = response
+    this.initMap()
+    this.interventions.subscribe((interventions) => {
+      this.addMarker()
     })
   }
-  initMap(): void {
+
+  addMarker(): void {
+    if (this.interventions.getValue().length > 0) {
+      this.interventions.getValue().forEach(inter => {
+        L.marker([inter.coord.lat, inter.coord.long], {icon: this.icon}).addTo(this.map);
+      })
+    }
+  }
+  private initMap(): void {
     this.icon = L.icon({
       iconUrl: 'assets/marker-icon-2x.png',
       iconSize: [32, 32],
       iconAnchor: [16, 32],
     })
-    this.map = L.map('mapid', {
+    this.map = L.map('map', {
       center: [ 39, -98 ],
       zoom: 10
     })
@@ -45,18 +71,19 @@ export class SummaryEvenementComponent implements OnInit {
     });
 
     tiles.addTo(this.map);
-
-    this.map.panTo([48.886622, 2.598313])
-      // const marker = L.marker([affaires[0].location.lat, affaires[0].location.lon], {icon: this.icon}).addTo(this.map);
-      L.marker([48.886622, 2.598313], {icon: this.icon}).addTo(this.map);
   }
+
+
+
   ngAfterViewInit(): void {
-    // this.initMap()
+    this.evenementsService.getSignalementsForEvenement(this.evenement.uuid).subscribe(response => {
+      this.interventions.next(response)
+    })
   }
 
   closeEvenement(): void {
     this.evenementsService.closeEvenement(this.evenement.uuid).subscribe((res) => {
-      this.router.navigate(['/situations/evenements'])
+      this.router.navigate(['/evenements'])
     })
   }
 

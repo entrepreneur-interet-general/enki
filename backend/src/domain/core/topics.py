@@ -18,6 +18,11 @@ class AffairCreatedTopic(Topic):
 
 
 @dataclass
+class MeetingCreatedTopic(Topic):
+    name: str = "AffairCreated"
+
+
+@dataclass
 class CreateEvenementTopic(Topic):
     name: str = "CreateEvenement"
 
@@ -55,3 +60,7 @@ class CreateContactTopic(Topic):
 @dataclass
 class CreateInvitationTopic(Topic):
     name: str = "CreateInvitation"
+
+@dataclass
+class CreateMeetingTopic(Topic):
+    name: str = "CreateMeeting"

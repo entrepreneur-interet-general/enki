@@ -1,9 +1,12 @@
-<a class="goTo" routerLink="/situations/evenements">
+<a class="goTo" routerLink="/evenements">
   <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
   Retour à la liste des événements
 </a>
 <div class="evenement">
   <div class="title-container -reversed">
+    <div class="evenement--over badge badge__blueFill">
+      {{evenement.creator.position.group.label}}
+    </div>
     <div class="evenement--title h2-title">
       {{evenement.title}}
     </div>
@@ -12,23 +15,23 @@
     </div>
     <div class="evenement--dateTime">
       <div class="evenement--startDateTime">
-        {{evenement.started_at | date:"dd/MM/yyyy à HH:mm":"UTC/GMT+2"}}
+        {{evenement.started_at | date:"dd/MM/yyyy à HH:mm":timedifference}}
       </div>
       <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
       <div class="evenement--endDateTime">
-        <div *ngIf="evenement.ended_at; else inprogress">{{evenement.ended_at | date:"dd/MM/yyyy à HH:mm":"UTC/GMT+2"}}</div>
+        <div *ngIf="evenement.ended_at; else inprogress">{{evenement.ended_at | date:"dd/MM/yyyy à HH:mm":timedifference}}</div>
         <ng-template #inprogress>En cours</ng-template>
       </div>
     </div>
   </div>
-<!-- </div>
-<div class="map">
-  <div class="map-container">
-    <div class="map-frame">
-      <div id="mapid"></div>
+  <div class="map">
+    <div class="map-container">
+      <div class="map-frame">
+        <div id="map"></div>
+      </div>
     </div>
   </div>
-</div>
+<!-- </div>
 <div class="evenement" *ngIf="fetchedEvenement"> -->
   <div class="evenement--body">
     <div class="signalements">
@@ -38,10 +41,10 @@
       <div class="signalements--list">
         <h2 class="title-with-icon">
           <svg class="icon-signalements icon"><use xlink:href="#icon-signalements"></use></svg>
-          ({{interventions.length}}) Appels de secours
+          ({{getInterventions().length}}) Appels de secours
         </h2>
         <ul class="interventions list">
-          <li class="list--element" *ngFor="let intervention of interventions">
+          <li class="list--element" *ngFor="let intervention of interventions | async">
             <a class="list--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
               <div class="secondInfos">
                 <div class="badge">

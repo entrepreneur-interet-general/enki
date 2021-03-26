@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { environment } from '../environments/environment';
 import { UserService } from './user/user.service';
-import jwt_decode from 'jwt-decode';
-import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { MobilePrototypeService } from './mobile-prototype/mobile-prototype.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,25 +18,22 @@ export class AppComponent {
   token;
   environment;
   user;
+  showOnboarding = new BehaviorSubject<boolean>(true);
 
   constructor(
     private keycloakService: KeycloakService,
     public userService: UserService,
-    private router: Router
+    private titleService: Title,
+    public mobilePrototype: MobilePrototypeService
     ) {
 
+      this.titleService.setTitle('Gestion de crise | ENKI')
       this.environment = environment;
-/*       this.keycloakService.getToken().then((res) => {
+      this.keycloakService.getToken().then((res) => {
         this.token = res;
         window.localStorage.setItem('token', res);
-        let decodedJWT: any = jwt_decode(res);
-
-        this.userService.user.attributes.fonction = decodedJWT.fonction ? decodedJWT.fonction : '';
-        this.userService.user.location = decodedJWT.code_insee ? decodedJWT.code_insee : '';
-        if (this.userService.userIsValid()) {
-          this.router.navigate(['dashboard'])
-        }
-      }); */
+      })
+      this.showOnboarding.next(window.localStorage.getItem('showOnboarding') === 'true' || window.localStorage.getItem('showOnboarding') === null ? true : false)
       this.fetchedAffaire = false;
 
   }
@@ -46,6 +44,11 @@ Bienvenue sur 🅴🅽🅺🅸 !
 Un petit 🅱🅱🆃🅴🅰 ?
 ---
 `)
+  }
+
+  hideOnboarding(): void {
+    window.localStorage.setItem('showOnboarding', 'false')
+    this.showOnboarding.next(false)
   }
 
   canSeeEvents(): boolean {

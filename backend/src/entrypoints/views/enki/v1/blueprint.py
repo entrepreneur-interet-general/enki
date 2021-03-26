@@ -1,7 +1,8 @@
 from flask import Blueprint, current_app
 from flask_restful import Api
+from slugify import slugify
 
-from domain.evenements.schemas.schema import MessageSchema
+from domain.evenements.schemas.message_tag_schema import MessageSchema
 from domain.evenements.schemas.evenement_schema import EvenementSchema
 from entrypoints.extensions import api_spec
 from entrypoints.views.enki.v1.resources.users.user_ressources import UserResource, UserListResource
@@ -13,14 +14,17 @@ from .resources import AffairListResource, AffairRandomResource, AffairRandomLis
     ResourceListResource, ResourceResource, \
     MessageResourceResource, MessageResourceListResource, \
     AffairEvenementResource, AffairListEvenementResource
-from .resources.contact_ressources import ContactListResource, ContactResource
-from .resources.envement_invitation_resource import EvenementInviteUserResource
-from .resources.evenement_resource import MeEvenementResource
+from entrypoints.views.enki.v1.resources.users.contact_ressources import ContactListResource, ContactResource
+from entrypoints.views.enki.v1.resources.evenements.envement_invitation_resource import EvenementInviteUserResource
+from entrypoints.views.enki.v1.resources.evenements.evenement_resource import MeEvenementResource
 from .resources.evenements.evenement_export_resource import EvenementExportResource
-from .resources.invitation_ressources import InvitationResource, ValidateInvitationResource
-from .resources.message_resource_resource import MessageMultipleResourceResource
-from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, LocationListResource, \
+from entrypoints.views.enki.v1.resources.users.invitation_ressources import InvitationResource, \
+    ValidateInvitationResource
+from entrypoints.views.enki.v1.resources.evenements.message_resource_resource import MessageMultipleResourceResource
+from .resources.evenements.meeting_ressources import MeetingResource, MeetingListResource, JoinMeetingResource
+from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, \
     PositionGroupTypeListResource
+from .resources.users.location_ressources import LocationListResource, LocationResource
 from .resources.users.me.me_affairs_ressources import UserMeAffairsResource
 from .resources.users.me.me_ressources import UserMeResource
 from .resources.users.user_favorite_ressources import UserContactListResource, UserContactResource
@@ -28,73 +32,71 @@ from .resources.users.user_favorite_ressources import UserContactListResource, U
 enki_blueprint_v1 = Blueprint(name="enki_blueprint_v1", import_name=__name__, url_prefix="/api/enki/v1")
 
 api = Api(enki_blueprint_v1)
-# Affairs
-api.add_resource(AffairResource, '/affairs/<uuid>', endpoint="affair_by_id")
-api.add_resource(AffairListResource, '/affairs', endpoint="affairs")
-api.add_resource(AffairRandomResource, '/affair/random', endpoint="affair_random")
-api.add_resource(AffairRandomListResource, '/affairs/random', endpoint="affairs_random")
 
+endpoints = {
+    # Affairs
+    AffairResource: '/affairs/<uuid>',
+    AffairListResource: '/affairs',
+    AffairRandomResource: '/affair/random',
+    AffairRandomListResource: '/affairs/random',
+    # Tags
+    TagListResource: '/tags',
+    TagResource: '/tags/<uuid>',
+    MessageTagResource: '/messages/<uuid>/tags/<tag_uuid>',
+    MessageTagListResource: '/messages/<uuid>/tags',
+    # Resources
+    ResourceListResource: '/resources',
+    ResourceResource: '/resources/<uuid>',
+    # Messages
+    MessageResourceResource: '/messages/<uuid>/resource/<resource_uuid>',
+    MessageMultipleResourceResource: '/messages/<uuid>/resource/add',
+    MessageResourceListResource: '/messages/<uuid>/resources',
+    # Evenements
+    EvenementListResource: '/events',
+    EvenementResource: '/events/<uuid>',
+    EvenementClosedResource: '/events/<uuid>/close',
+    EvenementInviteUserResource: '/events/<uuid>/invite/<user_uuid>',
+    # Evenements <> Messages
+    MessageListResource: '/events/<uuid>/messages',
+    MessageResource: '/events/<uuid>/messages/<message_uuid>',
+    # Evenement <> Affairs
+    AffairEvenementResource: '/events/<uuid>/affairs/<affair_uuid>',
+    AffairListEvenementResource: '/events/<uuid>/affairs',
+    # Evenement <> Export
+    EvenementExportResource: '/events/<uuid>/export',
+    # Evenement<> Meeting
+    MeetingListResource: '/events/<uuid>/meeting',
+    MeetingResource: '/events/<uuid>/meeting/<meeting_uuid>',
+    JoinMeetingResource: '/events/<uuid>/meeting/<meeting_uuid>/join',
+    # User
+    UserListResource: '/users',
+    UserResource: '/users/<uuid>',
+    # Contacts
+    ContactListResource: '/contacts',
+    ContactResource: '/contacts/<uuid>',
+    # Groups
+    GroupListResource: '/groups',
+    GroupTypeListResource: '/groups/types',
+    PositionGroupTypeListResource: '/groups/positions',
+    # Location
+    LocationListResource: '/locations',
+    LocationResource: '/locations/<uuid>',
+    # User <> Contacts
+    UserContactListResource: '/users/me/contact/favorites',
+    UserContactResource: '/users/me/contact/favorites/<contact_uuid>',
+    # Me
+    UserMeResource: '/users/me',
+    UserMeAffairsResource: '/users/me/affairs',
+    MeEvenementResource: '/users/me/events',
+    # Invitations
+    InvitationResource: '/invitation',
+    ValidateInvitationResource: '/invitation/validate'
+}
 
+inverse_dico = {v:k for k,v in endpoints.items()}
 
-# Tags
-api.add_resource(TagListResource, '/tags', endpoint="tags")
-api.add_resource(TagResource, '/tags/<uuid>', endpoint="tag_by_id")
-api.add_resource(MessageTagResource, '/messages/<uuid>/tags/<tag_uuid>', endpoint="message_by_id_tag_by_id")
-api.add_resource(MessageTagListResource, '/messages/<uuid>/tags', endpoint="message_by_id_tags")
-
-# Resources
-api.add_resource(ResourceListResource, '/resources', endpoint="resources")
-api.add_resource(ResourceResource, '/resources/<uuid>', endpoint="resource_by_id")
-
-api.add_resource(MessageResourceResource, '/messages/<uuid>/resource/<resource_uuid>',
-                 endpoint="message_by_id_resource_by_id")
-api.add_resource(MessageMultipleResourceResource, '/messages/<uuid>/resource/add',
-                 endpoint="message_by_id_resource_by_ids")
-
-
-api.add_resource(MessageResourceListResource, '/messages/<uuid>/resources', endpoint="message_by_id_resources")
-
-# Evenements
-api.add_resource(EvenementListResource, '/events', endpoint="events")
-api.add_resource(EvenementResource, '/events/<uuid>', endpoint="events_by_id")
-api.add_resource(EvenementClosedResource, '/events/<uuid>/close', endpoint="event_finish_by_id")
-api.add_resource(EvenementInviteUserResource, '/events/<uuid>/invite/<user_uuid>', endpoint="events_by_id_invite_user")
-# Evenements <> Messages
-api.add_resource(MessageListResource, '/events/<uuid>/messages', endpoint="messages")
-api.add_resource(MessageResource, '/events/<uuid>/messages/<message_uuid>', endpoint="message_by_id")
-# Evenement <> Affairs
-api.add_resource(AffairEvenementResource, '/events/<uuid>/affairs/<affair_uuid>', endpoint="evenement_affairs_by_id")
-api.add_resource(AffairListEvenementResource, '/events/<uuid>/affairs', endpoint="evenement_affairs_list")
-# Evenement <> Export
-api.add_resource(EvenementExportResource, '/events/<uuid>/export', endpoint="evenement_export")
-
-# User
-api.add_resource(UserListResource, '/users', endpoint="users")
-api.add_resource(UserResource, '/users/<uuid>', endpoint="users_by_id")
-
-# User
-api.add_resource(ContactListResource, '/contacts', endpoint="contacts")
-api.add_resource(ContactResource, '/contacts/<uuid>', endpoint="contacts_by_id")
-
-# Groups
-api.add_resource(GroupListResource, '/groups', endpoint="groups")
-api.add_resource(GroupTypeListResource, '/groups/types', endpoint="groups_types")
-api.add_resource(PositionGroupTypeListResource, '/groups/positions', endpoint="groups_type_positions")
-api.add_resource(LocationListResource, '/groups/locations', endpoint="groups_locations")
-
-# User <> Contacts
-api.add_resource(UserContactListResource, '/users/me/contact/favorites', endpoint="user_contacts")
-api.add_resource(UserContactResource, '/users/me/contact/favorites/<contact_uuid>', endpoint="user_contacts_by_id")
-
-# Me
-api.add_resource(UserMeResource, '/users/me', endpoint="me_informations")
-api.add_resource(UserMeAffairsResource, '/users/me/affairs', endpoint="me_affairs")
-api.add_resource(MeEvenementResource, '/users/me/events', endpoint="me_events")
-
-
-# Invitations
-api.add_resource(InvitationResource, '/invitation', endpoint="create_invitation")
-api.add_resource(ValidateInvitationResource, '/invitation/validate', endpoint="validate_invitation")
+for path, resource  in inverse_dico.items():
+    api.add_resource(resource, path, endpoint=slugify(path))
 
 
 @enki_blueprint_v1.before_app_first_request
@@ -105,67 +107,5 @@ def register_views():
     api_spec.spec.components.schema("UserSchema", schema=MessageSchema)
     # api_spec.spec.components.schema("TagSchema", schema=TagSchema)
 
-    # Affairs
-    api_spec.spec.path(view=AffairListResource, app=current_app)
-    api_spec.spec.path(view=AffairRandomResource, app=current_app)
-    api_spec.spec.path(view=AffairRandomListResource, app=current_app)
-
-    # Messages
-    api_spec.spec.path(view=MessageListResource, app=current_app)
-    api_spec.spec.path(view=MessageResource, app=current_app)
-
-    # Tags
-    api_spec.spec.path(view=TagListResource, app=current_app)
-    api_spec.spec.path(view=TagResource, app=current_app)
-
-    # Tag <> Messages
-    api_spec.spec.path(view=MessageTagResource, app=current_app)
-    api_spec.spec.path(view=MessageTagListResource, app=current_app)
-
-    # Resources
-    api_spec.spec.path(view=ResourceResource, app=current_app)
-    api_spec.spec.path(view=MessageMultipleResourceResource, app=current_app)
-    api_spec.spec.path(view=ResourceListResource, app=current_app)
-
-    # Resource <> Messages
-    api_spec.spec.path(view=MessageResourceResource, app=current_app)
-    api_spec.spec.path(view=MessageResourceListResource, app=current_app)
-
-    # Evenements
-    api_spec.spec.path(view=EvenementListResource, app=current_app)
-    api_spec.spec.path(view=EvenementResource, app=current_app)
-    api_spec.spec.path(view=EvenementClosedResource, app=current_app)
-    api_spec.spec.path(view=EvenementInviteUserResource, app=current_app)
-    api_spec.spec.path(view=EvenementExportResource, app=current_app)
-
-    # Affairs <> Evenement
-    api_spec.spec.path(view=AffairEvenementResource, app=current_app)
-    api_spec.spec.path(view=AffairListEvenementResource, app=current_app)
-
-    # Users
-    api_spec.spec.path(view=UserListResource, app=current_app)
-    api_spec.spec.path(view=UserResource, app=current_app)
-
-    # Groups
-    api_spec.spec.path(view=GroupListResource, app=current_app)
-    api_spec.spec.path(view=GroupTypeListResource, app=current_app)
-    # Groups Locations & positions
-    api_spec.spec.path(view=PositionGroupTypeListResource, app=current_app)
-    api_spec.spec.path(view=LocationListResource, app=current_app)
-
-    # Contacts
-    api_spec.spec.path(view=ContactListResource, app=current_app)
-    api_spec.spec.path(view=ContactResource, app=current_app)
-
-    # Users <> Contacts
-    api_spec.spec.path(view=UserContactListResource, app=current_app)
-    api_spec.spec.path(view=UserContactResource, app=current_app)
-
-    # Me
-    api_spec.spec.path(view=UserMeResource, app=current_app)
-    api_spec.spec.path(view=UserMeAffairsResource, app=current_app)
-
-    # Invitation
-    api_spec.spec.path(view=InvitationResource, app=current_app)
-    api_spec.spec.path(view=ValidateInvitationResource, app=current_app)
-
+    for resource in endpoints:
+        api_spec.spec.path(view=resource, app=current_app)

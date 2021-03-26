@@ -1,13 +1,14 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from uuid import uuid4
 
+from flask import current_app
 from marshmallow import ValidationError
 
 from adapters.http.keycloak import KeycloakHelper
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.affairs.schema.simple_affair import SimpleAffairSchema
 from domain.users.entities.contact import ContactEntity
-from domain.users.entities.group import UserPositionEntity, PositionGroupTypeEntity
+from domain.users.entities.group import UserPositionEntity, PositionGroupTypeEntity, GroupTypeNotMatchException
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.contact import ContactSchema
 from domain.users.schemas.user import UserSchema
@@ -21,6 +22,7 @@ class UserService:
     @staticmethod
     def add_user(data: dict,
                  uow: AbstractUnitOfWork):
+        token: str = data.pop("token", None)
         try:
             user: UserEntity = UserService.schema().load(data)
         except ValidationError as ve:
@@ -77,9 +79,9 @@ class UserService:
             return UserService.schema(many=True).dump(users)
 
     @staticmethod
-    def search_users(query: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
+    def search_users(query: str, uow: AbstractUnitOfWork, uuids: Optional[List[str]] = None) -> List[Dict[str, Any]]:
         with uow:
-            users: List[UserEntity] = uow.user.search(query=query)
+            users: List[UserEntity] = uow.user.search(query=query, uuids=uuids)
             return UserService.schema(many=True).dump(users)
 
     @staticmethod
@@ -129,11 +131,12 @@ class UserService:
     ):
         group = uow.group.get_by_uuid(uuid=group_id)
         if group.type != group_type:
-            raise IndexError
+            current_app.logger.info(f"group.type : {group.type} != {group_type} : group_type")
+            raise GroupTypeNotMatchException()
 
         position: PositionGroupTypeEntity = uow.group.get_position(position_id=position_id)
         if position.group_type != group_type:
-            raise IndexError
+            raise GroupTypeNotMatchException()
 
         user_position = UserPositionEntity(uuid=str(uuid4()))
         user_position.group = group

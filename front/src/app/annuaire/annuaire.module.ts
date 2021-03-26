@@ -12,6 +12,7 @@ import { SearchContactPipe } from './search-contact/search-contact.pipe';
 import { UiModule } from '../ui/ui.module';
 import { UserInfoGuard } from '../guards/user-info.guard';
 import { SearchStructureComponent } from './search-structure.component';
+import { SearchEtablissementComponent } from '../search-etablissement/search-etablissement.component';
 
 const routes : Routes = [
   {
@@ -47,7 +48,7 @@ const routes : Routes = [
         children: [
           {
             path: 'searchstructure',
-            component: SearchStructureComponent
+            component: SearchEtablissementComponent
           }
         ]
       }

@@ -1,0 +1,38 @@
+<app-small-heading title="Main courante" backLink="../liste"></app-small-heading>
+<div class="title-container">
+  <h1 class="h2-title">Filtrer la liste</h1>
+</div>
+<div class="filter-messages">
+  <form class="filterForm" [formGroup]="filterGroup" (ngSubmit)="onSubmit()">
+    <div class="enkiform__group">
+      <select class="enkiform__input" id="etablissement" formControlName="etablissement" required>
+        <option value=""></option>
+        <option *ngFor="let option of etablissementOptions" [value]="option.group_id">{{option.group_label}}</option>
+      </select>
+      <label for="etablissement" class="enkiform__label">Établissement</label>
+      <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+    </div>
+    <div class="enkiform__group">
+      <select class="enkiform__input" id="auteur" formControlName="auteur" required>
+        <option value=""></option>
+        <option *ngFor="let option of auteursOptions" [value]="option.auteur_id">{{option.auteur_label}}</option>
+      </select>
+      <label for="auteur" class="enkiform__label">Auteur</label>
+      <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+    </div>
+    <div class="enkiform__group">
+      <select class="enkiform__input" id="type" formControlName="type" required>
+        <option value=""></option>
+        <option *ngFor="let option of messageTypeOptions" [value]="option.type_id">{{option.type_label}}</option>
+      </select>
+      <label for="type" class="enkiform__label">Type de message</label>
+      <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+    </div>
+    <div class="enkiform__group">
+      <input type="submit" id="submit-filters" class="btn" value="Appliquer les filtres">
+    </div>
+    <div class="enkiform__group">
+      <div (click)="resetFilters()" class="removeFilters">Effacer les filtres</div>
+    </div>
+  </form>
+</div>

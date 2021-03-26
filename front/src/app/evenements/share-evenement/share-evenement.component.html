@@ -1,33 +1,38 @@
-<div class="title-container">
-  <h1 class="h2-title">Partager l'événement</h1>
-</div>
-<div class="share">
-  <p class="share--description">
-    Vous pouvez ajouter des particpants depuis l’annuaire ENKI.
-  </p>
-  <div class="enkiform__group">
-    <!-- <input type="text" class="enkiform__input" id="participants"  [formControl]="participants" required> -->
-    <button class="btn test--shareWithUser" (click)="goToSearchUser()">Ajouter des participants</button>
-    <!-- <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg> -->
+<div class="share--content" [class]="mobilePrototype.getCheckedClass()">
+  <div class="title-container">
+    <h1 class="h2-title">Partager l'événement</h1>
   </div>
-</div>
-<div class="participants" *ngIf="participants.length">
-  <h2 class="participants--title title-with-icon">
-    <svg class="icon-user icon"><use xlink:href="#icon-user"></use></svg>
-    {{participants.length}} PARTICIPANTS
-  </h2>
-  <div class="participants--user" *ngFor="let participant of participants">
-    <div class="list-participants--primaryInfos">
-      {{participant.user.position.group.label}} - {{participant.user.position.position.label}}
-    </div>
-    <div class="participants--secondaryInfos">
-      {{participant.user.last_name}} {{participant.user.first_name}}
-    </div>
-    <div class="participants--role test--changeParticipantRole" (click)="showEditParticipantRights(participant)">
-      {{mapUserRoleToLabel(participant.type)}}
-      <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+  <div class="share">
+    <p class="share--description">
+      Vous pouvez ajouter des particpants depuis l’annuaire ENKI.
+    </p>
+    <div class="enkiform__group">
+      <!-- <input type="text" class="enkiform__input" id="participants"  [formControl]="participants" required> -->
+      <button class="btn test--shareWithUser" (click)="goToSearchUser()">Ajouter des participants</button>
+      <!-- <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg> -->
     </div>
   </div>
+  <div class="participants" *ngIf="(participants | async).length">
+    <h2 class="participants--title title-with-icon">
+      <svg class="icon-user icon"><use xlink:href="#icon-user"></use></svg>
+      {{participants.length}} PARTICIPANTS
+    </h2>
+    <div class="participants--user" *ngFor="let participant of participants | async">
+      <div class="list-participants--primaryInfos">
+        {{participant.user.position.group.label}} - {{participant.user.position.position.label}}
+      </div>
+      <div class="participants--secondaryInfos">
+        {{participant.user.last_name}} {{participant.user.first_name}}
+      </div>
+      <div class="participants--role test--changeParticipantRole" (click)="showEditParticipantRights(participant)">
+        {{mapUserRoleToLabel(participant.type)}}
+        <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="action action--video" (click)="createMeeting()">
+  <svg class="icon-video icon"><use xlink:href="#icon-video"></use></svg>
 </div>
 <app-modal (closed)="removeSelectedParticipant($event)">
   <!-- {{selectedParticipant | json}} -->

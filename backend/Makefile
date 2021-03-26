@@ -16,6 +16,9 @@ clean:
 logs:
 	docker-compose -f docker-compose.yml logs --follow --tail=50
 
+restart:
+	make down && make upd && sleep 8 && make seed
+
 seed:
 	docker exec backend_enki-api_1 flask create-position-groups
 	docker exec backend_enki-api_1 flask create-groups-and-locations
@@ -38,3 +41,12 @@ test-resource-up:
 
 test-resource-down:
 	docker-compose -f docker-compose.test.yml down -v --remove-orphans
+
+# Migrations
+create-migration:
+	docker-compose -f docker-compose.yml exec enki-api alembic revision --autogenerate -m "test"
+run-migration:
+	docker-compose -f docker-compose.yml exec enki-api alembic upgrade head
+stamp-migration:
+	docker-compose -f docker-compose.yml exec enki-api alembic stamp head
+

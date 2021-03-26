@@ -2,6 +2,8 @@ from datetime import datetime
 from uuid import uuid4
 
 from flask import current_app
+from geoalchemy2.shape import to_shape
+from shapely.geometry import mapping
 from marshmallow import Schema, fields, post_load, validate
 from marshmallow_enum import EnumField
 from werkzeug.exceptions import HTTPException
@@ -26,6 +28,21 @@ class LocationSchema(Schema):
     @post_load
     def make_location(self, data: dict, **kwargs):
         return LocationEntity.from_dict(data)
+
+
+class LocationExtendedSchema(LocationSchema):
+    geometry = fields.Method("_build_polygon")
+    centroid = fields.Method("_get_centroid")
+
+    @staticmethod
+    def _build_polygon(obj):
+        return mapping(to_shape(obj.polygon))
+
+    @staticmethod
+    def _get_centroid(obj):
+        return to_shape(obj.polygon).centroid.coords[0]
+
+
 
 
 class GroupSchema(Schema):

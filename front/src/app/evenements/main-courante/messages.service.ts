@@ -9,11 +9,24 @@ import { EvenementsService } from '../evenements.service';
 export interface Message {
   title: string;
   description: string;
+  creator: {
+    last_name: string;
+    first_name: string;
+    position: {
+      group_id: string;
+      group: {
+        label: string;
+      },
+    },
+    uuid: string;
+  };
   created_at: string;
   uuid: string;
   tags: [];
   resources: [];
   evenement_id: string;
+  type: string;
+  type_label: string;
 }
 
 
@@ -49,7 +62,10 @@ export class MessagesService {
     this._messagesSource.next(messages)
   }
 
-  private addMessages(messages: Message[]): void {
+  private addMessages(messages: Message[], evenement_id: string): void {
+    messages.map(message => {
+      message.evenement_id = evenement_id
+    })
     const messagesConcat = [...this.getMessages(), ...messages]
     this._setMessages(messagesConcat)
   }
@@ -57,6 +73,7 @@ export class MessagesService {
   private containsEvenementMessages(evenementUUID: string): boolean {
     return this.getMessages().some(message => message.evenement_id === evenementUUID)
   }
+
 
   getMessagesByEvenementID(evenementUUID: string): Observable<Message[]> {
     const messages = this.getMessages().filter(message => message.evenement_id === evenementUUID)
@@ -68,7 +85,7 @@ export class MessagesService {
       .pipe(
         map(messages => {
           if (!this.containsEvenementMessages(evenementUUID)) {
-            this.addMessages(messages.data)
+            this.addMessages(messages.data, evenementUUID)
           }
           return messages.data
         })
@@ -81,7 +98,7 @@ export class MessagesService {
   }
 
   httpGetMessageByID(messageUUID: string): Observable<Message> {
-    return this.http.get<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/messages/${messageUUID}`)
+    return this.http.get<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/messages/${messageUUID}`)
       .pipe(
         map(response => {
           return response.data
@@ -99,10 +116,10 @@ export class MessagesService {
       "evenement_id": event_id,
       "resources": resources
     }
-    return this.http.post<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenement.getValue().uuid}/messages`, message, this.httpHeaders)
+    return this.http.post<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/messages`, message, this.httpHeaders)
       .pipe(
         map(message => {
-          this.addMessages([message.data])
+          this.addMessages([message.data], event_id)
           return message.data
         })
       )

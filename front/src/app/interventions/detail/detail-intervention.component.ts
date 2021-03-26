@@ -57,7 +57,7 @@ export class DetailInterventionComponent implements OnInit {
     });
   }
   getEvenements(): void {
-    this.evenementsService.getEvenements().subscribe((evenements) => {
+    this.evenementsService.getEvenementsByHTTP().subscribe((evenements) => {
       this.evenementsList = evenements
       if (this.intervention.evenement_id) {
         this.evenementGroup.controls.evenement.disable()

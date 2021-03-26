@@ -10,7 +10,6 @@ import { MapComponent } from './map/map.component';
 import { environment } from '../environments/environment';
 import { ListeInterventionsComponent } from './interventions/liste-interventions/liste-interventions.component';
 import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
-import { SvgDefinitionsComponent } from './ui/svg-definitions/svg-definitions.component';
 import { HeaderComponent } from './ui/header/header.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -20,24 +19,29 @@ import { SecondStepComponent } from './registration/second-step/second-step.comp
 import { ReactiveFormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
+import { SearchLocationModule } from './search-location/search-location.module'
+import { SearchEtablissementModule } from './search-etablissement/search-etablissement.module'
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
+import { AccountModule } from './account/account.module';
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
-import { SituationsComponent } from './situations/situations.component';
+import { DirectivesModule } from './directives.module';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
+import { MobilePrototypeComponent } from './mobile-prototype/mobile-prototype.component';
+import { FilterStatusPipe } from './evenements/liste-evenements/filter-status.pipe';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
         "realm": "enki",
-        "url": "http://keycloak:8080/auth/",
+        "url": environment.keycloakUrl,
         "clientId": "angular_frontend",
       },
       initOptions: {
         onLoad: 'login-required'
       },
-      bearerExcludedUrls: ['minio:9000', 'https://yesno.wtf/'],
+      bearerExcludedUrls: ['api.enki-crise.fr:9000', 'minio:9000', 'https://yesno.wtf/'],
     });
 }
 @NgModule({
@@ -49,13 +53,15 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DetailInterventionComponent,
     SecondStepComponent,
     PageNotFoundComponent,
-    SituationsComponent,
-    ListeEvenementsComponent
+    ListeEvenementsComponent,
+    MobilePrototypeComponent,
+    FilterStatusPipe,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    DirectivesModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
@@ -65,9 +71,12 @@ function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     UiModule,
     UserDashboardModule,
+    SearchLocationModule,
+    SearchEtablissementModule,
+    AccountModule,
     EvenementsModule,
     AnnuaireModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [{
     provide: APP_INITIALIZER,

@@ -1,5 +1,5 @@
 
-<div class="contact-list">
+<div class="contact-list" [class]="mobilePrototype.getCheckedClass()">
   <div class="contact-list--search">
     <div class="enkiform__group">
       <input class="enkiform__input" id="test--search-contact" routerLink="/annuaire/searchcontact" placeholder="Rechercher dans l'annuaire partagé"/>
@@ -28,6 +28,6 @@
   
 </div>
 
-<div class="action--add" routerLink="/contactadd">
+<div class="action action--add" routerLink="/contactadd">
   <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
 </div>

@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchLocationComponent } from './register/first-step/search-location/search-location.component';
 import { FirstStepComponent } from './register/first-step/first-step.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { RegisterService } from './register.service';
 import { UserInfoGuard } from '../guards/user-info.guard';
+import { SearchEtablissementComponent } from '../search-etablissement/search-etablissement.component';
+// import { AuthGuard } from '../app-auth-guard.service';
 
 const routes : Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+    // canActivate: [ AuthGuard ],
     canActivate: [ UserInfoGuard ],
     children: [
       {
@@ -25,7 +27,7 @@ const routes : Routes = [
         children: [
           {
             path: 'searchlocation',
-            component: SearchLocationComponent
+            component: SearchEtablissementComponent
           }
         ]
       },
@@ -36,7 +38,6 @@ const routes : Routes = [
 @NgModule({
   declarations: [
     FirstStepComponent,
-    SearchLocationComponent,
     RegisterComponent
   ],
   providers: [ RegisterService ],

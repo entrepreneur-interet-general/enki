@@ -27,7 +27,10 @@ fixture `Authentication register`
         .typeText('#password', 'azeRTY123#')
         .typeText('#password-confirm', 'azeRTY123#')
         .click('#kc-form-buttons input')
-
+        .click('#hideOnboarding')
+        .click('.burger')
+        .click('#mobile-prototype')
+        .click('.burger')
         await Selector('.userInfoForm')
         await t
         .typeText('#lastName', 'PERNEY')
@@ -36,7 +39,7 @@ fixture `Authentication register`
         .click(structureOption.withText('Mairie'))
         .click(positionSelect)
         .click(positionOption.withText('Maire'))
-        .click('#structure')
+        .click('#etablissement')
         .typeText('.fullscreen-form--searchInput', 'Chelles')
         .click('#locationid-77108')
         .click('#submit-register')
@@ -54,7 +57,10 @@ fixture `Authentication register`
         .typeText('#password', 'azeRTY123#')
         .typeText('#password-confirm', 'azeRTY123#')
         .click('#kc-form-buttons input')
-
+        .click('#hideOnboarding')
+        .click('.burger')
+        .click('#mobile-prototype')
+        .click('.burger')
         await Selector('.userInfoForm')
         await t
         .typeText('#lastName', 'PERNEY')
@@ -63,7 +69,7 @@ fixture `Authentication register`
         .click(structureOption.withText('Prefecture'))
         .click(positionSelect)
         .click(positionOption.withText('Préfet'))
-        .click('#structure')
+        .click('#etablissement')
         .typeText('.fullscreen-form--searchInput', 'Seine')
         .click('#locationid-77')
         .click('#submit-register')

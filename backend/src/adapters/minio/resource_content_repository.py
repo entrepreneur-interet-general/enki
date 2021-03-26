@@ -1,5 +1,7 @@
 from typing import Union
 
+import os
+
 from minio import Minio
 from urllib3.exceptions import MaxRetryError
 
@@ -24,10 +26,11 @@ class MinioResourceContentRepository:
 
     def __init__(self, minio_uri: str, access_key: str, secret_key: str, bucket_list: Union[list, None] = None):
         self.bucket_list = bucket_list or []
+        MINIO_SECURE = os.environ.get("MINIO_SECURE", "minio") == "true"
         try:
             self.client = Minio(minio_uri,
                                 access_key=access_key,
-                                secret_key=secret_key, secure=False)
+                                secret_key=secret_key, secure=MINIO_SECURE)
             self.initialize()
         except MaxRetryError:
             self.client = None

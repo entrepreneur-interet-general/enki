@@ -27,8 +27,9 @@ export class SearchLocationComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private searchLocationService: SearchLocationService
+    private searchLocationService: SearchLocationService,
   ) {
+
     this.groupType = this.route.snapshot.queryParams.groupType
 
     this.locationResults$ = this.subject.pipe(

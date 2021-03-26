@@ -97,10 +97,9 @@
     }
 
     &__label {
-        font-size: 12px;
+        pointer-events: none;
         line-height: 16px;
         position: absolute;
-        top: 0;
         background: white;
         color: $darkGrey;
         font-size: 16px;

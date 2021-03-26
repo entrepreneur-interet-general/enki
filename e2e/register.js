@@ -27,7 +27,10 @@ fixture `Authentication register`
         .typeText('#password', 'azeRTY123#')
         .typeText('#password-confirm', 'azeRTY123#')
         .click('#kc-form-buttons input')
-
+        .click('#hideOnboarding')
+        .click('.burger')
+        .click('#mobile-prototype')
+        .click('.burger')
         await Selector('.userInfoForm')
         await t
         .typeText('#lastName', 'PERNEY')
@@ -54,7 +57,10 @@ fixture `Authentication register`
         .typeText('#password', 'azeRTY123#')
         .typeText('#password-confirm', 'azeRTY123#')
         .click('#kc-form-buttons input')
-
+        .click('#hideOnboarding')
+        .click('.burger')
+        .click('#mobile-prototype')
+        .click('.burger')
         await Selector('.userInfoForm')
         await t
         .typeText('#lastName', 'PERNEY')

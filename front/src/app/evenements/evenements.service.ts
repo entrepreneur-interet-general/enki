@@ -89,11 +89,18 @@ export class EvenementsService {
 
 
   addOrUpdateEvenement(evenementToAdd: Evenement): void {
-    let evenements = this.getEvenements()
+    let evenements: Evenement[] = this.getEvenements()
+    evenementToAdd.filter = {
+      etablissement: '',
+      auteur: '',
+      type: '',
+      fromDatetime: '',
+      toDatetime: '',
+    };
     // if it already exist, then update it
     if (evenements.some(event => event.uuid === evenementToAdd.uuid)) {
       evenements.map(evenement => {
-        return evenement.uuid === evenement.uuid ? evenement = evenementToAdd : evenement
+        return evenementToAdd.uuid === evenement.uuid ? evenementToAdd : evenement
       })
     } {
       // if it doesn't exist, just add it

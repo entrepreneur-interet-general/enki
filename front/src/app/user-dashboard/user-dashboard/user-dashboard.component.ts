@@ -30,4 +30,8 @@ export class UserDashboardComponent implements OnInit {
     
   }
 
+  ngAfterViewInit(): void {
+    document.querySelector('.base').scroll(0,0)
+  }
+
 }

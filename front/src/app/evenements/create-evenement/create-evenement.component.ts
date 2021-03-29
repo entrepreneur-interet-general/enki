@@ -79,5 +79,8 @@ export class CreateEvenementComponent implements OnInit {
       pluck(HTTP_DATA)
     )
   }
+  ngAfterViewInit(): void {
+    document.querySelector('.base').scroll(0,0)
+  }
 
 }

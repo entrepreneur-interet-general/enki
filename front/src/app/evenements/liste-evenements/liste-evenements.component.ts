@@ -32,5 +32,8 @@ export class ListeEvenementsComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  ngAfterViewInit(): void {
+    document.querySelector('.base').scroll(0,0)
+  }
 
 }

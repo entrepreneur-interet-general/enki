@@ -9,7 +9,7 @@
         <svg class="icon-close icon" (click)="unselectLabel(label)"><use xlink:href="#icon-close"></use></svg>
       </div>
     </div>
-    <input type="text" class="fullscreen-form--searchInput" [formControl]="labelSearch" placeholder="Ajouter un label">
+    <input type="text" appFocusFormInput class="fullscreen-form--searchInput" [formControl]="labelSearch" placeholder="Ajouter un label">
   </div>
   <div class="addLabel--searchResults fullscreen-for--searchResults">
     <div class="searchResults--title">

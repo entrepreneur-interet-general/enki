@@ -21,6 +21,7 @@ import { SearchUserComponent } from './share-evenement/search-user/search-user.c
 import { FilterMessagesPipe } from './main-courante/filter-messages.pipe';
 import { FilterMessagesComponent } from './main-courante/filter-messages/filter-messages.component';
 import { SearchLocationComponent } from '../search-location/search-location.component';
+import { DirectivesModule } from '../directives.module';
 
 
 const routes : Routes = [
@@ -130,6 +131,7 @@ const routes : Routes = [
     MessagesService,
   ],
   imports: [
+    DirectivesModule,
     UiModule,
     CommonModule,
     ReactiveFormsModule,

@@ -5,7 +5,7 @@ import { Participant } from 'src/app/interfaces/Participant';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
 import { Evenement, EvenementsService } from '../evenements.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, Observer } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HTTP_DATA } from 'src/app/constants';
 import { pluck } from 'rxjs/operators';

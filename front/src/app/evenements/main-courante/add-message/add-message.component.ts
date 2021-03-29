@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessagesService } from '../messages.service';
 import { LabelsService } from '../labels.service';
 import { EvenementsService } from '../../evenements.service';
+import { ModalComponent } from 'src/app/ui/modal/modal.component';
 
 interface Media {
   uuid: string;
@@ -22,6 +23,8 @@ export class AddMessageComponent implements OnInit {
   })
   evenementUUID: string;
   listOfMedias: Array<Media>;
+  @ViewChild(ModalComponent)
+  modal: ModalComponent;
   constructor(
     private messagesService: MessagesService,
     public labelsService: LabelsService,
@@ -46,6 +49,10 @@ export class AddMessageComponent implements OnInit {
         this.router.navigate([`..`], { relativeTo: this.route })
       }
     )
+  }
+
+  openConfirmationModal(): void {
+    this.modal.open()
   }
 
   uploadFile(event: any): void {

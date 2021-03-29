@@ -35,6 +35,31 @@
       }
   }
 }
+.confirmation {
+  &--title {
+    font-family: $secondaryFont;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  &--description {
+    margin-bottom: 16px;
+    font-family: $secondaryFont;
+    line-height: 23px;
+    letter-spacing: 0.5px;
+  }
+  &--quote {
+    color: $darkestGrey;
+    font-size: rem-calc(16);
+    line-height: 23px;
+    font-family: $secondaryFont;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+    svg {
+      position: relative;
+      top: 5px;
+    }
+  }
+}
 
 .labelGroup {
   padding: 12px 0 16px;

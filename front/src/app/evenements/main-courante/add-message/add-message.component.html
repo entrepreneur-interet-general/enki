@@ -37,11 +37,24 @@
       <input id="mediaFile" type="file" formControlName="files" (change)="uploadFile($event)">
     </div>
     <div class="enkiSpecialForm__group">
-      <input type="submit" class="btn" value="Publier le message">
+      <input type="button" class="btn" value="Publier le message" (click)="openConfirmationModal()">
     </div>
-
+    <app-modal class="confirmation">
+      <h2 class="h3-title confirmation--title">Confirmation</h2>
+      <p class="confirmation--description">Une fois publiée, votre main courante sera consultable par les autres acteurs.</p>
+      <p class="confirmation--quote">
+        <svg class="icon-eye-hide icon"><use xlink:href="#icon-eye-hide"></use></svg>
+        Pour masquer votre publication, cochez la case suivante :
+      </p>
+      <div class="enkiform__group">
+        <input type="checkbox" class="enkiform__checkbox" id="privatePublish" required>
+        <label for="privatePublish" class="enkiform__label">Publication privée</label>
+      </div>
+      <div class="enkiSpecialForm__group">
+        <input type="submit" class="btn -green" value="Confirmer la publication">
+      </div>
+    </app-modal>
   </form>
-
   <router-outlet></router-outlet>
 
 </div>

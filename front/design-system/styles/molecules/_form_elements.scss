@@ -97,7 +97,6 @@
     }
 
     &__label {
-        pointer-events: none;
         line-height: 16px;
         position: absolute;
         background: white;
@@ -166,6 +165,12 @@
         }
         &::placeholder {
             color: #999;
+        }
+    }
+
+    &__select {
+        & + label {
+            pointer-events: none;
         }
     }
 

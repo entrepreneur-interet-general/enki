@@ -62,7 +62,7 @@
     <form action="" class="userInfoForm" [formGroup]="evenementGroup" (ngSubmit)="attachEvenementToSignalement()">
       <div class="evenement--select">
         <div class="enkiform__group">
-          <select class="enkiform__input" id="evenement" formControlName="evenement">
+          <select class="enkiform__input enkiform__select" id="evenement" formControlName="evenement">
             <option value="" disabled>Sélectionner ou créer un événement</option>
             <option *ngFor="let evenement of evenementsList" [value]="evenement.uuid">{{evenement.title}}</option>
           </select>

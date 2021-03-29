@@ -5,7 +5,7 @@
 <div class="filter-messages">
   <form class="filterForm" [formGroup]="filterGroup" (ngSubmit)="onSubmit()">
     <div class="enkiform__group">
-      <select class="enkiform__input" id="etablissement" formControlName="etablissement" required>
+      <select class="enkiform__input enkiform__select" id="etablissement" formControlName="etablissement" required>
         <option value=""></option>
         <option *ngFor="let option of etablissementOptions" [value]="option.group_id">{{option.group_label}}</option>
       </select>
@@ -13,7 +13,7 @@
       <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
     </div>
     <div class="enkiform__group">
-      <select class="enkiform__input" id="auteur" formControlName="auteur" required>
+      <select class="enkiform__input enkiform__select" id="auteur" formControlName="auteur" required>
         <option value=""></option>
         <option *ngFor="let option of auteursOptions" [value]="option.auteur_id">{{option.auteur_label}}</option>
       </select>
@@ -21,7 +21,7 @@
       <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
     </div>
     <div class="enkiform__group">
-      <select class="enkiform__input" id="type" formControlName="type" required>
+      <select class="enkiform__input enkiform__select" id="type" formControlName="type" required>
         <option value=""></option>
         <option *ngFor="let option of messageTypeOptions" [value]="option.type_id">{{option.type_label}}</option>
       </select>

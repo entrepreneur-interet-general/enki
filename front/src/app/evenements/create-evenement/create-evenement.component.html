@@ -16,7 +16,7 @@
     <label for="location" class="enkiform__label">Localisation</label>
   </div>
   <div class="enkiform__group">
-    <select class="enkiform__input" id="eventType" formControlName="eventType" required>
+    <select class="enkiform__input enkiform__select" id="eventType" formControlName="eventType" required>
       <option *ngFor="let eventType of EvenementTypeEnum | keyvalue" [value]="eventType.value">{{eventType.value}}</option>
     </select>
 <!--     <input type="text" class="enkiform__input" id="eventType" formControlName="eventType" required>

@@ -123,4 +123,9 @@ export class ShareEvenementComponent implements OnInit {
   ngOnDestroy(): void {
     this.evenementSubscriber.unsubscribe();
   }
+
+
+  onActivate(): void {
+    document.querySelector('.base').scroll(0,0)
+  }
 }

@@ -13,6 +13,10 @@ export class MainCouranteComponent implements OnInit {
 
   }
 
+  onActivate(): void {
+    document.querySelector('.base').scroll(0,0)
+  }
+
   ngOnInit(): void {
   }
 

@@ -29,12 +29,6 @@ const routes: Routes = [
         path: 'evenements',
         component: ListeEvenementsComponent
       },
-      /* {
-        path: 'situations',
-        component: SituationsComponent,
-        children: [
-        ]
-      }, */
       {
         path: 'detail-intervention/:uuid',
         component: DetailInterventionComponent
@@ -47,7 +41,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {scrollOffset: [0, 0], scrollPositionRestoration: 'enabled' }),
     EvenementsModule,
     AnnuaireModule,
     RegistrationModule,

@@ -46,6 +46,10 @@ Un petit 🅱🅱🆃🅴🅰 ?
 `)
   }
 
+  onActivate(): void {
+    window.scroll(0, 0);
+  }
+
   hideOnboarding(): void {
     window.localStorage.setItem('showOnboarding', 'false')
     this.showOnboarding.next(false)

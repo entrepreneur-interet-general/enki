@@ -69,7 +69,6 @@ export class CreateEvenementComponent implements OnInit {
   }
 
   goToSearchLocation(): void {
-    // this.router.navigate([''])
     this.router.navigate([`evenements/create/searchlocation`])
 
   }

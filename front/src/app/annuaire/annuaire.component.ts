@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-annuaire',
   template: `
-    <router-outlet (activate)="onActivate($event)" (deactivate)="onActivate($event)"></router-outlet>
+    <router-outlet (activate)="onActivate()" (deactivate)="onActivate()"></router-outlet>
   `,
   styles: [
   ]

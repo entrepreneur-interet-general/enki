@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-account',
   template: `
-    <router-outlet (activate)="onActivate($event)"></router-outlet>
+    <router-outlet (activate)="onActivate()"></router-outlet>
   `,
   styles: [
   ]

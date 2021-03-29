@@ -5,6 +5,9 @@ import { UserService } from './user/user.service';
 import { Title } from '@angular/platform-browser';
 import { MobilePrototypeService } from './mobile-prototype/mobile-prototype.service';
 import { BehaviorSubject } from 'rxjs';
+import { NavigationStart, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { HistoryUrlService } from './history-url.service';
 
 @Component({
   selector: 'app-root',
@@ -19,14 +22,22 @@ export class AppComponent {
   environment;
   user;
   showOnboarding = new BehaviorSubject<boolean>(true);
+  previousUrl: string;
+  currentUrl: string;
 
   constructor(
     private keycloakService: KeycloakService,
     public userService: UserService,
     private titleService: Title,
-    public mobilePrototype: MobilePrototypeService
+    public mobilePrototype: MobilePrototypeService,
+    private router: Router,
+    private historyUrl: HistoryUrlService,
     ) {
-
+      this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe((event: NavigationStart) => {
+        this.historyUrl.setPreviousUrl(this.currentUrl)
+        // this.previousUrl = this.currentUrl
+        this.currentUrl = event.url
+      })
       this.titleService.setTitle('Gestion de crise | ENKI')
       this.environment = environment;
       this.keycloakService.getToken().then((res) => {

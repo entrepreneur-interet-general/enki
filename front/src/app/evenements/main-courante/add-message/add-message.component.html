@@ -39,7 +39,7 @@
     <div class="enkiSpecialForm__group">
       <input type="button" class="btn" value="Publier le message" (click)="openConfirmationModal()">
     </div>
-    <app-modal class="confirmation">
+    <app-modal class="confirmation" #confirmation>
       <h2 class="h3-title confirmation--title">Confirmation</h2>
       <p class="confirmation--description">Une fois publiée, votre main courante sera consultable par les autres acteurs.</p>
       <p class="confirmation--quote">
@@ -52,6 +52,19 @@
       </div>
       <div class="enkiSpecialForm__group">
         <input type="submit" class="btn -green" value="Confirmer la publication">
+      </div>
+    </app-modal>
+    <app-modal class="cancel" #cancel>
+      <h2 class="h3-title confirmation--title">Confirmation</h2>
+      <p class="confirmation--description">
+        Êtes-vous sûr de vouloir quitter cette page sans publier ?
+      </p>
+      <p class="confirmation--quote">
+        Votre message ne sera pas sauvegardé.
+      </p>
+      <div class="btn-group -right">
+        <button class="btn -transparent -auto">Annuler</button>
+        <button class="btn -red -auto" (click)="confirmButton.next(true)">Quitter</button>
       </div>
     </app-modal>
   </form>

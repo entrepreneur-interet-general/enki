@@ -28,11 +28,9 @@
     }
 
     &.-auto {
-        @media screen and (min-width: 768px) {
-            width: auto;
-            max-width: none;
-        }
-       
+        width: auto;
+        max-width: none;
+        padding: 1px 16px;
     }
     &.-white {
         background-color: $white;
@@ -44,6 +42,13 @@
 
     &.-green {
         background: $lightGreen;
+    }
+    &.-red {
+        background: $red;
+    }
+    &.-transparent {
+        background: transparent;
+        color: $darkestGrey;
     }
 
     &-icon {
@@ -71,6 +76,9 @@
     }
     &.-spacebetween {
         justify-content: space-between;
+    }
+    &.-right {
+        justify-content: flex-end;
     }
 
 

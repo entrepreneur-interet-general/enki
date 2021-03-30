@@ -5,6 +5,7 @@ import { MessagesService } from '../messages.service';
 import { LabelsService } from '../labels.service';
 import { EvenementsService } from '../../evenements.service';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
+import { Observable, of, Subject } from 'rxjs';
 
 interface Media {
   uuid: string;
@@ -23,8 +24,11 @@ export class AddMessageComponent implements OnInit {
   })
   evenementUUID: string;
   listOfMedias: Array<Media>;
-  @ViewChild(ModalComponent)
-  modal: ModalComponent;
+  formSubmitted: boolean;
+  public confirmButton = new Subject<boolean>();
+  public confirmBtn$ = this.confirmButton.asObservable();
+  @ViewChild('confirmation') modal: ModalComponent;
+  @ViewChild('cancel') modalCancel: ModalComponent;
   constructor(
     private messagesService: MessagesService,
     public labelsService: LabelsService,
@@ -32,7 +36,8 @@ export class AddMessageComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.listOfMedias = []
+    this.listOfMedias = [];
+    this.formSubmitted = false;
   }
   
 
@@ -46,6 +51,7 @@ export class AddMessageComponent implements OnInit {
         this.evenementUUID,
         this.listOfMedias.map(media => media.uuid)
       ).subscribe(() => {
+        this.formSubmitted = true;
         this.router.navigate([`..`], { relativeTo: this.route })
       }
     )
@@ -76,6 +82,17 @@ export class AddMessageComponent implements OnInit {
         this.listOfMedias = this.listOfMedias.filter(media => media.uuid !== mediaUUID)
       }
     })
+  }
+
+  canDeactivate(): Observable<any> | boolean {
+    if (this.formSubmitted) return true;
+    for (const property in this.messageGroup.value ) {
+      if (this.messageGroup.value[property] !== '') {
+        this.modalCancel.open()
+        return this.confirmBtn$;
+      }
+    }
+    return true;
   }
 
   ngOnDestroy(): void {

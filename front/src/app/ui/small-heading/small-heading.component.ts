@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
       <div class="small-heading--title">
         {{title}}
       </div>
-      <div class="small-heading--close" routerLink="{{backLink}}">
+      <div class="small-heading--close" routerLink="..">
         Fermer
         <svg class="icon-close title-icon"><use xlink:href="#icon-close"></use></svg>
       </div>

@@ -22,6 +22,7 @@ import { FilterMessagesPipe } from './main-courante/filter-messages.pipe';
 import { FilterMessagesComponent } from './main-courante/filter-messages/filter-messages.component';
 import { SearchLocationComponent } from '../search-location/search-location.component';
 import { DirectivesModule } from '../directives.module';
+import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 
 
 const routes : Routes = [
@@ -86,6 +87,7 @@ const routes : Routes = [
               {
                 path: 'addmessage',
                 component: AddMessageComponent,
+                canDeactivate: [CanDeactivateGuard],
                 children: [
                   {
                     path: 'addlabel',

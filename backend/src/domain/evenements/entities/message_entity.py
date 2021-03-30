@@ -92,7 +92,6 @@ class MessageEntity(Entity):
             description=affair.affair["eventLocation"]["address"],
             title=affair.affair["primaryAlert"]["alertCode"]["whatsHappen"]["label"],
             created_at=affair.created_at,
-            updated_at=affair.updated_at,
             type=MessageType.AFFAIR
         )
 

@@ -13,11 +13,16 @@ from domain.evenements.ports.message_repository import AlreadyExistingTagInThisM
 from domain.evenements.schemas.message_tag_schema import MessageSchema, TagSchema
 from domain.evenements.schemas.resource_schema import ResourceSchema
 from domain.users.entities.user import UserEntity
+from entrypoints.extensions import event_bus
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
 class MessageService:
     schema = MessageSchema
+
+    @staticmethod
+    def save_message(message: MessageEntity, uow: AbstractUnitOfWork):
+        uow.message.add(message)
 
     @staticmethod
     def add_message(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
@@ -29,7 +34,7 @@ class MessageService:
         with uow:
             message: MessageEntity = MessageService.schema().load(data)
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
-            uow.message.add(message)
+            MessageService.save_message(message, uow=uow)
             evenement.add_message(message=message)
             user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
             message.set_creator(user=user)
@@ -124,7 +129,7 @@ class MessageService:
         with uow:
             message: MessageEntity = MessageEntity.from_meeting(meeting=meeting)
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=meeting.evenement_id)
-            uow.message.add(message)
+            MessageService.save_message(message, uow=uow)
             evenement.add_message(message=message)
             user: UserEntity = uow.user.get_by_uuid(uuid=meeting.creator_id)
             message.set_creator(user=user)
@@ -133,5 +138,5 @@ class MessageService:
     def add_message_from_affair(affair: SimpleAffairEntity, evenement: EvenementEntity, uow: AbstractUnitOfWork):
         with uow:
             message: MessageEntity = MessageEntity.from_affair(affair=affair)
-            uow.message.add(message)
+            MessageService.save_message(message, uow=uow)
             evenement.add_message(message=message)

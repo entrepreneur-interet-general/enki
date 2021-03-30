@@ -7,14 +7,15 @@ from .handlers import events, commands
 EVENT_HANDLERS: Dict[Type[Topic], List[Callable]] = {
     topics.AffairCreatedTopic: [
         events.send_affair_created_email_notification,
-        events.create_message_from_affair,
     ],
     topics.CreateUserTopic: [
         events.create_contact_from_user,
     ],
     topics.MeetingCreatedTopic: [
         events.create_message_from_meeting,
-        events.send_email_at_participants,
+    ],
+    topics.UserEventInvitationTopic: [
+        events.send_email_to_user_when_invite_to_an_event,
     ],
 }
 

@@ -53,3 +53,8 @@ class EnkiConfig(object):
     KEYCLOAK_REALM = os.environ.get("KEYCLOAK_REALM")
     KEYCLOAK_USERNAME = os.environ.get("KEYCLOAK_USERNAME")
     KEYCLOAK_PASSWORD = os.environ.get("KEYCLOAK_PASSWORD")
+
+    EMAIL_HOST = os.environ.get("EMAIL_HOST")
+    EMAIL_PORT = os.environ.get("EMAIL_PORT")
+    EMAIL_USER = os.environ.get("EMAIL_USER")
+    EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")

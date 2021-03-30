@@ -48,6 +48,7 @@ usersTable = Table(
     Column('uuid', String(60), primary_key=True),
     Column('first_name', String(255), nullable=False),
     Column('last_name', String(255), nullable=False),
+    Column('email', String(255), nullable=False),
     Column('position_id', String(60), ForeignKey("users_positions.uuid")),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)

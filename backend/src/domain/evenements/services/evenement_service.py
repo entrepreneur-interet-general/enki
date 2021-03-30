@@ -8,6 +8,7 @@ from marshmallow import ValidationError
 
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.affairs.schema.simple_affair import SimpleAffairSchema
+from domain.core.events import UserEventInvitationCreated
 from domain.evenements.entities.evenement_entity import EvenementEntity, EvenementRoleType, UserEvenementRole
 from domain.evenements.entities.message_entity import MessageEntity
 from domain.evenements.schemas.message_tag_schema import MessageSchema
@@ -16,6 +17,7 @@ from domain.evenements.services.message_service import MessageService
 from domain.users.entities.group import LocationEntity
 from domain.users.entities.user import UserEntity
 from domain.users.schemas.user import UserSchema
+from entrypoints.extensions import event_bus
 from service_layer.unit_of_work import AbstractUnitOfWork
 
 
@@ -63,7 +65,11 @@ class EvenementService:
             )
             user_event_role.user = user
             evenement.add_user_role(user_role=user_event_role)
-
+            event_bus.publish(UserEventInvitationCreated(data={
+                "email": user.email,
+                "evenement_id": evenement.uuid,
+                "evenement_title": evenement.title
+            }))
             return UserSchema().dump(user)
 
     @staticmethod

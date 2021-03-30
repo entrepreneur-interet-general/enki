@@ -4,6 +4,7 @@ from slugify import slugify
 
 from domain.evenements.schemas.message_tag_schema import MessageSchema
 from domain.evenements.schemas.evenement_schema import EvenementSchema
+from domain.users.schemas.user import UserSchema
 from entrypoints.extensions import api_spec
 from entrypoints.views.enki.v1.resources.users.user_ressources import UserResource, UserListResource
 from .resources import AffairListResource, AffairRandomResource, AffairRandomListResource, \
@@ -104,7 +105,7 @@ def register_views():
     # Add documents Schemas
     api_spec.spec.components.schema("EvenementSchema", schema=EvenementSchema)
     api_spec.spec.components.schema("MessageSchema", schema=MessageSchema)
-    api_spec.spec.components.schema("UserSchema", schema=MessageSchema)
+    api_spec.spec.components.schema("UserSchema", schema=UserSchema)
     # api_spec.spec.components.schema("TagSchema", schema=TagSchema)
 
     for resource in endpoints:

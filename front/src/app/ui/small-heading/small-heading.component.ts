@@ -21,6 +21,7 @@ export class SmallHeadingComponent implements OnInit {
   @Input() backLink: string;
   constructor() { }
 
+
   ngOnInit(): void {
   }
 

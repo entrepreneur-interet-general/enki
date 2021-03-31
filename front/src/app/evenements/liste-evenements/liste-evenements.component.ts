@@ -11,7 +11,7 @@ export class ListeEvenementsComponent implements OnInit {
 
   evenements: Evenement[];
   activeFilter: EvenementStatus;
-  public StatusEnum = EvenementStatus;   
+  public StatusEnum = EvenementStatus;
 
   constructor(
     private evenementsService: EvenementsService,

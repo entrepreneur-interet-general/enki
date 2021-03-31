@@ -60,11 +60,7 @@
       </li>
     </ul>
   </div>
-  <app-modal>
-    <h2 class="h3-title">Exporter</h2>
-    <p class="description">
-      Télécharger la main courante avec les filtres que vous avez appliqué.
-    </p>
+  <app-modal title="Exporter" description="Télécharger la main courante avec les filtres que vous avez appliqué.">
     <div class="enkiform__group radio-export">
       <input type="radio" class="enkiform__radio" [formControl]="exportType" id="csv" value="csv" />
       <label for="csv">CSV</label>

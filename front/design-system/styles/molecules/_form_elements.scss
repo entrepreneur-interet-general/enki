@@ -22,7 +22,7 @@
         & + label {
             position: relative;
             color: $darkestPrimary;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             padding: 0;
             padding-left: 26px;
             top: 0;
@@ -93,7 +93,6 @@
 
     &__radio {
         & + label {
-
             &:before {
                 background: transparent;
                 width: 20px;

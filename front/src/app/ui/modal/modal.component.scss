@@ -17,6 +17,17 @@
       width: 290px;
     }
   }
+  &--title {
+    font-family: $secondaryFont;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  &--description {
+    margin-bottom: 16px;
+    font-family: $secondaryFont;
+    line-height: 23px;
+    letter-spacing: 0.5px;
+  }
   &--overlay {
     position: fixed;
     top: 0;

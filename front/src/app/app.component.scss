@@ -53,7 +53,10 @@
 }
 
 main {
-  margin-top: 16px;
+  padding-top: 16px;
+  height: 599px;
+  box-sizing: border-box;
+  overflow: scroll;
 }
 
 

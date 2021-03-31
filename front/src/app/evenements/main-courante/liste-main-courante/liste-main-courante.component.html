@@ -2,24 +2,24 @@
   <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
   Retour à la liste des événements
 </a>
-<div class="title-container">
+<div class="title-container -bottomLine">
   <h1 class="h2-title">Main courante</h1>
   <div class="subtitle">
     Mis à jour il y a une minute
   </div>
-  <div *ngIf="messages.length > 0" class="action action--export" (click)="exportMainCourante()">
+  <div *ngIf="messages.length > 0" class="action action--export" (click)="openModal()">
     <svg class="icon-download icon"><use xlink:href="#icon-download"></use></svg>
   </div>
 </div>
 <div class="mc" [class]="mobilePrototype.getCheckedClass()">
-  <div class="head-tab">
+<!--   <div class="head-tab">
     <div class="head-tab--element -active">
       Messages
     </div>
-    <!-- <div class="head-tab--element">
+    <div class="head-tab--element">
       Liste des actions
-    </div> -->
-  </div>
+    </div>
+  </div> -->
   <div class="mc--content">
     <div class="mc--empty" *ngIf="!(messages.length > 0) ">
       Le dossier est vide, créez une nouvelle main courante pour démarrer le partage.
@@ -60,6 +60,20 @@
       </li>
     </ul>
   </div>
+  <app-modal title="Exporter" description="Télécharger la main courante avec les filtres que vous avez appliqué.">
+    <div class="enkiform__group radio-export">
+      <input type="radio" class="enkiform__radio" [formControl]="exportType" id="csv" value="csv" />
+      <label for="csv">CSV</label>
+    </div>
+    <div class="enkiform__group radio-export">
+      <input type="radio" class="enkiform__radio" [formControl]="exportType" id="pdf" value="pdf" />
+      <label for="pdf">PDF</label>
+    </div>
+    <button class="btn -icon" (click)="exportMainCourante()">
+      <svg class="icon-download icon"><use xlink:href="#icon-download"></use></svg>
+      Télécharger
+    </button>
+  </app-modal>
   <div class="action action--filter" routerLink="../filters" *ngIf="messages.length > 0">
     <svg class="icon-filter icon"><use xlink:href="#icon-filter"></use></svg>
   </div>

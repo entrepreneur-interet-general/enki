@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/interfaces/User';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
+import { ModalComponent } from 'src/app/ui/modal/modal.component';
 import { UserService } from 'src/app/user/user.service';
 import { EvenementsService, Filter } from '../../evenements.service';
 import { Message, MessagesService } from '../messages.service';
@@ -20,6 +22,9 @@ export class ListeMainCouranteComponent implements OnInit {
   fetchedMessages: boolean;
   user: User;
   currentEventFilter: Filter;
+  exportType = new FormControl('csv');
+
+  @ViewChild(ModalComponent) modal: ModalComponent;
 
   constructor(
     private messagesService: MessagesService,
@@ -46,9 +51,31 @@ export class ListeMainCouranteComponent implements OnInit {
       this.fetchedMessages = true;
     })
   }
-
+  openModal(): void {
+    this.modal.open()
+  }
   exportMainCourante(): void {
-    this.evenementsService.downloadFile();
+    this.evenementsService.getMainCouranteData().subscribe(data => {
+      const a = document.createElement("a");
+      a.style.display = "none";
+      document.body.appendChild(a);
+    
+      // Set the HREF to a Blob representation of the data to be downloaded
+      a.href = window.URL.createObjectURL(
+        new Blob([data], { type: 'text/csv;charset=utf-8;' })
+      );
+    
+      // Use download attribute to set set desired file name
+      a.setAttribute("download", `${this.evenementsService.selectedEvenementUUID.getValue()}-${(new Date()).toISOString()}.csv`);
+    
+      // Trigger the download by simulating click
+      a.click();
+    
+      // Cleanup
+      this.modal.close()
+      window.URL.revokeObjectURL(a.href);
+      document.body.removeChild(a);
+    });
   }
 
   clickOnMessage(message: Message): void {

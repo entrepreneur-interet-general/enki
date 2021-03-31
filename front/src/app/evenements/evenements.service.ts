@@ -31,7 +31,7 @@ export interface Evenement {
     }
   };
   location_id: string;
-  started_at: string;
+  started_at: Date;
   ended_at: string;
   description: string;
   created_at: string;
@@ -97,6 +97,7 @@ export class EvenementsService {
       fromDatetime: '',
       toDatetime: '',
     };
+    evenementToAdd.started_at = new Date(evenementToAdd.started_at + "Z")
     // if it already exist, then update it
     if (evenements.some(event => event.uuid === evenementToAdd.uuid)) {
       evenements.map(evenement => {
@@ -138,40 +139,43 @@ export class EvenementsService {
       )
   }
 
+  mapEvenement(event: Evenement): Evenement {
+    return {
+      uuid: event.uuid,
+      title: event.title,
+      description: event.description,
+      created_at: event.created_at,
+      closed: event.closed,
+      started_at: new Date(event.started_at + 'Z'),
+      ended_at: event.ended_at,
+      user_roles: event.user_roles,
+      location_id: event.location_id,
+      messages: [],
+      creator: {
+        position: {
+          group: {
+            label: event.creator.position.group.label
+          }
+        }
+      },
+      filter: {
+        etablissement: '',
+        auteur: '',
+        type: '',
+        fromDatetime: '',
+        toDatetime: '',
+      },
+      status: this.checkStatus(event)
+    }
+  }
   getEvenementsByHTTP(): Observable<Evenement[]> {
     return this.http.get<EvenementsHTTP>(`${environment.backendUrl}/users/me/events`)
       .pipe(
         map(
           response => {
             const evenementsList = response.data.map((event: Evenement) => {
-              const currentStatus = this.checkStatus(event);
-              return {
-                uuid: event.uuid,
-                title: event.title,
-                description: event.description,
-                created_at: event.created_at,
-                closed: event.closed,
-                started_at: event.started_at,
-                ended_at: event.ended_at,
-                user_roles: event.user_roles,
-                location_id: event.location_id,
-                messages: [],
-                creator: {
-                  position: {
-                    group: {
-                      label: event.creator.position.group.label
-                    }
-                  }
-                },
-                filter: {
-                  etablissement: '',
-                  auteur: '',
-                  type: '',
-                  fromDatetime: '',
-                  toDatetime: '',
-                },
-                status: currentStatus
-              }
+              // const currentStatus = this.checkStatus(event);
+              return this.mapEvenement(event)
             });
             this._setEvenements(evenementsList);
             return evenementsList;
@@ -241,7 +245,7 @@ export class EvenementsService {
       )
   }
 
-  callMainCouranteData(): Observable<any> {
+  getMainCouranteData(): Observable<any> {
     return this.http.get<any>(
         `${environment.backendUrl}/events/${this.selectedEvenementUUID.getValue()}/export?format=csv`,
         { responseType: "arraybuffer" as "json" }
@@ -250,29 +254,6 @@ export class EvenementsService {
         return file;
       })
     )
-  }
-
-  downloadFile(): void {
-    this.callMainCouranteData().subscribe(data => {
-      const a = document.createElement("a");
-      a.style.display = "none";
-      document.body.appendChild(a);
-    
-      // Set the HREF to a Blob representation of the data to be downloaded
-      a.href = window.URL.createObjectURL(
-        new Blob([data], { type: 'text/csv;charset=utf-8;' })
-      );
-    
-      // Use download attribute to set set desired file name
-      a.setAttribute("download", `${this.selectedEvenementUUID.getValue()}-${(new Date()).toISOString()}`);
-    
-      // Trigger the download by simulating click
-      a.click();
-    
-      // Cleanup
-      window.URL.revokeObjectURL(a.href);
-      document.body.removeChild(a);
-    })
   }
 
   closeEvenement(uuid: string): Observable<any> {

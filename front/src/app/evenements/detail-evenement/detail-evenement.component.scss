@@ -8,7 +8,6 @@
 }
 .evenement-container {
   height: 541px;
-  overflow: scroll;
 }
 .signalements {
   margin-bottom: 20px;
@@ -29,7 +28,7 @@
   &.prototype {
     bottom: auto;
     width: 375px;
-    // margin-top: 255px;
+    margin-top: -14px;
   }
 }
 .tab {

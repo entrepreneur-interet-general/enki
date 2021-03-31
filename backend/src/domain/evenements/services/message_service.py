@@ -136,7 +136,6 @@ class MessageService:
 
     @staticmethod
     def add_message_from_affair(affair: SimpleAffairEntity, evenement: EvenementEntity, uow: AbstractUnitOfWork):
-        with uow:
-            message: MessageEntity = MessageEntity.from_affair(affair=affair)
-            MessageService.save_message(message, uow=uow)
-            evenement.add_message(message=message)
+        message: MessageEntity = MessageEntity.from_affair(affair=affair)
+        MessageService.save_message(message, uow=uow)
+        evenement.add_message(message=message)

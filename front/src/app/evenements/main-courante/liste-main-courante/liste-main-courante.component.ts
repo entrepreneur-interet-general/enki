@@ -55,7 +55,27 @@ export class ListeMainCouranteComponent implements OnInit {
     this.modal.open()
   }
   exportMainCourante(): void {
-    this.evenementsService.downloadFile();
+    this.evenementsService.getMainCouranteData().subscribe(data => {
+      const a = document.createElement("a");
+      a.style.display = "none";
+      document.body.appendChild(a);
+    
+      // Set the HREF to a Blob representation of the data to be downloaded
+      a.href = window.URL.createObjectURL(
+        new Blob([data], { type: 'text/csv;charset=utf-8;' })
+      );
+    
+      // Use download attribute to set set desired file name
+      a.setAttribute("download", `${this.evenementsService.selectedEvenementUUID.getValue()}-${(new Date()).toISOString()}.csv`);
+    
+      // Trigger the download by simulating click
+      a.click();
+    
+      // Cleanup
+      this.modal.close()
+      window.URL.revokeObjectURL(a.href);
+      document.body.removeChild(a);
+    });
   }
 
   clickOnMessage(message: Message): void {

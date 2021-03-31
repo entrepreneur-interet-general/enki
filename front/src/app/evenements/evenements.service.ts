@@ -245,7 +245,7 @@ export class EvenementsService {
       )
   }
 
-  callMainCouranteData(): Observable<any> {
+  getMainCouranteData(): Observable<any> {
     return this.http.get<any>(
         `${environment.backendUrl}/events/${this.selectedEvenementUUID.getValue()}/export?format=csv`,
         { responseType: "arraybuffer" as "json" }
@@ -254,29 +254,6 @@ export class EvenementsService {
         return file;
       })
     )
-  }
-
-  downloadFile(): void {
-    this.callMainCouranteData().subscribe(data => {
-      const a = document.createElement("a");
-      a.style.display = "none";
-      document.body.appendChild(a);
-    
-      // Set the HREF to a Blob representation of the data to be downloaded
-      a.href = window.URL.createObjectURL(
-        new Blob([data], { type: 'text/csv;charset=utf-8;' })
-      );
-    
-      // Use download attribute to set set desired file name
-      a.setAttribute("download", `${this.selectedEvenementUUID.getValue()}-${(new Date()).toISOString()}`);
-    
-      // Trigger the download by simulating click
-      a.click();
-    
-      // Cleanup
-      window.URL.revokeObjectURL(a.href);
-      document.body.removeChild(a);
-    })
   }
 
   closeEvenement(uuid: string): Observable<any> {

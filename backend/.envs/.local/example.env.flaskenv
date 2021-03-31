@@ -19,3 +19,11 @@ KEYCLOAK_BASE_URL=http://keycloak:8080/auth/
 KEYCLOAK_REALM=enki
 KEYCLOAK_USERNAME=admin
 KEYCLOAK_PASSWORD=Pa55w0rd
+
+# Emails
+EMAIL_HOST=smtp.online.net
+EMAIL_PORT=465
+EMAIL_USER=no-reply@enki-crise.fr
+EMAIL_PASSWORD=ask-it
+
+ENKI_FRONT_URL=http://localhost:1337

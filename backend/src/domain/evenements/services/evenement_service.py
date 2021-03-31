@@ -43,7 +43,7 @@ class EvenementService:
             _ = uow.evenement.add(evenement)
             evenement.set_location(location)
             evenement.creator = user
-            final_evenement: UserEntity = uow.evenement.get_by_uuid(uuid=evenement.uuid)
+            final_evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement.uuid)
             return EvenementService.schema().dump(final_evenement)
 
     @staticmethod

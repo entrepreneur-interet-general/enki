@@ -7,7 +7,8 @@
   }
 }
 .evenement-container {
-  height: 526px;
+  height: 541px;
+  overflow: scroll;
 }
 .signalements {
   margin-bottom: 20px;
@@ -24,6 +25,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+  border-top: 1px solid $grey;
   &.prototype {
     bottom: auto;
     width: 375px;

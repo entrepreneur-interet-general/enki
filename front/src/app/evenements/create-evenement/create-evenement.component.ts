@@ -69,7 +69,6 @@ export class CreateEvenementComponent implements OnInit {
   }
 
   goToSearchLocation(): void {
-    // this.router.navigate([''])
     this.router.navigate([`evenements/create/searchlocation`])
 
   }
@@ -78,6 +77,9 @@ export class CreateEvenementComponent implements OnInit {
     return this.http.post<any>(this.evenementUrl, formBody, this.httpOptions).pipe(
       pluck(HTTP_DATA)
     )
+  }
+  ngAfterViewInit(): void {
+    document.querySelector('.base').scroll(0,0)
   }
 
 }

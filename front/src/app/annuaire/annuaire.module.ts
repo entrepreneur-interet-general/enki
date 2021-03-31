@@ -13,6 +13,7 @@ import { UiModule } from '../ui/ui.module';
 import { UserInfoGuard } from '../guards/user-info.guard';
 import { SearchStructureComponent } from './search-structure.component';
 import { SearchEtablissementComponent } from '../search-etablissement/search-etablissement.component';
+import { DirectivesModule } from '../directives.module';
 
 const routes : Routes = [
   {
@@ -68,6 +69,7 @@ const routes : Routes = [
   providers: [AnnuaireService],
   imports: [
     CommonModule,
+    DirectivesModule,
     ReactiveFormsModule,
     UiModule,
     RouterModule.forChild(routes)

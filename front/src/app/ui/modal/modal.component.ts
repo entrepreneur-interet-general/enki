@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 
 @Component({
   selector: 'app-modal',
@@ -9,7 +10,9 @@ export class ModalComponent implements OnInit {
   isOpened: boolean;
   @Output() closed = new EventEmitter<boolean>();
 
-  constructor() {
+  constructor(
+    public mobilePrototype: MobilePrototypeService
+  ) {
     this.isOpened = false;
   }
 

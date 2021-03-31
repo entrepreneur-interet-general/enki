@@ -71,6 +71,7 @@ fixture `Test as Maire`
       .click('.fullscreen-form--cancel')
       // END label testing
       .setFilesToUpload('#mediaFile', './gymnase.jpg')
+      .click('.test--publish-message')
       .click('.addMessageForm input[type="submit"]')
       // verify message infos from the list of messages
       .expect(Selector('.list--element:first-child .mainInfos--title').innerText).contains('MAIRE')

@@ -9,10 +9,11 @@ import { MobilePrototypeService } from './mobile-prototype.service';
 })
 export class MobilePrototypeComponent implements OnInit {
 
-  checked = new FormControl(true)
+  checked = new FormControl()
   constructor(
     public prototypeService: MobilePrototypeService
   ) {
+    this.checked.setValue(this.prototypeService.checked.getValue())
     this.checked.valueChanges.subscribe(isChecked => {
       this.prototypeService.setChecked(isChecked);
     })

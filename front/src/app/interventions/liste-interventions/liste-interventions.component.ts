@@ -23,5 +23,7 @@ export class ListeInterventionsComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
+  ngAfterViewInit(): void {
+    document.querySelector('.base').scroll(0,0)
+  }
 }

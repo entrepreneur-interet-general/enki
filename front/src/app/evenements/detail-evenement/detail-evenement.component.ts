@@ -24,4 +24,8 @@ export class DetailEvenementComponent implements OnInit {
     });
   }
 
+  onActivate(): void {
+    document.querySelector('.base').scroll(0,0)
+  }
+
 }

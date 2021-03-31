@@ -11,6 +11,7 @@ import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-ev
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
 import { RegistrationModule } from './registration/registration.module';
+import { DirectivesModule } from './directives.module';
 
 const routes: Routes = [
   {
@@ -29,12 +30,6 @@ const routes: Routes = [
         path: 'evenements',
         component: ListeEvenementsComponent
       },
-      /* {
-        path: 'situations',
-        component: SituationsComponent,
-        children: [
-        ]
-      }, */
       {
         path: 'detail-intervention/:uuid',
         component: DetailInterventionComponent
@@ -47,7 +42,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {scrollOffset: [0, 0], scrollPositionRestoration: 'enabled' }),
+    DirectivesModule,
     EvenementsModule,
     AnnuaireModule,
     RegistrationModule,

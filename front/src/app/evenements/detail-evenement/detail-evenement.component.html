@@ -4,7 +4,7 @@
     <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
     Retour à la liste des événements
   </a> -->
-  <router-outlet></router-outlet>
+  <router-outlet (activate)="onActivate()"></router-outlet>
 </div>
 <div class="tabbar" [class]="mobilePrototype.getCheckedClass()">
   <a routerLink="./summary" class="tab" routerLinkActive="-active">

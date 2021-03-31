@@ -3,7 +3,7 @@
     <a class="fullscreen-form--cancel" routerLink="/annuaire/contactlist">
       <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
     </a>
-    <input type="text" [formControl]="contactSearch" class="fullscreen-form--searchInput" placeholder="Saisir un nom ou numéro">
+    <input type="text" appFocusFormInput [formControl]="contactSearch" class="fullscreen-form--searchInput" placeholder="Saisir un nom ou numéro">
   </div>
   <div class="searchResults--title">
     Résultats de votre recherche

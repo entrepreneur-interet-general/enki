@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { InterventionsService } from '../../interventions/interventions.service';
 import { UserService } from '../../user/user.service'
 
@@ -17,7 +16,6 @@ export class UserDashboardComponent implements OnInit {
   constructor(
     private interventionsService: InterventionsService,
     private userService: UserService,
-    private activatedRoute: ActivatedRoute
     ) {
     this.interventions = []
     this.interventionsService.httpGetAllInterventions().subscribe((interventions) => {
@@ -28,6 +26,10 @@ export class UserDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     
+  }
+
+  ngAfterViewInit(): void {
+    document.querySelector('.base').scroll(0,0)
   }
 
 }

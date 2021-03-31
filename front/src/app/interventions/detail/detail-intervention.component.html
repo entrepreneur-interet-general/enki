@@ -1,6 +1,6 @@
-<li class="goTo" routerLink="/interventions">
+<li class="goTo" (click)="goBack()">
   <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
-  Retourner à la liste des appels de secours
+  {{previousLinkLabel}}
 </li>
 
 <div class="intervention" *ngIf="fetchedIntervention">
@@ -62,7 +62,7 @@
     <form action="" class="userInfoForm" [formGroup]="evenementGroup" (ngSubmit)="attachEvenementToSignalement()">
       <div class="evenement--select">
         <div class="enkiform__group">
-          <select class="enkiform__input" id="evenement" formControlName="evenement">
+          <select class="enkiform__input enkiform__select" id="evenement" formControlName="evenement">
             <option value="" disabled>Sélectionner ou créer un événement</option>
             <option *ngFor="let evenement of evenementsList" [value]="evenement.uuid">{{evenement.title}}</option>
           </select>

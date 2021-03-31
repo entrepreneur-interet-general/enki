@@ -26,7 +26,6 @@ export class SummaryEvenementComponent implements OnInit {
     this.evenementUUID = this.evenementsService.selectedEvenementUUID.getValue()
     this.evenementsService.getEvenementByID(this.evenementUUID).subscribe(evenement => {
       this.evenement = evenement;
-      console.log(evenement.started_at)
       this.evenementsService.getEvenementLocationPolygon(this.evenement.location_id).subscribe(data => {
         let eventPolygon = L.polygon(data.geometry.coordinates[0]).addTo(this.map);
         const bounds = eventPolygon.getBounds();

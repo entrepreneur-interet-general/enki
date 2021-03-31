@@ -97,6 +97,7 @@ export class EvenementsService {
       fromDatetime: '',
       toDatetime: '',
     };
+    evenementToAdd.started_at = new Date(evenementToAdd.started_at + "Z")
     // if it already exist, then update it
     if (evenements.some(event => event.uuid === evenementToAdd.uuid)) {
       evenements.map(evenement => {

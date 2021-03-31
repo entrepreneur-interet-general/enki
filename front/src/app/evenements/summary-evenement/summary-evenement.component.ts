@@ -18,14 +18,14 @@ export class SummaryEvenementComponent implements OnInit {
   evenement: Evenement;
   interventions = new BehaviorSubject<Intervention[]>([]);
   uuid;
-  // timedifference: string;
+  started_at: Date;
 
   constructor(
     private evenementsService: EvenementsService,
     private router: Router
   ) {
-    // this.timedifference = ((new Date()).getTimezoneOffset() / 60).toString();
     this.evenementUUID = this.evenementsService.selectedEvenementUUID.getValue()
+    this.started_at = new Date();
     this.evenementsService.getEvenementByID(this.evenementUUID).subscribe(evenement => {
       this.evenement = evenement;
       this.evenementsService.getEvenementLocationPolygon(this.evenement.location_id).subscribe(data => {

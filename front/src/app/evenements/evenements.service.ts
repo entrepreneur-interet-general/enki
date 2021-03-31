@@ -31,7 +31,7 @@ export interface Evenement {
     }
   };
   location_id: string;
-  started_at: string;
+  started_at: Date;
   ended_at: string;
   description: string;
   created_at: string;
@@ -138,40 +138,43 @@ export class EvenementsService {
       )
   }
 
+  mapEvenement(event: Evenement): Evenement {
+    return {
+      uuid: event.uuid,
+      title: event.title,
+      description: event.description,
+      created_at: event.created_at,
+      closed: event.closed,
+      started_at: new Date(event.started_at + 'Z'),
+      ended_at: event.ended_at,
+      user_roles: event.user_roles,
+      location_id: event.location_id,
+      messages: [],
+      creator: {
+        position: {
+          group: {
+            label: event.creator.position.group.label
+          }
+        }
+      },
+      filter: {
+        etablissement: '',
+        auteur: '',
+        type: '',
+        fromDatetime: '',
+        toDatetime: '',
+      },
+      status: this.checkStatus(event)
+    }
+  }
   getEvenementsByHTTP(): Observable<Evenement[]> {
     return this.http.get<EvenementsHTTP>(`${environment.backendUrl}/users/me/events`)
       .pipe(
         map(
           response => {
             const evenementsList = response.data.map((event: Evenement) => {
-              const currentStatus = this.checkStatus(event);
-              return {
-                uuid: event.uuid,
-                title: event.title,
-                description: event.description,
-                created_at: event.created_at,
-                closed: event.closed,
-                started_at: event.started_at,
-                ended_at: event.ended_at,
-                user_roles: event.user_roles,
-                location_id: event.location_id,
-                messages: [],
-                creator: {
-                  position: {
-                    group: {
-                      label: event.creator.position.group.label
-                    }
-                  }
-                },
-                filter: {
-                  etablissement: '',
-                  auteur: '',
-                  type: '',
-                  fromDatetime: '',
-                  toDatetime: '',
-                },
-                status: currentStatus
-              }
+              // const currentStatus = this.checkStatus(event);
+              return this.mapEvenement(event)
             });
             this._setEvenements(evenementsList);
             return evenementsList;

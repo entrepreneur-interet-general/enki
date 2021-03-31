@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/interfaces/User';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
+import { ModalComponent } from 'src/app/ui/modal/modal.component';
 import { UserService } from 'src/app/user/user.service';
 import { EvenementsService, Filter } from '../../evenements.service';
 import { Message, MessagesService } from '../messages.service';
@@ -20,6 +22,9 @@ export class ListeMainCouranteComponent implements OnInit {
   fetchedMessages: boolean;
   user: User;
   currentEventFilter: Filter;
+  exportType = new FormControl('csv');
+
+  @ViewChild(ModalComponent) modal: ModalComponent;
 
   constructor(
     private messagesService: MessagesService,
@@ -46,7 +51,9 @@ export class ListeMainCouranteComponent implements OnInit {
       this.fetchedMessages = true;
     })
   }
-
+  openModal(): void {
+    this.modal.open()
+  }
   exportMainCourante(): void {
     this.evenementsService.downloadFile();
   }

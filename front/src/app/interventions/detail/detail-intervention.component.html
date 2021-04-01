@@ -4,18 +4,18 @@
 </li>
 
 <div class="intervention" *ngIf="fetchedIntervention">
-  <div class="info-block niveauAlerte">
+  <!-- <div class="info-block niveauAlerte">
     Niveau d'alerte : 
     <svg class="icon-notification -active"><use xlink:href="#icon-notification"></use></svg>
     <svg class="icon-notification"><use xlink:href="#icon-notification"></use></svg>
     <svg class="icon-notification"><use xlink:href="#icon-notification"></use></svg>
-  </div>
+  </div> -->
   <div class="info-block infosPrincipales">
     <div class="infosPrincipales--icon">
       <img src="assets/natureDeFaits/Incendies.png" alt="">
     </div>
     <div>
-      <div class="infosPrincipales--natureDeFait">
+      <div class="h2-title infosPrincipales--natureDeFait">
         {{intervention.natureDeFait}}
       </div>
       <div class="infosPrincipales--dateTemps">
@@ -39,7 +39,7 @@
         Circulation / transport, voie rapide
       </div>
     </div>
-    <button class="btn">Copier l'adresse</button>
+    <button class="btn -auto">Copier l'adresse</button>
   </div>
   <div class="info-block circonstances">
     <div class="title-with-icon circonstances--title">
@@ -57,7 +57,7 @@
       <div class="">Événement</div>
     </div>
     <div class="evenement--description">
-      Attachez cette affaire à un événement pour activer les dossiers partagés.
+      Attachez une affaire à un événement pour la lier à la main courante de l’évènement sélectionné.
     </div>
     <form action="" class="userInfoForm" [formGroup]="evenementGroup" (ngSubmit)="attachEvenementToSignalement()">
       <div class="evenement--select">

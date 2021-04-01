@@ -4,8 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { interval, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, debounce, pluck, switchMap } from 'rxjs/operators';
-import { HTTP_DATA } from 'src/app/constants';
-import { Participant } from 'src/app/interfaces/Participant';
+import { HTTP_DATA, SEARCH_MIN_CHARS } from 'src/app/constants';
 import { User } from 'src/app/interfaces/User';
 import { UserService } from 'src/app/user/user.service';
 import { environment } from 'src/environments/environment';
@@ -32,7 +31,7 @@ export class SearchUserComponent implements OnInit {
     this.userResults = [];
 
     this.userSearch.valueChanges.subscribe((value: string) => {
-      if (value.length > 2) {
+      if (value.length >= SEARCH_MIN_CHARS) {
         this.subject.next(value)
       }
     })

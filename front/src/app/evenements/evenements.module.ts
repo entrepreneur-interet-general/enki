@@ -9,7 +9,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MainCouranteComponent } from './main-courante/main-courante.component';
 import { AddMessageComponent } from './main-courante/add-message/add-message.component';
 import { AddLabelComponent } from './main-courante/add-label/add-label.component';
+
 import { FilterLabelsPipe } from './main-courante/add-label/filter-labels.pipe';
+import { HighlightIncludedCharsPipe } from '../highlight-included-chars.pipe';
+import { FilterMessagesPipe } from './main-courante/filter-messages.pipe';
+
 import { DetailMessageComponent } from './main-courante/detail-message/detail-message.component';
 import { EvenementDetailResolverService } from './evenement-detail-resolver.service';
 import { ListeMainCouranteComponent } from './main-courante/liste-main-courante/liste-main-courante.component';
@@ -18,7 +22,6 @@ import { UiModule } from '../ui/ui.module';
 import { UserInfoGuard } from '../guards/user-info.guard';
 import { ShareEvenementComponent } from './share-evenement/share-evenement.component';
 import { SearchUserComponent } from './share-evenement/search-user/search-user.component';
-import { FilterMessagesPipe } from './main-courante/filter-messages.pipe';
 import { FilterMessagesComponent } from './main-courante/filter-messages/filter-messages.component';
 import { SearchLocationComponent } from '../search-location/search-location.component';
 import { DirectivesModule } from '../directives.module';
@@ -121,6 +124,7 @@ const routes : Routes = [
     AddMessageComponent,
     AddLabelComponent,
     FilterLabelsPipe,
+    HighlightIncludedCharsPipe,
     DetailMessageComponent,
     SummaryEvenementComponent,
     ListeMainCouranteComponent,

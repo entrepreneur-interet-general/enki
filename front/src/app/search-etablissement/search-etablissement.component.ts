@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { interval, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, debounce, pluck, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { HTTP_DATA } from '../constants';
+import { HTTP_DATA, SEARCH_MIN_CHARS } from '../constants';
 import { SearchEtablissementService } from './search-etablissement.service';
 import { Location } from '../interfaces/Location';
 
@@ -54,7 +54,7 @@ export class SearchEtablissementComponent implements OnInit {
     });
 
     this.etablissementSearch.valueChanges.subscribe((value: string) => {
-      if (value.length > 2) {
+      if (value.length >= SEARCH_MIN_CHARS) {
         this.subject.next(value)
       }
     });

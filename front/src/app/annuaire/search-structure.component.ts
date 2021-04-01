@@ -5,6 +5,7 @@ import { interval, Observable, Subject } from 'rxjs';
 import { debounce, switchMap } from 'rxjs/operators';
 import { RegisterService } from '../registration/register.service';
 import { Location } from '../interfaces/Location';
+import { SEARCH_MIN_CHARS } from '../constants';
 
 @Component({
   selector: 'app-search-structure',
@@ -36,7 +37,7 @@ export class SearchStructureComponent implements OnInit {
     })
 
     this.locationSearch.valueChanges.subscribe((value: string) => {
-      if (value.length > 2) {
+      if (value.length >= SEARCH_MIN_CHARS) {
         this.subjet.next(value)
       }
     })

@@ -8,11 +8,12 @@ import { environment } from 'src/environments/environment';
 import { HTTP_DATA, SEARCH_MIN_CHARS } from '../constants';
 import { SearchEtablissementService } from './search-etablissement.service';
 import { Location } from '../interfaces/Location';
+import { HighlightIncludedCharsPipe } from '../highlight-included-chars.pipe';
 
 @Component({
   selector: 'app-search-etablissement',
-  templateUrl: './search-etablissement.component.html'
-  // styleUrls: ['./search-etablissement.component.scss']
+  templateUrl: './search-etablissement.component.html',
+  providers: [HighlightIncludedCharsPipe],
 })
 export class SearchEtablissementComponent implements OnInit {
 
@@ -28,6 +29,7 @@ export class SearchEtablissementComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private etablissementService: SearchEtablissementService,
+    private highlightTransform: HighlightIncludedCharsPipe,
   ) {
     this.groupType = this.route.snapshot.queryParams.groupType
 
@@ -61,6 +63,13 @@ export class SearchEtablissementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  getEtablissementLabel(etablissement: Location, searchvalue: string): string {
+    const label = this.highlightTransform.transform(etablissement.label, searchvalue)
+    const external_id = this.highlightTransform.transform(etablissement.location.external_id, searchvalue)
+
+    return `${label} (${external_id})`
   }
 
   selectEtablissement(etablissement: Location): void {

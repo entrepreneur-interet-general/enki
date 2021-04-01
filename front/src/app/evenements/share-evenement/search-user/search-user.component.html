@@ -25,10 +25,9 @@
         id="userid-{{ user.uuid }}"
       >
         <div class="searchList--group">
-          <span [innerHTML]="user.position.group.label | highlightIncludedChars:userSearch.value"></span> - <span [innerHTML]="user.position.position.label | highlightIncludedChars:userSearch.value"></span>
+          <span [innerHTML]="getUserPositionResult(user, userSearch.value)"></span>
           <div class="searchList--name">
-            <span [innerHTML]="user.first_name | highlightIncludedChars:userSearch.value"></span>
-            - <span [innerHTML]="user.last_name | highlightIncludedChars:userSearch.value"></span>
+            <span [innerHTML]="getUserNameResult(user, userSearch.value)"></span>
           </div>
         </div>
       </a>

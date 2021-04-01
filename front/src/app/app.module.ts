@@ -26,9 +26,9 @@ import { AccountModule } from './account/account.module';
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
 import { DirectivesModule } from './directives.module';
+import { PipesModule } from './pipes.module';
 import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
 import { MobilePrototypeComponent } from './mobile-prototype/mobile-prototype.component';
-import { FilterStatusPipe } from './evenements/liste-evenements/filter-status.pipe';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -55,13 +55,13 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PageNotFoundComponent,
     ListeEvenementsComponent,
     MobilePrototypeComponent,
-    FilterStatusPipe,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
     DirectivesModule,
+    PipesModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.

@@ -10,7 +10,9 @@
   </div>
   <div *ngFor="let contact of contactList">
     <div class="searchList--element">
-      <a routerLink="/annuaire/contactdetail/{{contact.uuid}}" class="searchList--link">{{contact.first_name}}</a>
+      <a routerLink="/annuaire/contactdetail/{{contact.uuid}}" class="searchList--link">
+        <span [innerHTML]="getContactLabel(contact, contactSearch.value)"></span>
+      </a>
       <a (click)="addRemoveToUserFavs(contact.uuid)" class="searchList--action" [class.isFavorite]="isUserFav(contact.uuid)">
         <svg class="icon-star icon"><use xlink:href="#icon-star"></use></svg>
       </a>

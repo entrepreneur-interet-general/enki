@@ -26,6 +26,7 @@ import { FilterMessagesComponent } from './main-courante/filter-messages/filter-
 import { SearchLocationComponent } from '../search-location/search-location.component';
 import { DirectivesModule } from '../directives.module';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
+import { PipesModule } from '../pipes.module';
 
 
 const routes : Routes = [
@@ -124,7 +125,6 @@ const routes : Routes = [
     AddMessageComponent,
     AddLabelComponent,
     FilterLabelsPipe,
-    HighlightIncludedCharsPipe,
     DetailMessageComponent,
     SummaryEvenementComponent,
     ListeMainCouranteComponent,
@@ -138,6 +138,7 @@ const routes : Routes = [
   ],
   imports: [
     DirectivesModule,
+    PipesModule,
     UiModule,
     CommonModule,
     ReactiveFormsModule,

@@ -8,11 +8,13 @@ import { environment } from 'src/environments/environment';
 import { HTTP_DATA, SEARCH_MIN_CHARS } from '../constants';
 import { SearchLocationService } from './search-location.service';
 import { Location } from '../interfaces/Location';
+import { HighlightIncludedCharsPipe } from '../highlight-included-chars.pipe';
 
 @Component({
   selector: 'app-search-location',
   templateUrl: './search-location.component.html',
-  styleUrls: ['./search-location.component.scss']
+  styleUrls: ['./search-location.component.scss'],
+  providers: [HighlightIncludedCharsPipe]
 })
 export class SearchLocationComponent implements OnInit {
 
@@ -28,6 +30,7 @@ export class SearchLocationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private searchLocationService: SearchLocationService,
+    private highlightTransform: HighlightIncludedCharsPipe,
   ) {
 
     this.groupType = this.route.snapshot.queryParams.groupType
@@ -59,6 +62,12 @@ export class SearchLocationComponent implements OnInit {
         this.subject.next(value)
       }
     });
+  }
+
+  getLocationInfos(location: Location, searchvalue: string): string {
+    const label = this.highlightTransform.transform(location.label, searchvalue)
+    const external_id = this.highlightTransform.transform(location.location.external_id, searchvalue)
+    return `${label} (${external_id})`
   }
 
   ngOnInit(): void {

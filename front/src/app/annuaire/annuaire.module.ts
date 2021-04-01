@@ -14,6 +14,7 @@ import { UserInfoGuard } from '../guards/user-info.guard';
 import { SearchStructureComponent } from './search-structure.component';
 import { SearchEtablissementComponent } from '../search-etablissement/search-etablissement.component';
 import { DirectivesModule } from '../directives.module';
+import { PipesModule } from '../pipes.module';
 
 const routes : Routes = [
   {
@@ -70,6 +71,7 @@ const routes : Routes = [
   imports: [
     CommonModule,
     DirectivesModule,
+    PipesModule,
     ReactiveFormsModule,
     UiModule,
     RouterModule.forChild(routes)

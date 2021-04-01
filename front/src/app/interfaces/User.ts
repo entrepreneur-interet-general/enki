@@ -3,9 +3,16 @@ import { Contact } from './Contact';
 export interface User {
   first_name?: string;
   last_name?: string;
-  position?: string;
+  position?: {
+    group: {
+      label: string;
+    };
+    position: {
+      label: string;
+    };
+  };
   attributes?: {
-    fonction?: string
+    fonction?: string;
   };
   location: string;
   fullname?: string;

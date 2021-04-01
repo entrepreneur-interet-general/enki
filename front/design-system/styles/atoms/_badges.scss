@@ -15,6 +15,10 @@
     border: 1px solid $primary;
     color: $primary;
   }
+  &__redFill {
+    border-color: $red;
+    background-color: $red;
+  }
   &__green {
     border-color: $lightGreen;
     color: $lightGreen;

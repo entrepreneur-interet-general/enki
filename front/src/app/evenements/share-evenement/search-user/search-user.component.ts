@@ -4,8 +4,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { interval, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, debounce, pluck, switchMap } from 'rxjs/operators';
-import { HTTP_DATA } from 'src/app/constants';
-import { Participant } from 'src/app/interfaces/Participant';
+import { HTTP_DATA, SEARCH_MIN_CHARS } from 'src/app/constants';
+import { HighlightIncludedCharsPipe } from 'src/app/highlight-included-chars.pipe';
 import { User } from 'src/app/interfaces/User';
 import { UserService } from 'src/app/user/user.service';
 import { environment } from 'src/environments/environment';
@@ -14,7 +14,8 @@ import { EvenementsService } from '../../evenements.service';
 @Component({
   selector: 'app-search-user',
   templateUrl: './search-user.component.html',
-  styleUrls: ['./search-user.component.scss']
+  styleUrls: ['./search-user.component.scss'],
+  providers: [HighlightIncludedCharsPipe]
 })
 export class SearchUserComponent implements OnInit {
   userResults: User[];
@@ -27,12 +28,13 @@ export class SearchUserComponent implements OnInit {
     private evenementsService: EvenementsService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private highlightTransform: HighlightIncludedCharsPipe
   ) {
     this.userResults = [];
 
     this.userSearch.valueChanges.subscribe((value: string) => {
-      if (value.length > 2) {
+      if (value.length >= SEARCH_MIN_CHARS) {
         this.subject.next(value)
       }
     })
@@ -80,6 +82,20 @@ export class SearchUserComponent implements OnInit {
       this.evenementsService.addParticipantsToEvenement({user: res, type: 'view'});
       this.router.navigate(['..'], { relativeTo: this.activatedRoute});
     })
+  }
+
+  getUserNameResult(user: User, searchvalue: string): string {
+    const firstName = this.highlightTransform.transform(user.first_name, searchvalue)
+    const lastName = this.highlightTransform.transform(user.last_name, searchvalue)
+
+    return `${firstName} - ${lastName}`
+  }
+  getUserPositionResult(user: User, searchvalue: string): string {
+    const groupLabel = this.highlightTransform.transform(user.position.group.label, searchvalue)
+    const positionLabel = this.highlightTransform.transform(user.position.position.label, searchvalue)
+
+    return `${groupLabel} - ${positionLabel}`
+
   }
   
   addParticipantsToEvenement(userUUID: string): Observable<User> {

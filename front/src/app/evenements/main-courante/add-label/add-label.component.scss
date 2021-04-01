@@ -11,10 +11,13 @@
   &--item {
     display: flex;
     align-items: center;
+    margin-right: 8px;
+    white-space: nowrap;
     svg {
       font-size: 12px;
       fill: $primary;
       margin: 0 4px 0 8px;
+      cursor: pointer;
     }
   }
 }

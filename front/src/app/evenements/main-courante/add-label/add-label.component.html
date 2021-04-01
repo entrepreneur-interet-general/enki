@@ -5,7 +5,7 @@
     </a>
     <div class="addLabel--selectedLabels" *ngIf="labelsService.selectedLabels.length > 0">
       <div class="selectedLabels--item badge badge__inverted" *ngFor="let label of labelsService.selectedLabels">
-        {{ label.title }}
+        <div>{{ label.title }}</div>
         <svg class="icon-close icon" (click)="unselectLabel(label)"><use xlink:href="#icon-close"></use></svg>
       </div>
     </div>

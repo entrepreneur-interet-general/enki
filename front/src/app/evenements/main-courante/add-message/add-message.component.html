@@ -7,7 +7,7 @@
     </div>
     <div class="enkiSpecialform__group labelGroup">
       <div class="labelGroup--labelList" *ngIf="labelsService.selectedLabels.length > 0">
-        <div class="labelElement labelElement badge badge__inverted" *ngFor="let label of labelsService.selectedLabels">
+        <div class="labelGroup--labelElement badge badge__inverted" *ngFor="let label of labelsService.selectedLabels">
           {{label.title}}
         </div>
       </div>

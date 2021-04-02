@@ -67,10 +67,11 @@
   align-items: center;
   margin: 0 -4px;
   margin-bottom: 12px;
-  div {
+  .badge {
     margin: 0 4px;
   }
   &--dateTime {
+    margin: 0 4px;
     display: block;
     font-size: 17px;
     font-family: $secondaryFont;

@@ -88,7 +88,7 @@ export class SearchUserComponent implements OnInit {
     const firstName = this.highlightTransform.transform(user.first_name, searchvalue)
     const lastName = this.highlightTransform.transform(user.last_name, searchvalue)
 
-    return `${firstName} - ${lastName}`
+    return `${firstName} ${lastName}`
   }
   getUserPositionResult(user: User, searchvalue: string): string {
     const groupLabel = this.highlightTransform.transform(user.position.group.label, searchvalue)

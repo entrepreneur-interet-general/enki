@@ -1,7 +1,7 @@
 import json
 import os
 from uuid import uuid4
-
+from typing import List
 import click
 from flask import current_app
 from flask.cli import with_appcontext
@@ -47,18 +47,27 @@ def create_sdis_groups():
     uow = current_app.context
 
     with uow:
-        matches:LocationEntity = uow.session.query(LocationEntity).filter(
+        depts:LocationEntity = uow.session.query(LocationEntity).filter(
             LocationEntity.type == LocationType.DEPARTEMENT).all()
+        depts: LocationEntity = uow.session.query(LocationEntity).filter(
+            LocationEntity.type == LocationType.DEPARTEMENT).all()
+        def _match(label, matches : List[GroupEntity]):
+            for match in matches:
+                if match.type == GroupType.SDIS and label == label:
+                    return True
+
+            return False
+
 
         sdis_groups = [
             GroupEntity(
                 uuid=str(uuid4()),
-                label=f"Sdis {mapping[match.label]}{match.label}",
+                label=f"Sdis {mapping[dept.label]}{dept.label}",
                 type=GroupType.SDIS
             )
-            for match in matches
+            for dept in depts if _match(f"Sdis {mapping[dept.label]}{dept.label}", )
         ]
 
         uow.session.add_all(sdis_groups)
-        for sdis, match in zip(sdis_groups, matches):
+        for sdis, match in zip(sdis_groups, depts):
             sdis.location = match

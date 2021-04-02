@@ -65,7 +65,7 @@ class UserService:
                 "group_type": group_type,
             }
         )
-        kh.assign_to_group(user_id=uuid, group_name=group_type.lower())
+        kh.assign_to_group(user_id=uuid, group_name=group_type.replace("é", "e").lower())
 
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:

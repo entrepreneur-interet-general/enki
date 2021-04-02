@@ -67,7 +67,7 @@ export class SearchEtablissementComponent implements OnInit {
 
   getEtablissementLabel(etablissement: Location, searchvalue: string): string {
     const label = this.highlightTransform.transform(etablissement.label, searchvalue)
-    const external_id = this.highlightTransform.transform(etablissement.location.external_id, searchvalue)
+    const external_id = this.highlightTransform.transform(etablissement.external_id, searchvalue)
 
     return `${label} (${external_id})`
   }

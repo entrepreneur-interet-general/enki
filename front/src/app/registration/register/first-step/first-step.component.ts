@@ -80,9 +80,7 @@ export class FirstStepComponent {
             slug: res.group.slug,
             label: res.group.label,
             uuid: res.group.uuid,
-            location: {
-              external_id: res.group.location.external_id
-            },
+            external_id: res.group.location.external_id
           })
 
         })

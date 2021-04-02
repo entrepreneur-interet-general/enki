@@ -1,9 +1,6 @@
 export interface Location {
   slug: string;
-  external_id: string;
-  location: {
-    external_id: string;
-  };
+  external_id?: string;
   label: string;
   uuid: string;
   centroid?: any[];

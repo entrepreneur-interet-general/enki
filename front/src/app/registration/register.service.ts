@@ -1,25 +1,18 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { Location } from '../interfaces/Location';
-import { catchError, map, pluck, retry } from 'rxjs/operators';
+import { catchError, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HTTP_DATA } from '../constants';
-import { group } from '@angular/animations';
+import { LOCATION_INIT } from '../constants/location_init';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
 
-  selectedLocation = new BehaviorSubject<Location>({
-    slug: '',
-    label: '',
-    uuid: '',
-    location: {
-      external_id: ''
-    },
-  });
+  selectedLocation = new BehaviorSubject<Location>(LOCATION_INIT);
 
   selectedGroupType = new BehaviorSubject<string>('');
 

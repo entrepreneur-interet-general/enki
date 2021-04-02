@@ -94,13 +94,15 @@ export class EvenementsService {
 
   addOrUpdateEvenement(evenementToAdd: Evenement): void {
     let evenements: Evenement[] = this.getEvenements()
-    evenementToAdd.filter = {
-      etablissement: '',
-      auteur: '',
-      type: '',
-      fromDatetime: '',
-      toDatetime: '',
-    };
+    if(!evenementToAdd.filter) {
+      evenementToAdd.filter = {
+        etablissement: '',
+        auteur: '',
+        type: '',
+        fromDatetime: '',
+        toDatetime: '',
+      };
+    }
     evenementToAdd.started_at = new Date(evenementToAdd.started_at + "Z")
     // if it already exist, then update it
     if (evenements.some(event => event.uuid === evenementToAdd.uuid)) {

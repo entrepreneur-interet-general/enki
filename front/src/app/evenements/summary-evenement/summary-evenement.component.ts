@@ -31,6 +31,9 @@ export class SummaryEvenementComponent implements OnInit {
         const bounds = eventPolygon.getBounds();
         this.map.fitBounds(bounds);
         this.map.panTo([data.centroid[0], data.centroid[1]])
+        this.evenementsService.getSignalementsForEvenement(this.evenement.uuid).subscribe(response => {
+          this.interventions.next(response)
+        })
       })
     })
 
@@ -74,9 +77,7 @@ export class SummaryEvenementComponent implements OnInit {
 
 
   ngAfterViewInit(): void {
-    this.evenementsService.getSignalementsForEvenement(this.evenement.uuid).subscribe(response => {
-      this.interventions.next(response)
-    })
+
   }
 
   closeEvenement(): void {

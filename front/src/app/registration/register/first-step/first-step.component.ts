@@ -76,12 +76,7 @@ export class FirstStepComponent {
           this.userGroupPreFilled = true;
           this.structurePreFilled = true;
           this.registerService.token = params['token'];
-          this.etablissementService.selectedEtablissement.next({
-            slug: res.group.slug,
-            label: res.group.label,
-            uuid: res.group.uuid,
-            external_id: res.group.location.external_id
-          })
+          this.etablissementService.selectedEtablissement.next(res.group)
 
         })
       }
@@ -108,8 +103,6 @@ export class FirstStepComponent {
       this.userService.user.attributes = {
         fonction: this.userGroup.value.fonction
       }
-      console.log(response.data)
-
       this.router.navigate(['dashboard'])
 
     })

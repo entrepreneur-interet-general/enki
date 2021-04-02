@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Location } from '../interfaces/Location';
-import { LOCATION_INIT } from '../constants/location_init';
+import { Group } from '../interfaces/Group';
+import { GROUP_INIT } from '../constants/group_init';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchEtablissementService {
 
-  selectedEtablissement = new BehaviorSubject<Location>(LOCATION_INIT);
-  constructor() { }
+  selectedEtablissement = new BehaviorSubject<Group>(GROUP_INIT);
+  constructor() {}
 
-  setSelectedEtablissement(etablissement: Location): void {
+  setSelectedEtablissement(etablissement: Group): void {
     this.selectedEtablissement.next(etablissement)
   }
 }

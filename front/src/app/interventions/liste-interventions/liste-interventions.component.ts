@@ -25,5 +25,6 @@ export class ListeInterventionsComponent implements OnInit {
   }
   ngAfterViewInit(): void {
     document.querySelector('.base').scroll(0,0)
+    document.querySelector('main').scroll(0,0)
   }
 }

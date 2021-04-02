@@ -23,6 +23,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  closeMenu(): void {
+    this.menuActive = false;
+  }
+
   openCloseMenu(): void {
     this.menuActive = this.menuActive ? false : true;
   }

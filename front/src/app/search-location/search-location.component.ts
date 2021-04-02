@@ -66,7 +66,7 @@ export class SearchLocationComponent implements OnInit {
 
   getLocationInfos(location: Location, searchvalue: string): string {
     const label = this.highlightTransform.transform(location.label, searchvalue)
-    const external_id = this.highlightTransform.transform(location.location.external_id, searchvalue)
+    const external_id = this.highlightTransform.transform(location.external_id, searchvalue)
     return `${label} (${external_id})`
   }
 

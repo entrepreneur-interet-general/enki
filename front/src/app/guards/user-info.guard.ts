@@ -29,7 +29,6 @@ export class UserInfoGuard implements CanActivate {
     } else {
       return this.userService.getUserInfo().pipe(
         map(res => {
-          console.log(res)
           if (res.message === 'success') {
             this.userService.userExist = true
             // this.userService.user = res.data

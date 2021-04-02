@@ -7,7 +7,7 @@ import { catchError, debounce, pluck, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HTTP_DATA, SEARCH_MIN_CHARS } from '../constants';
 import { SearchEtablissementService } from './search-etablissement.service';
-import { Location } from '../interfaces/Location';
+import { Group } from '../interfaces/Group';
 import { HighlightIncludedCharsPipe } from '../highlight-included-chars.pipe';
 
 @Component({
@@ -19,8 +19,8 @@ export class SearchEtablissementComponent implements OnInit {
 
   etablissementSearch = new FormControl('', Validators.required);
   subject = new Subject();
-  etablissementResults$: Observable<Location[]>;
-  etablissementResults: Location[];
+  etablissementResults$: Observable<Group[]>;
+  etablissementResults: Group[];
   groupType: string;
 
 
@@ -65,14 +65,14 @@ export class SearchEtablissementComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getEtablissementLabel(etablissement: Location, searchvalue: string): string {
+  getEtablissementLabel(etablissement: Group, searchvalue: string): string {
     const label = this.highlightTransform.transform(etablissement.label, searchvalue)
-    const external_id = this.highlightTransform.transform(etablissement.external_id, searchvalue)
+    const external_id = this.highlightTransform.transform(etablissement.location.external_id, searchvalue)
 
     return `${label} (${external_id})`
   }
 
-  selectEtablissement(etablissement: Location): void {
+  selectEtablissement(etablissement: Group): void {
     this.etablissementService.setSelectedEtablissement(etablissement)
     this.router.navigate([`..`], {relativeTo: this.route})
   }

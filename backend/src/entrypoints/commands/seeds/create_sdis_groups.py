@@ -47,10 +47,11 @@ def create_sdis_groups():
     uow = current_app.context
 
     with uow:
-        depts:LocationEntity = uow.session.query(LocationEntity).filter(
+        depts:List[LocationEntity] = uow.session.query(LocationEntity).filter(
             LocationEntity.type == LocationType.DEPARTEMENT).all()
-        depts: LocationEntity = uow.session.query(LocationEntity).filter(
-            LocationEntity.type == LocationType.DEPARTEMENT).all()
+        sdis_groups_already_in: List[GroupEntity] = uow.session.query(GroupEntity).filter(
+            GroupEntity.type == GroupType.SDIS).all()
+
         def _match(label, matches : List[GroupEntity]):
             for match in matches:
                 if match.type == GroupType.SDIS and label == label:
@@ -58,14 +59,13 @@ def create_sdis_groups():
 
             return False
 
-
         sdis_groups = [
             GroupEntity(
                 uuid=str(uuid4()),
                 label=f"Sdis {mapping[dept.label]}{dept.label}",
                 type=GroupType.SDIS
             )
-            for dept in depts if _match(f"Sdis {mapping[dept.label]}{dept.label}", )
+            for dept in depts #if _match(f"Sdis {mapping[dept.label]}{dept.label}", sdis_groups_already_in)
         ]
 
         uow.session.add_all(sdis_groups)

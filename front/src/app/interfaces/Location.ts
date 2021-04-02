@@ -1,5 +1,6 @@
 export interface Location {
   slug: string;
+  external_id: string;
   location: {
     external_id: string;
   };

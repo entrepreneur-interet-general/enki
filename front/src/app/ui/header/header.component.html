@@ -6,7 +6,7 @@
       </span>
     </button>
   </div>
-  <div class="header--col" routerLink="/" id="test--dashboardlink">
+  <div class="header--col" routerLink="/" id="test--dashboardlink" (click)="closeMenu()">
     <div class="enki-logo">
       <svg class="icon-logo"><use xlink:href="#icon-logo"></use></svg>
       ENKI
@@ -56,4 +56,4 @@
     </nav>
   </div>
 </div>
-<div class="overlay" [ngClass]="{ '-active': menuActive }" [class]="mobilePrototype.getCheckedClass()"></div>
+<div class="overlay" (click)="closeMenu()" [ngClass]="{ '-active': menuActive }" [class]="mobilePrototype.getCheckedClass()"></div>

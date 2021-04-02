@@ -59,7 +59,7 @@ fixture `Test as Maire`
       // the main courante should be empty
       // create a new message
       .click('.mc--empty button')
-      .typeText('.addMessageForm--titleInput', MESSAGE_TITLE)
+      .typeText('#test--messageContent', MESSAGE_TITLE)
       .typeText('.addMessageForm--descriptionTextarea', MESSAGE_DESCRIPTION)
       // BEGIN label testing
       .click('.labelGroup--labelLink')

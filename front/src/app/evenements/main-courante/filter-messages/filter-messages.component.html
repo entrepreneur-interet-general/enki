@@ -8,6 +8,7 @@
       <select class="enkiform__input enkiform__select" id="etablissement" formControlName="etablissement" required>
         <option value=""></option>
         <option *ngFor="let option of etablissementOptions" [value]="option.group_id">{{option.group_label}}</option>
+        <option value="SDIS">SDIS</option>
       </select>
       <label for="etablissement" class="enkiform__label">Établissement</label>
       <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>

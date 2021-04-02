@@ -60,6 +60,9 @@ export class AddMessageComponent implements OnInit {
   openConfirmationModal(): void {
     this.modal.open()
   }
+  closeCancelModal(): void {
+    this.modalCancel.close()
+  }
 
   uploadFile(event: any): void {
     // TODO : montrer le loader

@@ -66,6 +66,7 @@ export class DetailInterventionComponent implements OnInit {
   }
   ngAfterViewInit(): void {
     document.querySelector('.base').scroll(0,0)
+    document.querySelector('main').scroll(0,0)
   }
   getEvenements(): void {
     this.evenementsService.getEvenementsByHTTP().subscribe((evenements) => {

@@ -10,6 +10,9 @@
   }
   &--labels {
     margin: 16px 0 0;
+    .badge {
+      margin: 0 8px 4px 0;
+    }
   }
   &--body {
     padding: 16px;

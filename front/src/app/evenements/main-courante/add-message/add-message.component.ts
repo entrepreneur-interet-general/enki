@@ -19,7 +19,7 @@ interface Media {
 export class AddMessageComponent implements OnInit {
   messageGroup = new FormGroup({
     title: new FormControl('', Validators.required),
-    content: new FormControl('', Validators.required),
+    content: new FormControl(''),
     files: new FormControl('', Validators.required)
   })
   evenementUUID: string;

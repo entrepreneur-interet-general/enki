@@ -8,7 +8,9 @@ networks:
 
 services:
   nginx:
-    image: nginx:latest
+    build:
+      context: proxy
+      dockerfile: Dockerfile
     ports:
       - "443:443"
       - "8000:8000"

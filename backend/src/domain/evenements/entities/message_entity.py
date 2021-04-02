@@ -67,7 +67,7 @@ class MessageType(str, Enum):
 @dataclass
 class MessageEntity(Entity):
     title: str
-    description: str
+    description: str = field(default_factory=lambda: None)
     creator_id: Optional[str] = field(default_factory=lambda: None)
     external_id: str = field(default_factory=lambda: None)
     creator: Optional[UserEntity] = field(default_factory=lambda: None)

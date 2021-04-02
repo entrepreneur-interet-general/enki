@@ -42,7 +42,7 @@ class MessageSchema(Schema):
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
     title = fields.Str(required=True, validate=validate.Length(min=5))
-    description = fields.Str(required=True, validate=validate.Length(min=5))
+    description = fields.Str(required=False, validate=validate.Length(min=5))
     severity = EnumField(Severity, missing=Severity.UNKNOWN, validate=validate.OneOf([e.value for e in Severity]))
     type = fields.Str(missing=MessageType.INFORMATION.value, validate=validate.OneOf([e.value for e in MessageType]))
     type_label = fields.Method("_build_type_label")

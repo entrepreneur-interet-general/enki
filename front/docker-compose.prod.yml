@@ -2,8 +2,12 @@ version: '2'
 
 services:
   front:
-    build: .
-    command: ng build --configuration="production"
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    command: npx serve
+    ports:
+      - "5000:5000"
     volumes:
       - ./src:/app/src
       - ./dist:/app/dist

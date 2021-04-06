@@ -22,7 +22,7 @@ export const PREVIOUS_PROPERTIES_MAP = [
   {
     path: '/affaires',
     fullPath: true,
-    value: 'à la liste des appels de secours'
+    value: 'à la liste des affaires'
   },
   {
     path: '/annuaire/searchcontact',

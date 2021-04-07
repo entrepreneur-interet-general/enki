@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class="map">
-    <app-map></app-map>
+    <app-map [affaire]="affaire"></app-map>
   </div>
   <div class="info-block localisation">
     <div class="title-with-icon localisation--title">
@@ -65,7 +65,7 @@
         <div class="enkiform__group">
           <select class="enkiform__input enkiform__select" id="evenement" formControlName="evenement">
             <option value="" disabled>Sélectionner ou créer un événement</option>
-            <option value="{{CREATE_EVENT_VALUE}}">Créer un nouvel événement</option>
+            <option [value]="CREATE_EVENT_VALUE">Créer un nouvel événement</option>
             <option *ngFor="let evenement of evenementsList" [value]="evenement.uuid">{{evenement.title}}</option>
           </select>
           <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>

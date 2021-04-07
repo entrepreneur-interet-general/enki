@@ -3,11 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Evenement, EvenementsService, EvenementType } from '../evenements.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SearchLocationService } from 'src/app/search-location/search-location.service';
 import { HTTP_DATA } from 'src/app/constants';
 import { pluck } from 'rxjs/operators';
+import { AffairesService } from 'src/app/affaires/affaires.service';
 
 @Component({
   selector: 'app-create-evenement',
@@ -29,6 +30,7 @@ export class CreateEvenementComponent implements OnInit {
   evenement: object;
   httpOptions: object;
   todayDay: Date;
+  attachAffaireUUID: string;
   public EvenementTypeEnum = EvenementType;
 
   constructor(
@@ -36,14 +38,12 @@ export class CreateEvenementComponent implements OnInit {
     private evenementsService: EvenementsService,
     private router: Router,
     private searchLocationService: SearchLocationService,
+    private affairesService: AffairesService,
+    private activatedRoute: ActivatedRoute,
   ) {
+    this.attachAffaireUUID = this.activatedRoute.snapshot.queryParams['affaireUUID'];
     this.todayDay = new Date();
     this.evenementUrl = `${environment.backendUrl}/events`
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      })
-    }
     this.searchLocationService.selectedEtablissement.subscribe(location => {
       this.evenementGroup.controls.location.setValue(location.label)
     })
@@ -64,6 +64,9 @@ export class CreateEvenementComponent implements OnInit {
     }
     this.httpFormSubmit(formBody).subscribe(response => {
       this.evenementsService.addOrUpdateEvenement(response)
+      if (this.attachAffaireUUID) {
+        this.affairesService.attachEvenementToAffaire(response.uuid, this.attachAffaireUUID).subscribe();
+      }
       this.router.navigate([`evenements/${response.uuid}`])
     })
   }
@@ -74,7 +77,7 @@ export class CreateEvenementComponent implements OnInit {
   }
 
   httpFormSubmit(formBody): Observable<Evenement> {
-    return this.http.post<any>(this.evenementUrl, formBody, this.httpOptions).pipe(
+    return this.http.post<any>(this.evenementUrl, formBody).pipe(
       pluck(HTTP_DATA)
     )
   }

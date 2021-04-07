@@ -29,6 +29,8 @@ export class AffairesService {
   readonly _affaires = new BehaviorSubject<Affaire[]>([]);
 
   affairesUrl: string;
+  evenementsUrl: string;
+
   affaires: Affaire[];
   httpOptions: object;
 
@@ -38,6 +40,7 @@ export class AffairesService {
     ) {
       this.affaires = []
       this.affairesUrl = `${environment.backendUrl}/affairs`;
+      this.evenementsUrl = `${environment.backendUrl}/events`;
       this.httpOptions = {
       };
     }
@@ -59,7 +62,22 @@ export class AffairesService {
     affaires.map(affaire => affaire.uuid === affaireUUID ? affaireToUpdate : affaire);
     this._setAffaires(affaires);
   }
-
+  attachEvenementToAffaire(evenementUUID: string, affaireUUID: string): Observable<any> {
+    return this.http.put(`${this.evenementsUrl}/${evenementUUID}/affairs/${affaireUUID}`, {})
+      .pipe(
+        tap(() => {
+          this.updateAffaireEvenementID(evenementUUID, affaireUUID)
+        })
+      )
+  }
+  detachEvenementToAffaire(evenementUUID: string, affaireUUID: string): Observable<any> {
+    return this.http.delete(`${this.evenementsUrl}/${evenementUUID}/affairs/${affaireUUID}`)
+      .pipe(
+        tap(() => {
+          this.updateAffaireEvenementID(null, affaireUUID)
+        })
+      )
+  }
 
   mapHTTPAffaires(affaires): Affaire[] {
     let updatedAffaires: Affaire[];

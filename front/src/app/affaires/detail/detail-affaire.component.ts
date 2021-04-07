@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Affaire, AffairesService } from '../affaires.service'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Evenement, EvenementsService } from 'src/app/evenements/evenements.service';
@@ -34,6 +34,7 @@ export class DetailAffaireComponent implements OnInit {
     private evenementsService: EvenementsService,
     private http: HttpClient,
     private _location: Location,
+    private router: Router
     ) {
       this.CREATE_EVENT_VALUE = 'create';
       this.previousLinkLabel = this.historyUrl.getPreviousLabel()
@@ -76,13 +77,12 @@ export class DetailAffaireComponent implements OnInit {
       }
     })
   }
-  getAffaire(): Observable<Affaire> {
-    return of(this.affaire)
-  }
   attachEvenementToAffaire(): void {
+    if (this.evenementGroup.controls.evenement.value === this.CREATE_EVENT_VALUE) {
+      this.router.navigate(['evenements/create'], { queryParams: { affaireUUID: this.uuid }});
+      return;
+    }
     this.submitAttachEvenementToAffaire().subscribe(() => {
-      // console.log(this.evenementsService.getEvenements(), this.affaire.evenement_id)
-      // console.log(this.evenementsService.getEvenementByID(this.affaire.evenement_id))
       this.selectedEvenementTitle = this.evenementsService.getEvenementByID(this.evenementGroup.controls.evenement.value).title;
     })
   }

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import { Affaire, AffairesService } from '../affaires/affaires.service';
 import { DetailAffaireComponent } from '../affaires/detail/detail-affaire.component'
 
 @Component({
@@ -10,8 +11,9 @@ import { DetailAffaireComponent } from '../affaires/detail/detail-affaire.compon
 export class MapComponent implements OnInit {
   map;
   icon;
+  @Input() affaire: Affaire;
 
-  constructor(private detailAffaire: DetailAffaireComponent) { }
+  constructor() {}
 
   private initMap(): void {
     this.icon = L.icon({
@@ -33,12 +35,8 @@ export class MapComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.initMap()
-    this.detailAffaire.getAffaire().subscribe((affaire) => {
-      this.map.panTo([affaire.coord.lat, affaire.coord.long])
-      // const marker = L.marker([affaires[0].location.lat, affaires[0].location.lon], {icon: this.icon}).addTo(this.map);
-      L.marker([affaire.coord.lat, affaire.coord.long], {icon: this.icon}).addTo(this.map);
-      
-    })
+    this.map.panTo([this.affaire.coord.lat, this.affaire.coord.long])
+    L.marker([this.affaire.coord.lat, this.affaire.coord.long], {icon: this.icon}).addTo(this.map);
   }
 
   ngOnInit(): void {

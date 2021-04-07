@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
-import { Intervention, InterventionsService } from '../interventions/interventions.service';
+import { Affaire, AffairesService } from '../affaires/affaires.service';
 import { Location } from '../interfaces/Location';
 import { Participant } from '../interfaces/Participant';
 import { HTTP_DATA } from '../constants';
@@ -68,7 +68,7 @@ export class EvenementsService {
   
   constructor(
     private http: HttpClient,
-    private interventionsService: InterventionsService,
+    private interventionsService: AffairesService,
     // private messagesService: MessagesService
     ) {
       this.evenementsUrl = `${environment.backendUrl}/events`
@@ -81,6 +81,10 @@ export class EvenementsService {
 
   getEvenements(): Evenement[] {
     return this._evenements.getValue();
+  }
+
+  getEvenementByID(uuid: string): Evenement {
+    return this.getEvenements().filter(evenement => evenement.uuid === uuid)[0];
   }
 
   private _setEvenements(evenements: Evenement[]): void {
@@ -186,9 +190,9 @@ export class EvenementsService {
   getSelectedEvenementsParticipants(): Participant[] {
     return this.selectedEvenementParticipants.getValue();
   }
-  getEvenementByID(uuid: string): Observable<Evenement> {
+  /* getEvenementByID(uuid: string): Observable<Evenement> {
     return this.evenementIsInMemory ? of(this.getEvenements().filter(evenement => evenement.uuid === uuid)[0]) : this.httpGetEvenementById(uuid)
-  }
+  } */
   private evenementIsInMemory(evenementUUID: string): boolean {
     return this.getEvenements().some(evenement => evenement.uuid === evenementUUID)
   }
@@ -210,37 +214,38 @@ export class EvenementsService {
       )
   }
   addParticipantsToEvenement(participant: Participant): void {
-    this.getEvenementByID(this.selectedEvenementUUID.getValue()).subscribe(evenement => {
-      const copyEvent = evenement;
-      copyEvent.user_roles = copyEvent.user_roles.concat(participant);
-      this.addOrUpdateEvenement(copyEvent);
-    })
+    const copyEvent = this.getEvenementByID(this.selectedEvenementUUID.getValue());
+    copyEvent.user_roles = copyEvent.user_roles.concat(participant);
+    this.addOrUpdateEvenement(copyEvent);
+
+/*     this.getEvenementByID(this.selectedEvenementUUID.getValue()).subscribe(evenement => {
+    }) */
   }
   changeParticipantRole(participant: Participant): void {
-    this.getEvenementByID(this.selectedEvenementUUID.getValue()).subscribe(evenement => {
-      const copyEvent = evenement;
-      // Replace the right participant by the received one
-      const newUserRoles = copyEvent.user_roles.map(user_role => {
-        if (user_role.user.uuid === participant.user.uuid) {
-          return participant
-        } else {
-          return user_role
-        }
-      });
-      copyEvent.user_roles = newUserRoles;
-      this.addOrUpdateEvenement(copyEvent);
-    })
+    const copyEvent = this.getEvenementByID(this.selectedEvenementUUID.getValue());
+    // Replace the right participant by the received one
+    const newUserRoles = copyEvent.user_roles.map(user_role => {
+      if (user_role.user.uuid === participant.user.uuid) {
+        return participant
+      } else {
+        return user_role
+      }
+    });
+    copyEvent.user_roles = newUserRoles;
+    this.addOrUpdateEvenement(copyEvent);
+    /* this.getEvenementByID(this.selectedEvenementUUID.getValue()).subscribe(evenement => {
+    }) */
 
   }
   selectEvenement(event: Evenement): void {
     this.selectedEvenementUUID.next(event.uuid);
     this.selectedEvenementParticipants.next(event.user_roles);
   }
-  getSignalementsForEvenement(uuid): Observable<Intervention[]> {
+  getSignalementsForEvenement(uuid): Observable<Affaire[]> {
     return this.http.get<any>(`${this.evenementsUrl}/${uuid}/affairs`, this.httpOptions)
       .pipe(
         map(response => {
-          return this.interventionsService.mapHTTPInterventions(response.data)
+          return this.interventionsService.mapHTTPAffaires(response.data)
         })
       )
   }

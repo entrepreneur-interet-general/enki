@@ -8,8 +8,8 @@ import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
 import { MapComponent } from './map/map.component';
 import { environment } from '../environments/environment';
-import { ListeInterventionsComponent } from './interventions/liste-interventions/liste-interventions.component';
-import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
+import { ListeAffairesComponent } from './affaires/liste-affaires/liste-affaires.component';
+import { DetailAffaireComponent } from './affaires/detail/detail-affaire.component';
 import { HeaderComponent } from './ui/header/header.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -49,8 +49,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AppComponent,
     HeaderComponent,
     MapComponent,
-    ListeInterventionsComponent,
-    DetailInterventionComponent,
+    ListeAffairesComponent,
+    DetailAffaireComponent,
     SecondStepComponent,
     PageNotFoundComponent,
     ListeEvenementsComponent,

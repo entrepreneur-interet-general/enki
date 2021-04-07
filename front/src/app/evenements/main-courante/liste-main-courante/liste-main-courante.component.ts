@@ -36,9 +36,8 @@ export class ListeMainCouranteComponent implements OnInit {
     ) {
     this.messages = []
     this.uuid = this.evenementsService.selectedEvenementUUID.getValue()
-    this.evenementsService.getEvenementByID(this.uuid).subscribe(evenement => {
-      this.currentEventFilter = evenement.filter
-    })
+    const event = this.evenementsService.getEvenementByID(this.uuid)
+    this.currentEventFilter = event.filter
     this.user = this.userService.user
   }
 

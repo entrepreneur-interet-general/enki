@@ -53,10 +53,8 @@ export class ShareEvenementComponent implements OnInit {
       const currentEvents: Evenement[] = events.filter(event => event.uuid === this.evenementsService.selectedEvenementUUID.getValue())
       this.participants.next(currentEvents[0].user_roles)
     })
-
-    this.evenementsService.getEvenementByID(this.evenementsService.selectedEvenementUUID.getValue()).subscribe((event) => {
-      this.participants.next(event.user_roles)
-    })
+    const event = this.evenementsService.getEvenementByID(this.evenementsService.selectedEvenementUUID.getValue())
+    this.participants.next(event.user_roles)
     this.roles = ROLES;
 
     this.roleGroup.controls.role.valueChanges.subscribe((value: string) => {

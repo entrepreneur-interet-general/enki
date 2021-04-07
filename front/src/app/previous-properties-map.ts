@@ -20,7 +20,7 @@ export const PREVIOUS_PROPERTIES_MAP = [
     value: 'à la liste d\'événements'
   },
   {
-    path: '/interventions',
+    path: '/affaires',
     fullPath: true,
     value: 'à la liste des appels de secours'
   },
@@ -35,7 +35,7 @@ export const PREVIOUS_PROPERTIES_MAP = [
     value: 'à la liste'
   },
   {
-    path: '/detail-intervention/',
+    path: '/detail-affaire/',
     fullPath: false,
     value: 'à l\'affaire'
   }

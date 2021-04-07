@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InterventionsService } from '../../interventions/interventions.service';
+import { AffairesService } from '../../affaires/affaires.service';
 import { UserService } from '../../user/user.service'
 
 @Component({
@@ -11,15 +11,15 @@ import { UserService } from '../../user/user.service'
 })
 export class UserDashboardComponent implements OnInit {
 
-  interventions;
+  affaires;
   user;
   constructor(
-    private interventionsService: InterventionsService,
+    private interventionsService: AffairesService,
     private userService: UserService,
     ) {
-    this.interventions = []
-    this.interventionsService.httpGetAllInterventions().subscribe((interventions) => {
-      this.interventions = interventions;
+    this.affaires = []
+    this.interventionsService.httpGetAllAffaires().subscribe((affaires) => {
+      this.affaires = affaires;
     });
     this.user = this.userService.user
   }

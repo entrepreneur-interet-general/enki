@@ -72,9 +72,9 @@
         </div>
       </div>
       <div class="evenement--button" *ngIf="!affaire.evenement_id">
-        <button type="submit" class="btn -green">Attacher l'affaire</button>
+        <button type="submit" class="btn -green">Valider</button>
       </div>
-      <div class="evenement--link" *ngIf="selectedEvenementTitle">
+      <div class="evenement--link" *ngIf="affaire.evenement_id">
         <button type="button" class="btn btn--special" routerLink='/evenements/{{affaire.evenement_id}}'>
           {{selectedEvenementTitle}}
           <svg class="icon-chevron rotated icon"><use xlink:href="#icon-chevron"></use></svg>

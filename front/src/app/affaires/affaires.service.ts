@@ -52,6 +52,14 @@ export class AffairesService {
     return this.getAffaires().filter(affaire => affaire.uuid === uuid)[0];
   }
 
+  updateAffaireEvenementID(evenementUUID: string, affaireUUID: string): void {
+    let affaires = this.getAffaires();
+    const affaireToUpdate = this.getAffaireByID(affaireUUID);
+    affaireToUpdate.evenement_id = evenementUUID;
+    affaires.map(affaire => affaire.uuid === affaireUUID ? affaireToUpdate : affaire);
+    this._setAffaires(affaires);
+  }
+
 
   mapHTTPAffaires(affaires): Affaire[] {
     let updatedAffaires: Affaire[];

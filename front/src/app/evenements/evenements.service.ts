@@ -217,9 +217,6 @@ export class EvenementsService {
     const copyEvent = this.getEvenementByID(this.selectedEvenementUUID.getValue());
     copyEvent.user_roles = copyEvent.user_roles.concat(participant);
     this.addOrUpdateEvenement(copyEvent);
-
-/*     this.getEvenementByID(this.selectedEvenementUUID.getValue()).subscribe(evenement => {
-    }) */
   }
   changeParticipantRole(participant: Participant): void {
     const copyEvent = this.getEvenementByID(this.selectedEvenementUUID.getValue());

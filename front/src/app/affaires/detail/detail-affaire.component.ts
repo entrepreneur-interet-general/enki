@@ -40,11 +40,6 @@ export class DetailAffaireComponent implements OnInit {
 
       this.evenementsList = [];
       this.evenementsUrl = `${environment.backendUrl}/events`;
-      this.evenementGroup.controls.evenement.valueChanges.subscribe(value => {
-        if (value === this.CREATE_EVENT_VALUE) {
-          console.log('create event')
-        }
-      })
     }
 
   
@@ -57,8 +52,8 @@ export class DetailAffaireComponent implements OnInit {
         this.getEvenements();
         this.fetchedAffaire = true
       } else {
-        this.affairesService.httpGetAffaire(this.uuid).subscribe((affaire) => {
-          this.affaire = affaire
+        this.affairesService.httpGetAllAffaires().subscribe(() => {
+          this.affaire = this.affairesService.getAffaireByID(this.uuid)
           this.getEvenements();
           this.fetchedAffaire = true;
         });
@@ -96,25 +91,18 @@ export class DetailAffaireComponent implements OnInit {
       .pipe(
         tap(() => {
           // change current affaire "evenementID"
-          this.affairesService.affaires = this.affairesService.affaires.map((affaire) => {
-            if (affaire.uuid === this.uuid) {
-              affaire.evenement_id = this.evenementGroup.value.evenement
-            }
-            return affaire
-          })
+          this.affairesService.updateAffaireEvenementID(this.evenementGroup.value.evenement, this.uuid)
         })
       )
   }
   detachEvenementToAffaire(): void {
-    this.submitDetachEvenementToAffaire().subscribe(() => {
-      console.log()
-    })
+    this.submitDetachEvenementToAffaire().subscribe()
   }
   submitDetachEvenementToAffaire(): Observable<any> {
     return this.http.delete(`${this.evenementsUrl}/${this.evenementGroup.value.evenement}/affairs/${this.uuid}`)
       .pipe(
         tap(() => {
-          console.log('test')
+          this.affairesService.updateAffaireEvenementID(null, this.uuid)
         })
       )
   }

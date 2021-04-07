@@ -21,7 +21,7 @@ export class SummaryEvenementComponent implements OnInit {
 
   constructor(
     private evenementsService: EvenementsService,
-    private router: Router
+    private router: Router,
   ) {
     this.evenementUUID = this.evenementsService.selectedEvenementUUID.getValue()
     this.evenementsService.getEvenementByID(this.evenementUUID).subscribe(evenement => {

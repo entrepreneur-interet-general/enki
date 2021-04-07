@@ -1,9 +1,9 @@
 
 <div class="evenement-container">
-<!--   <a class="goTo" routerLink="/evenements">
+  <a class="goTo" (click)=goBack()>
     <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
-    Retour à la liste des événements
-  </a> -->
+    Retourner à la liste des événements
+  </a>
   <router-outlet (activate)="onActivate()"></router-outlet>
 </div>
 <div class="tabbar" [class]="mobilePrototype.getCheckedClass()">

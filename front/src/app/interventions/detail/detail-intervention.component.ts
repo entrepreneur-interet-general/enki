@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { Intervention, InterventionsService } from '../interventions.service'
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EvenementsService } from 'src/app/evenements/evenements.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
-import { PREVIOUS_PROPERTIES_MAP } from '../../previous-properties-map';
 import { HistoryUrlService } from '../../history-url.service';
 
 @Component({
@@ -24,6 +23,7 @@ export class DetailInterventionComponent implements OnInit {
   httpOptions;
   evenementsUrl: string;
   previousLinkLabel: string;
+  readonly CREATE_EVENT_VALUE: string;
   evenementGroup = new FormGroup({
     evenement: new FormControl({value:'', disabled: false})
   });
@@ -33,8 +33,10 @@ export class DetailInterventionComponent implements OnInit {
     private historyUrl: HistoryUrlService,
     private evenementsService: EvenementsService,
     private http: HttpClient,
-    private _location: Location
+    private _location: Location,
+    private router: Router
     ) {
+      this.CREATE_EVENT_VALUE = 'create';
       this.previousLinkLabel = this.historyUrl.getPreviousLabel()
 
       this.evenementsList = [];
@@ -45,6 +47,11 @@ export class DetailInterventionComponent implements OnInit {
         })
       };
       this.evenementsUrl = `${environment.backendUrl}/events`;
+      this.evenementGroup.controls.evenement.valueChanges.subscribe(value => {
+        if (value === this.CREATE_EVENT_VALUE) {
+          console.log('create event')
+        }
+      })
     }
 
   ngOnInit(): void {

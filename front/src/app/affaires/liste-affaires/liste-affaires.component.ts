@@ -10,10 +10,10 @@ import { environment } from '../../../environments/environment';
 export class ListeAffairesComponent implements OnInit {
   affaires;
   constructor(
-    private interventionsService: AffairesService,
+    private affairesService: AffairesService,
   ) {
     this.affaires = [];
-    this.interventionsService.httpGetAllAffaires().subscribe((affaires) => {
+    this.affairesService.httpGetAllAffaires().subscribe((affaires) => {
         this.affaires = environment.HTTPClientInMemory ? affaires.map((affaire, index) => {
           affaire.uuid = (index + 1).toString()
           return affaire

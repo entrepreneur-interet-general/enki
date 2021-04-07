@@ -68,7 +68,7 @@ export class EvenementsService {
   
   constructor(
     private http: HttpClient,
-    private interventionsService: AffairesService,
+    private affairesService: AffairesService,
     // private messagesService: MessagesService
     ) {
       this.evenementsUrl = `${environment.backendUrl}/events`
@@ -245,7 +245,7 @@ export class EvenementsService {
     return this.http.get<any>(`${this.evenementsUrl}/${uuid}/affairs`, this.httpOptions)
       .pipe(
         map(response => {
-          return this.interventionsService.mapHTTPAffaires(response.data)
+          return this.affairesService.mapHTTPAffaires(response.data)
         })
       )
   }

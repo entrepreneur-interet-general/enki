@@ -14,11 +14,11 @@ export class UserDashboardComponent implements OnInit {
   affaires;
   user;
   constructor(
-    private interventionsService: AffairesService,
+    private affairesService: AffairesService,
     private userService: UserService,
     ) {
     this.affaires = []
-    this.interventionsService.httpGetAllAffaires().subscribe((affaires) => {
+    this.affairesService.httpGetAllAffaires().subscribe((affaires) => {
       this.affaires = affaires;
     });
     this.user = this.userService.user

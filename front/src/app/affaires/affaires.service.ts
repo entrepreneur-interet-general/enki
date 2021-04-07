@@ -28,7 +28,7 @@ interface Coordinates {
 export class AffairesService {
   readonly _affaires = new BehaviorSubject<Affaire[]>([]);
 
-  interventionsUrl: string;
+  affairesUrl: string;
   affaires: Affaire[];
   httpOptions: object;
 
@@ -37,7 +37,7 @@ export class AffairesService {
     private userService: UserService
     ) {
       this.affaires = []
-      this.interventionsUrl = `${environment.backendUrl}/affairs`;
+      this.affairesUrl = `${environment.backendUrl}/affairs`;
       this.httpOptions = {
       };
     }
@@ -81,7 +81,6 @@ export class AffairesService {
     if (!this.userService.user.attributes) {
       return of([]);
     }
-    // if(this.userService.user.)
     return this.http.get<any>(`${environment.backendUrl}/users/me/affairs`, this.httpOptions)
       .pipe(
         map(affaires => {
@@ -95,25 +94,17 @@ export class AffairesService {
   }
 
   httpGetAffaire(uuid: string): Observable<Affaire> {
-    return this.http.get<any>(`${this.interventionsUrl}/${uuid}`, this.httpOptions)
+    return this.http.get<any>(`${this.affairesUrl}/${uuid}`, this.httpOptions)
       .pipe(
         map(affaire => {
           affaire = environment.HTTPClientInMemory ? affaire : affaire.data;
-          let interventionsArray: Affaire[] = [];
-          interventionsArray.push(affaire);
-          interventionsArray = this.mapHTTPAffaires(interventionsArray);
-          return interventionsArray[0];
+          let affairesArray: Affaire[] = [];
+          affairesArray.push(affaire);
+          affairesArray = this.mapHTTPAffaires(affairesArray);
+          return affairesArray[0];
         }),
         tap(_ => this.log('fetched one affaire'))
       );
-  }
-
-  getAffairesFromMemory(): Affaire[] {
-    return this.affaires;
-  }
-
-  getAffaireFromMemory(uuid: string): Affaire {
-    return this.affaires ? this.affaires.filter(affaire => affaire.uuid === uuid)[0] : null;
   }
   /**
    * Handle Http operation that failed.

@@ -28,7 +28,7 @@ export class DetailAffaireComponent implements OnInit {
   });
   selectedEvenementTitle: string;
   constructor(
-    private interventionsService: AffairesService,
+    private affairesService: AffairesService,
     private route: ActivatedRoute,
     private historyUrl: HistoryUrlService,
     private evenementsService: EvenementsService,
@@ -52,12 +52,12 @@ export class DetailAffaireComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.uuid = params['uuid'];
-      if (this.interventionsService.getAffaireFromMemory(this.uuid)) {
-        this.affaire = this.interventionsService.getAffaireFromMemory(this.uuid)
+      if (this.affairesService.getAffaireByID(this.uuid)) {
+        this.affaire = this.affairesService.getAffaireByID(this.uuid)
         this.getEvenements();
         this.fetchedAffaire = true
       } else {
-        this.interventionsService.httpGetAffaire(this.uuid).subscribe((affaire) => {
+        this.affairesService.httpGetAffaire(this.uuid).subscribe((affaire) => {
           this.affaire = affaire
           this.getEvenements();
           this.fetchedAffaire = true;
@@ -96,7 +96,7 @@ export class DetailAffaireComponent implements OnInit {
       .pipe(
         tap(() => {
           // change current affaire "evenementID"
-          this.interventionsService.affaires = this.interventionsService.affaires.map((affaire) => {
+          this.affairesService.affaires = this.affairesService.affaires.map((affaire) => {
             if (affaire.uuid === this.uuid) {
               affaire.evenement_id = this.evenementGroup.value.evenement
             }

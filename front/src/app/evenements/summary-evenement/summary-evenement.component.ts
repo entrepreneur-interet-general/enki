@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { BehaviorSubject } from 'rxjs';
 
-import { Intervention } from 'src/app/interventions/interventions.service';
+import { Affaire } from 'src/app/affaires/affaires.service';
 import { Evenement, EvenementsService } from '../evenements.service';
 
 @Component({
@@ -16,42 +16,39 @@ export class SummaryEvenementComponent implements OnInit {
   icon;
   evenementUUID: string;
   evenement: Evenement;
-  interventions = new BehaviorSubject<Intervention[]>([]);
+  affaires = new BehaviorSubject<Affaire[]>([]);
   uuid;
 
   constructor(
     private evenementsService: EvenementsService,
-    private router: Router
+    private router: Router,
   ) {
     this.evenementUUID = this.evenementsService.selectedEvenementUUID.getValue()
-    this.evenementsService.getEvenementByID(this.evenementUUID).subscribe(evenement => {
-      this.evenement = evenement;
-      this.evenementsService.getEvenementLocationPolygon(this.evenement.location_id).subscribe(data => {
-        let eventPolygon = L.polygon(data.geometry.coordinates[0]).addTo(this.map);
-        const bounds = eventPolygon.getBounds();
-        this.map.fitBounds(bounds);
-        this.map.panTo([data.centroid[0], data.centroid[1]])
-        this.evenementsService.getSignalementsForEvenement(this.evenement.uuid).subscribe(response => {
-          this.interventions.next(response)
-        })
+    this.evenement = this.evenementsService.getEvenementByID(this.evenementUUID);
+    this.evenementsService.getEvenementLocationPolygon(this.evenement.location_id).subscribe(data => {
+      let eventPolygon = L.polygon(data.geometry.coordinates[0]).addTo(this.map);
+      const bounds = eventPolygon.getBounds();
+      this.map.fitBounds(bounds);
+      this.map.panTo([data.centroid[0], data.centroid[1]])
+      this.evenementsService.getSignalementsForEvenement(this.evenement.uuid).subscribe(response => {
+        this.affaires.next(response)
       })
     })
-
   }
 
-  getInterventions(): Intervention[] {
-    return this.interventions.getValue();
+  getAffaires(): Affaire[] {
+    return this.affaires.getValue();
   }
   ngOnInit(): void {
     this.initMap()
-    this.interventions.subscribe((interventions) => {
+    this.affaires.subscribe((affaires) => {
       this.addMarker()
     })
   }
 
   addMarker(): void {
-    if (this.interventions.getValue().length > 0) {
-      this.interventions.getValue().forEach(inter => {
+    if (this.affaires.getValue().length > 0) {
+      this.affaires.getValue().forEach(inter => {
         L.marker([inter.coord.lat, inter.coord.long], {icon: this.icon}).addTo(this.map);
       })
     }

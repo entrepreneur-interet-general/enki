@@ -10,11 +10,11 @@
       <svg class="icon-sun icon"><use xlink:href="#icon-sun"></use></svg>
       Événements
     </h2>
-    <li class="intervention list--element" *ngFor="let intervention of interventions | slice:0:3">
-      <a class="intervention--wrapper list--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
+    <li class="affaire list--element" *ngFor="let affaire of affaires | slice:0:3">
+      <a class="affaire--wrapper list--wrapper" routerLink="/detail-affaire/{{affaire.uuid}}">
         <div class="secondInfos">
           <div class="secondInfos--dateTime">
-            {{intervention.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
+            {{affaire.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
           </div>
           <div class="badge">
             En cours
@@ -22,7 +22,7 @@
         </div>
         <div class="mainInfos -hasIcon">
           <div class="mainInfos--title">
-            {{intervention.natureDeFait}}
+            {{affaire.natureDeFait}}
           </div>
           <div class="mainInfos--icon">
             <img src="assets/natureDeFaits/Incendies.png" alt="">
@@ -40,19 +40,19 @@
       <img src="assets/meteo-chelles.png" alt="">
     </div>
   </div>
-  <ul class="interventions dashboard--widget">
+  <ul class="affaires dashboard--widget">
     <!-- <div class="sub-title">
       Chelles
     </div> -->
-    <h2 class="interventions--title title-with-icon">
+    <h2 class="affaires--title title-with-icon">
       <svg class="icon-post-it icon"><use xlink:href="#icon-post-it"></use></svg>
       Derniers appels de secours
     </h2>
-    <li class="intervention list--element" *ngFor="let intervention of interventions | slice:0:3">
-      <a class="intervention--wrapper list--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
+    <li class="affaire list--element" *ngFor="let affaire of affaires | slice:0:3">
+      <a class="affaire--wrapper list--wrapper" routerLink="/detail-affaire/{{affaire.uuid}}">
         <div class="secondInfos">
           <div class="secondInfos--dateTime">
-            {{intervention.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
+            {{affaire.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
           </div>
           <div class="badge">
             En cours
@@ -60,7 +60,7 @@
         </div>
         <div class="mainInfos -hasIcon">
           <div class="mainInfos--title">
-            {{intervention.natureDeFait}}
+            {{affaire.natureDeFait}}
           </div>
           <!-- <div class="mainInfos--icon">
             <img src="assets/natureDeFaits/Incendies.png" alt="">
@@ -68,13 +68,13 @@
         </div>
       </a>
     </li>
-    <div class="interventions--seeMore" *ngIf="interventions.length > 0">
-      <a routerLink="/interventions">
+    <div class="affaires--seeMore" *ngIf="affaires.length > 0">
+      <a routerLink="/affaires">
         <svg class="icon-add title-icon"><use xlink:href="#icon-add"></use></svg>
         <span>Voir plus d'appels de secours</span>
       </a>
     </div>
-    <div class="interventions--noInterventions" *ngIf="interventions.length === 0">
+    <div class="affaires--noAffaires" *ngIf="affaires.length === 0">
       Pas d'appels de secours en cours
     </div>
   </ul>

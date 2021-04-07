@@ -4,19 +4,19 @@
     Mise à jour il y a 2 minutes
   </div>
 </div>
-<div class="interventions">
+<div class="affaires">
   <ul class="list">
-    <li class="list--element" *ngFor="let intervention of interventions">
-      <a class="list--wrapper" routerLink="/detail-intervention/{{intervention.uuid}}">
+    <li class="list--element" *ngFor="let affaire of affaires">
+      <a class="list--wrapper" routerLink="/detail-affaire/{{affaire.uuid}}">
         <div class="secondInfos">
           <div class="secondInfos--dateTime">
-            {{intervention.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
+            {{affaire.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
           </div>
-          <div class="badge badge__inverted" *ngIf="intervention.evenement">{{intervention.evenement.title}}</div>
+          <div class="badge badge__inverted" *ngIf="affaire.evenement">{{affaire.evenement.title}}</div>
         </div>
         <div class="mainInfos -hasIcon">
           <div class="mainInfos--title">
-            {{intervention.natureDeFait}}
+            {{affaire.natureDeFait}}
           </div>
           <!-- <div class="mainInfos--icon">
             <img src="assets/natureDeFaits/Incendies.png" alt="">
@@ -25,7 +25,7 @@
       </a>
     </li>
   </ul>
-  <div class="interventions--empty" *ngIf="interventions.length === 0">
+  <div class="affaires--empty" *ngIf="affaires.length === 0">
     Pas d'appels pour le moment...
   </div>
 </div>

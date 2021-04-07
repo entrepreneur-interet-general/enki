@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './app-auth-guard.service';
 import { UserInfoGuard } from './guards/user-info.guard';
-import { ListeInterventionsComponent } from './interventions/liste-interventions/liste-interventions.component';
-import { DetailInterventionComponent } from './interventions/detail/detail-intervention.component';
+import { ListeAffairesComponent } from './affaires/liste-affaires/liste-affaires.component';
+import { DetailAffaireComponent } from './affaires/detail/detail-affaire.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard/user-dashboard.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 // import { SituationsComponent } from './situations/situations.component';
@@ -23,16 +23,16 @@ const routes: Routes = [
         component: UserDashboardComponent,
       },
       {
-        path: 'interventions',
-        component: ListeInterventionsComponent
+        path: 'affaires',
+        component: ListeAffairesComponent
       },
       {
         path: 'evenements',
         component: ListeEvenementsComponent
       },
       {
-        path: 'detail-intervention/:uuid',
-        component: DetailInterventionComponent
+        path: 'detail-affaire/:uuid',
+        component: DetailAffaireComponent
       }
     ]
   },

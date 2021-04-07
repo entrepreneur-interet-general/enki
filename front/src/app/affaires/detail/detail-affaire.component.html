@@ -3,7 +3,7 @@
   {{previousLinkLabel}}
 </li>
 
-<div class="intervention" *ngIf="fetchedIntervention">
+<div class="affaire" *ngIf="fetchedAffaire">
   <!-- <div class="info-block niveauAlerte">
     Niveau d'alerte : 
     <svg class="icon-notification -active"><use xlink:href="#icon-notification"></use></svg>
@@ -16,15 +16,15 @@
     </div> -->
     <div>
       <div class="h2-title infosPrincipales--natureDeFait">
-        {{intervention.natureDeFait}}
+        {{affaire.natureDeFait}}
       </div>
       <div class="infosPrincipales--dateTemps">
-        {{intervention.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
+        {{affaire.dateTimeSent | date:"dd/MM/yyyy à HH:mm"}}
       </div>
     </div>
   </div>
   <div class="map">
-    <app-map></app-map>
+    <app-map [affaire]="affaire"></app-map>
   </div>
   <div class="info-block localisation">
     <div class="title-with-icon localisation--title">
@@ -33,7 +33,7 @@
     </div>
     <div class="localisation--details">
       <div class="localisation--adresse">
-        <!-- {{intervention.address}} -->
+        <!-- {{affaire.address}} -->
         17 Rue Eugène Pelletan, 13500 Martigues
       </div>
       <!-- <div class="localisation--type">
@@ -60,19 +60,30 @@
     <div class="evenement--description">
       Attachez une affaire à un événement pour la lier à la main courante de l’évènement sélectionné.
     </div>
-    <form action="" class="userInfoForm" [formGroup]="evenementGroup" (ngSubmit)="attachEvenementToSignalement()">
-      <div class="evenement--select">
+    <form action="" class="userInfoForm" [formGroup]="evenementGroup" (ngSubmit)="attachEvenementToAffaire()">
+      <div class="evenement--select" *ngIf="!affaire.evenement_id">
         <div class="enkiform__group">
           <select class="enkiform__input enkiform__select" id="evenement" formControlName="evenement">
             <option value="" disabled>Sélectionner ou créer un événement</option>
+            <option [value]="CREATE_EVENT_VALUE">Créer un nouvel événement</option>
             <option *ngFor="let evenement of evenementsList" [value]="evenement.uuid">{{evenement.title}}</option>
           </select>
           <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
-          <svg class="icon-pen icon" (click)="modifySelectedEvenement()"><use xlink:href="#icon-pen"></use></svg>
         </div>
       </div>
-      <div class="evenement--button">
-        <button type="submit" class="btn -green" [attr.disabled]="evenementGroup.controls.evenement.enabled ? null : true">Attacher l'affaire</button>
+      <div class="evenement--button" *ngIf="!affaire.evenement_id">
+        <button type="submit" class="btn -green">Valider</button>
+      </div>
+      <div class="evenement--link" *ngIf="affaire.evenement_id">
+        <button type="button" class="btn btn--special" routerLink='/evenements/{{affaire.evenement_id}}'>
+          {{selectedEvenementTitle}}
+          <svg class="icon-chevron rotated icon"><use xlink:href="#icon-chevron"></use></svg>
+        </button>
+      </div>
+      <div class="evenement--button" *ngIf="affaire.evenement_id">
+        <button type="button" class="btn" (click)="detachEvenementToAffaire()">
+          Retirer de l'événement
+        </button>
       </div>
     </form>
   </div>

@@ -59,6 +59,22 @@
             margin-right: 8px;
         }
     }
+    &--special {
+        background: $white;
+        color: $darkestPrimary;
+        font-family: $primaryFont;
+        justify-content: space-between;
+        text-transform: initial;
+        padding-left: 12px;
+        border: 1px solid $grey;
+        letter-spacing: 0;
+        height: 52px;
+        border-left: 4px solid $primary;
+        font-weight: normal;
+        .icon-chevron {
+            transform: rotate(-90deg);
+        }
+    }
 }
 
 // btn group

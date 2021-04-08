@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Acti
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
-import { REGISTER } from '../constants';
+import { REGISTER } from '../constants/constants';
 
 @Injectable({
   providedIn: 'root'

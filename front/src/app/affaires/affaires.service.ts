@@ -31,18 +31,12 @@ export class AffairesService {
   affairesUrl: string;
   evenementsUrl: string;
 
-  affaires: Affaire[];
-  httpOptions: object;
-
   constructor(
     private http: HttpClient,
     private userService: UserService
     ) {
-      this.affaires = []
       this.affairesUrl = `${environment.backendUrl}/affairs`;
       this.evenementsUrl = `${environment.backendUrl}/events`;
-      this.httpOptions = {
-      };
     }
 
   getAffaires(): Affaire[] {
@@ -100,36 +94,17 @@ export class AffairesService {
   }
 
   httpGetAllAffaires(): Observable<Affaire[]> {
-    // if there's already affaires in memory, send these
-    if (this.affaires !== undefined && this.affaires.length > 0) {
-      return of(this.affaires);
-    }
     if (!this.userService.user.attributes) {
       return of([]);
     }
-    return this.http.get<any>(`${environment.backendUrl}/users/me/affairs`, this.httpOptions)
+    return this.http.get<any>(`${environment.backendUrl}/users/me/affairs`)
       .pipe(
         map(affaires => {
-          // affaires = environment.HTTPClientInMemory ? affaires : affaires.data;
           const updatedAffaires = this.mapHTTPAffaires(affaires.data);
           this._setAffaires(updatedAffaires)
           return updatedAffaires;
         }),
         tap(_ => this.log('fetched all affaires'))
-      );
-  }
-
-  httpGetAffaire(uuid: string): Observable<Affaire> {
-    return this.http.get<any>(`${this.affairesUrl}/${uuid}`, this.httpOptions)
-      .pipe(
-        map(affaire => {
-          affaire = environment.HTTPClientInMemory ? affaire : affaire.data;
-          let affairesArray: Affaire[] = [];
-          affairesArray.push(affaire);
-          affairesArray = this.mapHTTPAffaires(affairesArray);
-          return affairesArray[0];
-        }),
-        tap(_ => this.log('fetched one affaire'))
       );
   }
   /**

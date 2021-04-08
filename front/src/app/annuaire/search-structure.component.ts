@@ -5,7 +5,7 @@ import { interval, Observable, Subject } from 'rxjs';
 import { debounce, switchMap } from 'rxjs/operators';
 import { RegisterService } from '../registration/register.service';
 import { Location } from '../interfaces/Location';
-import { SEARCH_MIN_CHARS } from '../constants';
+import { SEARCH_MIN_CHARS } from '../constants/constants';
 
 @Component({
   selector: 'app-search-structure',

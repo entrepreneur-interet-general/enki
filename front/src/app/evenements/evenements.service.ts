@@ -6,7 +6,7 @@ import { map, pluck } from 'rxjs/operators';
 import { Affaire, AffairesService } from '../affaires/affaires.service';
 import { Location } from '../interfaces/Location';
 import { Participant } from '../interfaces/Participant';
-import { HTTP_DATA } from '../constants';
+import { HTTP_DATA } from '../constants/constants';
 import { Message } from './main-courante/messages.service';
 
 export enum EvenementType {

@@ -7,7 +7,7 @@ import { UserService } from '../../../user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { RegisterService } from '../../register.service';
-import { HTTP_DATA, REGISTER } from 'src/app/constants';
+import { HTTP_DATA, REGISTER } from 'src/app/constants/constants';
 import { pluck } from 'rxjs/operators';
 import { SearchEtablissementService } from 'src/app/search-etablissement/search-etablissement.service';
 

@@ -6,7 +6,7 @@ import { Evenement, EvenementsService, EvenementType } from '../evenements.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SearchLocationService } from 'src/app/search-location/search-location.service';
-import { HTTP_DATA } from 'src/app/constants';
+import { HTTP_DATA } from 'src/app/constants/constants';
 import { pluck } from 'rxjs/operators';
 import { AffairesService } from 'src/app/affaires/affaires.service';
 

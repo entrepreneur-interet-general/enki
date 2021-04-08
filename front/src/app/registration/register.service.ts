@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { Location } from '../interfaces/Location';
 import { catchError, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { HTTP_DATA } from '../constants';
+import { HTTP_DATA } from '../constants/constants';
 import { LOCATION_INIT } from '../constants/location_init';
 
 @Injectable({

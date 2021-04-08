@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { UserService } from 'src/app/user/user.service';
 import { interval, Observable, Subject } from 'rxjs';
 import { debounce, switchMap } from 'rxjs/operators';
-import { SEARCH_MIN_CHARS } from 'src/app/constants';
+import { SEARCH_MIN_CHARS } from 'src/app/constants/constants';
 import { HighlightIncludedCharsPipe } from 'src/app/highlight-included-chars.pipe';
 
 @Component({

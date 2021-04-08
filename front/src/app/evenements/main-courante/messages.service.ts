@@ -22,8 +22,8 @@ export interface Message {
   };
   created_at: string;
   uuid: string;
-  tags: [];
-  resources: [];
+  tags: any[];
+  resources: any[];
   evenement_id: string;
   type: string;
   type_label: string;
@@ -39,19 +39,12 @@ export class MessagesService {
   resourcesUrl: string;
   private readonly _messagesSource = new BehaviorSubject<Message[]>([]);
 
-  httpHeaders: object;
   constructor(
     private http: HttpClient,
     private evenementsService: EvenementsService
   ) {
     this.resourcesUrl = `${environment.backendUrl}/resources`
     this.messagesUrl = `${environment.backendUrl}/messages`
-
-    this.httpHeaders = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    }
   }
 
   getMessages(): Message[] {
@@ -116,7 +109,7 @@ export class MessagesService {
       "evenement_id": event_id,
       "resources": resources
     }
-    return this.http.post<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/messages`, message, this.httpHeaders)
+    return this.http.post<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/messages`, message)
       .pipe(
         map(message => {
           this.addMessages([message.data], event_id)

@@ -65,9 +65,12 @@ export class CreateEvenementComponent implements OnInit {
     this.httpFormSubmit(formBody).subscribe(response => {
       this.evenementsService.addOrUpdateEvenement(response)
       if (this.attachAffaireUUID) {
-        this.affairesService.attachEvenementToAffaire(response.uuid, this.attachAffaireUUID).subscribe();
+        this.affairesService.attachEvenementToAffaire(response.uuid, this.attachAffaireUUID).subscribe(() => {
+          this.router.navigate([`evenements/${response.uuid}`])
+        });
+      } else {
+        this.router.navigate([`evenements/${response.uuid}`])
       }
-      this.router.navigate([`evenements/${response.uuid}`])
     })
   }
 

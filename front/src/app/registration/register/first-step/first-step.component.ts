@@ -118,4 +118,8 @@ export class FirstStepComponent {
 
     this.router.navigate([`${REGISTER}/step1/searchlocation`], { queryParams: { groupType: this.userGroup.controls.group.value }})
   }
+
+  ngOnDestroy(): void {
+    this.etablissementService.resetSelectedEtablissement();
+  }
 }

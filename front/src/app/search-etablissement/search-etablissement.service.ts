@@ -14,4 +14,8 @@ export class SearchEtablissementService {
   setSelectedEtablissement(etablissement: Group): void {
     this.selectedEtablissement.next(etablissement)
   }
+
+  resetSelectedEtablissement(): void {
+    this.selectedEtablissement.next(GROUP_INIT);
+  }
 }

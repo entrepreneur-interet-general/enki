@@ -71,4 +71,7 @@ export class ContactAddComponent implements OnInit {
     this.router.navigate([`contactadd/searchstructure`], { queryParams: { groupType: this.contactGroup.controls.group.value }})
   }
 
+  ngOnDestroy(): void {
+    this.searchEtablissementService.resetSelectedEtablissement();
+  }
 }

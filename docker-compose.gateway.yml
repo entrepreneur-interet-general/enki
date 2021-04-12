@@ -1,20 +1,19 @@
 version: '3.4'
 
-services:
-  keycloak:
-    build: .
-    env_file:
-      - .env
-    volumes:
-      - ./realms/enki-realm-export.json:/tmp/enki-realm-export.json
-        # surcharge de config pour que le theme n'ait pas de cache et qu'on puisse bosser dessus
-      - ./standalone-ha.xml:/opt/jboss/keycloak/standalone/configuration/standalone-ha.xml
-      - ./enki-theme/:/opt/jboss/keycloak/themes/enki-theme
-    networks:
-      - default
-    ports:
-    - "8080:8080"
-
 networks:
   default:
     driver: bridge
+
+services:
+  kong:
+    build:
+      context: kong
+      dockerfile: Dockerfile
+    env_file:
+      - .envs/.local/.env.kong
+    networks:
+      - default
+    ports:
+      - "8000:8000" # Listener
+      - "8001:8001" # Admin API
+      - "8002:8002" # Admin GUI

@@ -87,5 +87,8 @@ export class CreateEvenementComponent implements OnInit {
   ngAfterViewInit(): void {
     document.querySelector('.base').scroll(0,0)
   }
+  ngOnDestroy(): void {
+    this.searchLocationService.resetSelectedLocation();
+  }
 
 }

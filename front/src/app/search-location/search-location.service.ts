@@ -12,6 +12,9 @@ export class SearchLocationService {
   constructor() { }
 
   setSelectedLocation(location: Location): void {
-    this.selectedEtablissement.next(location)
+    this.selectedEtablissement.next(location);
+  }
+  resetSelectedLocation(): void {
+    this.selectedEtablissement.next(LOCATION_INIT);
   }
 }

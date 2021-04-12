@@ -1,5 +1,11 @@
 @import "../../../../design-system/styles/variables";
-
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: $white;
+  width: 100%;
+}
 .createEvenement {
   &--form {
     padding: 0 16px;

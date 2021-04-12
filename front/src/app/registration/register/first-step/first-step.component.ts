@@ -27,7 +27,6 @@ export class FirstStepComponent {
   })
   fonctions: object;
   updateUserUrl: string;
-  httpOptions: object;
   userTypes: [];
   userPositions: object[];
   structurePreFilled: boolean;
@@ -43,12 +42,6 @@ export class FirstStepComponent {
   ) {
     this.structurePreFilled = false;
     this.userGroupPreFilled = false;
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        Authorization: `Bearer ${window.localStorage.getItem('token')}`
-      })
-    }
 
     this.etablissementService.selectedEtablissement.subscribe((etablissement) => {
       this.userGroup.get('etablissement').setValue(etablissement.label)
@@ -69,7 +62,6 @@ export class FirstStepComponent {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-
       if (params['token']) {
         this.validateInvitationToken(params['token']).subscribe(res => {
           this.userGroup.controls.group.setValue(res.group.type.toLowerCase())
@@ -77,7 +69,6 @@ export class FirstStepComponent {
           this.structurePreFilled = true;
           this.registerService.token = params['token'];
           this.etablissementService.selectedEtablissement.next(res.group)
-
         })
       }
 
@@ -110,7 +101,7 @@ export class FirstStepComponent {
 
   httpSubmitForm(bodyForm): Observable<any> {
     const submitUrl = this.registerService.token ? `${environment.backendUrl}/users?token=${this.registerService.token}` : `${environment.backendUrl}/users`
-    return this.http.post<any>(submitUrl, bodyForm, this.httpOptions)
+    return this.http.post<any>(submitUrl, bodyForm)
   }
 
   goToSearchLocation() {

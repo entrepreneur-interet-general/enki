@@ -1,34 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
-import { MapComponent } from './map/map.component';
 import { environment } from '../environments/environment';
 import { ListeAffairesComponent } from './affaires/liste-affaires/liste-affaires.component';
-import { DetailAffaireComponent } from './affaires/detail/detail-affaire.component';
 import { HeaderComponent } from './ui/header/header.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 
-import { ReactiveFormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
+import { MobilePrototypeComponent } from './mobile-prototype/mobile-prototype.component';
 
-import { SearchLocationModule } from './search-location/search-location.module'
-import { SearchEtablissementModule } from './search-etablissement/search-etablissement.module'
+import { SearchLocationModule } from './search-location/search-location.module';
+import { SearchEtablissementModule } from './search-etablissement/search-etablissement.module';
+import { AffairesModule } from './affaires/affaires.module';
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
 import { AccountModule } from './account/account.module';
 import { EvenementsModule } from './evenements/evenements.module';
 import { AnnuaireModule } from './annuaire/annuaire.module';
 import { DirectivesModule } from './directives.module';
 import { PipesModule } from './pipes.module';
-import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
-import { MobilePrototypeComponent } from './mobile-prototype/mobile-prototype.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -48,12 +47,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
   declarations: [
     AppComponent,
     HeaderComponent,
-    MapComponent,
     ListeAffairesComponent,
-    DetailAffaireComponent,
     SecondStepComponent,
     PageNotFoundComponent,
-    ListeEvenementsComponent,
     MobilePrototypeComponent,
   ],
   imports: [
@@ -71,6 +67,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     UiModule,
     UserDashboardModule,
+    AffairesModule,
     SearchLocationModule,
     SearchEtablissementModule,
     AccountModule,

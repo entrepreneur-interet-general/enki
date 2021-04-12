@@ -26,14 +26,6 @@ const routes: Routes = [
         path: 'affaires',
         component: ListeAffairesComponent
       },
-      {
-        path: 'evenements',
-        component: ListeEvenementsComponent
-      },
-      {
-        path: 'detail-affaire/:uuid',
-        component: DetailAffaireComponent
-      }
     ]
   },
   { path: '**', component: PageNotFoundComponent }

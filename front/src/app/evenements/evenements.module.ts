@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { AuthGuard } from '../app-auth-guard.service';
 import { CreateEvenementComponent } from './create-evenement/create-evenement.component';
 import { DetailEvenementComponent } from './detail-evenement/detail-evenement.component';
 import { SummaryEvenementComponent } from './summary-evenement/summary-evenement.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MainCouranteComponent } from './main-courante/main-courante.component';
 import { AddMessageComponent } from './main-courante/add-message/add-message.component';
 import { AddLabelComponent } from './main-courante/add-label/add-label.component';
 
 import { FilterLabelsPipe } from './main-courante/add-label/filter-labels.pipe';
-import { HighlightIncludedCharsPipe } from '../highlight-included-chars.pipe';
 import { FilterMessagesPipe } from './main-courante/filter-messages.pipe';
 
 import { DetailMessageComponent } from './main-courante/detail-message/detail-message.component';
@@ -27,6 +27,7 @@ import { SearchLocationComponent } from '../search-location/search-location.comp
 import { DirectivesModule } from '../directives.module';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { PipesModule } from '../pipes.module';
+import { ListeEvenementsComponent } from './liste-evenements/liste-evenements.component';
 
 
 const routes : Routes = [
@@ -38,6 +39,10 @@ const routes : Routes = [
         path: '',
         redirectTo: '/dashboard',
         pathMatch: 'full'
+      },
+      {
+        path: 'evenements',
+        component: ListeEvenementsComponent
       },
       {
         path: 'evenements/create',
@@ -119,6 +124,7 @@ const routes : Routes = [
 
 @NgModule({
   declarations: [
+    ListeEvenementsComponent,
     CreateEvenementComponent,
     DetailEvenementComponent,
     MainCouranteComponent,

@@ -46,7 +46,7 @@
     </div> -->
     <h2 class="affaires--title title-with-icon">
       <svg class="icon-post-it icon"><use xlink:href="#icon-post-it"></use></svg>
-      Derniers appels de secours
+      Dernières affaires
     </h2>
     <li class="affaire list--element" *ngFor="let affaire of affaires | slice:0:3">
       <a class="affaire--wrapper list--wrapper" routerLink="/detail-affaire/{{affaire.uuid}}">
@@ -71,11 +71,11 @@
     <div class="affaires--seeMore" *ngIf="affaires.length > 0">
       <a routerLink="/affaires">
         <svg class="icon-add title-icon"><use xlink:href="#icon-add"></use></svg>
-        <span>Voir plus d'appels de secours</span>
+        <span>Voir plus d'affaires</span>
       </a>
     </div>
     <div class="affaires--noAffaires" *ngIf="affaires.length === 0">
-      Pas d'appels de secours en cours
+      Pas d'affaire en cours
     </div>
   </ul>
   <div class="vigicrue dashboard--widget">

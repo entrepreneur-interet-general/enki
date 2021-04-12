@@ -1,0 +1,17 @@
+version: '3.4'
+
+networks:
+  default:
+    driver: bridge
+
+services:
+  kong:
+    build:
+      context: kong
+      dockerfile: Dockerfile
+    networks:
+      - default
+    ports:
+      - "8000:8000" # Listener
+      - "8001:8001" # Admin API
+      - "8002:8002" # Admin GUI

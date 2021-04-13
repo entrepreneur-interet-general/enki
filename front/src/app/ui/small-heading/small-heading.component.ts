@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
       <div class="small-heading--title">
         {{title}}
       </div>
-      <div class="small-heading--close" (click)="goBack()">
+      <div class="small-heading--close" routerLink="..">
         Fermer
         <svg class="icon-close title-icon"><use xlink:href="#icon-close"></use></svg>
       </div>

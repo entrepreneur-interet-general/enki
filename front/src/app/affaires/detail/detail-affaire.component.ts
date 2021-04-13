@@ -79,7 +79,7 @@ export class DetailAffaireComponent implements OnInit {
   }
   attachEvenementToAffaire(): void {
     if (this.evenementGroup.controls.evenement.value === this.CREATE_EVENT_VALUE) {
-      this.router.navigate(['evenements/create'], { queryParams: { affaireUUID: this.uuid }});
+      this.router.navigate(['./create-evenement'], { queryParams: { affaireUUID: this.uuid }, relativeTo: this.route});
       return;
     }
     this.submitAttachEvenementToAffaire().subscribe(() => {

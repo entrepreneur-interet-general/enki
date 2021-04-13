@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, timer } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { User } from 'src/app/interfaces/User';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';

@@ -23,6 +23,8 @@ export class ListeMainCouranteComponent implements OnInit {
   user: User;
   currentEventFilter: Filter;
   exportType = new FormControl('csv');
+  messages$: Observable<Message[]>;
+  subscription: any;
 
   @ViewChild(ModalComponent) modal: ModalComponent;
 
@@ -34,21 +36,29 @@ export class ListeMainCouranteComponent implements OnInit {
     public mobilePrototype: MobilePrototypeService,
     private route: ActivatedRoute,
     ) {
-    this.messages = []
-    this.uuid = this.evenementsService.selectedEvenementUUID.getValue()
+      this.messages = []
+      this.uuid = this.evenementsService.selectedEvenementUUID.getValue()
     const event = this.evenementsService.getEvenementByID(this.uuid)
     this.currentEventFilter = event.filter
     this.user = this.userService.user
   }
 
   ngOnInit(): void {
-    this.messagesService.getMessagesByEvenementID(this.uuid).subscribe(messages => {
+
+    const timer$ = timer(0, 3000);
+    this.messages$ = timer$.pipe(
+      switchMap(() => this.messagesService.getMessagesByEvenementID(this.uuid))
+    )
+    this.subscription = this.messages$.subscribe((messages) => {
+      this.evenementsService.setMessages(this.uuid, this.messages);
+      this.fetchedMessages = true;
       this.messages = messages.sort((a, b) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       });
-      this.evenementsService.setMessages(this.uuid, this.messages);
-      this.fetchedMessages = true;
     })
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
   openModal(): void {
     this.modal.open()

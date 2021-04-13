@@ -16,6 +16,12 @@ services:
       - default
     ports:
     - "8080:8080"
+  keycloak-db:
+    image: postgres
+    env_file:
+      - .envs/.local/.env.auth
+    networks:
+      - default
 
 networks:
   default:

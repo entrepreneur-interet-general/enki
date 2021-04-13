@@ -2,7 +2,9 @@ version: '3.4'
 
 services:
   keycloak:
-    build: .
+    build:
+      context: authentication
+      dockerfile: Dockerfile
     env_file:
       - .envs/.local/.env.auth
     volumes:

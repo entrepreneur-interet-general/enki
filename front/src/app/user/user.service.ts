@@ -22,6 +22,7 @@ export class UserService {
         fonction: ''
       },
       location: '',
+      location_id: '',
       contacts: [],
       uuid: ''
     };

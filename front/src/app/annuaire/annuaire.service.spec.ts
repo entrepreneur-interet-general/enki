@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { AnnuaireService, Contact } from './annuaire.service';
+import { AnnuaireService } from './annuaire.service';
+import { Contact } from '../interfaces/Contact';
 import { CONTACTS, ANNUAIRE } from '../mocks/contacts-mocks';
 import { HttpClientTestingModule,  HttpTestingController } from '@angular/common/http/testing';
 

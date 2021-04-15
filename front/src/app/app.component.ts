@@ -5,7 +5,7 @@ import { UserService } from './user/user.service';
 import { Title } from '@angular/platform-browser';
 import { MobilePrototypeService } from './mobile-prototype/mobile-prototype.service';
 import { BehaviorSubject } from 'rxjs';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HistoryUrlService } from './history-url.service';
 
@@ -33,10 +33,11 @@ export class AppComponent {
     private router: Router,
     private historyUrl: HistoryUrlService,
     ) {
-      this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe((event: NavigationStart) => {
-        this.historyUrl.setPreviousUrl(this.currentUrl)
-        // this.previousUrl = this.currentUrl
-        this.currentUrl = event.url
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationStart)
+        ).subscribe((event: NavigationStart) => {
+            this.historyUrl.setPreviousUrl(this.currentUrl)
+            this.currentUrl = event.url
       })
       this.titleService.setTitle('Gestion de crise | ENKI')
       this.environment = environment;

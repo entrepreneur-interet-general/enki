@@ -6,7 +6,7 @@ import { PREVIOUS_PROPERTIES_MAP } from './previous-properties-map';
   providedIn: 'root'
 })
 export class HistoryUrlService {
-  private _previousUrl = new BehaviorSubject<string>('');
+  private _previousUrl = new BehaviorSubject<string>(null);
   constructor() {}
   getPreviousLabel(): string {
     const previousUrl = this.getPreviousUrl();

@@ -5,7 +5,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class MobilePrototypeService {
-  checked = new BehaviorSubject<boolean>(false);
+  checked = new BehaviorSubject<boolean>(true);
   constructor() {}
 
   setChecked(isChecked: boolean): void {

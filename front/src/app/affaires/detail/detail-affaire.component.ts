@@ -7,7 +7,7 @@ import { Evenement, EvenementsService } from 'src/app/evenements/evenements.serv
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { filter, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { HistoryUrlService } from '../../history-url.service';
 
 @Component({
@@ -22,7 +22,6 @@ export class DetailAffaireComponent implements OnInit {
   evenementsList: Evenement[];
   evenementsUrl: string;
   previousLinkLabel: string;
-  comingFromUrl: string;
   readonly CREATE_EVENT_VALUE: string;
   evenementGroup = new FormGroup({
     evenement: new FormControl({value:'', disabled: false})
@@ -34,9 +33,9 @@ export class DetailAffaireComponent implements OnInit {
     private historyUrl: HistoryUrlService,
     private evenementsService: EvenementsService,
     private http: HttpClient,
+    private _location: Location,
     private router: Router
     ) {
-      this.comingFromUrl = this.historyUrl.getPreviousUrl().includes('/evenements') ? this.historyUrl.getPreviousUrl() : '/affaires'
       this.CREATE_EVENT_VALUE = 'create';
       this.previousLinkLabel = this.historyUrl.getPreviousLabel()
 
@@ -108,6 +107,6 @@ export class DetailAffaireComponent implements OnInit {
       )
   }
   goBack(): void {
-    this.router.navigate([this.comingFromUrl])
+    this._location.back()
   }
 }

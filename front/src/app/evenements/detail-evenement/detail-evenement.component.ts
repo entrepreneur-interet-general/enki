@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HistoryUrlService } from 'src/app/history-url.service';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { Evenement } from '../evenements.service';
 
@@ -12,15 +11,11 @@ import { Evenement } from '../evenements.service';
 export class DetailEvenementComponent implements OnInit {
   uuid: string;
   evenement: Evenement;
-  comingFromUrl: string;
-
   constructor(
     private route: ActivatedRoute,
     public mobilePrototype: MobilePrototypeService,
     private router: Router,
-    private historyUrl: HistoryUrlService,
     ) {
-      this.comingFromUrl = this.historyUrl.getPreviousUrl().includes('/affaires') ? this.historyUrl.getPreviousUrl() : '/evenements'
   }
 
   ngOnInit(): void {

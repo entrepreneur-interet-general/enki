@@ -40,7 +40,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       initOptions: {
         onLoad: 'login-required'
       },
-      bearerExcludedUrls: ['api.enki-crise.fr:9000', 'minio:9000', 'https://yesno.wtf/'],
+      bearerExcludedUrls: ['minio:9000'],
     });
 }
 @NgModule({

@@ -151,3 +151,6 @@ class MessageEntity(Entity):
 
     def set_creator(self, user: UserEntity):
         self.creator = user
+
+    def is_authorized_to_modify(self, user_uuid) -> bool:
+        return self.creator_id == user_uuid

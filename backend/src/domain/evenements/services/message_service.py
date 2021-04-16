@@ -15,7 +15,12 @@ from domain.evenements.schemas.resource_schema import ResourceSchema
 from domain.users.entities.user import UserEntity
 from entrypoints.extensions import event_bus
 from service_layer.unit_of_work import AbstractUnitOfWork
+from werkzeug.exceptions import HTTPException
 
+
+class NotAuthorizedOnThisMessage(HTTPException):
+    code = 401
+    description = "Action interdite sur ce message"
 
 class MessageService:
     schema = MessageSchema
@@ -58,38 +63,51 @@ class MessageService:
                 message.add_resource(resource=resource)
 
     @staticmethod
-    def add_tag_to_message(message_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:
+    def add_tag_to_message(message_uuid: str, tag_uuid: str, user_uuid:str,  uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
-            results = message.get_tag_by_id(uuid=tag_uuid)
-            if results:
-                raise AlreadyExistingTagInThisMessage()
-            tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
-            message.add_tag(tag=tag)
+            if message.is_authorized_to_modify(user_uuid):
+                results = message.get_tag_by_id( uuid=tag_uuid)
+                if results:
+                    raise AlreadyExistingTagInThisMessage()
+                tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
+                message.add_tag(tag=tag)
+            else:
+                raise NotAuthorizedOnThisMessage()
+
 
     @staticmethod
-    def remove_tag_to_message(message_uuid, tag_uuid, uow: AbstractUnitOfWork) -> None:
+    def remove_tag_to_message(message_uuid: str, tag_uuid: str, user_uuid:str, uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
-            tag: TagEntity = message.get_tag_by_id(uuid=tag_uuid)
-            message.remove_tag(tag=tag)
+            if message.is_authorized_to_modify(user_uuid):
+                tag: TagEntity = message.get_tag_by_id(uuid=tag_uuid)
+                message.remove_tag(tag=tag)
+            else:
+                raise NotAuthorizedOnThisMessage()
 
     @staticmethod
-    def add_resource_to_message(message_uuid, resource_uuid, uow: AbstractUnitOfWork) -> None:
+    def add_resource_to_message(message_uuid:str, resource_uuid:str,  user_id:str, uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
-            results = message.get_resource_by_id(uuid=resource_uuid)
-            if results:
-                raise AlreadyExistingResourceInThisMessage()
-            resource: ResourceEntity = uow.resource.get_by_uuid(uuid=resource_uuid)
-            message.add_resource(resource=resource)
+            if message.is_authorized_to_modify(user_id):
+                results = message.get_resource_by_id(uuid=resource_uuid)
+                if results:
+                    raise AlreadyExistingResourceInThisMessage()
+                resource: ResourceEntity = uow.resource.get_by_uuid(uuid=resource_uuid)
+                message.add_resource(resource=resource)
+            else:
+                raise NotAuthorizedOnThisMessage()
 
     @staticmethod
-    def remove_resource_to_message(message_uuid, resource_uuid, uow: AbstractUnitOfWork) -> None:
+    def remove_resource_to_message(message_uuid:str, resource_uuid:str,user_id:str,  uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
-            resource: ResourceEntity = message.get_resource_by_id(uuid=resource_uuid)
-            message.remove_resource(resource=resource)
+            if message.is_authorized_to_modify(user_id):
+                resource: ResourceEntity = message.get_resource_by_id(uuid=resource_uuid)
+                message.remove_resource(resource=resource)
+            else:
+                raise NotAuthorizedOnThisMessage()
 
     @staticmethod
     def list_tags(uuid: str, uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:

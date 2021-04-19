@@ -69,7 +69,7 @@ export class FilterMessagesComponent implements OnInit {
 
   onSubmit(): void {
     this.evenementsService.updateEvenementFilter(this.evenementUUID, this.filterGroup.getRawValue()).subscribe(() => {
-      this.router.navigate(['../liste'], { relativeTo: this.route})
+      this.router.navigate(['..'], { relativeTo: this.route})
     })
   }
 

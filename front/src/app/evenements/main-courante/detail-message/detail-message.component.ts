@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { Message, MessagesService } from '../messages.service';
 import { MESSAGE_INIT } from '../../../constants/message_init';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-detail-message',
@@ -17,18 +18,23 @@ export class DetailMessageComponent implements OnInit {
   constructor(
     private messagesService: MessagesService,
     private route: ActivatedRoute,
-    public mobilePrototype: MobilePrototypeService
+    public mobilePrototype: MobilePrototypeService,
+    private _location: Location,
   ) {
     this.message = MESSAGE_INIT;
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.messageUUID = params['uuid']
+      this.messageUUID = params['uuid'];
       this.messagesService.getMessageByID(this.messageUUID).subscribe(message => {
-        this.message = message
+        this.message = message;
       })
     })
+  }
+
+  goBack(): void {
+    this._location.back();
   }
 
 }

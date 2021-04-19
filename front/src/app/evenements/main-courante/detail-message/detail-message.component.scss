@@ -1,6 +1,13 @@
 @import "../../../../../design-system/styles/variables";
 @import "../../../../../design-system/styles/mixins";
 
+:host {
+  position: absolute;
+  top: 0;
+  background: white;
+  width: 100%;
+  padding-top: 16px;
+}
 .detail-message {
   &--header {
     margin: 0 0 24px 0;

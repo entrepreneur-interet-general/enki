@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Affaire, AffairesService } from '../affaires.service'
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,8 +42,6 @@ export class DetailAffaireComponent implements OnInit {
       this.evenementsList = [];
       this.evenementsUrl = `${environment.backendUrl}/events`;
     }
-
-  
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {

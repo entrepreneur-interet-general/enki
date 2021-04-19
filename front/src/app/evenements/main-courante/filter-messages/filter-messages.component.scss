@@ -3,6 +3,13 @@
 .filter-messages {
   padding: 0 16px;
 }
+:host {
+  position: absolute;
+  top: 0;
+  background: white;
+  width: 100%;
+  padding-top: 16px;
+}
 .removeFilters {
   color: $red;
   text-align: center;

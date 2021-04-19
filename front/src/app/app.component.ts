@@ -35,7 +35,6 @@ export class AppComponent {
     ) {
       this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe((event: NavigationStart) => {
         this.historyUrl.setPreviousUrl(this.currentUrl)
-        // this.previousUrl = this.currentUrl
         this.currentUrl = event.url
       })
       this.titleService.setTitle('Gestion de crise | ENKI')

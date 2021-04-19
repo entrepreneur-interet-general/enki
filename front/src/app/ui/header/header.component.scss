@@ -51,7 +51,7 @@
   background: $white;
   transform: translate(0, 0);
   width: calc(100% - 50px);
-  height: 100%;
+  height: calc(100% - 56px);
   transition: .3s ease all;
   z-index: 8000;
   box-sizing: border-box;

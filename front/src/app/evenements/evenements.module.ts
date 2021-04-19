@@ -78,20 +78,15 @@ const routes : Routes = [
             children: [
               {
                 path: '',
-                redirectTo: 'liste',
-                pathMatch: 'full'
+                component: ListeMainCouranteComponent
               },
               {
-                path: 'liste',
-                component: ListeMainCouranteComponent
+                path: 'message/:uuid',
+                component: DetailMessageComponent
               },
               {
                 path: 'filters',
                 component: FilterMessagesComponent
-              },
-              {
-                path: 'detailmessage/:uuid',
-                component: DetailMessageComponent
               },
               {
                 path: 'addmessage',
@@ -103,7 +98,7 @@ const routes : Routes = [
                     component: AddLabelComponent
                   }
                 ]
-              }
+              },
             ]
           },
           {

@@ -21,6 +21,7 @@ export class AppComponent {
   token;
   environment;
   user;
+  onBoardingEnabled: boolean;
   showOnboarding = new BehaviorSubject<boolean>(true);
   previousUrl: string;
   currentUrl: string;
@@ -43,7 +44,12 @@ export class AppComponent {
         this.token = res;
         window.localStorage.setItem('token', res);
       })
-      this.showOnboarding.next(window.localStorage.getItem('showOnboarding') === 'true' || window.localStorage.getItem('showOnboarding') === null ? true : false)
+      this.onBoardingEnabled = true;
+      if (this.onBoardingEnabled) {
+        this.showOnboarding.next(window.localStorage.getItem('showOnboarding') === 'true' || window.localStorage.getItem('showOnboarding') === null ? true : false);
+      } else {
+        this.showOnboarding.next(false);
+      }
       this.fetchedAffaire = false;
 
   }

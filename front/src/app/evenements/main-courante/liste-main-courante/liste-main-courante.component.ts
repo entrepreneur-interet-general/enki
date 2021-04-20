@@ -88,6 +88,12 @@ export class ListeMainCouranteComponent implements OnInit {
     });
   }
 
+  listIsFiltered(): boolean {
+    return Object.keys(this.currentEventFilter).some(element => {
+      return this.currentEventFilter[element] !== "";
+    })
+  }
+
   clickOnMessage(message: Message): void {
     // routerLink="../detailmessage/{{message.uuid}}"
     if (message.type === 'meeting') {

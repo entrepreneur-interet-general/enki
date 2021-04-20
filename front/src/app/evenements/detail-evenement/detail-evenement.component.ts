@@ -31,10 +31,6 @@ export class DetailEvenementComponent implements OnInit {
     });
   }
   goBack(): void {
-    console.log(this.activatedRoute)
-    if (this.activatedRoute.snapshot.url) {
-
-    }
     this.router.navigate(['evenements'])
   }
 

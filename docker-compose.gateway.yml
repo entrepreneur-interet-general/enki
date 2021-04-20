@@ -8,6 +8,12 @@ volumes:
   certs:
   acme:
 
+
+networks:
+  default:
+    driver: bridge
+
+
 services:
   nginx-proxy:
     image: nginxproxy/nginx-proxy
@@ -22,7 +28,8 @@ services:
       - dhparam:/etc/nginx/dhparam
       - certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    network_mode: bridge
+    networks:
+      - default
 
   acme-companion:
     image: nginxproxy/acme-companion
@@ -33,14 +40,15 @@ services:
       - certs:/etc/nginx/certs:rw
       - acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    network_mode: bridge
-
+   networks:
+      - default
   kong:
     build:
       context: kong
       dockerfile: Dockerfile
     env_file:
       - .envs/.local/.env.kong
-    network_mode: bridge
+    networks:
+      - default
     ports:
       - "8000:8000" # Listener

@@ -24,7 +24,7 @@ export class ListeMainCouranteComponent implements OnInit {
   fetchedMessages: boolean;
   user: User;
   currentEventFilter: Filter;
-  exportType = new FormControl('csv');
+  exportType = new FormControl('xlsx');
   messages$: Observable<Message[]>;
   subscription: any;
 
@@ -72,11 +72,11 @@ export class ListeMainCouranteComponent implements OnInit {
     
       // Set the HREF to a Blob representation of the data to be downloaded
       a.href = window.URL.createObjectURL(
-        new Blob([data], { type: 'text/csv;charset=utf-8;' })
+        new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8;' })
       );
     
       // Use download attribute to set set desired file name
-      a.setAttribute("download", `${this.evenementsService.selectedEvenementUUID.getValue()}-${(new Date()).toISOString()}.csv`);
+      a.setAttribute("download", `${this.evenementsService.selectedEvenementUUID.getValue()}-${(new Date()).toISOString()}.xlsx`);
     
       // Trigger the download by simulating click
       a.click();

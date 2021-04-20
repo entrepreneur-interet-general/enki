@@ -251,7 +251,7 @@ export class EvenementsService {
 
   getMainCouranteData(): Observable<any> {
     return this.http.get<any>(
-        `${environment.backendUrl}/events/${this.selectedEvenementUUID.getValue()}/export?format=csv`,
+        `${environment.backendUrl}/events/${this.selectedEvenementUUID.getValue()}/export?format=xlsx`,
         { responseType: "arraybuffer" as "json" }
       ).pipe(
       map((file: ArrayBuffer) => {

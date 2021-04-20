@@ -44,7 +44,7 @@ export class AppComponent {
         this.token = res;
         window.localStorage.setItem('token', res);
       })
-      this.onBoardingEnabled = true;
+      this.onBoardingEnabled = false;
       if (this.onBoardingEnabled) {
         this.showOnboarding.next(window.localStorage.getItem('showOnboarding') === 'true' || window.localStorage.getItem('showOnboarding') === null ? true : false);
       } else {

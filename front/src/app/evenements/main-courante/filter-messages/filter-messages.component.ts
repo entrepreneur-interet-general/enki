@@ -74,7 +74,15 @@ export class FilterMessagesComponent implements OnInit {
   }
 
   resetFilters(): void {
-    this.filterGroup.reset();
+    this.evenementsService.updateEvenementFilter(this.evenementUUID, {
+      etablissement: '',
+      auteur: '',
+      type: '',
+      fromDatetime: '',
+      toDatetime: '',
+    }).subscribe(() => {
+      this.router.navigate(['..'], { relativeTo: this.route})
+    })
   }
 
 }

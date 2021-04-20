@@ -13,6 +13,19 @@
       margin-left: 240px;
     }
   }
+  .filter-pastille {
+    display: none;
+    background: $red;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    position: absolute;
+    right: 14px;
+    top: 14px;
+    &.-active {
+      display: block;
+    }
+  }
   // margin-bottom: 104px;
   &--content {
     height: 410px;

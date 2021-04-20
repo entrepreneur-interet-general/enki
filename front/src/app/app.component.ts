@@ -21,7 +21,7 @@ export class AppComponent {
   token;
   environment;
   user;
-  showOnboarding = new BehaviorSubject<boolean>(true);
+  showOnboarding = new BehaviorSubject<boolean>(false);
   previousUrl: string;
   currentUrl: string;
 

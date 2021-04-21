@@ -53,3 +53,14 @@ services:
     ports:
       - "8000:8000" # Listener
       - "8001:8001" # ADMIN
+
+  keycloak-nginx:
+    build:
+      context: proxy
+      dockerfile: Dockerfile
+    ports:
+      - "8765:8765"
+    volumes:
+      - ./proxy/data/nginx_gateway_auth/:/etc/nginx/conf.d
+    networks:
+      - default

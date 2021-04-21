@@ -5,7 +5,9 @@ import { MessagesService } from '../messages.service';
 import { LabelsService } from '../labels.service';
 import { EvenementsService } from '../../evenements.service';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+
+const TITLE_MAX_LENGTH = 250;
 
 interface Media {
   uuid: string;
@@ -18,13 +20,18 @@ interface Media {
 })
 export class AddMessageComponent implements OnInit {
   messageGroup = new FormGroup({
-    title: new FormControl('', Validators.required),
+    title: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(TITLE_MAX_LENGTH),
+    ]),
     content: new FormControl(''),
-    files: new FormControl('', Validators.required)
+    files: new FormControl('')
   })
   evenementUUID: string;
   listOfMedias: Array<Media>;
   formSubmitted: boolean;
+  charactersTitleLimit: number;
+  textareaLength: number;
   public confirmButton = new Subject<boolean>();
   public confirmBtn$ = this.confirmButton.asObservable();
   @ViewChild('confirmation') modal: ModalComponent;
@@ -38,8 +45,14 @@ export class AddMessageComponent implements OnInit {
   ) {
     this.listOfMedias = [];
     this.formSubmitted = false;
+    this.charactersTitleLimit = TITLE_MAX_LENGTH;
+    this.textareaLength = 0;
+    this.messageGroup.controls.title.valueChanges.subscribe((value: string) => {
+      this.textareaLength = value.length;
+    })
   }
-  
+
+  get title() { return this.messageGroup.get('title'); }
 
   onSubmit(): void {
     let selectedLabelsUUID = this.labelsService.selectedLabels.map(label => label.uuid)

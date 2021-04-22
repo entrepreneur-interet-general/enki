@@ -26,8 +26,7 @@ const ROLES = {
 export class ShareEvenementComponent implements OnInit {
 
   participants = new BehaviorSubject<Participant[]>([]);
-  @ViewChild(ModalComponent)
-  modal: ModalComponent;
+  @ViewChild(ModalComponent) modal: ModalComponent;
   roleGroup = new FormGroup({
     role: new FormControl('view', Validators.required)
   })

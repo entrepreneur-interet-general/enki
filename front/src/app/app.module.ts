@@ -17,6 +17,7 @@ import { SecondStepComponent } from './registration/second-step/second-step.comp
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MobilePrototypeComponent } from './mobile-prototype/mobile-prototype.component';
+import { ToastContainerComponent } from './toast/toast-container.component';
 
 import { SearchLocationModule } from './search-location/search-location.module';
 import { SearchEtablissementModule } from './search-etablissement/search-etablissement.module';
@@ -53,6 +54,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     SecondStepComponent,
     PageNotFoundComponent,
     MobilePrototypeComponent,
+    ToastContainerComponent,
   ],
   imports: [
     BrowserModule,

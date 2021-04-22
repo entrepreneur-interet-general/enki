@@ -4,7 +4,6 @@ import { SvgDefinitionsComponent } from './svg-definitions/svg-definitions.compo
 import { SmallHeadingComponent } from './small-heading/small-heading.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
-import { ToastComponent } from './toast/toast.component';
 
 
 
@@ -13,12 +12,10 @@ import { ToastComponent } from './toast/toast.component';
     SvgDefinitionsComponent,
     SmallHeadingComponent,
     ModalComponent,
-    ToastComponent
   ],
   exports: [
     SvgDefinitionsComponent,
     SmallHeadingComponent,
-    ToastComponent,
     ModalComponent
   ],
   imports: [

@@ -21,7 +21,7 @@ const ROLES = {
 @Component({
   selector: 'app-share-evenement',
   templateUrl: './share-evenement.component.html',
-  styleUrls: ['./share-evenement.component.scss'],
+  styleUrls: ['./share-evenement.component.scss','../detail-evenement/detail-evenement.component.scss'],
 })
 export class ShareEvenementComponent implements OnInit {
 

@@ -31,8 +31,10 @@
     </div>
   </div>
 </div>
-<div class="action action--video" (click)="createMeeting()">
-  <svg class="icon-video icon"><use xlink:href="#icon-video"></use></svg>
+<div class="actions">
+  <div class="action actions--element action--video" (click)="createMeeting()">
+    <svg class="icon-video icon"><use xlink:href="#icon-video"></use></svg>
+  </div>
 </div>
 <app-modal (closed)="removeSelectedParticipant($event)">
   <!-- {{selectedParticipant | json}} -->

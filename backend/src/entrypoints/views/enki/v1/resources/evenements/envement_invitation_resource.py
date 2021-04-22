@@ -85,7 +85,10 @@ class EvenementInviteUserResource(WithEvenementRepoResource):
     method_decorators = [user_info_middleware]
 
     def put(self, uuid: str, user_uuid: str):
-        AuthorizationService.as_access_to_this_evenement_resource(g.user_info["id"], evenement_id=uuid, role_type=EvenementRoleType.ADMIN)
+        AuthorizationService.as_access_to_this_evenement_resource(g.user_info["id"],
+                                                                  evenement_id=uuid,
+                                                                  role_type=EvenementRoleType.ADMIN,
+                                                                  uow=current_app.context)
         parser = reqparse.RequestParser()
         parser.add_argument('role_type', type=str, required=False,     choices=([e.value for e in EvenementRoleType]))
 

@@ -9,10 +9,12 @@
   cursor: pointer;
 }
 .header {
-  position: sticky;
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
   top: 0;
   background: $white;
-  z-index: 5000;
+  z-index: 8000;
   text-align: left;
   height: 56px;
   border-bottom: 1px solid $grey;

@@ -16,7 +16,6 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ListeEvenementsComponent } from './evenements/liste-evenements/liste-evenements.component';
 import { MobilePrototypeComponent } from './mobile-prototype/mobile-prototype.component';
 
 import { SearchLocationModule } from './search-location/search-location.module';
@@ -30,7 +29,8 @@ import { DirectivesModule } from './directives.module';
 import { PipesModule } from './pipes.module';
 
 function initializeKeycloak(keycloak: KeycloakService) {
-  return () =>
+  return () => {
+    return environment.auth ? (
     keycloak.init({
       config: {
         "realm": "enki",
@@ -41,7 +41,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
         onLoad: 'login-required'
       },
       bearerExcludedUrls: ['minio:9000'],
-    });
+    })
+    ) : true;
+  }
 }
 @NgModule({
   declarations: [

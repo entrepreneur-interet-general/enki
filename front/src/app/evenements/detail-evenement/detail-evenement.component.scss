@@ -6,14 +6,11 @@
     padding: 16px;
   }
 }
-.evenement-container {
-  margin-bottom: 58px;
+.actions {
+  bottom: 82px;
 }
-.signalements {
-  margin-bottom: 20px;
-  .icon {
-    fill: $primary;
-  }
+.evenement-container {
+  padding-bottom: 58px;
 }
 .tabbar {
   display: flex;

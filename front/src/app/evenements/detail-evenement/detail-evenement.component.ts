@@ -18,10 +18,7 @@ export class DetailEvenementComponent implements OnInit {
     private route: ActivatedRoute,
     public mobilePrototype: MobilePrototypeService,
     private router: Router,
-    private historyUrl: HistoryUrlService,
-    private activatedRoute: ActivatedRoute,
     ) {
-      console.log(this.historyUrl.getPreviousUrl())
   }
 
   ngOnInit(): void {

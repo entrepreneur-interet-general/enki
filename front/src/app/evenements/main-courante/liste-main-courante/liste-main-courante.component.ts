@@ -15,7 +15,7 @@ import { Message, MessagesService } from '../messages.service';
 @Component({
   selector: 'app-liste-main-courante',
   templateUrl: './liste-main-courante.component.html',
-  styleUrls: ['./liste-main-courante.component.scss']
+  styleUrls: ['./liste-main-courante.component.scss','../../detail-evenement/detail-evenement.component.scss']
 })
 export class ListeMainCouranteComponent implements OnInit {
 

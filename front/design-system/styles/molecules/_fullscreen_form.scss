@@ -6,7 +6,8 @@
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 6000;
+  // same as modal
+  z-index: 9000;
   .prototype & {
     left: 50%;
     transform: translate(-50%, 0);

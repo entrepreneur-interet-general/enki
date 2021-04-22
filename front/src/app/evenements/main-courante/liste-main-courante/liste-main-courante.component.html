@@ -76,11 +76,13 @@
       Télécharger
     </button>
   </app-modal>
-  <div class="action action--filter" routerLink="../filters" *ngIf="messages.length > 0">
-    <div class="filter-pastille" [class.-active]="listIsFiltered()"></div>
-    <svg class="icon-filter icon"><use xlink:href="#icon-filter"></use></svg>
-  </div>
-  <div class="action action--add" routerLink="../addmessage" *ngIf="messages.length > 0">
-    <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
+  <div class="actions">
+    <div class="action actions--element" routerLink="../filters" *ngIf="messages.length > 0">
+      <div class="filter-pastille" [class.-active]="listIsFiltered()"></div>
+      <svg class="icon-filter icon"><use xlink:href="#icon-filter"></use></svg>
+    </div>
+    <div class="action actions--element" routerLink="../addmessage" *ngIf="messages.length > 0">
+      <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
+    </div>
   </div>
 </div>

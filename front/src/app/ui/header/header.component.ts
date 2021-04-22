@@ -30,9 +30,6 @@ export class HeaderComponent implements OnInit {
   openCloseMenu(): void {
     this.menuActive = this.menuActive ? false : true;
   }
-  canSeeEvents(): boolean {
-    return this.keycloakService.isUserInRole('watchEvents')
-  }
   logout(): void {
     this.keycloakService.logout()
   }

@@ -49,6 +49,7 @@ class EnkiConfig(object):
     MINIO_ACCESS_KEY = os.environ.get("MINIO_ACCESS_KEY", "MINIOACCESSKEY")
     MINIO_SECRET_KEY = os.environ.get("MINIO_SECRET_KEY", "MINIO_SECRET_KEY")
     MINIO_REGION = os.environ.get("MINIO_REGION", "fr-par")
+    MINIO_SECURE = os.environ.get("MINIO_SECURE", "false") == "true"
 
     KEYCLOAK_BASE_URL = os.environ.get("KEYCLOAK_BASE_URL")
     KEYCLOAK_REALM = os.environ.get("KEYCLOAK_REALM")

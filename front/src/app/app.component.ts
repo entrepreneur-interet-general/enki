@@ -40,10 +40,12 @@ export class AppComponent {
       })
       this.titleService.setTitle('Gestion de crise | ENKI')
       this.environment = environment;
-      this.keycloakService.getToken().then((res) => {
-        this.token = res;
-        window.localStorage.setItem('token', res);
-      })
+      if (environment.auth) {
+        this.keycloakService.getToken().then((res) => {
+          this.token = res;
+          window.localStorage.setItem('token', res);
+        })
+      }
       this.onBoardingEnabled = false;
       if (this.onBoardingEnabled) {
         this.showOnboarding.next(window.localStorage.getItem('showOnboarding') === 'true' || window.localStorage.getItem('showOnboarding') === null ? true : false);
@@ -69,10 +71,6 @@ Un petit 🅱🅱🆃🅴🅰 ?
   hideOnboarding(): void {
     window.localStorage.setItem('showOnboarding', 'false')
     this.showOnboarding.next(false)
-  }
-
-  canSeeEvents(): boolean {
-    return this.keycloakService.isUserInRole('watchEvents');
   }
 
 }

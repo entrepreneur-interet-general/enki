@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
 import { REGISTER } from '../constants/constants';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class UserInfoGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       // send the first segment of requested route
       const firstSegmentRouterSnapshot = this.router.parseUrl(state.url).root.children[PRIMARY_OUTLET] ? this.router.parseUrl(state.url).root.children[PRIMARY_OUTLET].segments[0].path : ''
-      return this.userIsAuth(firstSegmentRouterSnapshot);
+      return environment.auth ? this.userIsAuth(firstSegmentRouterSnapshot) : true;
   }
 
   userIsAuth(firstSegmentRouterSnapshot): Observable<boolean | UrlTree> {

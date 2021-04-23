@@ -16,8 +16,7 @@ const ROLES = {
   admin: 'Administrateur',
   view: 'Lecteur',
   edit: 'Éditeur',
-  creator: 'Créateur'
-}
+};
 
 @Component({
   selector: 'app-share-evenement',
@@ -102,7 +101,7 @@ export class ShareEvenementComponent implements OnInit {
   }
 
   mapUserRoleToLabel(type: string): string {
-    return ROLES[type];
+    return type === 'creator' ? 'Créateur' : ROLES[type];
   }
 
   createMeeting(): void {

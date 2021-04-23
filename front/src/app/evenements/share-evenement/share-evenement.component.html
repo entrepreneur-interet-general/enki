@@ -26,7 +26,7 @@
       </div>
       <div class="participants--role test--changeParticipantRole" (click)="showEditParticipantRights(participant)">
         {{mapUserRoleToLabel(participant.type)}}
-        <svg class="icon-chevron icon"><use xlink:href="#icon-chevron"></use></svg>
+        <svg class="icon-chevron icon" *ngIf="participant.type!='creator'"><use xlink:href="#icon-chevron"></use></svg>
       </div>
     </div>
   </div>

@@ -35,12 +35,14 @@ class EvenementType(str, Enum):
 
 
 class EvenementRoleType(str, Enum):
+    CREATOR = "creator"
     ADMIN = "admin"
     EDIT = "edit"
     VIEW = "view"
 
 
 evenement_role_dependancies = {
+    EvenementRoleType.CREATOR: [EvenementRoleType.ADMIN, EvenementRoleType.EDIT, EvenementRoleType.VIEW],
     EvenementRoleType.ADMIN: [EvenementRoleType.EDIT, EvenementRoleType.VIEW],
     EvenementRoleType.EDIT: [EvenementRoleType.VIEW],
     EvenementRoleType.VIEW: [],

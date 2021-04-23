@@ -24,7 +24,8 @@
       <div class="participants--secondaryInfos">
         {{participant.user.last_name}} {{participant.user.first_name}}
       </div>
-      <div class="participants--role test--changeParticipantRole" (click)="showEditParticipantRights(participant)">
+      <div class="participants--role test--changeParticipantRole"
+           (click)="participant.type==='creator' ? null : showEditParticipantRights(participant)">
         {{mapUserRoleToLabel(participant.type)}}
         <svg class="icon-chevron icon" *ngIf="participant.type!='creator'"><use xlink:href="#icon-chevron"></use></svg>
       </div>

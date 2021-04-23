@@ -15,7 +15,8 @@ import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototyp
 const ROLES = {
   admin: 'Administrateur',
   view: 'Lecteur',
-  edit: 'Éditeur'
+  edit: 'Éditeur',
+  creator: 'Créateur'
 }
 
 @Component({

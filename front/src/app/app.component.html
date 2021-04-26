@@ -21,10 +21,10 @@
   </div>
   <main>
   
+    <input type="text" [formControl]="model">
+    <button (click)="addToast(model.value)">Add message</button>
     <router-outlet (activate)="onActivate()"></router-outlet>
   
   </main>
-  <div class="toast-container">
-    <app-toast-container></app-toast-container>
-  </div>
+  <app-toast-container></app-toast-container>
 </div>

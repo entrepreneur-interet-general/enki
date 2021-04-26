@@ -49,7 +49,7 @@ services:
 
   kong:
     build:
-      context: kong
+      context: gateway
       dockerfile: Dockerfile
     depends_on:
       - letsencrypt

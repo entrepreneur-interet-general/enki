@@ -24,5 +24,10 @@ run-gateway-dev:
 setup-gateway-dev:
 	docker-compose -f docker-compose.gateway.dev.yml run --rm kong kong migrations bootstrap
 
+provision-dev:
+	docker-compose -f docker-compose.provision.yml build keycloak-provision
+	docker-compose -f docker-compose.provision.yml run --rm keycloak-provision
+	docker-compose -f docker-compose.provision.yml build kong-provision
+	docker-compose -f docker-compose.provision.yml run --rm kong-provision
 run-auth-dev:
 	docker-compose -f docker-compose.auth.dev.yml up -d --force-recreate

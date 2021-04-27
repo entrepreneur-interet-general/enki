@@ -11,6 +11,7 @@ from domain.core.entity import Entity
 from domain.evenements.entities.message_entity import MessageEntity
 from domain.users.entities.group import LocationEntity
 from domain.users.entities.user import UserEntity
+from domain.evenements.entities.evenement_type import EvenementType
 
 
 class EvenementClosedException(HTTPException):
@@ -26,12 +27,6 @@ class UserAlreadyAccessEvenement(HTTPException):
 class UserHasNoAccessEvenement(HTTPException):
     code = 409
     description = "Cet utilisateur n'à pas accès à cet évenement"
-
-
-class EvenementType(str, Enum):
-    INCENDIE = "incendie"
-    INONDATION = "inondation"
-    ATTENTAT = "attentat"
 
 
 class EvenementRoleType(str, Enum):

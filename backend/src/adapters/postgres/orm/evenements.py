@@ -9,8 +9,10 @@ from sqlalchemy_utils import ChoiceType
 
 from adapters.postgres.orm.metadata import metadata
 from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
-from domain.evenements.entities.evenement_entity import EvenementType, EvenementEntity, EvenementRoleType, \
+from domain.evenements.entities.evenement_type import EvenementType
+from domain.evenements.entities.evenement_entity import EvenementEntity, EvenementRoleType, \
     UserEvenementRole
+
 from domain.users.entities.group import LocationEntity
 from domain.evenements.entities.message_entity import MessageType, Severity, MessageEntity
 from domain.evenements.entities.meeting_entity import MeetingEntity

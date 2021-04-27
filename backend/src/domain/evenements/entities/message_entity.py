@@ -10,6 +10,7 @@ from dataclasses_json import dataclass_json
 from werkzeug.exceptions import HTTPException
 
 from domain.core.entity import Entity
+from domain.evenements.entities.reaction_entity import ReactionEntity, ReactionType
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.users.entities.user import UserEntity
@@ -23,6 +24,16 @@ class NotFoundResourceInThisMessage(HTTPException):
 class TagAlreadyInThisMessage(HTTPException):
     code = 409
     description = "Tag already exists in this message"
+
+
+class ReactionAlreadyExistsOnThisMessage(HTTPException):
+    code = 409
+    description = "Reaction already exists in this message"
+
+
+class ReactionNotFoundOnThisMessage(HTTPException):
+    code = 404
+    description = "Reaction not found in this message"
 
 
 class NotFoundTagInThisMessage(HTTPException):
@@ -63,6 +74,7 @@ class MessageType(str, Enum):
     def get_label(message_type) -> str:
         return MessageType.get_mapping().get(message_type, "Message")
 
+
 @dataclass_json
 @dataclass
 class MessageEntity(Entity):
@@ -75,6 +87,7 @@ class MessageEntity(Entity):
     started_at: Union[datetime, None] = field(default_factory=lambda: None)
     tags: List[TagEntity] = field(default_factory=lambda: [])
     resources: List[ResourceEntity] = field(default_factory=lambda: [])
+    reactions: List[ReactionEntity] = field(default_factory=lambda: [])
     created_at: datetime = field(default_factory=lambda: datetime.now())
     updated_at: datetime = field(default_factory=lambda: datetime.now())
     type: MessageType = field(default_factory=lambda: MessageType.UNKNOWN)
@@ -160,3 +173,22 @@ class MessageEntity(Entity):
 
     def is_authorized_to_modify(self, user_uuid) -> bool:
         return self.creator_id == user_uuid
+
+    def get_reaction_by_id(self, creator_id: str, reaction_type: ReactionType) -> Optional[ReactionEntity]:
+        for reaction in self.reactions:
+            if reaction.creator_id == creator_id and reaction.type == reaction_type:
+                return reaction
+        raise ReactionNotFoundOnThisMessage()
+
+    def add_reaction(self, reaction: ReactionEntity) -> ReactionEntity:
+        try:
+            if self.get_reaction_by_creator_id(creator_id=reaction.creator_id, type=reaction.type):
+                raise ReactionAlreadyExistsOnThisMessage()
+        except NotFoundTagInThisMessage:
+            self.reactions.append(reaction)
+            return reaction
+
+    def remove_reaction(self, reaction: ReactionEntity) -> ReactionEntity:
+        reaction = self.get_reaction_by_creator_id(creator_id=reaction.creator_id, type=reaction.type)
+        self.reactions.remove(reaction)
+        return reaction

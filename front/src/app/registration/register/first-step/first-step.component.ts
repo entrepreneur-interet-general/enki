@@ -53,7 +53,7 @@ export class FirstStepComponent {
     
     
     this.userGroup.get('group').valueChanges.subscribe(typeName => {
-      this.registerService.selectedGroupType.next(typeName);
+      this.registerService.setGroupType(typeName);
       this.registerService.getUserPositions(typeName).subscribe(positions => {
         this.userPositions = positions
       })

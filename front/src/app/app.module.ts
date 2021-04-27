@@ -11,8 +11,6 @@ import { environment } from '../environments/environment';
 import { ListeAffairesComponent } from './affaires/liste-affaires/liste-affaires.component';
 import { HeaderComponent } from './ui/header/header.component';
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
 import { SecondStepComponent } from './registration/second-step/second-step.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -62,12 +60,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ReactiveFormsModule,
     DirectivesModule,
     PipesModule,
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    environment.HTTPClientInMemory ? HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ) : [],
     KeycloakAngularModule,
     UiModule,
     UserDashboardModule,

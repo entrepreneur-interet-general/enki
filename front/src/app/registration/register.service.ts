@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HTTP_DATA } from '../constants/constants';
@@ -10,11 +10,15 @@ import { HTTP_DATA } from '../constants/constants';
 })
 export class RegisterService {
   token: string;
+  private readonly selectedGroupType = new BehaviorSubject<string>('');
 
   constructor(
     private http: HttpClient,
   ) {
     this.token = '';
+  }
+  setGroupType(groupType: string): void {
+    this.selectedGroupType.next(groupType)
   }
 
   getUserTypes(): Observable<[]> {

@@ -39,6 +39,7 @@ messagesTable = Table(
     Column('external_id', String(60)),
     Column('executor_id', String(60), ForeignKey("users.uuid"), nullable=True),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
+    Column('parent_id', String(60), ForeignKey("messages.uuid")),
     Column('done_at', TIMESTAMP()),
     Column('started_at', TIMESTAMP()),
     Column('severity', ChoiceType(Severity, impl=Integer()), nullable=False),
@@ -158,6 +159,7 @@ def start_mappers():
         properties={
             'tags': relationship(TagEntity, backref='messages', secondary=tagMessageTable),
             'resources': relationship(ResourceEntity, backref='messages'),
-            'creator': relationship(UserEntity, backref='messages', foreign_keys=messagesTable.c.creator_id)
+            'creator': relationship(UserEntity, backref='messages', foreign_keys=messagesTable.c.creator_id),
+            'parent': relationship(MessageEntity)
         }
     )

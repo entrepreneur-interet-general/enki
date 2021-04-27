@@ -1,3 +1,4 @@
+from __future__ import annotations
 from datetime import datetime
 from uuid import uuid4
 
@@ -51,6 +52,8 @@ class MessageSchema(Schema):
     started_at = fields.DateTime(required=False)
     tags = fields.Nested(TagSchema, many=True, dump_only=True)
     tag_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)
+    parent = fields.Nested('MessageSchema', required=False, dump_only=True)
+    parent_id = fields.Str(required=False, load_only=True)
     resources = fields.Nested(ResourceSchema, required=False, many=True, dump_only=True)
     resource_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)
     executor_id = fields.Str(required=False)

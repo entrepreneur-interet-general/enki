@@ -1,17 +1,19 @@
 version: '3.4'
 
 services:
-  nginx:
+  front:
     build:
-      context: proxy
+      context: front
       dockerfile: Dockerfile
+    command: ng serve --host=0.0.0.0 --port 4000
     ports:
       - "4000:4000"
     volumes:
-      - ./front/dist/:/etc/nginx/html/dist/
-      - ./proxy/data/nginx_app/:/etc/nginx/conf.d
+      - ./front/src:/app/src
+      - ./front/design-system:/app/design-system
     networks:
       - default
+      - enki_default
   api:
     build:
       context: backend

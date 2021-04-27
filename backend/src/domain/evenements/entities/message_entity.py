@@ -79,22 +79,22 @@ class MessageType(str, Enum):
 @dataclass
 class MessageEntity(Entity):
     title: str
-    description: str = field(default_factory=lambda: None)
+    description: Optional[str] = field(default_factory=lambda: None)
     creator_id: Optional[str] = field(default_factory=lambda: None)
-    external_id: str = field(default_factory=lambda: None)
+    external_id: Optional[str] = field(default_factory=lambda: None)
     creator: Optional[UserEntity] = field(default_factory=lambda: None)
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
-    started_at: Union[datetime, None] = field(default_factory=lambda: None)
+    started_at: Optional[datetime] = field(default_factory=lambda: None)
     tags: List[TagEntity] = field(default_factory=lambda: [])
     resources: List[ResourceEntity] = field(default_factory=lambda: [])
     reactions: List[ReactionEntity] = field(default_factory=lambda: [])
     created_at: datetime = field(default_factory=lambda: datetime.now())
     updated_at: datetime = field(default_factory=lambda: datetime.now())
     type: MessageType = field(default_factory=lambda: MessageType.UNKNOWN)
-    parent_id: str = field(default_factory=lambda: None)
-    parent: MessageEntity = field(default_factory=lambda: None)
-    executor_id: Union[str, None] = field(default_factory=lambda: None)
-    done_at: Union[datetime, None] = field(default_factory=lambda: None)
+    parent_id: Optional[str] = field(default_factory=lambda: None)
+    parent: Optional[MessageEntity] = field(default_factory=lambda: None)
+    executor_id: Optional[str] = field(default_factory=lambda: None)
+    done_at: Optional[datetime] = field(default_factory=lambda: None)
 
     def __eq__(self, other):
         return self.uuid == other.uuid

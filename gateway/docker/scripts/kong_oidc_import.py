@@ -68,11 +68,10 @@ services = [
 response = requests.get(f'{KONG_URL}/routes')
 for _id in [e["id"] for e in response.json()["data"]]:
     response = requests.delete(f'{KONG_URL}/routes/{_id}')
-    print(response.json())
+
 response = requests.get(f'{KONG_URL}/services')
 for _id in [e["id"] for e in response.json()["data"]]:
     reponse = requests.delete(f'{KONG_URL}/services/{_id}')
-    print(response.json())
 
 for service in services:
     print(f"Start configuring {service['name']}")

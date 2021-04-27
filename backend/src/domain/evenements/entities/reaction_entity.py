@@ -9,7 +9,7 @@ from slugify import slugify
 from domain.core.entity import Entity
 
 
-class ReactionType(Enum, str):
+class ReactionType(str, Enum):
     LOOKING = 'looking'
     OK = 'ok'
     ON_MY_WAY = 'on_my_way'

@@ -1,3 +1,4 @@
+from __future__ import annotations
 from uuid import uuid4
 
 from dataclasses import dataclass, field
@@ -62,7 +63,6 @@ class MessageType(str, Enum):
     def get_label(message_type) -> str:
         return MessageType.get_mapping().get(message_type, "Message")
 
-
 @dataclass_json
 @dataclass
 class MessageEntity(Entity):
@@ -78,6 +78,8 @@ class MessageEntity(Entity):
     created_at: datetime = field(default_factory=lambda: datetime.now())
     updated_at: datetime = field(default_factory=lambda: datetime.now())
     type: MessageType = field(default_factory=lambda: MessageType.UNKNOWN)
+    parent_id: str = field(default_factory=lambda: None)
+    parent: MessageEntity = field(default_factory=lambda: None)
     executor_id: Union[str, None] = field(default_factory=lambda: None)
     done_at: Union[datetime, None] = field(default_factory=lambda: None)
 
@@ -107,6 +109,10 @@ class MessageEntity(Entity):
             updated_at=meeting.updated_at,
             type=MessageType.MEETING
         )
+
+    def add_parent_message(self, message: MessageEntity):
+        self.parent_message_id = message.uuid
+        self.parent_message = message
 
     def add_tag(self, tag: TagEntity) -> TagEntity:
         try:

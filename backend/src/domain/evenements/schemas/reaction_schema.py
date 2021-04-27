@@ -2,75 +2,18 @@ from __future__ import annotations
 from datetime import datetime
 from uuid import uuid4
 
-from marshmallow import Schema, fields, post_load, validate
-from marshmallow_enum import EnumField
-from werkzeug.exceptions import HTTPException
-
-from domain.evenements.entities.message_entity import MessageEntity, MessageType, Severity
-from domain.evenements.entities.tag_entity import TagEntity
-from domain.evenements.schemas.resource_schema import ResourceSchema
-from domain.users.schemas.user import UserSchema
+from marshmallow import Schema, fields, post_load
+from domain.evenements.entities.reaction_entity import ReactionEntity
 
 
-class MessageValidationError(HTTPException):
-    code = 400
-
-
-class TagValidationError(HTTPException):
-    code = 400
-
-
-class TagSchema(Schema):
-    __model__ = TagEntity
+class ReactionSchema(Schema):
+    __model__ = ReactionEntity
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
-    title = fields.Str(required=True, validate=validate.Length(min=5))
-    slug = fields.Str(dump_only=True)
+    type = fields.Str(dump_only=True)
     creator_id = fields.Str(required=False)
     created_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
-    updated_at = fields.DateTime(missing=lambda: datetime.utcnow(), dump_only=True)
 
     @post_load
-    def make_tag(self, data: dict, **kwargs):
-        return TagEntity.from_dict(data)
-
-    def handle_error(self, exc, data, **kwargs):
-        raise TagValidationError(description=exc.normalized_messages())
-
-
-class MessageSchema(Schema):
-    __model__ = MessageEntity
-
-    uuid = fields.Str(missing=lambda: str(uuid4()))
-    title = fields.Str(required=True, validate=validate.Length(min=2, max=150))
-    description = fields.Str(required=False)
-    severity = EnumField(Severity, missing=Severity.UNKNOWN, validate=validate.OneOf([e.value for e in Severity]))
-    type = fields.Str(missing=MessageType.INFORMATION.value, validate=validate.OneOf([e.value for e in MessageType]))
-    type_label = fields.Method("_build_type_label")
-    creator_id = fields.Str(required=False, dump_only=True)
-    creator = fields.Nested(UserSchema, dump_only=True)
-    started_at = fields.DateTime(required=False)
-    tags = fields.Nested(TagSchema, many=True, dump_only=True)
-    tag_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)
-    parent = fields.Nested('MessageSchema', required=False, dump_only=True)
-    parent_id = fields.Str(required=False, load_only=True)
-    resources = fields.Nested(ResourceSchema, required=False, many=True, dump_only=True)
-    resource_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)
-    executor_id = fields.Str(required=False)
-    done_at = fields.DateTime(default=None, dump_only=True)
-    created_at = fields.DateTime(missing=lambda: datetime.now(), dump_only=True)
-    updated_at = fields.DateTime(missing=lambda: datetime.now(), dump_only=True)
-
-    @post_load
-    def make_message(self, data: dict, **kwargs):
-        entity = MessageEntity.from_dict(data)
-        return entity
-
-    def _build_type_label(self, obj) -> str:
-        return MessageType.get_label(message_type=obj.type)
-
-    def handle_error(self, exc, data, **kwargs):
-        error_data = exc.normalized_messages()
-        error_data["valid"] = [e for e in MessageType]
-        raise MessageValidationError(description=error_data)
-
+    def make_reaction(self, data: dict, **kwargs):
+        return ReactionEntity.from_dict(data)

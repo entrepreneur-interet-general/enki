@@ -47,25 +47,19 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: always
 
-  keycloak:
+  kong:
     build:
-      context: authentication
+      context: kong
       dockerfile: Dockerfile
+    depends_on:
+      - letsencrypt
     env_file:
-      - .envs/.local/.env.auth
-    volumes:
-      - ./authentication/realms/enki-realm-export.json:/tmp/enki-realm-export.json
-        # surcharge de config pour que le theme n'ait pas de cache et qu'on puisse bosser dessus
-      - ./authentication/standalone-ha.xml:/opt/jboss/keycloak/standalone/configuration/standalone-ha.xml
-      - ./authentication/enki-theme/:/opt/jboss/keycloak/themes/enki-theme
-    ports:
-    - "8080:8080"
-  keycloak-db:
-    image: postgres
-    env_file:
-      - .envs/.local/.env.auth
+      - .envs/.local/.env.kong
     networks:
       - default
+    ports:
+      - "8000:8000" # Listener
+      - "8001:8001" # ADMIN
 
 volumes:
   conf:

@@ -38,12 +38,22 @@ class EvenementService:
         with uow:
 
             user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
+            user_event_role: UserEvenementRole = UserEvenementRole(
+                uuid=str(uuid4()),
+                user_id=user.uuid,
+                evenement_id=evenement.uuid,
+                type=EvenementRoleType.CREATOR
+            )
             if evenement.uuid:
                 location: LocationEntity = uow.group.get_location_by_uuid(evenement.location_id)
             _ = uow.evenement.add(evenement)
             evenement.set_location(location)
             evenement.creator = user
+
+            user_event_role.user = user
+            evenement.add_user_role(user_role=user_event_role)
             evenement_uuid = str(evenement.uuid)
+
         final_evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_uuid)
         return EvenementService.schema().dump(final_evenement)
 

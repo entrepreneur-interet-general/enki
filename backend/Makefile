@@ -20,8 +20,8 @@ restart:
 	make down && make upd && sleep 8 && make seed
 
 seed:
-	docker exec backend_enki-api_1 flask create-position-groups
-	docker exec backend_enki-api_1 flask create-groups-and-locations
+	docker exec enki_api_1 flask create-position-groups
+	docker exec enki_api_1 flask create-groups-and-locations
 
 shell:
 	docker-compose exec enki-api flask shell

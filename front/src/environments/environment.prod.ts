@@ -2,8 +2,8 @@ export const environment = {
   prototype: true,
   production: true,
   auth: true,
-  backendUrl: `https://api.enki-crise.fr:8000/enki/v1`,
-  keycloakUrl: `https://api.enki-crise.fr/auth/`,
-  HTTPClientInMemory: false
 
+  backendUrl: `https://enki.nexsis112.fr/api`,
+  keycloakUrl: `https://auth.enki.nexsis112.fr/auth/`,
+  HTTPClientInMemory: false
 };

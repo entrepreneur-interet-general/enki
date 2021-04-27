@@ -7,7 +7,8 @@ import { EvenementsService } from '../../evenements.service';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
 import { Observable, Subject } from 'rxjs';
 
-const TITLE_MAX_LENGTH = 250;
+const TITLE_MAX_LENGTH = 150;
+const TITLE_MIN_LENGTH = 2;
 
 interface Media {
   uuid: string;
@@ -22,6 +23,7 @@ export class AddMessageComponent implements OnInit {
   messageGroup = new FormGroup({
     title: new FormControl('', [
       Validators.required,
+      Validators.minLength(TITLE_MIN_LENGTH),
       Validators.maxLength(TITLE_MAX_LENGTH),
     ]),
     content: new FormControl(''),

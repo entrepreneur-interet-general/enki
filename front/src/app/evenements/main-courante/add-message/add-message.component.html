@@ -3,8 +3,8 @@
   <form action="" class="addMessageForm" [formGroup]="messageGroup" (ngSubmit)="onSubmit()">
     <div class="enkiSpecialform__group">
       <textarea appFocusFormInput formControlName="title" placeholder="Tapez ici votre message" id="test--messageContent" cols="30" rows="3"></textarea>
-      <!-- <input type="text" appFocusFormInput class="addMessageForm--titleInput" formControlName="title" placeholder="Sans titre" required> -->
     </div>
+    <div class="counter" [class.-error]="title.invalid && title.errors.maxlength">{{textareaLength}}/{{charactersTitleLimit}} signes</div>
     <div class="enkiSpecialform__group labelGroup">
       <div class="labelGroup--labelList" *ngIf="labelsService.selectedLabels.length > 0">
         <div class="labelGroup--labelElement badge badge__inverted" *ngFor="let label of labelsService.selectedLabels">
@@ -38,7 +38,7 @@
       <input id="mediaFile" type="file" formControlName="files" (change)="uploadFile($event)">
     </div>
     <div class="enkiSpecialForm__group">
-      <input type="button" class="btn test--publish-message" value="Publier le message" (click)="openConfirmationModal()">
+      <input type="button" class="btn test--publish-message" value="Publier le message" (click)="openConfirmationModal()" [disabled]="messageGroup.invalid">
     </div>
     <app-modal class="confirmation" title="Confirmation" description="Une fois publiée, votre main courante sera consultable par les autres acteurs." #confirmation>
       <p class="confirmation--quote">

@@ -12,6 +12,13 @@
   padding: 0 16px;
   margin-bottom: 52px;
 }
+.counter {
+  color: $darkerGrey;
+  font-size: 14px;
+  &.-error {
+    color: $red;
+  }
+}
 .addMessageForm {
   padding: 16px 0;
   &--titleInput {

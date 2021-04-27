@@ -41,7 +41,7 @@ class MessageSchema(Schema):
     __model__ = MessageEntity
 
     uuid = fields.Str(missing=lambda: str(uuid4()))
-    title = fields.Str(required=True, validate=validate.Length(min=5))
+    title = fields.Str(required=True, validate=validate.Length(min=2, max=150))
     description = fields.Str(required=False)
     severity = EnumField(Severity, missing=Severity.UNKNOWN, validate=validate.OneOf([e.value for e in Severity]))
     type = fields.Str(missing=MessageType.INFORMATION.value, validate=validate.OneOf([e.value for e in MessageType]))

@@ -1,11 +1,12 @@
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, pluck } from 'rxjs/operators';
-import { Affaire, Location, Evenement, EvenementsHTTP, EvenementStatus, Participant, Message, MessageFilter } from 'src/app/interfaces';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { catchError, map, pluck } from 'rxjs/operators';
+import { Affaire, Location, Evenement, EvenementsHTTP, EvenementStatus, Participant, Message, MessageFilter, ToastType } from 'src/app/interfaces';
 import { AffairesService } from '../affaires/affaires.service';
 import { HTTP_DATA } from '../constants/constants';
+import { ToastService } from '../toast/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class EvenementsService {
   constructor(
     private http: HttpClient,
     private affairesService: AffairesService,
+    private toastService: ToastService,
     ) {
       this.evenementsUrl = `${environment.backendUrl}/events`
       this.httpOptions = {
@@ -92,7 +94,8 @@ export class EvenementsService {
   getEvenementLocationPolygon(location_id: string): Observable<Location> {
     return this.http.get<any>(`${environment.backendUrl}/locations/${location_id}`)
       .pipe(
-        pluck(HTTP_DATA)
+        pluck(HTTP_DATA),
+        catchError(this.handleError.bind(this))
       )
   }
 
@@ -131,23 +134,17 @@ export class EvenementsService {
         map(
           response => {
             const evenementsList = response.data.map((event: Evenement) => {
-              // const currentStatus = this.checkStatus(event);
               return this.mapEvenement(event)
             });
             this._setEvenements(evenementsList);
             return evenementsList;
           }
-        )
+        ),
+        catchError(this.handleError.bind(this))
       )
   }
   getSelectedEvenementsParticipants(): Participant[] {
     return this.selectedEvenementParticipants.getValue();
-  }
-  /* getEvenementByID(uuid: string): Observable<Evenement> {
-    return this.evenementIsInMemory ? of(this.getEvenements().filter(evenement => evenement.uuid === uuid)[0]) : this.httpGetEvenementById(uuid)
-  } */
-  private evenementIsInMemory(evenementUUID: string): boolean {
-    return this.getEvenements().some(evenement => evenement.uuid === evenementUUID)
   }
   httpGetEvenementById(uuid: string): Observable<Evenement> {
     return this.http.get<any>(`${this.evenementsUrl}/${uuid}`, this.httpOptions)
@@ -163,7 +160,8 @@ export class EvenementsService {
           } 
           this.addOrUpdateEvenement(event)
           return event
-        })
+        }),
+        catchError(this.handleError.bind(this))
       )
   }
   addParticipantsToEvenement(participant: Participant): void {
@@ -183,9 +181,6 @@ export class EvenementsService {
     });
     copyEvent.user_roles = newUserRoles;
     this.addOrUpdateEvenement(copyEvent);
-    /* this.getEvenementByID(this.selectedEvenementUUID.getValue()).subscribe(evenement => {
-    }) */
-
   }
   selectEvenement(event: Evenement): void {
     this.selectedEvenementUUID.next(event.uuid);
@@ -196,7 +191,8 @@ export class EvenementsService {
       .pipe(
         map(response => {
           return this.affairesService.mapHTTPAffaires(response.data)
-        })
+        }),
+        catchError(this.handleError.bind(this))
       )
   }
 
@@ -207,19 +203,23 @@ export class EvenementsService {
       ).pipe(
       map((file: ArrayBuffer) => {
         return file;
-      })
+      }),
+      catchError(this.handleError.bind(this))
     )
   }
 
   closeEvenement(uuid: string): Observable<any> {
-    return this.http.put<any>(`${environment.backendUrl}/events/${uuid}/close`, {})
+    return this.http.put<any>(`${environment.backendUrl}/events/${uuid}/close`, {}).pipe(
+      catchError(this.handleError.bind(this))
+    )
   }
 
   httpCreateMeeting(): Observable<any> {
     return this.http.post<any>(`${environment.backendUrl}/events/${this.selectedEvenementUUID.getValue()}/meeting`, {
       evenement_id: this.selectedEvenementUUID.getValue()
     }).pipe(
-      pluck(HTTP_DATA)
+      pluck(HTTP_DATA),
+      catchError(this.handleError.bind(this))
     )
   }
   joinMeeting(meetingUUID: string): void {
@@ -229,7 +229,13 @@ export class EvenementsService {
   }
   httpJoinMeeting(meetingUUID: string): Observable<any> {
     return this.http.get<any>(`${environment.backendUrl}/events/${this.selectedEvenementUUID.getValue()}/meeting/${meetingUUID}/join`).pipe(
-      pluck(HTTP_DATA)
+      pluck(HTTP_DATA),
+      catchError(this.handleError.bind(this))
     )
+  }
+
+  handleError(error: HttpErrorResponse) {
+    this.toastService.addMessage(error.message, ToastType.ERROR)
+    return throwError(error);
   }
 }

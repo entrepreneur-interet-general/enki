@@ -11,6 +11,7 @@ import { HTTP_DATA, REGISTER } from 'src/app/constants/constants';
 import { catchError, pluck } from 'rxjs/operators';
 import { SearchEtablissementService } from 'src/app/search-etablissement/search-etablissement.service';
 import { ToastService } from 'src/app/toast/toast.service';
+import { ToastType } from 'src/app/interfaces/Toast';
 
 @Component({
   selector: 'app-first-step',
@@ -91,7 +92,7 @@ export class FirstStepComponent {
       console.error(error); // log to console instead
   
       // TODO: better job of transforming error for user consumption
-      this.toastService.addMessage(`${operation} failed: ${error.message}`);
+      this.toastService.addMessage(`${operation} failed: ${error.message}`, ToastType.ERROR);
   
       // Let the app keep running by returning an empty result.
       return of(result);

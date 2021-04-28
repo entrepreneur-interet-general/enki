@@ -4,6 +4,7 @@ import { ToastDirective } from '../toast.directive';
 import { ToastComponent } from './toast.component';
 import { ToastService } from './toast.service';
 import { TOAST_DURATION } from '../constants/constants';
+import { Toast } from '../interfaces/Toast';
 
 @Component({
   selector: 'app-toast-container',
@@ -27,12 +28,13 @@ export class ToastContainerComponent implements OnInit {
   ngOnInit(): void {
     const viewContainerRef = this.toastHost.viewContainerRef;
     viewContainerRef.clear();
-    this.toastService.messages$.subscribe((message) => {
+    this.toastService.messages$.subscribe((toast: Toast) => {
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ToastComponent);
       const componentRef = viewContainerRef.createComponent<ToastComponent>(componentFactory);
-      const viewRefChild = componentRef.hostView
-      componentRef.instance.message = message;
+      const viewRefChild = componentRef.hostView;
+      componentRef.instance.message = toast.message;
       componentRef.instance.toastID = viewContainerRef.indexOf(viewRefChild);
+      componentRef.instance.type = toast.type;
       const sub: Subscription = componentRef.instance.removeToast.subscribe(toastID => {
         this.toastHost.viewContainerRef.remove(toastID);
       });

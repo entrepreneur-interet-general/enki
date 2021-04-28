@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HTTP_DATA } from '../constants/constants';
+import { ToastType } from '../interfaces/Toast';
 import { ToastService } from '../toast/toast.service';
 
 @Injectable({
@@ -41,7 +42,7 @@ export class RegisterService {
 
   private handleError(operation: string, result?: any) {
     return (error: any): Observable<any> => {
-      this.toastService.addMessage(`${operation} failed: ${JSON.stringify(error)}`)
+      this.toastService.addMessage(`${operation} failed: ${JSON.stringify(error)}`, ToastType.ERROR)
       return of(result)
     }
   }

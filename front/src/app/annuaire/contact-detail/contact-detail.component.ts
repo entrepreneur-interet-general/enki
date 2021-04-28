@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HistoryUrlService } from 'src/app/history-url.service';
-import { Contact } from 'src/app/interfaces/Contact';
+import { Contact } from 'src/app/interfaces';
 import { UserService } from 'src/app/user/user.service';
 import { AnnuaireService } from '../annuaire.service';
 

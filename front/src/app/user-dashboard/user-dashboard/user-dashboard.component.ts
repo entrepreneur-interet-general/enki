@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/interfaces/User';
-import { Affaire, AffairesService } from '../../affaires/affaires.service';
+import { User, Affaire } from 'src/app/interfaces';
+import { AffairesService } from '../../affaires/affaires.service';
 import { UserService } from '../../user/user.service'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DEPARTEMENTS } from './departements';
@@ -30,13 +30,13 @@ export class UserDashboardComponent implements OnInit {
     this.user = this.userService.user;
     // postal code length is minimum 5
     if (this.user.location_id.length > 3) {
-      this.meteoIframeLink = this.sanitizer.bypassSecurityTrustResourceUrl(`https://meteofrance.com/widget/prevision/${this.user.location_id}0##034EA2`)
+      this.meteoIframeLink = this.sanitizer.bypassSecurityTrustResourceUrl(`https://meteofrance.com/widget/prevision/${this.user.location_id}0##034EA2`);
     } else {
       const currentDep = DEPARTEMENTS.find(departement => {
-        return departement.DEP.toString() === this.user.location_id
+        return departement.DEP.toString() === this.user.location_id;
       });
       const chefLieu = currentDep.CHEFLIEU;
-      this.meteoIframeLink = this.sanitizer.bypassSecurityTrustResourceUrl(`https://meteofrance.com/widget/prevision/${chefLieu}0##034EA2`)
+      this.meteoIframeLink = this.sanitizer.bypassSecurityTrustResourceUrl(`https://meteofrance.com/widget/prevision/${chefLieu}0##034EA2`);
     }
   }
 

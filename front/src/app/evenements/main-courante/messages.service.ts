@@ -5,29 +5,8 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { uuidv4 } from '../../utilities';
 import { EvenementsService } from '../evenements.service';
-
-export interface Message {
-  title: string;
-  description: string;
-  creator: {
-    last_name: string;
-    first_name: string;
-    position: {
-      group_id: string;
-      group: {
-        label: string;
-      },
-    },
-    uuid: string;
-  };
-  created_at: string;
-  uuid: string;
-  tags: any[];
-  resources: any[];
-  evenement_id: string;
-  type: string;
-  type_label: string;
-}
+import { Message, ToastType } from 'src/app/interfaces';
+import { ToastService } from 'src/app/toast/toast.service';
 
 
 @Injectable({
@@ -41,7 +20,8 @@ export class MessagesService {
 
   constructor(
     private http: HttpClient,
-    private evenementsService: EvenementsService
+    private evenementsService: EvenementsService,
+    private toastService: ToastService,
   ) {
     this.resourcesUrl = `${environment.backendUrl}/resources`
     this.messagesUrl = `${environment.backendUrl}/messages`
@@ -82,6 +62,10 @@ export class MessagesService {
             this.addMessages(messages.data, evenementUUID)
           }
           return messages.data
+        }),
+        catchError((error) => {
+          this.toastService.addMessage(`Impossible de récupérer les messages de cet événement`, ToastType.ERROR);
+          return throwError(error);
         })
       )
   }
@@ -96,6 +80,10 @@ export class MessagesService {
       .pipe(
         map(response => {
           return response.data
+        }),
+        catchError((error) => {
+          this.toastService.addMessage(`Impossible de récupérer ce message`, ToastType.ERROR);
+          return throwError(error);
         })
       )
   }
@@ -115,14 +103,12 @@ export class MessagesService {
         map(message => {
           this.addMessages([message.data], event_id)
           return message.data
+        }),
+        catchError((error) => {
+          this.toastService.addMessage(`Impossible de soumettre ce message`, ToastType.ERROR);
+          return throwError(error);
         })
       )
-  }
-
-  addRessourceToMessage(mediaUUIDs, messageUUID): Observable<any> {
-    return this.http.put<any>(`${this.messagesUrl}/${messageUUID}/resource/add`, {
-        resource_ids: mediaUUIDs
-    })
   }
 
   getUrlFileUpload(file: any): Observable<any> {
@@ -130,14 +116,29 @@ export class MessagesService {
       "content_type": file.type,
       "original_name": file.name
     }
-    return this.http.post<any>(`${this.resourcesUrl}`, formBody)
+    return this.http.post<any>(`${this.resourcesUrl}`, formBody).pipe(
+      catchError((error) => {
+        this.toastService.addMessage(`Impossible d'envoyer le fichier sur le serveur`, ToastType.ERROR);
+        return throwError(error);
+      })
+    )
   }
 
   getUrlFileDownload(uuid: string): Observable<any> {
-    return this.http.get<any>(`${this.resourcesUrl}/${uuid}`)
+    return this.http.get<any>(`${this.resourcesUrl}/${uuid}`).pipe(
+      catchError((error) => {
+        this.toastService.addMessage(`Impossible de récupérer les informations de la pièce jointe`, ToastType.ERROR);
+        return throwError(error);
+      })
+    )
   }
   removeFileFromServer(resourceUUID: string): Observable<any> {
-    return this.http.delete<any>(`${this.resourcesUrl}/${resourceUUID}`)
+    return this.http.delete<any>(`${this.resourcesUrl}/${resourceUUID}`).pipe(
+      catchError((error) => {
+        this.toastService.addMessage(`Une erreur est survenue lors de la suppression de la pièce jointe sur le serveur`, ToastType.ERROR);
+        return throwError(error);
+      })
+    )
   }
   putFileOnServer(file, url): Observable<any> {
     const httpHeaders = {

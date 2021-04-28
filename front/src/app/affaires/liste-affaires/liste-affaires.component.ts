@@ -14,10 +14,7 @@ export class ListeAffairesComponent implements OnInit {
   ) {
     this.affaires = [];
     this.affairesService.httpGetAllAffaires().subscribe((affaires) => {
-        this.affaires = environment.HTTPClientInMemory ? affaires.map((affaire, index) => {
-          affaire.uuid = (index + 1).toString()
-          return affaire
-        }) : affaires
+        this.affaires = affaires
     });
   }
   ngOnInit(): void {

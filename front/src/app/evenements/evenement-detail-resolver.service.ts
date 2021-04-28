@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { EMPTY, Observable, of } from 'rxjs';
 import { mergeMap, take } from 'rxjs/operators';
-import { Evenement, EvenementsService } from './evenements.service';
+import { EvenementsService } from './evenements.service';
+import { Evenement } from 'src/app/interfaces';
 
 @Injectable({
   providedIn: 'root'

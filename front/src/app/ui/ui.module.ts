@@ -11,7 +11,7 @@ import { ModalComponent } from './modal/modal.component';
   declarations: [
     SvgDefinitionsComponent,
     SmallHeadingComponent,
-    ModalComponent
+    ModalComponent,
   ],
   exports: [
     SvgDefinitionsComponent,

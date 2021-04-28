@@ -8,6 +8,8 @@ import { BehaviorSubject } from 'rxjs';
 import { NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HistoryUrlService } from './history-url.service';
+import { ToastService } from './toast/toast.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +23,7 @@ export class AppComponent {
   token;
   environment;
   user;
+  model = new FormControl();
   onBoardingEnabled: boolean;
   showOnboarding = new BehaviorSubject<boolean>(true);
   previousUrl: string;
@@ -33,6 +36,7 @@ export class AppComponent {
     public mobilePrototype: MobilePrototypeService,
     private router: Router,
     private historyUrl: HistoryUrlService,
+    private toastService: ToastService,
     ) {
       this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe((event: NavigationStart) => {
         this.historyUrl.setPreviousUrl(this.currentUrl)

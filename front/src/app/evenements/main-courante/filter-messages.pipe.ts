@@ -1,13 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Filter } from '../evenements.service';
-import { Message } from './messages.service';
+import { MessageFilter, Message } from 'src/app/interfaces';
 
 @Pipe({
   name: 'filterMessages'
 })
 export class FilterMessagesPipe implements PipeTransform {
 
-  transform(messages: Message[], filter: Filter, ...args: any[]): unknown {
+  transform(messages: Message[], filter: MessageFilter, ...args: any[]): unknown {
     // Établissement : messages.filter(message => message.creator.position.group_id === "61b7324b-632f-4f22-bc5e-f288117c74fe"
     // Type de message : messages.filter(message => message.type === "meeting")
     // 

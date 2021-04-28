@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Contact } from 'src/app/interfaces/Contact';
+import { Contact } from 'src/app/interfaces';
 import { RegisterService } from 'src/app/registration/register.service';
 import { SearchEtablissementService } from 'src/app/search-etablissement/search-etablissement.service';
 import { AnnuaireService } from '../annuaire.service';
@@ -36,7 +36,7 @@ export class ContactAddComponent implements OnInit {
       this.userTypes = response
     })
     this.contactGroup.get('group').valueChanges.subscribe(typeName => {
-      this.registerService.selectedGroupType.next(typeName);
+      this.registerService.setGroupType(typeName);
       this.registerService.getUserPositions(typeName).subscribe(positions => {
         this.userPositions = positions
       })

@@ -1,26 +1,13 @@
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { Affaire, ToastType } from 'src/app/interfaces';
 
 import { UserService } from '../user/user.service';
+import { ToastService } from '../toast/toast.service';
 
-export interface Affaire {
-  id?: string; // used for in memory db
-  uuid: string;
-  dateTimeSent: object;
-  natureDeFait: string;
-  resource?: any;
-  coord: Coordinates;
-  victims: number;
-  address: string;
-  evenement_id: string;
-}
-interface Coordinates {
-  lat: number;
-  long: number;
-}
 @Injectable({
   providedIn: 'root'
 })
@@ -33,7 +20,8 @@ export class AffairesService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService
+    private userService: UserService,
+    private toastService: ToastService,
     ) {
       this.affairesUrl = `${environment.backendUrl}/affairs`;
       this.evenementsUrl = `${environment.backendUrl}/events`;
@@ -61,7 +49,8 @@ export class AffairesService {
       .pipe(
         tap(() => {
           this.updateAffaireEvenementID(evenementUUID, affaireUUID)
-        })
+        }),
+        catchError(this.handleError.bind(this))
       )
   }
   detachEvenementToAffaire(evenementUUID: string, affaireUUID: string): Observable<any> {
@@ -69,11 +58,12 @@ export class AffairesService {
       .pipe(
         tap(() => {
           this.updateAffaireEvenementID(null, affaireUUID)
-        })
+        }),
+        catchError(this.handleError.bind(this))
       )
   }
 
-  mapHTTPAffaires(affaires): Affaire[] {
+  mapHTTPAffaires(affaires: any[]): Affaire[] {
     let updatedAffaires: Affaire[];
     updatedAffaires = affaires.map(affaire => {
       return {
@@ -104,30 +94,12 @@ export class AffairesService {
           this._setAffaires(updatedAffaires)
           return updatedAffaires;
         }),
-        tap(_ => this.log('fetched all affaires'))
+        catchError(this.handleError.bind(this))
       );
   }
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
-  private log(message: string): void {
-    console.log(message);
+  handleError(error: HttpErrorResponse) {
+    this.toastService.addMessage(`Une erreur est survenue`, ToastType.ERROR)
+    return throwError(error);
   }
 }
 

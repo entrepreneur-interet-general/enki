@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Location } from '../interfaces/Location';
+import { Location } from 'src/app/interfaces';
 import { LOCATION_INIT } from '../constants/location_init';
 
 @Injectable({

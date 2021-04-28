@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Group } from '../interfaces/Group';
+import { Group } from 'src/app/interfaces';
 import { GROUP_INIT } from '../constants/group_init';
 
 @Injectable({

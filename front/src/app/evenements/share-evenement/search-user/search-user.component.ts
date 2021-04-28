@@ -6,7 +6,8 @@ import { interval, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, debounce, pluck, switchMap } from 'rxjs/operators';
 import { HTTP_DATA, SEARCH_MIN_CHARS } from 'src/app/constants/constants';
 import { HighlightIncludedCharsPipe } from 'src/app/highlight-included-chars.pipe';
-import { User } from 'src/app/interfaces/User';
+import { ToastType, User } from 'src/app/interfaces';
+import { ToastService } from 'src/app/toast/toast.service';
 import { UserService } from 'src/app/user/user.service';
 import { environment } from 'src/environments/environment';
 import { EvenementsService } from '../../evenements.service';
@@ -29,6 +30,7 @@ export class SearchUserComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
+    private toastService: ToastService,
     private highlightTransform: HighlightIncludedCharsPipe
   ) {
     this.userResults = [];
@@ -68,7 +70,7 @@ export class SearchUserComponent implements OnInit {
         if (error.status === 404) {
           return of([])
         } else {
-          console.error(error)
+          this.toastService.addMessage(`Impossible de rechercher un utilisateur`, ToastType.ERROR)
           return throwError(
             'Something bad happened; please try again later.');
         }
@@ -100,7 +102,11 @@ export class SearchUserComponent implements OnInit {
   
   addParticipantsToEvenement(userUUID: string): Observable<User> {
     return this.http.put<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/invite/${userUUID}`, {}).pipe(
-      pluck(HTTP_DATA)
+      pluck(HTTP_DATA),
+      catchError((error) => {
+        this.toastService.addMessage(`Impossible d'ajouter un participant à cet événement`, ToastType.ERROR)
+        return throwError(error);
+      })
     )
   }
 }

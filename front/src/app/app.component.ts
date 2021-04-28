@@ -68,10 +68,6 @@ Un petit 🅱🅱🆃🅴🅰 ?
 `)
   }
 
-  addToast(message: string): void {
-    this.toastService.addMessage(`Message: ${message}`)
-  }
-
   onActivate(): void {
     window.scroll(0, 0);
   }

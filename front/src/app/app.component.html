@@ -21,8 +21,6 @@
   </div>
   <main>
   
-    <input type="text" [formControl]="model">
-    <button (click)="addToast(model.value)">Add message</button>
     <router-outlet (activate)="onActivate()"></router-outlet>
   
   </main>

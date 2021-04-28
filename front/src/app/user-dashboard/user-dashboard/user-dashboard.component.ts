@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/interfaces/User';
-import { Affaire, AffairesService } from '../../affaires/affaires.service';
+import { Affaire } from '../../interfaces/Affaire';
+import { AffairesService } from '../../affaires/affaires.service';
 import { UserService } from '../../user/user.service'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DEPARTEMENTS } from './departements';

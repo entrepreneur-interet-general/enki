@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { BehaviorSubject } from 'rxjs';
 
-import { Affaire } from 'src/app/affaires/affaires.service';
+import { Affaire } from '../../interfaces/Affaire';
 import { Evenement, EvenementsService } from '../evenements.service';
 
 @Component({

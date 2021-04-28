@@ -3,24 +3,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Affaire } from '../interfaces/Affaire';
 
 import { UserService } from '../user/user.service';
 
-export interface Affaire {
-  id?: string; // used for in memory db
-  uuid: string;
-  dateTimeSent: object;
-  natureDeFait: string;
-  resource?: any;
-  coord: Coordinates;
-  victims: number;
-  address: string;
-  evenement_id: string;
-}
-interface Coordinates {
-  lat: number;
-  long: number;
-}
 @Injectable({
   providedIn: 'root'
 })
@@ -73,7 +59,7 @@ export class AffairesService {
       )
   }
 
-  mapHTTPAffaires(affaires): Affaire[] {
+  mapHTTPAffaires(affaires: any[]): Affaire[] {
     let updatedAffaires: Affaire[];
     updatedAffaires = affaires.map(affaire => {
       return {

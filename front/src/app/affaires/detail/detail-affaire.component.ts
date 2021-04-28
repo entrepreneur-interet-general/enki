@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Affaire, AffairesService } from '../affaires.service'
+import { Affaire } from '../../interfaces/Affaire';
+import { AffairesService } from '../affaires.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Evenement, EvenementsService } from 'src/app/evenements/evenements.service';
 import { FormControl, FormGroup } from '@angular/forms';

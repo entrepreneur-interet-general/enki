@@ -1,6 +1,6 @@
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { Affaire, ToastType } from 'src/app/interfaces';
@@ -50,11 +50,7 @@ export class AffairesService {
         tap(() => {
           this.updateAffaireEvenementID(evenementUUID, affaireUUID)
         }),
-        catchError((error) => {
-          this.toastService.addMessage(error, ToastType.ERROR);
-          return throwError(error);
-        })
-        
+        catchError(this.handleError.bind(this))
       )
   }
   detachEvenementToAffaire(evenementUUID: string, affaireUUID: string): Observable<any> {
@@ -62,7 +58,8 @@ export class AffairesService {
       .pipe(
         tap(() => {
           this.updateAffaireEvenementID(null, affaireUUID)
-        })
+        }),
+        catchError(this.handleError.bind(this))
       )
   }
 
@@ -97,30 +94,12 @@ export class AffairesService {
           this._setAffaires(updatedAffaires)
           return updatedAffaires;
         }),
-        tap(_ => this.log('fetched all affaires'))
+        catchError(this.handleError.bind(this))
       );
   }
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
-  private log(message: string): void {
-    console.log(message);
+  handleError(error: HttpErrorResponse) {
+    this.toastService.addMessage(`Une erreur est survenue`, ToastType.ERROR)
+    return throwError(error);
   }
 }
 

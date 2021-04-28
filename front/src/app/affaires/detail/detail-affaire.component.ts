@@ -1,15 +1,16 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Affaire, Evenement } from 'src/app/interfaces';
+import { Observable, throwError } from 'rxjs';
+import { Affaire, Evenement, ToastType } from 'src/app/interfaces';
 import { AffairesService } from '../affaires.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EvenementsService } from 'src/app/evenements/evenements.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { HistoryUrlService } from '../../history-url.service';
+import { ToastService } from 'src/app/toast/toast.service';
 
 @Component({
   selector: 'fronts-detail-affaire',
@@ -35,7 +36,8 @@ export class DetailAffaireComponent implements OnInit {
     private evenementsService: EvenementsService,
     private http: HttpClient,
     private _location: Location,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService,
     ) {
       this.CREATE_EVENT_VALUE = 'create';
       this.previousLinkLabel = this.historyUrl.getPreviousLabel()
@@ -81,29 +83,12 @@ export class DetailAffaireComponent implements OnInit {
       this.router.navigate(['./create-evenement'], { queryParams: { affaireUUID: this.uuid }, relativeTo: this.route});
       return;
     }
-    this.submitAttachEvenementToAffaire().subscribe(() => {
+    this.affairesService.attachEvenementToAffaire(this.evenementGroup.value.evenement, this.uuid).subscribe(() => {
       this.selectedEvenementTitle = this.evenementsService.getEvenementByID(this.evenementGroup.controls.evenement.value).title;
     })
   }
-  submitAttachEvenementToAffaire(): Observable<any> {
-    return this.http.put(`${this.evenementsUrl}/${this.evenementGroup.value.evenement}/affairs/${this.uuid}`, {})
-      .pipe(
-        tap(() => {
-          // change current affaire "evenementID"
-          this.affairesService.updateAffaireEvenementID(this.evenementGroup.value.evenement, this.uuid)
-        })
-      )
-  }
   detachEvenementToAffaire(): void {
-    this.submitDetachEvenementToAffaire().subscribe()
-  }
-  submitDetachEvenementToAffaire(): Observable<any> {
-    return this.http.delete(`${this.evenementsUrl}/${this.evenementGroup.value.evenement}/affairs/${this.uuid}`)
-      .pipe(
-        tap(() => {
-          this.affairesService.updateAffaireEvenementID(null, this.uuid)
-        })
-      )
+    this.affairesService.detachEvenementToAffaire(this.evenementGroup.value.evenement, this.uuid).subscribe()
   }
   goBack(): void {
     this._location.back()

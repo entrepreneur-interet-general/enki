@@ -3,58 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
-import { Affaire } from '../interfaces/Affaire';
+import { Affaire, Location, Evenement, EvenementsHTTP, EvenementStatus, Participant, Message, MessageFilter } from 'src/app/interfaces';
 import { AffairesService } from '../affaires/affaires.service';
-import { Location } from '../interfaces/Location';
-import { Participant } from '../interfaces/Participant';
 import { HTTP_DATA } from '../constants/constants';
-import { Message } from './main-courante/messages.service';
-
-export enum EvenementType {
-  INCENDIE = "incendie",
-  INONDATION = "inondation",
-  ATTENTAT = "attentat"
-}
-
-export enum EvenementStatus {
-  ongoing = "En cours",
-  tobegoing = "À venir",
-  over = "Terminé"
-};
-export interface Evenement {
-  uuid: string;
-  title: string;
-  creator: {
-    position: {
-      group: {
-        label: string;
-      }
-    }
-  };
-  location_id: string;
-  started_at: Date;
-  ended_at: string;
-  description: string;
-  created_at: string;
-  closed: boolean;
-  user_roles: Participant[];
-  messages: Message[];
-  filter: Filter;
-  status: EvenementStatus;
-}
-
-export interface Filter {
-  etablissement: string;
-  auteur: string;
-  type: string;
-  fromDatetime: string;
-  toDatetime: string;
-} 
-
-export interface EvenementsHTTP {
-  data: Evenement[];
-  message: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -70,7 +21,6 @@ export class EvenementsService {
   constructor(
     private http: HttpClient,
     private affairesService: AffairesService,
-    // private messagesService: MessagesService
     ) {
       this.evenementsUrl = `${environment.backendUrl}/events`
       this.httpOptions = {
@@ -117,7 +67,7 @@ export class EvenementsService {
     this._setEvenements(evenements)
   }
 
-  updateEvenementFilter(evenement_id: string, filter: Filter): Observable<Filter> {
+  updateEvenementFilter(evenement_id: string, filter: MessageFilter): Observable<MessageFilter> {
     let evenementToFilter = this.getEvenements().filter(evenement => evenement.uuid === evenement_id)
     evenementToFilter[0].filter = filter
     this.addOrUpdateEvenement(evenementToFilter[0])

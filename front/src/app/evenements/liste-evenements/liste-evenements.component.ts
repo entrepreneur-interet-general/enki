@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
-import { Evenement, EvenementsService, EvenementStatus } from '../evenements.service';
+import { EvenementsService } from '../evenements.service';
+import { Evenement, EvenementStatus } from 'src/app/interfaces';
 
 @Component({
   selector: 'app-liste-evenements',

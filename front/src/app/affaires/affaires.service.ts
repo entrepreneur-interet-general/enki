@@ -1,11 +1,12 @@
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { Affaire } from '../interfaces/Affaire';
+import { catchError, map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { Affaire, ToastType } from 'src/app/interfaces';
 
 import { UserService } from '../user/user.service';
+import { ToastService } from '../toast/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class AffairesService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService
+    private userService: UserService,
+    private toastService: ToastService,
     ) {
       this.affairesUrl = `${environment.backendUrl}/affairs`;
       this.evenementsUrl = `${environment.backendUrl}/events`;
@@ -47,7 +49,12 @@ export class AffairesService {
       .pipe(
         tap(() => {
           this.updateAffaireEvenementID(evenementUUID, affaireUUID)
+        }),
+        catchError((error) => {
+          this.toastService.addMessage(error, ToastType.ERROR);
+          return throwError(error);
         })
+        
       )
   }
   detachEvenementToAffaire(evenementUUID: string, affaireUUID: string): Observable<any> {

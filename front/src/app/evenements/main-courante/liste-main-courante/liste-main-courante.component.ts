@@ -3,12 +3,12 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { User } from 'src/app/interfaces/User';
+import { User, MessageFilter, Message } from 'src/app/interfaces';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
 import { UserService } from 'src/app/user/user.service';
-import { EvenementsService, Filter } from '../../evenements.service';
-import { Message, MessagesService } from '../messages.service';
+import { EvenementsService,  } from '../../evenements.service';
+import { MessagesService } from '../messages.service';
 
 
 
@@ -23,7 +23,7 @@ export class ListeMainCouranteComponent implements OnInit {
   uuid: string;
   fetchedMessages: boolean;
   user: User;
-  currentEventFilter: Filter;
+  currentEventFilter: MessageFilter;
   exportType = new FormControl('xlsx');
   messages$: Observable<Message[]>;
   subscription: any;

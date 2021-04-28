@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HTTP_DATA } from '../constants/constants';
-import { ToastType } from '../interfaces/Toast';
+import { ToastType } from 'src/app/interfaces';
 import { ToastService } from '../toast/toast.service';
 
 @Injectable({

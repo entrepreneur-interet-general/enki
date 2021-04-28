@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TOAST_DURATION } from '../constants/constants';
-import { ToastType } from '../interfaces/Toast';
+import { ToastType } from 'src/app/interfaces';
 
 @Component({
   selector: 'app-toast',

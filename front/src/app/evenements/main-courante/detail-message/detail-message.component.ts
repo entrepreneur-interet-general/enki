@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
-import { Message, MessagesService } from '../messages.service';
+import { MessagesService } from '../messages.service';
+import { Message } from 'src/app/interfaces';
 import { MESSAGE_INIT } from '../../../constants/message_init';
 import { Location } from '@angular/common';
 

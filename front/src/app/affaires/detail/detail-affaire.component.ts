@@ -1,10 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Affaire } from '../../interfaces/Affaire';
+import { Affaire, Evenement } from 'src/app/interfaces';
 import { AffairesService } from '../affaires.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Evenement, EvenementsService } from 'src/app/evenements/evenements.service';
+import { EvenementsService } from 'src/app/evenements/evenements.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';

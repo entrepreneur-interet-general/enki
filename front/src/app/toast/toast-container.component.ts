@@ -4,7 +4,7 @@ import { ToastDirective } from '../toast.directive';
 import { ToastComponent } from './toast.component';
 import { ToastService } from './toast.service';
 import { TOAST_DURATION } from '../constants/constants';
-import { Toast } from '../interfaces/Toast';
+import { Toast } from 'src/app/interfaces';
 
 @Component({
   selector: 'app-toast-container',

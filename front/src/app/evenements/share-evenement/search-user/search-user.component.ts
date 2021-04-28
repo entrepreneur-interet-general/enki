@@ -6,7 +6,7 @@ import { interval, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, debounce, pluck, switchMap } from 'rxjs/operators';
 import { HTTP_DATA, SEARCH_MIN_CHARS } from 'src/app/constants/constants';
 import { HighlightIncludedCharsPipe } from 'src/app/highlight-included-chars.pipe';
-import { User } from 'src/app/interfaces/User';
+import { User } from 'src/app/interfaces';
 import { UserService } from 'src/app/user/user.service';
 import { environment } from 'src/environments/environment';
 import { EvenementsService } from '../../evenements.service';

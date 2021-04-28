@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import { Affaire } from '../interfaces/Affaire';
+import { Affaire } from 'src/app/interfaces';
 
 @Component({
   selector: 'app-map',

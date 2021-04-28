@@ -7,7 +7,7 @@ import { catchError, debounce, pluck, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HTTP_DATA, SEARCH_MIN_CHARS } from '../constants/constants';
 import { SearchLocationService } from './search-location.service';
-import { Location } from '../interfaces/Location';
+import { Location } from 'src/app/interfaces';
 import { HighlightIncludedCharsPipe } from '../highlight-included-chars.pipe';
 
 @Component({

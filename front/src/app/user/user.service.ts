@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Contact } from '../interfaces/Contact';
-import { User } from '../interfaces/User';
+import { Contact, User } from 'src/app/interfaces';
 
 @Injectable({
   providedIn: 'root'

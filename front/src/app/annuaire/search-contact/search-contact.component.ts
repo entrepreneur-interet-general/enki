@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Contact } from 'src/app/interfaces/Contact';
+import { Contact } from 'src/app/interfaces';
 import { AnnuaireService } from '../annuaire.service';
 import { FormControl } from '@angular/forms';
 import { UserService } from 'src/app/user/user.service';

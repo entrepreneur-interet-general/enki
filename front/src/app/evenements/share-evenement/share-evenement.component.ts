@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/app/interfaces/User';
-import { Participant } from 'src/app/interfaces/Participant';
+import { User, Participant, Evenement } from 'src/app/interfaces';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
-import { Evenement, EvenementsService } from '../evenements.service';
+import { EvenementsService } from '../evenements.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';

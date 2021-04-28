@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { ToastType } from 'src/app/interfaces';
 import { RegisterService } from 'src/app/registration/register.service';
 import { SearchEtablissementService } from 'src/app/search-etablissement/search-etablissement.service';
 import { ToastService } from 'src/app/toast/toast.service';
@@ -63,7 +64,7 @@ export class InvitationComponent implements OnInit {
         catchError((error) => {
           if (error.error) {
             this.toastService.addMessage(`Status: ${error.status}
-            ${JSON.stringify(error.error.message)}`)
+            ${JSON.stringify(error.error.message)}`, ToastType.ERROR)
           }
           return throwError(error)
         })

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Evenement, EvenementsService, EvenementType } from '../evenements.service';
+import { HttpClient } from '@angular/common/http';
+import { EvenementsService } from '../evenements.service';
+import { Evenement, EvenementType } from 'src/app/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SearchLocationService } from 'src/app/search-location/search-location.service';

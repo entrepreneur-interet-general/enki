@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { Contact } from '../interfaces/Contact';
+import { Contact, ToastType } from 'src/app/interfaces';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../toast/toast.service';
-import { ToastType } from '../interfaces/Toast';
 
 @Injectable({
   providedIn: 'root'

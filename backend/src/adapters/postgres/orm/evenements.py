@@ -160,6 +160,6 @@ def start_mappers():
             'tags': relationship(TagEntity, backref='messages', secondary=tagMessageTable),
             'resources': relationship(ResourceEntity, backref='messages'),
             'creator': relationship(UserEntity, backref='messages', foreign_keys=messagesTable.c.creator_id),
-            'parent': relationship(MessageEntity)
+            'parent': relationship(MessageEntity, uselist=False)
         }
     )

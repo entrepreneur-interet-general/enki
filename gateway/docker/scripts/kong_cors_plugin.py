@@ -40,9 +40,10 @@ data = [
 def get_enki_service_id():
   response = requests.get(f'http://{KONG_HOST_IP}:{KONG_PORT}/services')
   print(response.json()["data"])
-  enki_api_id = [elt["id"] for elt in response.json()["data"] if elt["host"] == BACKEND_HOST_IP][0]
-  return enki_api_id
+  enki_api_ids = [elt["id"] for elt in response.json()["data"] if elt["host"] == BACKEND_HOST_IP]
+  return enki_api_ids
 
-enki_service_id = get_enki_service_id()
+enki_service_ids = get_enki_service_id()
 
-response = requests.post(f'http://{KONG_HOST_IP}:{KONG_PORT}/services/{enki_service_id}/plugins', data=data)
+for enki_service_id in enki_service_ids:
+  response = requests.post(f'http://{KONG_HOST_IP}:{KONG_PORT}/services/{enki_service_id}/plugins', data=data)

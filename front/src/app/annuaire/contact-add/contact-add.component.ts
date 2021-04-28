@@ -36,7 +36,7 @@ export class ContactAddComponent implements OnInit {
       this.userTypes = response
     })
     this.contactGroup.get('group').valueChanges.subscribe(typeName => {
-      this.registerService.selectedGroupType.next(typeName);
+      this.registerService.setGroupType(typeName);
       this.registerService.getUserPositions(typeName).subscribe(positions => {
         this.userPositions = positions
       })

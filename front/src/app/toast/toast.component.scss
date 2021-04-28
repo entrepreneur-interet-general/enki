@@ -4,7 +4,6 @@
   padding: 8px;
   margin-bottom: 8px;
   background: $red;
-  animation-delay: 3s;
   animation-duration: 1s;
   animation-fill-mode: forwards;
   animation-name: disappear;
@@ -15,6 +14,7 @@
   &--message {
     display: flex;
     align-content: center;
+    overflow: hidden;
   }
   &--close {
     display: flex;

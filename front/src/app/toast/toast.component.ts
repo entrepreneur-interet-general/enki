@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TOAST_DURATION } from '../constants/constants';
 
-export const TOAST_DURATION = 3000;
 @Component({
   selector: 'app-toast',
   template: `
-    <div class="toast" [class.-show]="isDisplayed">
+    <div class="toast" [class.-show]="isDisplayed" [style.animation-delay]="TOAST_DURATION">
       <div class="toast--message">
         {{message}}
       </div>
@@ -18,11 +18,11 @@ export const TOAST_DURATION = 3000;
 
 export class ToastComponent implements OnInit {
   isDisplayed: boolean;
+  public readonly TOAST_DURATION: string = `${(TOAST_DURATION / 1000) - 1}s`;
   @Input() message: string;
   @Input() toastID: number;
   @Output() removeToast = new EventEmitter<number>();
   constructor() {
-    // this.isDisplayed = false;
   }
 
   ngOnInit(): void {
@@ -30,14 +30,6 @@ export class ToastComponent implements OnInit {
 
   closeMessage(): void {
     this.removeToast.emit(this.toastID);
-  }
-
-  showMessage(message: string): void {
-    this.isDisplayed = true;
-    this.message = message;
-    setTimeout(() => {
-      this.isDisplayed = false;
-    }, TOAST_DURATION);
   }
 
 }

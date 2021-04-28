@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ToastDirective } from '../toast.directive';
 import { ToastComponent } from './toast.component';
 import { ToastService } from './toast.service';
+import { TOAST_DURATION } from '../constants/constants';
 
 @Component({
   selector: 'app-toast-container',
@@ -38,7 +39,7 @@ export class ToastContainerComponent implements OnInit {
       componentRef.onDestroy(()=> { sub.unsubscribe(); console.log("Unsubscribing")});
       setTimeout(() => {
         viewContainerRef.remove();
-      }, 5000)
+      }, TOAST_DURATION)
     })
   }
 

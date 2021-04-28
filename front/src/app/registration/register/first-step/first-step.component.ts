@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { Observable} from 'rxjs';
+import { Observable, of} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from '../../../user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { RegisterService } from '../../register.service';
 import { HTTP_DATA, REGISTER } from 'src/app/constants/constants';
-import { pluck } from 'rxjs/operators';
+import { catchError, pluck } from 'rxjs/operators';
 import { SearchEtablissementService } from 'src/app/search-etablissement/search-etablissement.service';
+import { ToastService } from 'src/app/toast/toast.service';
 
 @Component({
   selector: 'app-first-step',
@@ -38,7 +39,8 @@ export class FirstStepComponent {
     private userService: UserService,
     private registerService: RegisterService,
     private etablissementService: SearchEtablissementService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastService: ToastService,
   ) {
     this.structurePreFilled = false;
     this.userGroupPreFilled = false;
@@ -77,8 +79,23 @@ export class FirstStepComponent {
 
   validateInvitationToken(token: string): Observable<any> {
     return this.http.post(`${environment.backendUrl}/invitation/validate?token=${token}`, {}).pipe(
-      pluck(HTTP_DATA)
+      pluck(HTTP_DATA),
+      catchError(this.handleError('validateInvitationToken'))
     )
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<any> => {
+  
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+  
+      // TODO: better job of transforming error for user consumption
+      this.toastService.addMessage(`${operation} failed: ${error.message}`);
+  
+      // Let the app keep running by returning an empty result.
+      return of(result);
+    };
   }
 
   onSubmit(): void {
@@ -90,7 +107,6 @@ export class FirstStepComponent {
         group_id: this.etablissementService.selectedEtablissement.getValue().uuid
     }
     this.httpSubmitForm(bodyForm).subscribe((response) => {
-
       this.userService.user.attributes = {
         fonction: this.userGroup.value.fonction
       }
@@ -100,13 +116,15 @@ export class FirstStepComponent {
   }
 
   httpSubmitForm(bodyForm): Observable<any> {
-    const submitUrl = this.registerService.token ? `${environment.backendUrl}/users?token=${this.registerService.token}` : `${environment.backendUrl}/users`
-    return this.http.post<any>(submitUrl, bodyForm)
+    const submitUrl = this.registerService.token ? `${environment.backendUrl}/users?token=${this.registerService.token}` : `${environment.backendUrl}/user`
+    return this.http.post<any>(submitUrl, bodyForm).pipe(
+      catchError(() => {
+        return of([])
+      })
+    )
   }
 
   goToSearchLocation() {
-    // this.router.navigate([`search-etablissement`], { queryParams: { groupType: this.userGroup.controls.group.value }})
-
     this.router.navigate([`${REGISTER}/step1/searchlocation`], { queryParams: { groupType: this.userGroup.controls.group.value }})
   }
 

@@ -27,7 +27,7 @@ export class AnnuaireService {
           this.annuaire = contacts.data
           return contacts.data
         }),
-        catchError(this.handleError)
+        catchError(this.handleError.bind(this))
       )
   }
   // POST /annuaire/add
@@ -37,7 +37,7 @@ export class AnnuaireService {
         tap(contact => {
           this.annuaire = this.annuaire.concat(contact)
         }),
-        catchError(this.handleError)
+        catchError(this.handleError.bind(this))
       )
   }
   // GET /annuaire/{uuid}
@@ -47,7 +47,7 @@ export class AnnuaireService {
         map(contact => {
           return contact.data
         }),
-        catchError(this.handleError)
+        catchError(this.handleError.bind(this))
       )
   }
   // PUT /annuaire/{uuid}

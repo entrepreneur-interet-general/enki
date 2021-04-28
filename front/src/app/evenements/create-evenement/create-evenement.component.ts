@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EvenementsService } from '../evenements.service';
-import { Evenement, EvenementType } from 'src/app/interfaces';
+import { Evenement, EvenementType, ToastType } from 'src/app/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SearchLocationService } from 'src/app/search-location/search-location.service';
 import { HTTP_DATA } from 'src/app/constants/constants';
-import { pluck } from 'rxjs/operators';
+import { catchError, pluck } from 'rxjs/operators';
 import { AffairesService } from 'src/app/affaires/affaires.service';
+import { ToastService } from 'src/app/toast/toast.service';
 
 @Component({
   selector: 'app-create-evenement',
@@ -41,6 +42,7 @@ export class CreateEvenementComponent implements OnInit {
     private searchLocationService: SearchLocationService,
     private affairesService: AffairesService,
     private activatedRoute: ActivatedRoute,
+    private toastService: ToastService,
   ) {
     this.attachAffaireUUID = this.activatedRoute.snapshot.queryParams['affaireUUID'];
     this.todayDay = new Date();
@@ -82,7 +84,11 @@ export class CreateEvenementComponent implements OnInit {
 
   httpFormSubmit(formBody): Observable<Evenement> {
     return this.http.post<any>(this.evenementUrl, formBody).pipe(
-      pluck(HTTP_DATA)
+      pluck(HTTP_DATA),
+      catchError((error) => {
+        this.toastService.addMessage(`Impossible de créer l'événement`, ToastType.ERROR);
+        return throwError(error);
+      })
     )
   }
   ngAfterViewInit(): void {

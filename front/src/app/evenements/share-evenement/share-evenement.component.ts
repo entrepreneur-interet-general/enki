@@ -1,15 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User, Participant, Evenement } from 'src/app/interfaces';
+import { User, Participant, Evenement, ToastType } from 'src/app/interfaces';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
 import { EvenementsService } from '../evenements.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HTTP_DATA } from 'src/app/constants/constants';
-import { pluck } from 'rxjs/operators';
+import { catchError, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
+import { ToastService } from 'src/app/toast/toast.service';
 
 const ROLES = {
   admin: 'Administrateur',
@@ -42,6 +43,7 @@ export class ShareEvenementComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public evenementsService: EvenementsService,
     private http: HttpClient,
+    private toastService: ToastService,
     public mobilePrototype: MobilePrototypeService
   ) {
     this.selectedParticipant = null;
@@ -72,6 +74,11 @@ export class ShareEvenementComponent implements OnInit {
   getMeetingData(): Observable<any> {
     return this.http.get<any>(
       `${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/meeting`
+      ).pipe(
+        catchError((error) => {
+          this.toastService.addMessage(`Impossible de récupérer le salon vidéo en cours`, ToastType.ERROR);
+          return throwError(error);
+        })
       )
   }
 
@@ -81,7 +88,11 @@ export class ShareEvenementComponent implements OnInit {
     return this.http.put<any>(
       `${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/invite/${this.selectedParticipant.user.uuid}?role_type=${value}`, {}
       ).pipe(
-      pluck(HTTP_DATA)
+      pluck(HTTP_DATA),
+      catchError((error) => {
+        this.toastService.addMessage(`Le serveur n'a pas pu changer le rôle de l'utilisateur ${this.selectedParticipant.user.first_name}`, ToastType.ERROR);
+        return throwError(error);
+      })
     )
   }
   showEditParticipantRights(participant): void {

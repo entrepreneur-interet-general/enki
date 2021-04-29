@@ -1,4 +1,5 @@
 @import "../../../../design-system/styles/variables";
+@import "../../../../design-system/styles/mixins";
 
 .enki-logo {
   margin-bottom: 0;
@@ -21,6 +22,9 @@
   padding: 0 16px 0 8px;
   display: flex;
   justify-content: space-between;
+  @include mediaquery(desktop) {
+    position: relative;
+  }
   &--col {
     display: flex;
     align-items: center;
@@ -34,6 +38,9 @@
   }
   &--link {
     cursor: pointer;
+    @include mediaquery(desktop) {
+      display: none;
+    }
   }
   .notification {
     display: flex;

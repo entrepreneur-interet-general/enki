@@ -4,6 +4,7 @@ import { SvgDefinitionsComponent } from './svg-definitions/svg-definitions.compo
 import { SmallHeadingComponent } from './small-heading/small-heading.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
+import { MenuComponent } from './menu/menu.component';
 
 
 
@@ -12,10 +13,12 @@ import { ModalComponent } from './modal/modal.component';
     SvgDefinitionsComponent,
     SmallHeadingComponent,
     ModalComponent,
+    MenuComponent,
   ],
   exports: [
     SvgDefinitionsComponent,
     SmallHeadingComponent,
+    MenuComponent,
     ModalComponent
   ],
   imports: [

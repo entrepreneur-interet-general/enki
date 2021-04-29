@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Contact } from 'src/app/interfaces';
 import { RegisterService } from 'src/app/registration/register.service';
 import { SearchEtablissementService } from 'src/app/search-etablissement/search-etablissement.service';
@@ -30,7 +30,8 @@ export class ContactAddComponent implements OnInit {
     private annuaireService: AnnuaireService,
     private registerService: RegisterService,
     private searchEtablissementService: SearchEtablissementService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     this.registerService.getUserTypes().subscribe(response => {
       this.userTypes = response
@@ -62,13 +63,13 @@ export class ContactAddComponent implements OnInit {
       email: this.contactGroup.value.email,
       address: this.contactGroup.value.address,
     }
-    this.annuaireService.addContactToAnnuaire(contact).subscribe((contact) => {
+    this.annuaireService.addContactToAnnuaire(contact).subscribe(() => {
       this.router.navigate(['annuaire/contactlist']);
     })
   }
 
   goToSearchEtablissement() {
-    this.router.navigate([`contactadd/searchstructure`], { queryParams: { groupType: this.contactGroup.controls.group.value }})
+    this.router.navigate([`searchstructure`], { queryParams: { groupType: this.contactGroup.controls.group.value }, relativeTo: this.activatedRoute});
   }
 
   ngOnDestroy(): void {

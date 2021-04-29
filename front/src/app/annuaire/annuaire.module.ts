@@ -40,19 +40,19 @@ const routes : Routes = [
           {
             path: 'contactdetail/:uuid',
             component: ContactDetailComponent
+          },
+          {
+            path: 'contactadd',
+            component: ContactAddComponent,
+            children: [
+              {
+                path: 'searchstructure',
+                component: SearchEtablissementComponent
+              }
+            ]
           }
         ]
       },
-      {
-        path: 'contactadd',
-        component: ContactAddComponent,
-        children: [
-          {
-            path: 'searchstructure',
-            component: SearchEtablissementComponent
-          }
-        ]
-      }
     ]
   }
 ]

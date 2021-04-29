@@ -64,7 +64,8 @@ export class AddMessageComponent implements OnInit {
         this.messageGroup.value.content,
         selectedLabelsUUID,
         this.evenementUUID,
-        this.listOfMedias.map(media => media.uuid)
+        this.listOfMedias.map(media => media.uuid),
+        true,
       ).subscribe(() => {
         this.formSubmitted = true;
         this.router.navigate([`..`], { relativeTo: this.route })

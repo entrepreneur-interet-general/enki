@@ -19,6 +19,7 @@ from domain.evenements.entities.meeting_entity import MeetingEntity
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.users.entities.user import UserEntity
+from domain.users.entities.group import GroupEntity
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +46,12 @@ messagesTable = Table(
     Column('severity', ChoiceType(Severity, impl=Integer()), nullable=False),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
+)
+
+message_restricted_table = Table(
+    'messages_restricted', metadata,
+    Column('messages_uuid', String(60), ForeignKey("messages.uuid")),
+    Column('group_uuid', String(60), ForeignKey("groups.uuid")),
 )
 
 tagTable = Table(
@@ -160,6 +167,7 @@ def start_mappers():
             'tags': relationship(TagEntity, backref='messages', secondary=tagMessageTable),
             'resources': relationship(ResourceEntity, backref='messages'),
             'creator': relationship(UserEntity, backref='messages', foreign_keys=messagesTable.c.creator_id),
-            'parent': relationship(MessageEntity, uselist=False)
+            'parent': relationship(MessageEntity, uselist=False),
+            'restricted_to': relationship(GroupEntity, backref='messages', secondary=message_restricted_table)
         }
     )

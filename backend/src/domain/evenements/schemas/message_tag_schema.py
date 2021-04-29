@@ -58,6 +58,9 @@ class MessageSchema(Schema):
     resource_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)
     executor_id = fields.Str(required=False)
     done_at = fields.DateTime(default=None, dump_only=True)
+    restricted_to_group_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)
+    restricted = fields.Method("_is_restricted")
+
     created_at = fields.DateTime(missing=lambda: datetime.now(), dump_only=True)
     updated_at = fields.DateTime(missing=lambda: datetime.now(), dump_only=True)
 
@@ -68,6 +71,9 @@ class MessageSchema(Schema):
 
     def _build_type_label(self, obj) -> str:
         return MessageType.get_label(message_type=obj.type)
+
+    def _is_restricted(self, obj) -> bool:
+        return True
 
     def handle_error(self, exc, data, **kwargs):
         error_data = exc.normalized_messages()

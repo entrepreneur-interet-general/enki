@@ -12,6 +12,7 @@ from domain.evenements.ports.message_repository import AlreadyExistingTagInThisM
     AlreadyExistingResourceInThisMessage
 from domain.evenements.schemas.message_tag_schema import MessageSchema, TagSchema
 from domain.evenements.schemas.resource_schema import ResourceSchema
+from domain.users.entities.group import GroupEntity
 from domain.users.entities.user import UserEntity
 from entrypoints.extensions import event_bus
 from service_layer.unit_of_work import AbstractUnitOfWork
@@ -31,10 +32,10 @@ class MessageService:
 
     @staticmethod
     def add_message(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
-        tag_ids = data.pop("tags", [])
-        resource_ids = data.pop("resources", [])
+        current_app.logger.info(f"Data in created message {data}")
         creator_id = data.pop("creator_id")
         evenement_id = data.pop("evenement_id")
+        restricted_user_group = data.pop("restricted_user_group")
 
         with uow:
             message: MessageEntity = MessageService.schema().load(data)
@@ -43,10 +44,20 @@ class MessageService:
             evenement.add_message(message=message)
             user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
             message.set_creator(user=user)
-            MessageService.add_tags(message=message, tag_ids=tag_ids, uow=uow)
-            MessageService.add_resources(message=message, resource_ids=resource_ids, uow=uow)
+            MessageService.add_tags(message=message, tag_ids=message.tag_ids, uow=uow)
+            if restricted_user_group:
+                message.restricted_to_group_ids.append(user.position.group_id)
+                MessageService.add_restricted_group(message=message, uow=uow)
+            MessageService.add_resources(message=message, resource_ids=message.resource_ids, uow=uow)
             new_message = uow.message.get_by_uuid(message.uuid)
             return MessageService.schema().dump(new_message)
+
+    @staticmethod
+    def add_restricted_group(message: MessageEntity, uow: AbstractUnitOfWork):
+        if message.restricted_to_group_ids:
+            for group_id in message.restricted_to_group_ids:
+                group: GroupEntity = uow.group.get_by_uuid(uuid=group_id)
+                message.add_group_restriction(group=group)
 
     @staticmethod
     def add_tags(message: MessageEntity, tag_ids: List[str], uow: AbstractUnitOfWork):

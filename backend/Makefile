@@ -44,7 +44,7 @@ test-resource-down:
 
 # Migrations
 create-migration:
-	docker-compose -f docker-compose.yml exec enki-api alembic revision --autogenerate -m "test"
+	docker exec enki_api_1 alembic revision --autogenerate -m "test"
 run-migration:
 	docker-compose -f docker-compose.yml exec enki-api alembic upgrade head
 stamp-migration:

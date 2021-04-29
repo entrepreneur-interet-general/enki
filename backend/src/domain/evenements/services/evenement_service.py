@@ -60,7 +60,6 @@ class EvenementService:
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
-            current_app.logger.info(uow.evenement.get_by_uuid(uuid=uuid))
             return EvenementService.schema().dump(uow.evenement.get_by_uuid(uuid=uuid))
 
     @staticmethod

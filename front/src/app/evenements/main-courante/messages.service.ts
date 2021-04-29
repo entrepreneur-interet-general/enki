@@ -88,15 +88,16 @@ export class MessagesService {
       )
   }
 
-  httpSubmitMessage(title, description, selectedLabels, event_id, resources) : Observable<Message> {
+  httpSubmitMessage(title, description, selectedLabels, event_id, resources, restricted) : Observable<Message> {
     let uuid = uuidv4()
     let message = {
       "title":title,
       "description": description,
       "uuid": uuid,
-      "tags": selectedLabels,
+      "tag_ids": selectedLabels,
       "evenement_id": event_id,
-      "resources": resources
+      "resource_ids": resources,
+      "restricted_user_group": restricted
     }
     return this.http.post<any>(`${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/messages`, message)
       .pipe(

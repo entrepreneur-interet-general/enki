@@ -30,6 +30,7 @@
             </div>
             <div class="contentInfos">
               <div class="mainInfos">
+                <div>Restricted {{message.restricted}}</div>  <!-- TODO: Remove it -->
                 <div class="mainInfos--title" *ngIf="message.creator" [ngClass]="(message.creator && message.creator.position.group.type === 'PREFECTURE' ? '-blue' : '-green')">
                   {{message.creator.position.position.label}} —
                 </div>

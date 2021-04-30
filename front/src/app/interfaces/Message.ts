@@ -20,4 +20,5 @@ export interface Message {
   evenement_id: string;
   type: string;
   type_label: string;
+  restricted: boolean;
 }

@@ -49,12 +49,12 @@ export class FirstStepComponent {
     this.etablissementService.selectedEtablissement.subscribe((etablissement) => {
       this.userGroup.get('etablissement').setValue(etablissement.label)
     })
-    
+
     this.registerService.getUserTypes().subscribe(response => {
       this.userTypes = response
     })
-    
-    
+
+
     this.userGroup.get('group').valueChanges.subscribe(typeName => {
       this.registerService.setGroupType(typeName);
       this.registerService.getUserPositions(typeName).subscribe(positions => {
@@ -87,13 +87,13 @@ export class FirstStepComponent {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<any> => {
-  
+
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-  
+
       // TODO: better job of transforming error for user consumption
       this.toastService.addMessage(`${operation} failed: ${error.message}`, ToastType.ERROR);
-  
+
       // Let the app keep running by returning an empty result.
       return of(result);
     };
@@ -117,7 +117,7 @@ export class FirstStepComponent {
   }
 
   httpSubmitForm(bodyForm): Observable<any> {
-    const submitUrl = this.registerService.token ? `${environment.backendUrl}/users?token=${this.registerService.token}` : `${environment.backendUrl}/user`
+    const submitUrl = this.registerService.token ? `${environment.backendUrl}/users?token=${this.registerService.token}` : `${environment.backendUrl}/users`
     return this.http.post<any>(submitUrl, bodyForm).pipe(
       catchError(() => {
         return of([])

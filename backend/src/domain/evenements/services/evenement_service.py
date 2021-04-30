@@ -112,13 +112,6 @@ class EvenementService:
             return EvenementService.schema(many=True).dump(evenements)
 
     @staticmethod
-    def get_all_messages_and_affairs(evenement_id: str, uow: AbstractUnitOfWork):
-        with uow:
-            messages: List[MessageEntity] = uow.message.get_messages_by_query(evenement_id=evenement_id,
-                                                                              tag_ids=[])
-            return messages
-
-    @staticmethod
     def list_affairs_by_evenement(evenement_id: str, uow: AbstractUnitOfWork) -> List[SimpleAffairEntity]:
         with uow:
             simple_affairs: List[SimpleAffairEntity] = uow.simple_affair.get_by_evenement(uuid=evenement_id)
@@ -151,13 +144,21 @@ class EvenementService:
             return MessageSchema(many=True).dump(evenement.get_messages())
 
     @staticmethod
-    def list_messages_by_query(uuid: str, tag_ids: Union[str, List[str], None], uow: AbstractUnitOfWork) -> List[
-        Dict[str, Any]]:
+    def list_messages_by_query(uuid: str,
+                               creator_id: str,
+                               tag_ids: Union[str, List[str], None],
+                               uow: AbstractUnitOfWork) -> List[Dict[str, Any]]:
         if isinstance(tag_ids, str):
             tag_ids = [tag_ids]
+
+
         with uow:
+            user = uow.user.get_by_uuid(uuid=creator_id)
             _ = uow.evenement.get_by_uuid(uuid=uuid)
-            messages: List[MessageEntity] = uow.message.get_messages_by_query(evenement_id=uuid, tag_ids=tag_ids)
+            messages: List[MessageEntity] = uow.message.get_messages_by_query(
+                evenement_id=uuid,
+                restricted_group_id=user.position.group_id,
+                tag_ids=tag_ids)
             return MessageService.schema(many=True).dump(messages)
 
     @staticmethod

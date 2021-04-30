@@ -23,7 +23,7 @@ from domain.users.entities.user import UserEntity
 logger = logging.getLogger(__name__)
 
 tagMessageTable = Table(
-    'tags_messages', metadata,
+    'messages_tags', metadata,
     Column('messages_uuid', String(60), ForeignKey("messages.uuid")),
     Column('tag_uuid', String(60), ForeignKey("tags.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
@@ -58,6 +58,18 @@ tagTable = Table(
 
 user_evenement_role_table = Table(
     'user_evenement_roles', metadata,
+    Column('uuid', String(60), primary_key=True),
+    Column('user_id', String(255), ForeignKey("users.uuid")),
+    Column('evenement_id', String(255), ForeignKey("evenements.uuid")),
+    Column('type', ChoiceType(EvenementRoleType, impl=String())),
+    Column('revoked_at', TIMESTAMP(), nullable=True),
+    Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
+    Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
+)
+
+
+messages_reactions_table = Table(
+    'messages_reactions', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('user_id', String(255), ForeignKey("users.uuid")),
     Column('evenement_id', String(255), ForeignKey("evenements.uuid")),

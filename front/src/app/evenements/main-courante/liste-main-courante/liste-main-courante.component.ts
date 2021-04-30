@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +8,7 @@ import { User } from 'src/app/interfaces/User';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
 import { UserService } from 'src/app/user/user.service';
+import { environment } from 'src/environments/environment';
 import { EvenementsService, Filter } from '../../evenements.service';
 import { Message, MessagesService } from '../messages.service';
 
@@ -37,6 +39,7 @@ export class ListeMainCouranteComponent implements OnInit {
     private router: Router,
     public mobilePrototype: MobilePrototypeService,
     private route: ActivatedRoute,
+    private http: HttpClient,
     ) {
       this.messages = []
       this.uuid = this.evenementsService.selectedEvenementUUID.getValue()
@@ -60,6 +63,16 @@ export class ListeMainCouranteComponent implements OnInit {
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+  addReaction(messageUUID: string): void {
+    this.addReactionHttp(messageUUID).subscribe(res => {
+      console.log(`Success http result: ${res}`);
+    });
+  }
+  addReactionHttp(messageUUID: string): Observable<any> {
+    return this.http.post(`${environment.backendUrl}/events/${this.uuid}/message/${messageUUID}/react`, {
+      // json à envoyer
+    })
   }
   openModal(): void {
     this.modal.open()

@@ -15,6 +15,7 @@
     text-transform: uppercase;
     cursor: pointer;
     font-family: $secondaryFont;
+    position: relative;
     &:disabled {
         opacity: .5;
     }
@@ -99,9 +100,14 @@
         justify-content: flex-end;
     }
 
-
     .btn {
         margin-top: 15px;
+    }
+    &.-oneline {
+        justify-content: space-between;
+        .btn {
+            width: calc(50% - 8px);
+        }
     }
     
 }

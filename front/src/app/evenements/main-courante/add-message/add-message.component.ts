@@ -14,6 +14,11 @@ interface Media {
   uuid: string;
   url: string;
 }
+
+enum MessageType {
+  PUBLIC = 'public',
+  RESTRICTED = 'restricted'
+}
 @Component({
   selector: 'app-add-message',
   templateUrl: './add-message.component.html',
@@ -29,6 +34,7 @@ export class AddMessageComponent implements OnInit {
     content: new FormControl(''),
     files: new FormControl('')
   })
+  messageType = MessageType;
   evenementUUID: string;
   listOfMedias: Array<Media>;
   formSubmitted: boolean;
@@ -56,7 +62,7 @@ export class AddMessageComponent implements OnInit {
 
   get title() { return this.messageGroup.get('title'); }
 
-  onSubmit(): void {
+  onSubmit(messageType: MessageType): void {
     let selectedLabelsUUID = this.labelsService.selectedLabels.map(label => label.uuid)
     this.evenementUUID = this.evenementsService.selectedEvenementUUID.getValue()
     this.messagesService.httpSubmitMessage(
@@ -65,7 +71,7 @@ export class AddMessageComponent implements OnInit {
         selectedLabelsUUID,
         this.evenementUUID,
         this.listOfMedias.map(media => media.uuid),
-        true,
+        messageType === MessageType.RESTRICTED ? true : false
       ).subscribe(() => {
         this.formSubmitted = true;
         this.router.navigate([`..`], { relativeTo: this.route })

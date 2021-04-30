@@ -2,6 +2,7 @@ from __future__ import annotations
 from datetime import datetime
 from uuid import uuid4
 
+from flask import current_app
 from marshmallow import Schema, fields, post_load, validate
 from marshmallow_enum import EnumField
 from werkzeug.exceptions import HTTPException
@@ -9,6 +10,7 @@ from werkzeug.exceptions import HTTPException
 from domain.evenements.entities.message_entity import MessageEntity, MessageType, Severity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.schemas.resource_schema import ResourceSchema
+from domain.evenements.schemas.reaction_schema import ReactionSchema
 from domain.users.schemas.user import UserSchema
 
 
@@ -51,12 +53,13 @@ class MessageSchema(Schema):
     creator = fields.Nested(UserSchema, dump_only=True)
     started_at = fields.DateTime(required=False)
     tags = fields.Nested(TagSchema, many=True, dump_only=True)
-    tag_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)
+    tag_ids = fields.List(fields.Str(), required=False, load_only=True, many=True, default=[])
     parent = fields.Nested('MessageSchema', required=False, dump_only=True)
     parent_id = fields.Str(required=False, load_only=True)
     resources = fields.Nested(ResourceSchema, required=False, many=True, dump_only=True)
-    resource_ids = fields.List(fields.Str(), required=False, load_only=True, many=True)
+    resource_ids = fields.List(fields.Str(), required=False, load_only=True, many=True, default=[])
     executor_id = fields.Str(required=False)
+    reactions = fields.Nested(ReactionSchema, required=False,  many=True,  dump_only=True)
     done_at = fields.DateTime(default=None, dump_only=True)
     created_at = fields.DateTime(missing=lambda: datetime.now(), dump_only=True)
     updated_at = fields.DateTime(missing=lambda: datetime.now(), dump_only=True)
@@ -67,6 +70,7 @@ class MessageSchema(Schema):
         return entity
 
     def _build_type_label(self, obj) -> str:
+        current_app.logger.info(f"obj.type {obj}")##
         return MessageType.get_label(message_type=obj.type)
 
     def handle_error(self, exc, data, **kwargs):

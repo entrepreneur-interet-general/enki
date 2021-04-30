@@ -23,6 +23,7 @@ from entrypoints.views.enki.v1.resources.users.invitation_ressources import Invi
     ValidateInvitationResource
 from entrypoints.views.enki.v1.resources.evenements.message_resource_resource import MessageMultipleResourceResource
 from .resources.evenements.meeting_ressources import MeetingResource, MeetingListResource, JoinMeetingResource
+from .resources.evenements.message_reactions import MessageListReactions
 from .resources.users.group_ressources import GroupListResource, GroupTypeListResource, \
     PositionGroupTypeListResource
 from .resources.users.location_ressources import LocationListResource, LocationResource
@@ -60,6 +61,7 @@ endpoints = {
     # Evenements <> Messages
     MessageListResource: '/events/<uuid>/messages',
     MessageResource: '/events/<uuid>/messages/<message_uuid>',
+    MessageListReactions: '/events/<uuid>/messages/<message_uuid>/react',
     # Evenement <> Affairs
     AffairEvenementResource: '/events/<uuid>/affairs/<affair_uuid>',
     AffairListEvenementResource: '/events/<uuid>/affairs',

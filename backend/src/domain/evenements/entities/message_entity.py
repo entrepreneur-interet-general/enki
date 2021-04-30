@@ -10,6 +10,7 @@ from dataclasses_json import dataclass_json
 from werkzeug.exceptions import HTTPException
 
 from domain.core.entity import Entity
+from domain.evenements.entities.reaction_entity import ReactionEntity
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.users.entities.user import UserEntity
@@ -77,9 +78,10 @@ class MessageEntity(Entity):
     resources: List[ResourceEntity] = field(default_factory=lambda: [])
     created_at: datetime = field(default_factory=lambda: datetime.now())
     updated_at: datetime = field(default_factory=lambda: datetime.now())
-    type: MessageType = field(default_factory=lambda: MessageType.UNKNOWN)
+    #type: MessageType = field(default_factory=lambda: MessageType.UNKNOWN)
     parent_id: str = field(default_factory=lambda: None)
     parent: MessageEntity = field(default_factory=lambda: None)
+    reactions: List[ReactionEntity] = field(default_factory=lambda: [] )
     executor_id: Union[str, None] = field(default_factory=lambda: None)
     done_at: Union[datetime, None] = field(default_factory=lambda: None)
 
@@ -160,3 +162,10 @@ class MessageEntity(Entity):
 
     def is_authorized_to_modify(self, user_uuid) -> bool:
         return self.creator_id == user_uuid
+
+    def add_reaction(self, reaction: ReactionEntity):
+        self.reactions.append(reaction)
+
+    def remove_reaction(self, reaction: ReactionEntity):
+        self.reactions.remove(reaction)
+

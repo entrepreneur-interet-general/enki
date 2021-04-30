@@ -6,6 +6,7 @@ from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entities.evenement_entity import EvenementEntity
 from domain.evenements.entities.meeting_entity import MeetingEntity
 from domain.evenements.entities.message_entity import MessageEntity
+from domain.evenements.entities.reaction_entity import ReactionType, ReactionEntity
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage, \
@@ -22,6 +23,7 @@ class NotAuthorizedOnThisMessage(HTTPException):
     code = 401
     description = "Action interdite sur ce message"
 
+
 class MessageService:
     schema = MessageSchema
 
@@ -37,6 +39,7 @@ class MessageService:
         evenement_id = data.pop("evenement_id")
 
         with uow:
+            current_app.logger.info(f"data {data}")
             message: MessageEntity = MessageService.schema().load(data)
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=evenement_id)
             MessageService.save_message(message, uow=uow)
@@ -47,6 +50,20 @@ class MessageService:
             MessageService.add_resources(message=message, resource_ids=resource_ids, uow=uow)
             new_message = uow.message.get_by_uuid(message.uuid)
             return MessageService.schema().dump(new_message)
+
+    @staticmethod
+    def add_reaction(message_id: str,
+                     creator_id: str,
+                     reaction_type: ReactionType, uow: AbstractUnitOfWork):
+        with uow:
+            message = uow.message.get_by_uuid(uuid=message_id)
+            user = uow.user.get_by_uuid(uuid=creator_id)
+            reaction = ReactionEntity(
+                type=reaction_type,
+                creator_id=creator_id,
+            )
+            reaction.creator = user
+            message.add_reaction(reaction=reaction)
 
     @staticmethod
     def add_tags(message: MessageEntity, tag_ids: List[str], uow: AbstractUnitOfWork):
@@ -63,11 +80,11 @@ class MessageService:
                 message.add_resource(resource=resource)
 
     @staticmethod
-    def add_tag_to_message(message_uuid: str, tag_uuid: str, user_uuid:str,  uow: AbstractUnitOfWork) -> None:
+    def add_tag_to_message(message_uuid: str, tag_uuid: str, user_uuid: str, uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
             if message.is_authorized_to_modify(user_uuid):
-                results = message.get_tag_by_id( uuid=tag_uuid)
+                results = message.get_tag_by_id(uuid=tag_uuid)
                 if results:
                     raise AlreadyExistingTagInThisMessage()
                 tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
@@ -75,9 +92,8 @@ class MessageService:
             else:
                 raise NotAuthorizedOnThisMessage()
 
-
     @staticmethod
-    def remove_tag_to_message(message_uuid: str, tag_uuid: str, user_uuid:str, uow: AbstractUnitOfWork) -> None:
+    def remove_tag_to_message(message_uuid: str, tag_uuid: str, user_uuid: str, uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
             if message.is_authorized_to_modify(user_uuid):
@@ -87,7 +103,7 @@ class MessageService:
                 raise NotAuthorizedOnThisMessage()
 
     @staticmethod
-    def add_resource_to_message(message_uuid:str, resource_uuid:str,  user_id:str, uow: AbstractUnitOfWork) -> None:
+    def add_resource_to_message(message_uuid: str, resource_uuid: str, user_id: str, uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
             if message.is_authorized_to_modify(user_id):
@@ -100,7 +116,8 @@ class MessageService:
                 raise NotAuthorizedOnThisMessage()
 
     @staticmethod
-    def remove_resource_to_message(message_uuid:str, resource_uuid:str,user_id:str,  uow: AbstractUnitOfWork) -> None:
+    def remove_resource_to_message(message_uuid: str, resource_uuid: str, user_id: str,
+                                   uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
             if message.is_authorized_to_modify(user_id):

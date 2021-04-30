@@ -60,7 +60,6 @@ class EvenementService:
     @staticmethod
     def get_by_uuid(uuid: str, uow: AbstractUnitOfWork) -> Dict[str, Any]:
         with uow:
-            current_app.logger.info(uow.evenement.get_by_uuid(uuid=uuid))
             return EvenementService.schema().dump(uow.evenement.get_by_uuid(uuid=uuid))
 
     @staticmethod
@@ -149,7 +148,13 @@ class EvenementService:
     def list_messages(uuid: str, uow: AbstractUnitOfWork):
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
-            return MessageSchema(many=True).dump(evenement.get_messages())
+            to_return = []
+            for message in evenement.get_messages():
+
+                    to_return.append(MessageSchema().dump(message))
+
+
+            return to_return
 
     @staticmethod
     def list_messages_by_query(uuid: str, tag_ids: Union[str, List[str], None], uow: AbstractUnitOfWork) -> List[

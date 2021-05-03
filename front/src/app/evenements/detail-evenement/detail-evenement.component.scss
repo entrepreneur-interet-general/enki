@@ -1,5 +1,6 @@
 
 @import "../../../../design-system/styles/variables";
+@import "../../../../design-system/styles/mixins";
 
 .evenement {
   &--body {
@@ -12,6 +13,9 @@
 }
 .actions {
   bottom: 82px;
+  @include mediaquery(desktop) {
+    bottom: 24px;
+  }
 }
 .evenement-container {
   padding-bottom: 58px;

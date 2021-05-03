@@ -5,6 +5,10 @@
   &--body {
     padding: 16px;
   }
+  &--header {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 .actions {
   bottom: 82px;
@@ -12,42 +16,7 @@
 .evenement-container {
   padding-bottom: 58px;
 }
-.tabbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  background: $lightestGrey;
-  height: 58px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  border-top: 1px solid $grey;
-  &.prototype {
-    bottom: auto;
-    width: 375px;
-    margin-top: -23px;
-  }
-}
-.tab {
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  font-size: 13px;
-  color: $darkerGrey;
-  svg {
-    fill: $darkerGrey;
-  }
-  &--label {
-    display: block;
-    line-height: 12px;
-  }
-  &.-active {
-    color: $primary;
-    svg {
-      fill: $primary;
-    }
-  }
-}
+
 .map-container {
   height: 200px;
 }

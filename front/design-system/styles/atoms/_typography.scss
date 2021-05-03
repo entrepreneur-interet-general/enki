@@ -38,6 +38,9 @@
     letter-spacing: 0.5px;
     font-size: 17px;
     cursor: pointer;
+    @include mediaquery(desktop) {
+        margin-bottom: 0;
+    }
     svg {
         margin-right: 8px;
     }

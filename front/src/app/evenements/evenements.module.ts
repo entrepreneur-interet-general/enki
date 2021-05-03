@@ -28,6 +28,7 @@ import { DirectivesModule } from '../directives.module';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { PipesModule } from '../pipes.module';
 import { ListeEvenementsComponent } from './liste-evenements/liste-evenements.component';
+import { TabbarComponent } from './tabbar/tabbar.component';
 
 
 const routes : Routes = [
@@ -133,6 +134,7 @@ const routes : Routes = [
     SearchUserComponent,
     FilterMessagesPipe,
     FilterMessagesComponent,
+    TabbarComponent,
   ],
   providers: [
     MessagesService,

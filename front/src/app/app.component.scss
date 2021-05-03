@@ -70,7 +70,7 @@ main {
 .main-content {
   padding-top: 16px;
   @include mediaquery(desktop) {
-    padding: 0 0 16px 0;
+    padding: 0;
     background: $white;
     overflow: scroll;
   }

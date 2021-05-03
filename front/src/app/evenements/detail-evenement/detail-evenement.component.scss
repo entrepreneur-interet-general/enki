@@ -19,6 +19,12 @@
 }
 .evenement-container {
   padding-bottom: 58px;
+  @include mediaquery(desktop) {
+    padding-bottom: 0;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 56px 0;
+  }
 }
 
 .map-container {

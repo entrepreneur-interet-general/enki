@@ -163,6 +163,9 @@ class MessageEntity(Entity):
     def is_authorized_to_modify(self, user_uuid) -> bool:
         return self.creator_id == user_uuid
 
+    def get_reactions(self):
+        return self.reactions
+
     def add_reaction(self, reaction: ReactionEntity):
         self.reactions.append(reaction)
 

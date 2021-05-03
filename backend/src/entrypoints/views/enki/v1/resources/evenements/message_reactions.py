@@ -40,16 +40,26 @@ class MessageListReactions(WithMessageRepoResource):
     """
     method_decorators = [user_info_middleware]
 
+    def get(self, uuid: str, message_uuid: str):
+        AuthorizationService.as_access_to_this_evenement_resource(g.user_info["id"], evenement_id=uuid,
+                                                                  role_type=EvenementRoleType.VIEW,
+                                                                  uow=current_app.context)
+
+        MessageService.get_reactions(message_id=message_uuid,
+                                     uow=current_app.context)
+
     def post(self, uuid: str, message_uuid: str):
         AuthorizationService.as_access_to_this_evenement_resource(g.user_info["id"], evenement_id=uuid,
                                                                   role_type=EvenementRoleType.EDIT,
                                                                   uow=current_app.context)
+        body = request.get_json()
+        reaction_type = ReactionType[body.get("reaction")]
 
-        creator_id =  g.user_info["id"]
+        creator_id = g.user_info["id"]
 
         MessageService.add_reaction(creator_id=creator_id,
                                     message_id=message_uuid,
-                                    reaction_type=ReactionType.OK,
+                                    reaction_type=reaction_type,
                                     uow=current_app.context)
 
         return {

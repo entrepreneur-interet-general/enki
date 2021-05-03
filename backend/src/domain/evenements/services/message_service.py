@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Union
+from uuid import uuid4
 
 from flask import current_app
 
@@ -12,6 +13,7 @@ from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage, \
     AlreadyExistingResourceInThisMessage
 from domain.evenements.schemas.message_tag_schema import MessageSchema, TagSchema
+from domain.evenements.schemas.reaction_schema import ReactionSchema
 from domain.evenements.schemas.resource_schema import ResourceSchema
 from domain.users.entities.user import UserEntity
 from entrypoints.extensions import event_bus
@@ -59,11 +61,18 @@ class MessageService:
             message = uow.message.get_by_uuid(uuid=message_id)
             user = uow.user.get_by_uuid(uuid=creator_id)
             reaction = ReactionEntity(
+                uuid=str(uuid4()),
                 type=reaction_type,
+                message_id=message_id,
                 creator_id=creator_id,
             )
             reaction.creator = user
             message.add_reaction(reaction=reaction)
+    @staticmethod
+    def get_reactions(message_id: str, uow: AbstractUnitOfWork):
+        with uow:
+            message = uow.message.get_by_uuid(uuid=message_id)
+            return ReactionSchema(many=True).dump(message.get_reactions())
 
     @staticmethod
     def add_tags(message: MessageEntity, tag_ids: List[str], uow: AbstractUnitOfWork):

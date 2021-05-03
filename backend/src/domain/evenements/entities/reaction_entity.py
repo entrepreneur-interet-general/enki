@@ -20,7 +20,7 @@ class ReactionType(str, Enum):
     LOOKING = "looking"
     OK = "ok"
     WELL_DONE = "well-done"
-    NO = "NO"
+    NO = "no"
 
     def __str__(self):
         return self.value

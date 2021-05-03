@@ -70,9 +70,9 @@ export class ListeMainCouranteComponent implements OnInit {
     });
   }
   addReactionHttp(messageUUID: string): Observable<any> {
-    return this.http.post(`${environment.backendUrl}/events/${this.uuid}/message/${messageUUID}/react`, {
-      // json à envoyer
-    })
+    return this.http.post(`${environment.backendUrl}/events/${this.uuid}/messages/${messageUUID}/react`, {
+      reaction: 'ok'
+    });
   }
   openModal(): void {
     this.modal.open()
@@ -82,18 +82,18 @@ export class ListeMainCouranteComponent implements OnInit {
       const a = document.createElement("a");
       a.style.display = "none";
       document.body.appendChild(a);
-    
+
       // Set the HREF to a Blob representation of the data to be downloaded
       a.href = window.URL.createObjectURL(
         new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8;' })
       );
-    
+
       // Use download attribute to set set desired file name
       a.setAttribute("download", `${this.evenementsService.selectedEvenementUUID.getValue()}-${(new Date()).toISOString()}.xlsx`);
-    
+
       // Trigger the download by simulating click
       a.click();
-    
+
       // Cleanup
       this.modal.close()
       window.URL.revokeObjectURL(a.href);

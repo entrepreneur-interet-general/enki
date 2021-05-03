@@ -174,7 +174,7 @@ def start_mappers():
             'resources': relationship(ResourceEntity, backref='messages'),
             'creator': relationship(UserEntity, backref='messages', foreign_keys=messagesTable.c.creator_id),
             'parent': relationship(MessageEntity, uselist=False),
-            'reactions': relationship(ReactionEntity, backref='messages' )
+            'reactions': relationship(ReactionEntity, backref='messages')
         }
     )
     mapper(

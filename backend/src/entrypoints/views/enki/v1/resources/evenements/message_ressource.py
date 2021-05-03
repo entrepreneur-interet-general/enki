@@ -67,13 +67,17 @@ class MessageListResource(WithMessageRepoResource):
         parser.add_argument('tags', type=str, help='Tags ids', action='append')
         args = parser.parse_args()
         tags: Union[str, List[str], None] = args.get("tags")
-        AuthorizationService.as_access_to_this_evenement_resource(g.user_info["id"], evenement_id=uuid,
+        creator_id = g.user_info["id"]
+        AuthorizationService.as_access_to_this_evenement_resource(creator_id, evenement_id=uuid,
                                                                   role_type=EvenementRoleType.VIEW,
                                                                   uow=current_app.context)
-        if tags:
-            messages = EvenementService.list_messages_by_query(uuid=uuid, tag_ids=tags,  uow=current_app.context)
-        else:
-            messages = EvenementService.list_messages(uuid=uuid, uow=current_app.context)
+
+
+        messages = EvenementService.list_messages_by_query(uuid=uuid,
+                                                           tag_ids=tags,
+                                                           creator_id=creator_id,
+                                                           uow=current_app.context)
+
 
         return {
                    "data": messages,

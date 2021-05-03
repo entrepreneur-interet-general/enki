@@ -13,6 +13,7 @@ from domain.core.entity import Entity
 from domain.evenements.entities.reaction_entity import ReactionEntity, ReactionType
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
+from domain.users.entities.group import GroupEntity
 from domain.users.entities.user import UserEntity
 
 
@@ -82,10 +83,13 @@ class MessageEntity(Entity):
     description: Optional[str] = field(default_factory=lambda: None)
     creator_id: Optional[str] = field(default_factory=lambda: None)
     external_id: Optional[str] = field(default_factory=lambda: None)
+    creator_id: str
     creator: Optional[UserEntity] = field(default_factory=lambda: None)
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
     started_at: Optional[datetime] = field(default_factory=lambda: None)
+    tag_ids: List[str] = field(default_factory=lambda: [])
     tags: List[TagEntity] = field(default_factory=lambda: [])
+    resource_ids: List[str] = field(default_factory=lambda: [])
     resources: List[ResourceEntity] = field(default_factory=lambda: [])
     reactions: List[ReactionEntity] = field(default_factory=lambda: [])
     created_at: datetime = field(default_factory=lambda: datetime.now())
@@ -95,6 +99,8 @@ class MessageEntity(Entity):
     parent: Optional[MessageEntity] = field(default_factory=lambda: None)
     executor_id: Optional[str] = field(default_factory=lambda: None)
     done_at: Optional[datetime] = field(default_factory=lambda: None)
+    restricted_to: List[GroupEntity] = field(default_factory=lambda: [])
+    restricted_to_group_ids: List[str] = field(default_factory=lambda: [])
 
     def __eq__(self, other):
         return self.uuid == other.uuid
@@ -192,3 +198,9 @@ class MessageEntity(Entity):
         reaction = self.get_reaction_by_creator_id(creator_id=reaction.creator_id, type=reaction.type)
         self.reactions.remove(reaction)
         return reaction
+
+    def add_group_restriction(self, group: GroupEntity):
+        self.restricted_to.append(group)
+
+    def remove_group_restriction(self, group: GroupEntity):
+        self.restricted_to.remove(group)

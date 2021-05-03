@@ -31,6 +31,9 @@
             <div class="contentInfos">
               <div class="mainInfos">
                 <div class="mainInfos--title" *ngIf="message.creator" [ngClass]="(message.creator && message.creator.position.group.type === 'PREFECTURE' ? '-blue' : '-green')">
+                  <span *ngIf="message.restricted">
+                    <svg class="icon-lock icon"><use xlink:href="#icon-lock"></use></svg>
+                  </span>
                   {{message.creator.position.position.label}} —
                 </div>
                 <div class="mainInfos--title -red" *ngIf="!message.creator">

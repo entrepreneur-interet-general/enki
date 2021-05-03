@@ -19,4 +19,5 @@ export const MESSAGE_INIT = {
   evenement_id: '',
   type: '',
   type_label: '',
+  restricted: false,
 };

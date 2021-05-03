@@ -53,11 +53,6 @@
       }
   }
 }
-.cancel {
-  .btn-group {
-    padding: 0 16px;
-  }
-}
 .confirmation {
   &--quote {
     color: $darkestGrey;
@@ -66,20 +61,17 @@
     font-family: $secondaryFont;
     margin-bottom: 16px;
     letter-spacing: 0.5px;
-    padding: 0 16px;
     svg {
       position: relative;
       top: 5px;
     }
-  }
-  .enkiform__group {
-    padding: 0 16px;
   }
   &--note {
     background: $blueGrey;
     font-size: rem-calc(16);
     line-height: 23px;
     padding: 12px 16px;
+    margin: 0 -16px 0 -16px;
     color: $darkestPrimary;
   }
 }

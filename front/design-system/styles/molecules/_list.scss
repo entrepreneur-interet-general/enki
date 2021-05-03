@@ -43,6 +43,9 @@
     letter-spacing: .5px;
     font-weight: 700;
     text-transform: uppercase;
+    .icon {
+      font-size: 16px;
+    }
     &.-green {
       color: $lightGreen;
     }

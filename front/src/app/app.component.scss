@@ -58,12 +58,12 @@
 
 main {
   position: relative;
-  padding-top: 56px;
+  padding-top: $headerSize;
   @include mediaquery(desktop) {
     display: grid;
     grid-template-columns: 250px auto;
     padding-top: 0;
-    height: calc(100% - 56px);
+    height: calc(100% - #{$headerSize});
   }
 }
 

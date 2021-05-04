@@ -1,6 +1,12 @@
 @import "../../../../../design-system/styles/variables";
 @import "../../../../../design-system/styles/mixins";
 
+:host {
+  @include mediaquery(desktop) {
+    height: calc(100vh - #{$headerSize * 2});
+    overflow-y: scroll;
+  }
+}
 .action--export {
   position: absolute;
   top: 0;

@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: space-around;
   background: $lightestGrey;
-  height: 56px;
+  height: $headerSize;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -16,8 +16,15 @@
   @include mediaquery(desktop) {
     position: relative;
     background: transparent;
-    width: 414px;
+    width: 450px;
     border: 0;
+  }
+  &--sharebtn {
+    display: none;
+    @include mediaquery(desktop) {
+      display: flex;
+      margin-bottom: 0;
+    }
   }
 }
 .tab {
@@ -35,6 +42,11 @@
   @include mediaquery(desktop) {
     font-size: 17px;
     flex-direction: row;
+  }
+  &--sharetab {
+    @include mediaquery(desktop) {
+      display: none;
+    }
   }
   svg {
     fill: $darkerGrey;

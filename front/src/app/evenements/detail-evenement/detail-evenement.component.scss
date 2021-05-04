@@ -11,7 +11,7 @@
     justify-content: space-between;
     @include mediaquery(desktop) {
       position: fixed;
-      top: 56px;
+      top: $headerSize;
       width: calc(100% - 250px);
       z-index: 1;
       background: $white;
@@ -31,7 +31,7 @@
     padding-bottom: 0;
     height: 100%;
     display: grid;
-    grid-template-rows: 56px 0;
+    grid-template-rows: $headerSize 0;
   }
 }
 

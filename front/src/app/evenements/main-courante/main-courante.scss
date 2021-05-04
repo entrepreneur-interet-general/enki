@@ -17,7 +17,7 @@
   }
   &--container {
     position: sticky;
-    top: 56px;
+    top: $headerSize;
   }
   &--files {
     background: $blueGrey;

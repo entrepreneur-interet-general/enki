@@ -9,11 +9,19 @@
   &--header {
     display: flex;
     justify-content: space-between;
+    @include mediaquery(desktop) {
+      position: fixed;
+      top: 56px;
+      width: calc(100% - 250px);
+      z-index: 1;
+      background: $white;
+    }
   }
 }
 .actions {
   bottom: 82px;
   @include mediaquery(desktop) {
+    right: 410px;
     bottom: 24px;
   }
 }

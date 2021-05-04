@@ -101,7 +101,7 @@ export class ListeMainCouranteComponent implements OnInit {
       // replace window.open by calling joinMeeting in evenementsService and passing meetingID...
       window.open(message.description, '_blank')
     } else {
-      this.router.navigate([`../message/${message.uuid}`], { relativeTo: this.route })
+      this.router.navigate([`./message/${message.uuid}`], { relativeTo: this.route })
     }
   }
 

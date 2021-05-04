@@ -35,7 +35,7 @@ messagesTable = Table(
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False),
     Column('description', String(255)),
-    Column('type', Enum(MessageType)),
+    Column('type', ChoiceType(MessageType, impl=Integer())),
     Column('evenement_id', String(60), ForeignKey("evenements.uuid")),
     Column('external_id', String(60)),
     Column('executor_id', String(60), ForeignKey("users.uuid"), nullable=True),
@@ -103,7 +103,7 @@ evenementsTable = Table(
     Column('uuid', String(60), primary_key=True),
     Column('title', String(255), nullable=False),
     Column('description', String(255)),
-    Column('type', Enum(EvenementType)),
+    Column('type', ChoiceType(EvenementType, impl=String())),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
     Column('location_id', String(60), ForeignKey("locations.uuid")),
     Column('started_at', TIMESTAMP(), nullable=False, default=datetime.now),
@@ -180,7 +180,7 @@ def start_mappers():
             'resources': relationship(ResourceEntity, backref='messages'),
             'creator': relationship(UserEntity, backref='messages', foreign_keys=messagesTable.c.creator_id),
             'parent': relationship(MessageEntity, uselist=False),
-            'reactions': relationship(ReactionEntity, backref='messages')
+            'reactions': relationship(ReactionEntity, backref='messages'),
             'restricted_to': relationship(GroupEntity, backref='messages', secondary=message_restricted_table)
         }
     )

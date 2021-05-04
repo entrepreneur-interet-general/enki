@@ -6,7 +6,7 @@ from sqlalchemy import func
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import column_property
 from sqlalchemy.orm import mapper, relationship
-from sqlalchemy_utils import TSVectorType
+from sqlalchemy_utils import TSVectorType, ChoiceType
 
 from adapters.postgres.orm.metadata import metadata
 from domain.users.entities.contact import ContactEntity
@@ -60,7 +60,7 @@ groupTable = Table(
     Column('uuid', String(60), primary_key=True),
     Column('label', String(255), nullable=False),
     Column('slug', String(255), nullable=False),
-    Column('type', Enum(GroupType), nullable=False),
+    Column('type', ChoiceType(GroupType, impl=String()), nullable=False),
     Column('location_id', ForeignKey("locations.uuid")),
     Column('search_vector', TSVectorType('label'), nullable=True),
 )
@@ -71,7 +71,7 @@ locationTable = Table(
     Column('label', String(255), nullable=False),
     Column('search_label', String(255), nullable=False),
     Column('slug', String(255), nullable=False),
-    Column('type', Enum(LocationType), nullable=False),
+    Column('type',  ChoiceType(LocationType, impl=String()), nullable=False),
     Column('external_id', String(60), nullable=False, unique=True, index=True),
     Column('polygon', Geometry('POLYGON')),
     #Column('search_vector', TSVectorType('search_label'), nullable=True),
@@ -96,7 +96,7 @@ position_group_type_table = Table(
     Column('uuid', String(60), primary_key=True),
     Column('label', String(255), nullable=False),
     Column('slug', String(255), nullable=False),
-    Column('group_type', Enum(GroupType), nullable=False),
+    Column('group_type', ChoiceType(GroupType, impl=String()), nullable=False),
 )
 
 user_position_table = Table(

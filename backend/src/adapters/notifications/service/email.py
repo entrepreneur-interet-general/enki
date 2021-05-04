@@ -26,6 +26,9 @@ class EmailService:
         )
 
     def send_email(self, to_email: str, subject: str, template_name: str = None, content: str = None, **kwargs):
+        current_app.logger.info(f"to_email {to_email}")
+        current_app.logger.info(f"subject {subject}")
+
         context = ssl.create_default_context()
         message = MIMEMultipart()
         message['Subject'] = subject
@@ -43,3 +46,4 @@ class EmailService:
         with smtplib.SMTP_SSL(self.host, self.port, context=context) as server:
             server.login(self.user, self.password)
             result = server.sendmail(self.user, to_email, msg_body)
+            current_app.logger.info(f"result {result}")

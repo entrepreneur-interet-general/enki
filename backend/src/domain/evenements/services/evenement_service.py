@@ -141,7 +141,13 @@ class EvenementService:
     def list_messages(uuid: str, uow: AbstractUnitOfWork):
         with uow:
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=uuid)
-            return MessageSchema(many=True).dump(evenement.get_messages())
+            to_return = []
+            for message in evenement.get_messages():
+
+                    to_return.append(MessageSchema().dump(message))
+
+
+            return to_return
 
     @staticmethod
     def list_messages_by_query(uuid: str,

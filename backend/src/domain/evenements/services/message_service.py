@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Union
+from uuid import uuid4
 
 from flask import current_app
 
@@ -6,15 +7,16 @@ from domain.affairs.entities.simple_affair_entity import SimpleAffairEntity
 from domain.evenements.entities.evenement_entity import EvenementEntity
 from domain.evenements.entities.meeting_entity import MeetingEntity
 from domain.evenements.entities.message_entity import MessageEntity
+from domain.evenements.entities.reaction_entity import ReactionType, ReactionEntity
 from domain.evenements.entities.resource import ResourceEntity
 from domain.evenements.entities.tag_entity import TagEntity
 from domain.evenements.ports.message_repository import AlreadyExistingTagInThisMessage, \
     AlreadyExistingResourceInThisMessage
 from domain.evenements.schemas.message_tag_schema import MessageSchema, TagSchema
+from domain.evenements.schemas.reaction_schema import ReactionSchema
 from domain.evenements.schemas.resource_schema import ResourceSchema
 from domain.users.entities.group import GroupEntity
 from domain.users.entities.user import UserEntity
-from entrypoints.extensions import event_bus
 from service_layer.unit_of_work import AbstractUnitOfWork
 from werkzeug.exceptions import HTTPException
 
@@ -22,6 +24,7 @@ from werkzeug.exceptions import HTTPException
 class NotAuthorizedOnThisMessage(HTTPException):
     code = 401
     description = "Action interdite sur ce message"
+
 
 class MessageService:
     schema = MessageSchema
@@ -32,7 +35,8 @@ class MessageService:
 
     @staticmethod
     def add_message(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
-        current_app.logger.info(f"Data in created message {data}")
+        tag_ids = data.pop("tags", [])
+        resource_ids = data.pop("resources", [])
         creator_id = data.pop("creator_id")
         evenement_id = data.pop("evenement_id")
         restricted_user_group = data.pop("restricted_user_group")
@@ -51,6 +55,27 @@ class MessageService:
             MessageService.add_resources(message=message, resource_ids=message.resource_ids, uow=uow)
             new_message = uow.message.get_by_uuid(message.uuid)
             return MessageService.schema().dump(new_message)
+
+    @staticmethod
+    def add_reaction(message_id: str,
+                     creator_id: str,
+                     reaction_type: ReactionType, uow: AbstractUnitOfWork):
+        with uow:
+            message = uow.message.get_by_uuid(uuid=message_id)
+            user = uow.user.get_by_uuid(uuid=creator_id)
+            reaction = ReactionEntity(
+                uuid=str(uuid4()),
+                type=reaction_type,
+                message_id=message_id,
+                creator_id=creator_id,
+            )
+            reaction.creator = user
+            message.add_reaction(reaction=reaction)
+    @staticmethod
+    def get_reactions(message_id: str, uow: AbstractUnitOfWork):
+        with uow:
+            message = uow.message.get_by_uuid(uuid=message_id)
+            return ReactionSchema(many=True).dump(message.get_reactions())
 
     @staticmethod
     def add_restricted_group(message: MessageEntity, uow: AbstractUnitOfWork):
@@ -74,11 +99,11 @@ class MessageService:
                 message.add_resource(resource=resource)
 
     @staticmethod
-    def add_tag_to_message(message_uuid: str, tag_uuid: str, user_uuid:str,  uow: AbstractUnitOfWork) -> None:
+    def add_tag_to_message(message_uuid: str, tag_uuid: str, user_uuid: str, uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
             if message.is_authorized_to_modify(user_uuid):
-                results = message.get_tag_by_id( uuid=tag_uuid)
+                results = message.get_tag_by_id(uuid=tag_uuid)
                 if results:
                     raise AlreadyExistingTagInThisMessage()
                 tag: TagEntity = uow.tag.get_by_uuid(uuid=tag_uuid)
@@ -86,9 +111,8 @@ class MessageService:
             else:
                 raise NotAuthorizedOnThisMessage()
 
-
     @staticmethod
-    def remove_tag_to_message(message_uuid: str, tag_uuid: str, user_uuid:str, uow: AbstractUnitOfWork) -> None:
+    def remove_tag_to_message(message_uuid: str, tag_uuid: str, user_uuid: str, uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
             if message.is_authorized_to_modify(user_uuid):
@@ -98,7 +122,7 @@ class MessageService:
                 raise NotAuthorizedOnThisMessage()
 
     @staticmethod
-    def add_resource_to_message(message_uuid:str, resource_uuid:str,  user_id:str, uow: AbstractUnitOfWork) -> None:
+    def add_resource_to_message(message_uuid: str, resource_uuid: str, user_id: str, uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
             if message.is_authorized_to_modify(user_id):
@@ -111,7 +135,8 @@ class MessageService:
                 raise NotAuthorizedOnThisMessage()
 
     @staticmethod
-    def remove_resource_to_message(message_uuid:str, resource_uuid:str,user_id:str,  uow: AbstractUnitOfWork) -> None:
+    def remove_resource_to_message(message_uuid: str, resource_uuid: str, user_id: str,
+                                   uow: AbstractUnitOfWork) -> None:
         with uow:
             message: MessageEntity = uow.message.get_by_uuid(message_uuid)
             if message.is_authorized_to_modify(user_id):

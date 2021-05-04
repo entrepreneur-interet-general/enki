@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,7 +8,8 @@ import { User, MessageFilter, Message } from 'src/app/interfaces';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
 import { UserService } from 'src/app/user/user.service';
-import { EvenementsService,  } from '../../evenements.service';
+import { environment } from 'src/environments/environment';
+import { EvenementsService } from '../../evenements.service';
 import { MessagesService } from '../messages.service';
 
 
@@ -37,6 +39,7 @@ export class ListeMainCouranteComponent implements OnInit {
     private router: Router,
     public mobilePrototype: MobilePrototypeService,
     private route: ActivatedRoute,
+    private http: HttpClient,
     ) {
       this.messages = []
       this.uuid = this.evenementsService.selectedEvenementUUID.getValue()
@@ -61,6 +64,16 @@ export class ListeMainCouranteComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+  addReaction(messageUUID: string): void {
+    this.addReactionHttp(messageUUID).subscribe(res => {
+      console.log(`Success http result: ${res}`);
+    });
+  }
+  addReactionHttp(messageUUID: string): Observable<any> {
+    return this.http.post(`${environment.backendUrl}/events/${this.uuid}/messages/${messageUUID}/react`, {
+      reaction: 'ok'
+    });
+  }
   openModal(): void {
     this.modal.open()
   }
@@ -69,18 +82,18 @@ export class ListeMainCouranteComponent implements OnInit {
       const a = document.createElement("a");
       a.style.display = "none";
       document.body.appendChild(a);
-    
+
       // Set the HREF to a Blob representation of the data to be downloaded
       a.href = window.URL.createObjectURL(
         new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8;' })
       );
-    
+
       // Use download attribute to set set desired file name
       a.setAttribute("download", `${this.evenementsService.selectedEvenementUUID.getValue()}-${(new Date()).toISOString()}.xlsx`);
-    
+
       // Trigger the download by simulating click
       a.click();
-    
+
       // Cleanup
       this.modal.close()
       window.URL.revokeObjectURL(a.href);

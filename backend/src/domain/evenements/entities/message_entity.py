@@ -80,10 +80,10 @@ class MessageType(str, Enum):
 @dataclass
 class MessageEntity(Entity):
     title: str
+    creator_id: str
     description: Optional[str] = field(default_factory=lambda: None)
     creator_id: Optional[str] = field(default_factory=lambda: None)
     external_id: Optional[str] = field(default_factory=lambda: None)
-    creator_id: str
     creator: Optional[UserEntity] = field(default_factory=lambda: None)
     severity: Severity = field(default_factory=lambda: Severity.UNKNOWN)
     started_at: Optional[datetime] = field(default_factory=lambda: None)
@@ -179,6 +179,9 @@ class MessageEntity(Entity):
 
     def is_authorized_to_modify(self, user_uuid) -> bool:
         return self.creator_id == user_uuid
+
+    def get_reactions(self):
+        return self.reactions
 
     def get_reaction_by_id(self, creator_id: str, reaction_type: ReactionType) -> Optional[ReactionEntity]:
         for reaction in self.reactions:

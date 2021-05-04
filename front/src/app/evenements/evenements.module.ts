@@ -29,6 +29,7 @@ import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { PipesModule } from '../pipes.module';
 import { ListeEvenementsComponent } from './liste-evenements/liste-evenements.component';
 import { TabbarComponent } from './tabbar/tabbar.component';
+import { ParticipantsComponent } from './participants/participants.component';
 
 
 const routes : Routes = [
@@ -79,25 +80,32 @@ const routes : Routes = [
             children: [
               {
                 path: '',
-                component: ListeMainCouranteComponent
+                pathMatch: 'full',
+                redirectTo: 'liste',
               },
               {
-                path: 'message/:uuid',
-                component: DetailMessageComponent
-              },
-              {
-                path: 'filters',
-                component: FilterMessagesComponent
-              },
-              {
-                path: 'addmessage',
-                component: AddMessageComponent,
-                canDeactivate: [CanDeactivateGuard],
+                path: 'liste',
+                component: ListeMainCouranteComponent,
                 children: [
                   {
-                    path: 'addlabel',
-                    component: AddLabelComponent
-                  }
+                    path: 'message/:uuid',
+                    component: DetailMessageComponent
+                  },
+                  {
+                    path: 'filters',
+                    component: FilterMessagesComponent
+                  },
+                  {
+                    path: 'addmessage',
+                    component: AddMessageComponent,
+                    canDeactivate: [CanDeactivateGuard],
+                    children: [
+                      {
+                        path: 'addlabel',
+                        component: AddLabelComponent
+                      }
+                    ]
+                  },
                 ]
               },
             ]
@@ -135,6 +143,7 @@ const routes : Routes = [
     FilterMessagesPipe,
     FilterMessagesComponent,
     TabbarComponent,
+    ParticipantsComponent,
   ],
   providers: [
     MessagesService,

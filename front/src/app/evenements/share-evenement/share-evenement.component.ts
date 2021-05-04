@@ -1,22 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User, Participant, Evenement, ToastType } from 'src/app/interfaces';
-import { ModalComponent } from 'src/app/ui/modal/modal.component';
+import { Participant, Evenement, ToastType } from 'src/app/interfaces';
 import { EvenementsService } from '../evenements.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { HTTP_DATA } from 'src/app/constants/constants';
-import { catchError, pluck } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { ToastService } from 'src/app/toast/toast.service';
-
-const ROLES = {
-  admin: 'Administrateur',
-  view: 'Lecteur',
-  edit: 'Éditeur',
-};
 
 @Component({
   selector: 'app-share-evenement',
@@ -26,15 +17,11 @@ const ROLES = {
 export class ShareEvenementComponent implements OnInit {
 
   participants = new BehaviorSubject<Participant[]>([]);
-  @ViewChild(ModalComponent) modal: ModalComponent;
-  roleGroup = new FormGroup({
-    role: new FormControl('view', Validators.required)
-  })
+
   meetingUUID: string;
   // role = new FormControl('')
 
   selectedParticipant: Participant;
-  roles: object;
 
   evenementSubscriber: any;
 
@@ -55,20 +42,10 @@ export class ShareEvenementComponent implements OnInit {
     })
     const event = this.evenementsService.getEvenementByID(this.evenementsService.selectedEvenementUUID.getValue())
     this.participants.next(event.user_roles)
-    this.roles = ROLES;
 
-    this.roleGroup.controls.role.valueChanges.subscribe((value: string) => {
-      this.updateParticipantRole(value).subscribe((res: User) => {
-        this.evenementsService.changeParticipantRole({
-          user: res,
-          type: value
-        });
-      });
-    });
-
-    this.getMeetingData().subscribe(res => {
+    /* this.getMeetingData().subscribe(res => {
       this.meetingUUID = res.data[0].uuid
-    })
+    }) */
   }
 
   getMeetingData(): Observable<any> {
@@ -84,33 +61,9 @@ export class ShareEvenementComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  updateParticipantRole(value: string): Observable<User> {
-    return this.http.put<any>(
-      `${environment.backendUrl}/events/${this.evenementsService.selectedEvenementUUID.getValue()}/invite/${this.selectedParticipant.user.uuid}?role_type=${value}`, {}
-      ).pipe(
-      pluck(HTTP_DATA),
-      catchError((error) => {
-        this.toastService.addMessage(`Le serveur n'a pas pu changer le rôle de l'utilisateur ${this.selectedParticipant.user.first_name}`, ToastType.ERROR);
-        return throwError(error);
-      })
-    )
-  }
-  showEditParticipantRights(participant): void {
-    this.selectedParticipant = participant
-    this.roleGroup.controls.role.setValue(participant.type)
-    this.modal.open()
-  }
-  removeSelectedParticipant(closed: boolean): void {
-    if (closed) {
-      this.selectedParticipant = null;
-    }
-  }
+
   goToSearchUser(): void {
     this.router.navigate(['./searchuser'], {relativeTo: this.activatedRoute})
-  }
-
-  mapUserRoleToLabel(type: string): string {
-    return type === 'creator' ? 'Créateur' : ROLES[type];
   }
 
   createMeeting(): void {

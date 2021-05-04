@@ -11,7 +11,7 @@
   <div class="mc--content">
     <div class="mc--empty" *ngIf="!(messages.length > 0) ">
       Le dossier est vide, créez une nouvelle main courante pour démarrer le partage.
-      <button class="btn" routerLink="../addmessage">Ajouter un nouveau message</button>
+      <button class="btn" routerLink="./addmessage">Ajouter un nouveau message</button>
     </div>
     <ul class="list">
       <li class="list--element" *ngFor="let message of messages | filterMessages:currentEventFilter" [ngClass]="message.creator && message.creator.uuid === user.uuid ? '-right': ''">
@@ -76,8 +76,9 @@
       <div class="filter-pastille" [class.-active]="listIsFiltered()"></div>
       <svg class="icon-filter icon"><use xlink:href="#icon-filter"></use></svg>
     </div>
-    <div class="action actions--element" routerLink="../addmessage" *ngIf="messages.length > 0">
+    <div class="action actions--element" routerLink="./addmessage" *ngIf="messages.length > 0">
       <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
     </div>
   </div>
 </div>
+<router-outlet></router-outlet>

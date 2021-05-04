@@ -22,16 +22,7 @@ def upgrade():
         AND enumlabel='INONDATION'
     """)
     with op.get_context().autocommit_block():
-
-        op.execute("ALTER TYPE evenementtype ADD VALUE 'CLIMATIQUE'")
-        op.execute("ALTER TYPE evenementtype ADD VALUE 'ACCIDENT'")
-        op.execute("ALTER TYPE evenementtype ADD VALUE 'ENLEVEMENT'")
-        op.execute("ALTER TYPE evenementtype ADD VALUE 'EPIDEMIE'")
-        op.execute("ALTER TYPE evenementtype ADD VALUE 'EXPLOSION'")
-        op.execute("ALTER TYPE evenementtype ADD VALUE 'RASSEMBLEMENT'")
-        op.execute("ALTER TYPE evenementtype ADD VALUE 'AUTRE'")
-
-
+        pass
 def downgrade():
     op.execute("ALTER TYPE evenementtype RENAME TO evenementtype_old")
     op.execute("CREATE TYPE evenementtype AS ENUM('INCENDIE', 'INONDATION','ATTENTAT')")

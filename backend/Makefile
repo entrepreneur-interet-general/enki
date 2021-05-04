@@ -21,7 +21,7 @@ restart:
 
 seed:
 	docker exec enki_api_1 flask create-position-groups
-	docker exec enki_api_1 flask create-groups-and-locations
+	docker exec enki_api_1 flask create-position-groups
 
 shell:
 	docker-compose exec enki-api flask shell
@@ -46,7 +46,7 @@ test-resource-down:
 create-migration:
 	docker exec enki_api_1 alembic revision --autogenerate -m "test"
 run-migration:
-	docker-compose -f docker-compose.yml exec enki-api alembic upgrade head
+	docker exec enki_api_1 alembic upgrade head
 stamp-migration:
-	docker-compose -f docker-compose.yml exec enki-api alembic stamp head
+	docker exec enki_api_1 alembic stamp head
 

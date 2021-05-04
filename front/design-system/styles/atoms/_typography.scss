@@ -1,6 +1,9 @@
 .title-container {
     padding: 0 16px 20px 16px;
     position: relative;
+    @include mediaquery(desktop) {
+        padding: 16px;
+    }
     &.-reversed {
         background: $primary;
         padding: 16px;

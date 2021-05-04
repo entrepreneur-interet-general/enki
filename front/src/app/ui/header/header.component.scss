@@ -23,7 +23,7 @@
   display: flex;
   justify-content: space-between;
   @include mediaquery(desktop) {
-    position: relative;
+    position: static;
   }
   &--col {
     display: flex;

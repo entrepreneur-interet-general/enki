@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Participant, Evenement, ToastType } from 'src/app/interfaces';
 import { EvenementsService } from '../evenements.service';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Observer, Subject, Subscription, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -19,11 +19,14 @@ export class ShareEvenementComponent implements OnInit {
   participants = new BehaviorSubject<Participant[]>([]);
 
   meetingUUID: string;
+  isPanelSubscription: Subscription;
+  evenementSubscriber: Subscription;
+  isPanel: boolean;
+  // isPanel = new Subject<boolean>();
   // role = new FormControl('')
 
   selectedParticipant: Participant;
 
-  evenementSubscriber: any;
 
   constructor(
     private router: Router,
@@ -46,6 +49,15 @@ export class ShareEvenementComponent implements OnInit {
     /* this.getMeetingData().subscribe(res => {
       this.meetingUUID = res.data[0].uuid
     }) */
+
+    this.isPanelSubscription = this.activatedRoute
+      .data
+      .subscribe(data => {
+        // console.log(data.isPanel)
+        // this.isPanel.next(data.isPanel);
+        this.isPanel = data.isPanel;
+      });
+      
   }
 
   getMeetingData(): Observable<any> {
@@ -82,6 +94,7 @@ export class ShareEvenementComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.evenementSubscriber.unsubscribe();
+    this.isPanelSubscription.unsubscribe()
   }
 
 

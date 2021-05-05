@@ -1,10 +1,18 @@
 @import '../../../../design-system/styles/variables';
-
-.prototype.share--content {
-  height: 526px;
-  + .action {
-    margin-top: -120px;
-    margin-left: 304px;
+@import '../../../../design-system/styles/mixins';
+:host {
+  position: absolute;
+  top: 0;
+  background: $white;
+  width: 100%;
+  padding-top: 72px;
+  @include mediaquery(desktop) {
+    padding-top: 16px;
+    right: 0;
+    width: 400px;
+    z-index: 1;
+    height: 100%;
+    box-shadow: 0px 0px 8px rgb(0 0 0 / 25%);
   }
 }
 .share {

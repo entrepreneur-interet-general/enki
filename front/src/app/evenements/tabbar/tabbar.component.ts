@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ShareEvenementService } from '../share-evenement.service';
 
 @Component({
   selector: 'app-tabbar',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private shareEvenementService: ShareEvenementService,
+  ) { }
 
   ngOnInit(): void {
   }
+  openSharePanel(): void {
+    this.shareEvenementService.openPanel();
+  }
+
 
 }

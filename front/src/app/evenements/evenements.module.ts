@@ -106,13 +106,6 @@ const routes : Routes = [
                       }
                     ]
                   },
-                  {
-                    path: 'share',
-                    component: ShareEvenementComponent,
-                    data : {
-                      isPanel : true
-                    }
-                  }
                 ]
               },
             ]
@@ -120,9 +113,6 @@ const routes : Routes = [
           {
             path: 'share',
             component: ShareEvenementComponent,
-            data : {
-              isPanel : false
-            },
             children: [
               {
                 path: 'searchuser',

@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Participant, Evenement, ToastType } from 'src/app/interfaces';
 import { EvenementsService } from '../evenements.service';
-import { BehaviorSubject, Observable, Observer, Subject, Subscription, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { ToastService } from 'src/app/toast/toast.service';
+import { ShareEvenementService } from '../share-evenement.service';
 
 @Component({
   selector: 'app-share-evenement',
@@ -19,11 +19,8 @@ export class ShareEvenementComponent implements OnInit {
   participants = new BehaviorSubject<Participant[]>([]);
 
   meetingUUID: string;
-  isPanelSubscription: Subscription;
   evenementSubscriber: Subscription;
-  isPanel: boolean;
-  // isPanel = new Subject<boolean>();
-  // role = new FormControl('')
+  @Input() isPanel: boolean;
 
   selectedParticipant: Participant;
 
@@ -34,8 +31,8 @@ export class ShareEvenementComponent implements OnInit {
     public evenementsService: EvenementsService,
     private http: HttpClient,
     private toastService: ToastService,
-    public mobilePrototype: MobilePrototypeService
-  ) {
+    private shareEvenementService: ShareEvenementService,
+    ) {
     this.selectedParticipant = null;
     this.meetingUUID = null;
 
@@ -50,14 +47,6 @@ export class ShareEvenementComponent implements OnInit {
       this.meetingUUID = res.data[0].uuid
     }) */
 
-    this.isPanelSubscription = this.activatedRoute
-      .data
-      .subscribe(data => {
-        // console.log(data.isPanel)
-        // this.isPanel.next(data.isPanel);
-        this.isPanel = data.isPanel;
-      });
-      
   }
 
   getMeetingData(): Observable<any> {
@@ -92,9 +81,12 @@ export class ShareEvenementComponent implements OnInit {
     )
   }
 
+  closePanel(): void {
+    this.shareEvenementService.closePanel();
+  }
+
   ngOnDestroy(): void {
     this.evenementSubscriber.unsubscribe();
-    this.isPanelSubscription.unsubscribe()
   }
 
 

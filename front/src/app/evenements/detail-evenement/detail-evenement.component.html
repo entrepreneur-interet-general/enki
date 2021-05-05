@@ -6,6 +6,7 @@
       Retour à la liste des événements
     </a>
     <app-tabbar></app-tabbar>
-  </div> 
+  </div>
   <router-outlet (activate)="onActivate()"></router-outlet>
+  <app-share-evenement [isPanel]="true" [class.-active]="isPanelOpened" class="u-hidden-mobile"></app-share-evenement>
 </div>

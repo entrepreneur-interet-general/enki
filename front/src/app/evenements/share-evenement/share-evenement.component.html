@@ -1,4 +1,4 @@
-<a class="goTo" routerLink=".." *ngIf="isPanel">
+<a class="goTo" (click)="closePanel()" *ngIf="isPanel">
   <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
   Fermer
 </a>
@@ -12,15 +12,15 @@
     </p>
     <div class="enkiform__group">
       <!-- <input type="text" class="enkiform__input" id="participants"  [formControl]="participants" required> -->
-      <button class="btn test--shareWithUser" (click)="goToSearchUser()" *ngIf="!isPanel">Ajouter des participants</button>
+      <button class="btn test--shareWithUser" (click)="goToSearchUser()">Ajouter des participants</button>
       <!-- <svg class="icon-search icon"><use xlink:href="#icon-search"></use></svg> -->
     </div>
   </div>
   <app-participants [participants]="participants" [selectedParticipant]="selectedParticipant"></app-participants>
 </div>
-<div class="actions">
+<div class="actions u-hidden-desktop">
   <div class="action actions--element action--video" (click)="createMeeting()">
     <svg class="icon-video icon"><use xlink:href="#icon-video"></use></svg>
   </div>
 </div>
-<router-outlet (activate)="onActivate()"></router-outlet>
+<router-outlet name="share" (activate)="onActivate()"></router-outlet>

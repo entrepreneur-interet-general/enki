@@ -30,6 +30,7 @@ import { PipesModule } from '../pipes.module';
 import { ListeEvenementsComponent } from './liste-evenements/liste-evenements.component';
 import { TabbarComponent } from './tabbar/tabbar.component';
 import { ParticipantsComponent } from './participants/participants.component';
+import { ShareTabComponent } from './share-tab/share-tab.component';
 
 
 const routes : Routes = [
@@ -92,10 +93,6 @@ const routes : Routes = [
                     component: DetailMessageComponent
                   },
                   {
-                    path: 'filters',
-                    component: FilterMessagesComponent
-                  },
-                  {
                     path: 'addmessage',
                     component: AddMessageComponent,
                     canDeactivate: [CanDeactivateGuard],
@@ -112,7 +109,7 @@ const routes : Routes = [
           },
           {
             path: 'share',
-            component: ShareEvenementComponent,
+            component: ShareTabComponent,
             children: [
               {
                 path: 'searchuser',
@@ -144,6 +141,7 @@ const routes : Routes = [
     FilterMessagesComponent,
     TabbarComponent,
     ParticipantsComponent,
+    ShareTabComponent,
   ],
   providers: [
     MessagesService,

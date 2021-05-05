@@ -49,9 +49,9 @@ export class MessagesService {
 
 
   getMessagesByEvenementID(evenementUUID: string): Observable<Message[]> {
-    // const messages = this.getMessages().filter(message => message.evenement_id === evenementUUID)
-    // return this.containsEvenementMessages(evenementUUID) ? of(messages) : this.httpGetMessages(evenementUUID)
-    return this.httpGetMessages(evenementUUID)
+    const messages = this.getMessages().filter(message => message.evenement_id === evenementUUID)
+    return this.containsEvenementMessages(evenementUUID) ? of(messages) : this.httpGetMessages(evenementUUID)
+    // return this.httpGetMessages(evenementUUID)
   }
 
   httpGetMessages(evenementUUID: string): Observable<Message[]> {

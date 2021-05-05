@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Message } from 'src/app/interfaces';
 import { EvenementsService } from '../../evenements.service';
 import { MessagesService } from '../messages.service';
 
@@ -16,6 +17,7 @@ export class FilterMessagesComponent implements OnInit {
     auteur: new FormControl(''),
     type: new FormControl(''),
   })
+  @Input() messages: Message[];
   evenementUUID: string;
   etablissementOptions: any[];
   auteursOptions: any[];
@@ -34,9 +36,11 @@ export class FilterMessagesComponent implements OnInit {
     this.filterGroup.controls.etablissement.setValue(event.filter.etablissement)
     this.filterGroup.controls.auteur.setValue(event.filter.auteur)
     this.filterGroup.controls.type.setValue(event.filter.type)
+  }
 
-    this.messagesService.getMessagesByEvenementID(this.evenementUUID).subscribe(messages => {
-      messages.forEach(message => {
+  ngOnChanges() {
+    if(this.messages) {
+      this.messages.forEach(message => {
         if (message.creator) {
           if (!this.etablissementOptions.some(item => item.group_id === message.creator.position.group_id)) {
             this.etablissementOptions.push({
@@ -60,8 +64,7 @@ export class FilterMessagesComponent implements OnInit {
           })
         }
       })
-      
-    })
+    }
   }
 
   ngOnInit(): void {

@@ -48,7 +48,7 @@ export class ListeMainCouranteComponent implements OnInit {
   ngOnInit(): void {
     const timer$ = timer(0, 20000);
     this.messages$ = timer$.pipe(
-      switchMap(() => this.messagesService.getMessagesByEvenementID(this.uuid))
+      switchMap(() => this.messagesService.httpGetMessages(this.uuid))
     )
     this.subscription = this.messages$.subscribe((messages) => {
       this.evenementsService.setMessages(this.uuid, this.messages);

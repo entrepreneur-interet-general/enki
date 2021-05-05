@@ -75,7 +75,7 @@
     <div class="action actions--element u-hidden-mobile" routerLink="./addmessage">
       <svg class="icon icon-video"><use xlink:href="#icon-video"></use></svg>
     </div>
-    <div class="action actions--element u-hidden-desktop" routerLink="../filters" *ngIf="messages.length > 0">
+    <div class="action actions--element u-hidden-desktop" routerLink="./filters" *ngIf="messages.length > 0">
       <div class="filter-pastille" [class.-active]="listIsFiltered()"></div>
       <svg class="icon-filter icon"><use xlink:href="#icon-filter"></use></svg>
     </div>
@@ -83,5 +83,7 @@
       <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
     </div>
   </div>
+  
+  <app-filter-messages [messages]="messages"></app-filter-messages>
 </div>
 <router-outlet></router-outlet>

@@ -1,5 +1,5 @@
 .title-container {
-    padding: 0 16px 20px 16px;
+    padding: 16px 20px;
     position: relative;
     @include mediaquery(desktop) {
         padding: 16px;
@@ -32,7 +32,6 @@
 }
 
 .goTo {
-    margin-bottom: 20px;
     padding: 0 16px;
     color: $darkestGrey;
     display: flex;
@@ -41,9 +40,7 @@
     letter-spacing: 0.5px;
     font-size: 17px;
     cursor: pointer;
-    @include mediaquery(desktop) {
-        margin-bottom: 0;
-    }
+    height: 56px;
     svg {
         margin-right: 8px;
     }

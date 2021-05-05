@@ -16,7 +16,7 @@
   background: $white;
   transform: translate(0, 0);
   width: calc(100% - 50px);
-  height: calc(100% - $headerSize);
+  height: calc(100% - #{$headerSize});
   transition: .3s ease all;
   z-index: 8000;
   box-sizing: border-box;

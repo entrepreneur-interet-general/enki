@@ -17,6 +17,11 @@
     height: calc(100vh - #{$headerSize * 2});
     overflow-y: scroll;
   }
+  &--colright {
+    @include mediaquery(desktop) {
+      overflow: scroll;
+    }
+  }
   .filter-pastille {
     display: none;
     background: $red;

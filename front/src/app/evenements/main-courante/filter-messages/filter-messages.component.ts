@@ -75,7 +75,7 @@ export class FilterMessagesComponent implements OnInit {
 
   onSubmit(): void {
     this.evenementsService.updateEvenementFilter(this.evenementUUID, this.filterGroup.getRawValue()).subscribe(() => {
-      this.router.navigate(['..'], { relativeTo: this.route})
+      this.closeFilters();
     })
   }
 
@@ -87,7 +87,7 @@ export class FilterMessagesComponent implements OnInit {
       fromDatetime: '',
       toDatetime: '',
     }).subscribe(() => {
-      this.router.navigate(['..'], { relativeTo: this.route})
+      this.closeFilters();
     })
   }
 

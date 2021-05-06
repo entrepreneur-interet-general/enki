@@ -3,8 +3,8 @@
 
 :host {
   @include mediaquery(desktop) {
-    height: calc(100vh - #{$headerSize * 2});
-    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 1fr 400px;
   }
 }
 .action--export {
@@ -13,12 +13,9 @@
   right: 16px;
 }
 .mc {
-  &.prototype .action {
-    margin-top: -80px;
-    margin-left: 306px;
-    &--filter {
-      margin-left: 240px;
-    }
+  @include mediaquery(desktop) {
+    height: calc(100vh - #{$headerSize * 2});
+    overflow-y: scroll;
   }
   .filter-pastille {
     display: none;
@@ -42,7 +39,7 @@
     }
   }
   .list {
-    padding-bottom: 120px;
+    padding-bottom: 75px;
     background: $white;
     &--element {
       border: 0;

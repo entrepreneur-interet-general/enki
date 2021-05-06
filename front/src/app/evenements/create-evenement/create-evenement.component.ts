@@ -51,6 +51,9 @@ export class CreateEvenementComponent implements OnInit {
       this.evenementGroup.controls.location.setValue(location.label)
     })
   }
+  close(): void {
+    this.router.navigate(['/evenements']);
+  }
 
   ngOnInit(): void {
   }

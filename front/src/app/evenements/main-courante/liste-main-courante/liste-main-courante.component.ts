@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User, MessageFilter, Message } from 'src/app/interfaces';
-import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
 import { UserService } from 'src/app/user/user.service';
 import { EvenementsService,  } from '../../evenements.service';
@@ -27,6 +26,7 @@ export class ListeMainCouranteComponent implements OnInit {
   exportType = new FormControl('xlsx');
   messages$: Observable<Message[]>;
   subscription: any;
+  showFilters: boolean;
 
   @ViewChild(ModalComponent) modal: ModalComponent;
 
@@ -35,7 +35,6 @@ export class ListeMainCouranteComponent implements OnInit {
     private evenementsService: EvenementsService,
     private userService: UserService,
     private router: Router,
-    public mobilePrototype: MobilePrototypeService,
     private route: ActivatedRoute,
     ) {
       this.messages = []
@@ -43,10 +42,11 @@ export class ListeMainCouranteComponent implements OnInit {
     const event = this.evenementsService.getEvenementByID(this.uuid)
     this.currentEventFilter = event.filter
     this.user = this.userService.user
+    this.showFilters = false;
   }
 
   ngOnInit(): void {
-    const timer$ = timer(0, 20000);
+    const timer$ = timer(0, 5000);
     this.messages$ = timer$.pipe(
       switchMap(() => this.messagesService.httpGetMessages(this.uuid))
     )
@@ -63,6 +63,12 @@ export class ListeMainCouranteComponent implements OnInit {
   }
   openModal(): void {
     this.modal.open()
+  }
+  openFilters(): void {
+    this.showFilters = true;
+  }
+  hideFilters(event): void {
+    this.showFilters = false;
   }
   exportMainCourante(): void {
     this.evenementsService.getMainCouranteData().subscribe(data => {

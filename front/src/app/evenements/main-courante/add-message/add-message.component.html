@@ -1,4 +1,4 @@
-<app-small-heading title="Nouveau message" backLink="../liste"></app-small-heading>
+<app-small-heading title="Nouveau message" (closeEvent)="close()"></app-small-heading>
 <div class="addMessage">
   <form action="" #f="ngForm" class="addMessageForm" [formGroup]="messageGroup" (ngSubmit)="onSubmit(messageType.RESTRICTED)">
     <div>

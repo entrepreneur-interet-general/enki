@@ -1,13 +1,13 @@
-<div class="title-container -bottomLine">
-  <h1 class="h2-title">Main courante</h1>
-  <div class="subtitle">
-    Mis à jour il y a une minute
+<div class="mc">
+  <div class="title-container -bottomLine">
+    <h1 class="h2-title">Main courante</h1>
+    <div class="subtitle">
+      Mis à jour il y a une minute
+    </div>
+    <div *ngIf="messages.length > 0" class="action action--export" (click)="openModal()">
+      <svg class="icon-download icon"><use xlink:href="#icon-download"></use></svg>
+    </div>
   </div>
-  <div *ngIf="messages.length > 0" class="action action--export" (click)="openModal()">
-    <svg class="icon-download icon"><use xlink:href="#icon-download"></use></svg>
-  </div>
-</div>
-<div class="mc" [class]="mobilePrototype.getCheckedClass()">
   <div class="mc--content">
     <div class="mc--empty" *ngIf="!(messages.length > 0) ">
       Le dossier est vide, créez une nouvelle main courante pour démarrer le partage.
@@ -75,7 +75,7 @@
     <div class="action actions--element u-hidden-mobile" routerLink="./addmessage">
       <svg class="icon icon-video"><use xlink:href="#icon-video"></use></svg>
     </div>
-    <div class="action actions--element u-hidden-desktop" routerLink="./filters" *ngIf="messages.length > 0">
+    <div class="action actions--element u-hidden-desktop" (click)="openFilters()" *ngIf="messages.length > 0">
       <div class="filter-pastille" [class.-active]="listIsFiltered()"></div>
       <svg class="icon-filter icon"><use xlink:href="#icon-filter"></use></svg>
     </div>
@@ -84,6 +84,6 @@
     </div>
   </div>
   
-  <!-- <app-filter-messages [messages]="messages"></app-filter-messages> -->
 </div>
+<app-filter-messages [messages]="messages" [class.-active]="showFilters" (closeFilterEvent)="hideFilters($event)"></app-filter-messages>
 <router-outlet></router-outlet>

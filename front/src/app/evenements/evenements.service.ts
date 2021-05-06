@@ -14,6 +14,7 @@ import { ToastService } from '../toast/toast.service';
 export class EvenementsService {
 
   readonly _evenements = new BehaviorSubject<Evenement[]>([]);
+  public evenements$: Observable<Evenement[]>;
   evenementsUrl: string;
   selectedEvenementUUID = new BehaviorSubject<string>('');
   selectedEvenementParticipants = new BehaviorSubject<Participant[]>([]);
@@ -25,6 +26,7 @@ export class EvenementsService {
     private toastService: ToastService,
     ) {
       this.evenementsUrl = `${environment.backendUrl}/events`
+      this.evenements$ = this._evenements.asObservable();
       this.httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':  'application/json',
@@ -62,7 +64,7 @@ export class EvenementsService {
       evenements.map(evenement => {
         return evenementToAdd.uuid === evenement.uuid ? evenementToAdd : evenement
       })
-    } {
+    } else {
       // if it doesn't exist, just add it
       evenements = evenements.concat(evenementToAdd)
     }
@@ -79,7 +81,10 @@ export class EvenementsService {
   setMessages(evenement_id: string, messages: Message[]): void {
     let events = this.getEvenements()
     events.map(event => {
-      return event.uuid === evenement_id ? event.messages = messages : event
+      if (event.uuid === evenement_id) {
+        event.messages = messages
+      }
+      return event
     })
     this._setEvenements(events)
   }

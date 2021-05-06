@@ -38,9 +38,12 @@ export class ListeMainCouranteComponent implements OnInit {
     private route: ActivatedRoute,
     ) {
       this.messages = []
-      this.uuid = this.evenementsService.selectedEvenementUUID.getValue()
-    const event = this.evenementsService.getEvenementByID(this.uuid)
-    this.currentEventFilter = event.filter
+      this.uuid = this.evenementsService.selectedEvenementUUID.getValue();
+    const event = this.evenementsService.getEvenementByID(this.uuid);
+    this.currentEventFilter = event.filter;
+    this.evenementsService.evenements$.subscribe(() => {
+      this.currentEventFilter = this.evenementsService.getEvenementByID(this.uuid).filter;
+    })
     this.user = this.userService.user
     this.showFilters = false;
   }
@@ -67,7 +70,7 @@ export class ListeMainCouranteComponent implements OnInit {
   openFilters(): void {
     this.showFilters = true;
   }
-  hideFilters(event): void {
+  hideFilters(): void {
     this.showFilters = false;
   }
   exportMainCourante(): void {

@@ -93,4 +93,5 @@ export class ShareEvenementComponent implements OnInit {
   onActivate(): void {
     document.querySelector('.base').scroll(0,0)
   }
+
 }

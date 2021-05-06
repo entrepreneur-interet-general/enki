@@ -1,7 +1,4 @@
-<a class="goTo" (click)="closePanel()" *ngIf="isPanel">
-  <svg class="icon-arrow icon"><use xlink:href="#icon-arrow"></use></svg>
-  Fermer
-</a>
+<app-small-heading *ngIf="isPanel" title="Ajouter des participants" (closeEvent)="closePanel()"></app-small-heading>
 <div class="share--content">
   <div class="title-container">
     <h1 class="h2-title">Partager l'événement</h1>

@@ -14,7 +14,8 @@ def create_position_group():
     positions_groups = {
         GroupType.MAIRIE: ["Maire", "Adjoint", "Chef Sécurité", "Gestion des risques", "Sécurité Civile"],
         GroupType.PREFECTURE: ["Préfet", "Directeur de cabinet", "Chef site PC", "Sécurité civile", "Gestion des risques"],
-        GroupType.SDIS: ["Directeur", "Responsable CODIS", "Pompier"]
+        GroupType.SDIS: ["Directeur", "Responsable CODIS", "Pompier"],
+        GroupType.EPCI: ["Gestion des riques", "Sécurité Civile"]
     }
 
 

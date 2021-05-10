@@ -70,7 +70,6 @@ class MessageSchema(Schema):
         return entity
 
     def _build_type_label(self, obj) -> str:
-        current_app.logger.info(f"obj.type {obj}")##
         return MessageType.get_label(message_type=obj.type)
 
     def _is_restricted(self, obj) -> bool:

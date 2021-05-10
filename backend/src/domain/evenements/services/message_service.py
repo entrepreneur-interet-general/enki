@@ -48,11 +48,11 @@ class MessageService:
             evenement.add_message(message=message)
             user: UserEntity = uow.user.get_by_uuid(uuid=creator_id)
             message.set_creator(user=user)
-            MessageService.add_tags(message=message, tag_ids=message.tag_ids, uow=uow)
+            MessageService.add_tags(message=message, tag_ids=tag_ids, uow=uow)
             if restricted_user_group:
                 message.restricted_to_group_ids.append(user.position.group_id)
                 MessageService.add_restricted_group(message=message, uow=uow)
-            MessageService.add_resources(message=message, resource_ids=message.resource_ids, uow=uow)
+            MessageService.add_resources(message=message, resource_ids=resource_ids, uow=uow)
             new_message = uow.message.get_by_uuid(message.uuid)
             return MessageService.schema().dump(new_message)
 

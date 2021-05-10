@@ -75,6 +75,7 @@ def register_cli_commands(app):
     app.cli.add_command(seeds.create_position_group)
     app.cli.add_command(seeds.create_affairs)
     app.cli.add_command(seeds.create_sdis_groups)
+    app.cli.add_command(seeds.create_custom_group)
 
 
 def configure_redoc(app):

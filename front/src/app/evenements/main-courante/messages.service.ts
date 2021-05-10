@@ -17,14 +17,16 @@ export class MessagesService {
   messagesUrl: string;
   resourcesUrl: string;
   private readonly _messagesSource = new BehaviorSubject<Message[]>([]);
+  public messages$: Observable<Message[]>;
 
   constructor(
     private http: HttpClient,
     private evenementsService: EvenementsService,
     private toastService: ToastService,
-  ) {
-    this.resourcesUrl = `${environment.backendUrl}/resources`
-    this.messagesUrl = `${environment.backendUrl}/messages`
+    ) {
+      this.resourcesUrl = `${environment.backendUrl}/resources`
+      this.messagesUrl = `${environment.backendUrl}/messages`
+      this.messages$ = this._messagesSource.asObservable()
   }
 
   getMessages(): Message[] {

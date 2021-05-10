@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, timer } from 'rxjs';
+import { Observable, Subscription, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User, MessageFilter, Message } from 'src/app/interfaces';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
@@ -27,6 +27,7 @@ export class ListeMainCouranteComponent implements OnInit {
   messages$: Observable<Message[]>;
   subscription: any;
   showFilters: boolean;
+  messageUpdateSubscription: Subscription;
 
   @ViewChild(ModalComponent) modal: ModalComponent;
 
@@ -49,7 +50,7 @@ export class ListeMainCouranteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const timer$ = timer(0, 5000);
+    const timer$ = timer(0, 10000);
     this.messages$ = timer$.pipe(
       switchMap(() => this.messagesService.httpGetMessages(this.uuid))
     )
@@ -60,9 +61,15 @@ export class ListeMainCouranteComponent implements OnInit {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       });
     })
+    this.messageUpdateSubscription = this.messagesService.messages$.subscribe(messages => {
+      this.messages = messages.sort((a, b) => {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      });
+    })
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.messageUpdateSubscription.unsubscribe();
   }
   openModal(): void {
     this.modal.open()

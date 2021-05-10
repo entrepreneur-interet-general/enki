@@ -11,12 +11,12 @@
 }
 .menu {
   position: fixed;
-  top: 56px;
+  top: $headerSize;
   left: 0;
   background: $white;
   transform: translate(0, 0);
   width: calc(100% - 50px);
-  height: calc(100% - 56px);
+  height: calc(100% - #{$headerSize});
   transition: .3s ease all;
   z-index: 8000;
   box-sizing: border-box;
@@ -26,8 +26,9 @@
     top: auto;
     left: 0;
     width: auto;
-    height: auto;
     background: transparent;
+    height: 100%;
+    z-index: auto;
   }
   &--entries {
     display: flex;

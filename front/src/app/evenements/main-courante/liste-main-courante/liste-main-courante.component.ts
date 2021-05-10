@@ -2,10 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, timer } from 'rxjs';
+import { Observable, Subscription, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User, MessageFilter, Message } from 'src/app/interfaces';
-import { MobilePrototypeService } from 'src/app/mobile-prototype/mobile-prototype.service';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
 import { UserService } from 'src/app/user/user.service';
 import { environment } from 'src/environments/environment';
@@ -29,6 +28,8 @@ export class ListeMainCouranteComponent implements OnInit {
   exportType = new FormControl('xlsx');
   messages$: Observable<Message[]>;
   subscription: any;
+  showFilters: boolean;
+  messageUpdateSubscription: Subscription;
 
   @ViewChild(ModalComponent) modal: ModalComponent;
 
@@ -37,21 +38,24 @@ export class ListeMainCouranteComponent implements OnInit {
     private evenementsService: EvenementsService,
     private userService: UserService,
     private router: Router,
-    public mobilePrototype: MobilePrototypeService,
     private route: ActivatedRoute,
     private http: HttpClient,
     ) {
       this.messages = []
-      this.uuid = this.evenementsService.selectedEvenementUUID.getValue()
-    const event = this.evenementsService.getEvenementByID(this.uuid)
-    this.currentEventFilter = event.filter
+      this.uuid = this.evenementsService.selectedEvenementUUID.getValue();
+    const event = this.evenementsService.getEvenementByID(this.uuid);
+    this.currentEventFilter = event.filter;
+    this.evenementsService.evenements$.subscribe(() => {
+      this.currentEventFilter = this.evenementsService.getEvenementByID(this.uuid).filter;
+    })
     this.user = this.userService.user
+    this.showFilters = false;
   }
 
   ngOnInit(): void {
-    const timer$ = timer(0, 3000);
+    const timer$ = timer(0, 10000);
     this.messages$ = timer$.pipe(
-      switchMap(() => this.messagesService.getMessagesByEvenementID(this.uuid))
+      switchMap(() => this.messagesService.httpGetMessages(this.uuid))
     )
     this.subscription = this.messages$.subscribe((messages) => {
       this.evenementsService.setMessages(this.uuid, this.messages);
@@ -60,9 +64,15 @@ export class ListeMainCouranteComponent implements OnInit {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       });
     })
+    this.messageUpdateSubscription = this.messagesService.messages$.subscribe(messages => {
+      this.messages = messages.sort((a, b) => {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      });
+    })
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.messageUpdateSubscription.unsubscribe();
   }
   addReaction(messageUUID: string): void {
     this.addReactionHttp(messageUUID).subscribe(res => {
@@ -76,6 +86,12 @@ export class ListeMainCouranteComponent implements OnInit {
   }
   openModal(): void {
     this.modal.open()
+  }
+  openFilters(): void {
+    this.showFilters = true;
+  }
+  hideFilters(): void {
+    this.showFilters = false;
   }
   exportMainCourante(): void {
     this.evenementsService.getMainCouranteData().subscribe(data => {
@@ -114,7 +130,7 @@ export class ListeMainCouranteComponent implements OnInit {
       // replace window.open by calling joinMeeting in evenementsService and passing meetingID...
       window.open(message.description, '_blank')
     } else {
-      this.router.navigate([`../message/${message.uuid}`], { relativeTo: this.route })
+      this.router.navigate([`./message/${message.uuid}`], { relativeTo: this.route })
     }
   }
 

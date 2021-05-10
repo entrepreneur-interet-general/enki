@@ -48,6 +48,10 @@ export class ContactAddComponent implements OnInit {
     })
   }
 
+  closeContactAdd(): void {
+    this.router.navigate(['/annuaire/contactlist']);
+  }
+
   ngOnInit(): void {
   }
   onSubmit(): void {

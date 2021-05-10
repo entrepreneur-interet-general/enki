@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-main-courante',
   templateUrl: './main-courante.component.html',
-  styleUrls: []
+  styleUrls: ['./main-courante.scss']
 })
 export class MainCouranteComponent implements OnInit {
 

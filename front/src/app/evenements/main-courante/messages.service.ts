@@ -17,14 +17,16 @@ export class MessagesService {
   messagesUrl: string;
   resourcesUrl: string;
   private readonly _messagesSource = new BehaviorSubject<Message[]>([]);
+  public messages$: Observable<Message[]>;
 
   constructor(
     private http: HttpClient,
     private evenementsService: EvenementsService,
     private toastService: ToastService,
-  ) {
-    this.resourcesUrl = `${environment.backendUrl}/resources`
-    this.messagesUrl = `${environment.backendUrl}/messages`
+    ) {
+      this.resourcesUrl = `${environment.backendUrl}/resources`
+      this.messagesUrl = `${environment.backendUrl}/messages`
+      this.messages$ = this._messagesSource.asObservable()
   }
 
   getMessages(): Message[] {
@@ -49,9 +51,9 @@ export class MessagesService {
 
 
   getMessagesByEvenementID(evenementUUID: string): Observable<Message[]> {
-    // const messages = this.getMessages().filter(message => message.evenement_id === evenementUUID)
-    // return this.containsEvenementMessages(evenementUUID) ? of(messages) : this.httpGetMessages(evenementUUID)
-    return this.httpGetMessages(evenementUUID)
+    const messages = this.getMessages().filter(message => message.evenement_id === evenementUUID)
+    return this.containsEvenementMessages(evenementUUID) ? of(messages) : this.httpGetMessages(evenementUUID)
+    // return this.httpGetMessages(evenementUUID)
   }
 
   httpGetMessages(evenementUUID: string): Observable<Message[]> {

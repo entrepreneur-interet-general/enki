@@ -4,9 +4,18 @@
 :host {
   position: absolute;
   top: 0;
-  background: white;
+  background: $white;
   width: 100%;
   padding-top: 72px;
+  height: 100%;
+  z-index: 1;
+  @include mediaquery(desktop) {
+    right: 0;
+    width: 400px;
+    border-left: 1px solid $blueGrey;
+    padding-top: 0;
+    overflow: scroll;
+  }
 }
 .detail-message {
   &--header {

@@ -62,6 +62,9 @@ export class AddMessageComponent implements OnInit {
 
   get title() { return this.messageGroup.get('title'); }
 
+  close(): void {
+    this.router.navigate(['..'], { relativeTo: this.route });
+  }
   onSubmit(messageType: MessageType): void {
     let selectedLabelsUUID = this.labelsService.selectedLabels.map(label => label.uuid)
     this.evenementUUID = this.evenementsService.selectedEvenementUUID.getValue()

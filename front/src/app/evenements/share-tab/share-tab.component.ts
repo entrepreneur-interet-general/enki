@@ -10,11 +10,11 @@ import { ToastService } from 'src/app/toast/toast.service';
 import { ShareEvenementService } from '../share-evenement.service';
 
 @Component({
-  selector: 'app-share-evenement',
-  templateUrl: './share-evenement.component.html',
-  styleUrls: ['./share-evenement.component.scss','../detail-evenement/detail-evenement.component.scss'],
+  selector: 'app-share-tab',
+  templateUrl: './share-tab.component.html',
+  styleUrls: ['./share-tab.component.scss','../detail-evenement/detail-evenement.component.scss'],
 })
-export class ShareEvenementComponent implements OnInit {
+export class ShareTabComponent implements OnInit {
 
   participants = new BehaviorSubject<Participant[]>([]);
 
@@ -93,5 +93,4 @@ export class ShareEvenementComponent implements OnInit {
   onActivate(): void {
     document.querySelector('.base').scroll(0,0)
   }
-
 }

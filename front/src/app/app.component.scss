@@ -58,18 +58,18 @@
 
 main {
   position: relative;
-  padding-top: 56px;
+  padding-top: $headerSize;
   @include mediaquery(desktop) {
     display: grid;
     grid-template-columns: 250px auto;
     padding-top: 0;
+    height: calc(100% - #{$headerSize});
   }
 }
 
 .main-content {
-  padding-top: 24px;
   @include mediaquery(desktop) {
-    padding: 16px 0;
     background: $white;
+    overflow: scroll;
   }
 }

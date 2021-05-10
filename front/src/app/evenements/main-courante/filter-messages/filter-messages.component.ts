@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Message } from 'src/app/interfaces';
 import { EvenementsService } from '../../evenements.service';
-import { MessagesService } from '../messages.service';
 
 @Component({
   selector: 'app-filter-messages',
@@ -16,13 +16,14 @@ export class FilterMessagesComponent implements OnInit {
     auteur: new FormControl(''),
     type: new FormControl(''),
   })
+  @Input() messages: Message[];
+  @Output() closeFilterEvent = new EventEmitter();
   evenementUUID: string;
   etablissementOptions: any[];
   auteursOptions: any[];
   messageTypeOptions: any[];
   constructor(
     private evenementsService: EvenementsService,
-    private messagesService: MessagesService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -34,9 +35,15 @@ export class FilterMessagesComponent implements OnInit {
     this.filterGroup.controls.etablissement.setValue(event.filter.etablissement)
     this.filterGroup.controls.auteur.setValue(event.filter.auteur)
     this.filterGroup.controls.type.setValue(event.filter.type)
+  }
 
-    this.messagesService.getMessagesByEvenementID(this.evenementUUID).subscribe(messages => {
-      messages.forEach(message => {
+  closeFilters(): void {
+    this.closeFilterEvent.emit();
+  }
+
+  ngOnChanges() {
+    if(this.messages) {
+      this.messages.forEach(message => {
         if (message.creator) {
           if (!this.etablissementOptions.some(item => item.group_id === message.creator.position.group_id)) {
             this.etablissementOptions.push({
@@ -60,8 +67,7 @@ export class FilterMessagesComponent implements OnInit {
           })
         }
       })
-      
-    })
+    }
   }
 
   ngOnInit(): void {
@@ -69,7 +75,7 @@ export class FilterMessagesComponent implements OnInit {
 
   onSubmit(): void {
     this.evenementsService.updateEvenementFilter(this.evenementUUID, this.filterGroup.getRawValue()).subscribe(() => {
-      this.router.navigate(['..'], { relativeTo: this.route})
+      this.closeFilters();
     })
   }
 
@@ -81,7 +87,7 @@ export class FilterMessagesComponent implements OnInit {
       fromDatetime: '',
       toDatetime: '',
     }).subscribe(() => {
-      this.router.navigate(['..'], { relativeTo: this.route})
+      this.closeFilters();
     })
   }
 

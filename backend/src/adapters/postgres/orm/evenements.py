@@ -68,7 +68,7 @@ user_evenement_role_table = Table(
     Column('uuid', String(60), primary_key=True),
     Column('user_id', String(255), ForeignKey("users.uuid")),
     Column('evenement_id', String(255), ForeignKey("evenements.uuid")),
-    Column('type', Enum(EvenementRoleType)),
+    Column('type', ChoiceType(EvenementRoleType, impl=String())),
     Column('revoked_at', TIMESTAMP(), nullable=True),
     Column('updated_at', TIMESTAMP(), nullable=False, default=datetime.now, onupdate=datetime.now),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now)
@@ -79,7 +79,7 @@ messages_reactions_table = Table(
     'messages_reactions', metadata,
     Column('uuid', String(60), primary_key=True),
     Column('creator_id', String(60), ForeignKey("users.uuid")),
-    Column('type', Enum(ReactionType)),
+    Column('type', ChoiceType(ReactionType, impl=String())),
     Column('message_id', String(60), ForeignKey("messages.uuid")),
     Column('created_at', TIMESTAMP(), nullable=False, default=datetime.now),
     UniqueConstraint('creator_id', 'type', name='uix_1')

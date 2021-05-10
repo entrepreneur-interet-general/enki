@@ -19,6 +19,8 @@ class GroupType(str, Enum):
 
 
 
+
+
 class LocationType(str, Enum):
     VILLE = "ville"
     DEPARTEMENT = "departement"

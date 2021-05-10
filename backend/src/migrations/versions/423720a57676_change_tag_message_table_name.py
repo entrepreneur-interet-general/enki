@@ -17,7 +17,8 @@ depends_on = None
 
 
 def upgrade():
-    op.rename_table('tags_messages', 'messages_tags')
+    pass
+    #op.rename_table('tags_messages', 'messages_tags')
 
 
 def downgrade():

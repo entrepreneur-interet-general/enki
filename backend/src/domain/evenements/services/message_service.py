@@ -35,8 +35,8 @@ class MessageService:
 
     @staticmethod
     def add_message(data: Dict[str, Any], uow: AbstractUnitOfWork) -> Dict[str, Any]:
-        tag_ids = data.pop("tags", [])
-        resource_ids = data.pop("resources", [])
+        tag_ids = data.pop("tag_ids", [])
+        resource_ids = data.pop("resource_ids", [])
         creator_id = data.pop("creator_id")
         evenement_id = data.pop("evenement_id")
         restricted_user_group = data.pop("restricted_user_group")

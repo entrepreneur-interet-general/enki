@@ -178,5 +178,5 @@ class EvenementService:
     @staticmethod
     def create_dataframe(uuid: str, uow: AbstractUnitOfWork) -> pd.DataFrame:
         entries = EvenementService.create_list_of_dict_entries(uuid=uuid, uow=uow)
-        df = pd.DataFrame(entries)
+        df = pd.DataFrame(entries).sort_values("created_at", ascending=False)
         return df

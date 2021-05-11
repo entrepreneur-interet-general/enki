@@ -89,7 +89,6 @@ class MessageListResource(WithMessageRepoResource):
                                                                   role_type=EvenementRoleType.EDIT,
                                                                   uow=current_app.context)
         body = request.get_json()
-        current_app.logger.info(f"body {body}")
         body["creator_id"] = g.user_info["id"]
         body["evenement_id"] = uuid
         command = CreateMessage(data=body)

@@ -131,7 +131,6 @@ class UserService:
     ):
         group = uow.group.get_by_uuid(uuid=group_id)
         if group.type != group_type:
-            current_app.logger.info(f"group.type : {group.type} != {group_type} : group_type")
             raise GroupTypeNotMatchException()
 
         position: PositionGroupTypeEntity = uow.group.get_position(position_id=position_id)

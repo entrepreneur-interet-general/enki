@@ -29,9 +29,8 @@ class EvenementService:
                       uow: AbstractUnitOfWork):
         creator_id = data.pop("creator_id")
         try:
-            current_app.logger.info(f"data {data}")
             evenement: EvenementEntity = EvenementService.schema().load(data)
-            current_app.logger.info(f"evenement.location_id {evenement.location_id}")
+
         except ValidationError as ve:
             raise ve
 
@@ -80,7 +79,7 @@ class EvenementService:
                 "evenement_id": evenement.uuid,
                 "evenement_title": evenement.title
             }))
-            return UserSchema().dump(user)
+            return UserSchema().dump(uow.user.get_by_uuid(uuid=user_id))
 
     @staticmethod
     def change_user_role(uuid: str, user_id: str, role_type: EvenementRoleType, uow: AbstractUnitOfWork) -> Dict[

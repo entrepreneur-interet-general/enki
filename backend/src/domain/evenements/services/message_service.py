@@ -179,7 +179,6 @@ class MessageService:
 
     @staticmethod
     def add_message_from_meeting(meeting: MeetingEntity, uow: AbstractUnitOfWork):
-        current_app.logger.info(f"UOW type {type(uow)}")
         with uow:
             message: MessageEntity = MessageEntity.from_meeting(meeting=meeting)
             evenement: EvenementEntity = uow.evenement.get_by_uuid(uuid=meeting.evenement_id)

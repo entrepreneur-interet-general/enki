@@ -57,7 +57,7 @@ class MessageSchema(Schema):
     parent_id = fields.Str(required=False, load_only=True)
     resources = fields.Nested(ResourceSchema, required=False, many=True, dump_only=True)
     executor_id = fields.Str(required=False)
-    reactions = fields.Nested(ReactionSchema, required=False,  many=True,  dump_only=True)
+    reactions = fields.Nested(ReactionSchema, required=False, many=True, dump_only=True)
     done_at = fields.DateTime(default=None, dump_only=True)
     restricted = fields.Method("_is_restricted")
 

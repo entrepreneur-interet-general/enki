@@ -82,7 +82,6 @@ class UserListResource(WithUserRepoResource):
         body["uuid"] = g.user_info["id"]
         body["email"] = g.user_info["email"]
         body["token"] = args.get("token")
-        current_app.logger.info("start creating user")
         command = CreateUser(data=body)
         result = event_bus.publish(command, current_app.context)
         return {

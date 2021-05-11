@@ -84,6 +84,17 @@ export class ListeMainCouranteComponent implements OnInit {
       reaction: 'ok'
     });
   }
+  getCreatorCSSClass(creator: string): string {
+    switch (creator) {
+      case 'MAIRIE':
+        return '-green';
+      case 'PREFECTURE':
+        return '-blue';
+      case 'SDIS':
+        return '-red';
+    }
+
+  }
   openModal(): void {
     this.modal.open()
   }

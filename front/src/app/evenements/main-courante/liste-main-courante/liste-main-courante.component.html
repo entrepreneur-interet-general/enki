@@ -18,7 +18,7 @@
         <a (click)="clickOnMessage(message)">
           <div class="list--wrapper">
             <div class="secondInfos">
-              <div class="badge" *ngIf="message.creator" [ngClass]="(message.creator && message.creator.position.group.type === 'PREFECTURE') ? 'badge__blueFill' :'badge__greenFill'">
+              <div class="badge" *ngIf="message.creator" [class]="getCreatorCSSClass(message.creator.position.group.type)" [class]="getCreatorCSSClass(message.creator.position.group.type)">
                 <div class="badge__troncated">{{message.creator.position.group.label}}</div>
               </div>
               <div class="badge" *ngIf="!message.creator" [ngClass]="(message.type === 'affair') ? 'badge__redFill' :''">
@@ -30,7 +30,7 @@
             </div>
             <div class="contentInfos">
               <div class="mainInfos">
-                <div class="mainInfos--title" *ngIf="message.creator" [ngClass]="(message.creator && message.creator.position.group.type === 'PREFECTURE' ? '-blue' : '-green')">
+                <div class="mainInfos--title" *ngIf="message.creator" [class]="getCreatorCSSClass(message.creator.position.group.type)">
                   <span *ngIf="message.restricted">
                     <svg class="icon-lock icon"><use xlink:href="#icon-lock"></use></svg>
                   </span>

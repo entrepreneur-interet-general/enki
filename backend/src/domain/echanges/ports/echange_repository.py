@@ -24,8 +24,6 @@ class NotFoundEchange(HTTPException):
 
 class AbstractEchangeRepository(abc.ABC):
     def add(self, echange: EchangeEntity) -> Union[bool, None]:
-        if self._match_uuid(echange.uuid):
-            raise AlreadyExistingEchangeUuid()
         result = self._add(echange)
         return result
 

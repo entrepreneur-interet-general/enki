@@ -190,4 +190,3 @@ def start_mappers():
             'creator': relationship(UserEntity, backref='messages_reactions',uselist=False),
         },
     )
-

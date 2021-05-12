@@ -74,7 +74,7 @@ def build_engine(sql_engine_uri: str) -> Engine:
     isolation_level = "READ UNCOMMITTED" if "sqlite" in sql_engine_uri else "REPEATABLE READ"
     engine = create_engine(
         sql_engine_uri,
-        isolation_level=isolation_level,
+        # isolation_level=isolation_level,
         pool_pre_ping=True
     )
     return engine

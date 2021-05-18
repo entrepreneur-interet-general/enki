@@ -53,7 +53,6 @@ export class MessagesService {
   getMessagesByEvenementID(evenementUUID: string): Observable<Message[]> {
     const messages = this.getMessages().filter(message => message.evenement_id === evenementUUID)
     return this.containsEvenementMessages(evenementUUID) ? of(messages) : this.httpGetMessages(evenementUUID)
-    // return this.httpGetMessages(evenementUUID)
   }
 
   httpGetMessages(evenementUUID: string): Observable<Message[]> {
@@ -67,7 +66,7 @@ export class MessagesService {
         }),
         catchError((error) => {
           this.toastService.addMessage(`Impossible de récupérer les messages de cet événement`, ToastType.ERROR);
-          return throwError(error);
+          return of(this.getMessages());
         })
       )
   }

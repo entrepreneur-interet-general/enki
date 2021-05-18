@@ -74,7 +74,7 @@ export class AddMessageComponent implements OnInit {
         selectedLabelsUUID,
         this.evenementUUID,
         this.listOfMedias.map(media => media.uuid),
-        messageType === MessageType.RESTRICTED ? true : false
+        messageType === MessageType.RESTRICTED ? true : false,
       ).subscribe(() => {
         this.formSubmitted = true;
         this.router.navigate([`..`], { relativeTo: this.route })

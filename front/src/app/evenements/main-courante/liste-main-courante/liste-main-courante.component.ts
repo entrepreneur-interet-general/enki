@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, timer } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { retry, switchMap } from 'rxjs/operators';
 import { User, MessageFilter, Message } from 'src/app/interfaces';
 import { ModalComponent } from 'src/app/ui/modal/modal.component';
 import { UserService } from 'src/app/user/user.service';
@@ -53,9 +53,9 @@ export class ListeMainCouranteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const timer$ = timer(0, 10000);
+    const timer$ = timer(0, 5000);
     this.messages$ = timer$.pipe(
-      switchMap(() => this.messagesService.httpGetMessages(this.uuid))
+      switchMap(() => this.messagesService.httpGetMessages(this.uuid)),
     )
     this.subscription = this.messages$.subscribe((messages) => {
       this.evenementsService.setMessages(this.uuid, this.messages);
